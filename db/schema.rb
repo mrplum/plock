@@ -35,4 +35,11 @@ ActiveRecord::Schema.define(version: 2020_01_06_173624) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.integer "proyect_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
 end
