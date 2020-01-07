@@ -17,13 +17,15 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create project" do
     Project.destroy_all
+    @user = users(:matias)
     assert_difference('Project.count') do
       post projects_url,
       params: { project: {
         cost: @project.cost,
         name: @project.name,
         repository: @project.repository,
-        start_at: @project.start_at } }
+        start_at: @project.start_at,
+        user: @user } }
     end
 
     assert_redirected_to project_url(Project.last)
