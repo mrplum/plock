@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2020_01_07_173825) do
     t.integer "user_id"
     t.integer "team_id"
     t.index ["name"], name: "index_projects_on_name", unique: true
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
