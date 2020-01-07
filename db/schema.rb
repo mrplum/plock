@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_202656) do
+ActiveRecord::Schema.define(version: 2020_01_07_173825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,24 +23,36 @@ ActiveRecord::Schema.define(version: 2020_01_06_202656) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.integer "team_id"
     t.index ["name"], name: "index_projects_on_name", unique: true
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "description", null: false
+    t.string "name"
+    t.string "description"
     t.datetime "starts_at"
     t.datetime "end_at"
-    t.boolean "status", default: false
+    t.boolean "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "team_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "team_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "teams", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "teams_users", id: false, force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "user_id", null: false
   end
 
   create_table "users", force: :cascade do |t|
