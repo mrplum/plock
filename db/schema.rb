@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_150821) do
+ActiveRecord::Schema.define(version: 2020_01_07_173825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,11 +28,18 @@ ActiveRecord::Schema.define(version: 2020_01_07_150821) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
+    t.string "name", null: false
+    t.string "description", null: false
     t.datetime "starts_at"
     t.datetime "end_at"
-    t.boolean "status"
+    t.boolean "status", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "team_users", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "team_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -41,11 +48,6 @@ ActiveRecord::Schema.define(version: 2020_01_07_150821) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "teams_users", id: false, force: :cascade do |t|
-    t.bigint "team_id", null: false
-    t.bigint "user_id", null: false
   end
 
   create_table "users", force: :cascade do |t|
