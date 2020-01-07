@@ -10,19 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_173959) do
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 2020_01_06_191356) do
+=======
+ActiveRecord::Schema.define(version: 2020_01_06_190353) do
 
+>>>>>>> change validations
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "projects", force: :cascade do |t|
-    t.string "name"
-    t.string "repository"
-    t.decimal "cost"
+    t.string "name", null: false
+    t.string "repository", null: false
+    t.decimal "cost", null: false
     t.date "start_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.index ["name"], name: "index_projects_on_name", unique: true
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -40,6 +45,20 @@ ActiveRecord::Schema.define(version: 2020_01_06_173959) do
     t.integer "proyect_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "lastname", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end
