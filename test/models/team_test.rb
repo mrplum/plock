@@ -3,21 +3,17 @@ require 'test_helper'
 class TeamTest < ActiveSupport::TestCase
   
    test "create team" do
-    p  = Project.create(
-      name: "Is test",
-      repository: "github",
-      cost: 5,
-      start_at: Date.new);
-
-    t  = Team.new(
-      name: "team test",
-      project_id: p.id);
+    t  = Team.create(name: "team test")
     assert t.valid?
   end
 
-  test "should not save team without name and project_id" do
-    team = Team.new
-    assert_not team.save
+  test "create team presence name" do
+    t  = Team.new
+    assert_not t.save
   end
 
+  test "create team name minimun lenght 3" do
+    t  = Team.new(name: "te")
+    assert_not t.save
+  end
 end
