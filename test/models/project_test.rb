@@ -1,13 +1,19 @@
 require 'test_helper'
 
 class ProjectTest < ActiveSupport::TestCase
+  
+  def setup
+    @user = users(:matias)
+  end
 
   test "create project" do
     p  = Project.new(
       name: "Is test",
       repository: "github",
       cost: 5,
-      start_at: Date.new);
+      start_at: Date.new,
+      user: @user)
+    p.save
     assert p.valid?
   end
 
@@ -16,13 +22,16 @@ class ProjectTest < ActiveSupport::TestCase
       name: "Is test",
       repository: "github",
       cost: 5,
-      start_at: Date.new);
+      start_at: Date.new,
+      user: @user)
     p1 = Project.new(
       name: "Is test",
       repository: "github",
       cost: 5,
-      start_at: Date.new);
-    assert !p1.valid?
+      start_at: Date.new,
+      user: @user)
+    p1.save
+    assert_not p1.valid?
   end
 
   test "name not null" do 
@@ -30,8 +39,9 @@ class ProjectTest < ActiveSupport::TestCase
       name: nil,
       repository: "github",
       cost: 5,
-      start_at: Date.new);
-    assert !p.valid?
+      start_at: Date.new,
+      user: @user)
+    assert_not p.valid?
   end
 
   test "repository not null" do 
@@ -39,8 +49,9 @@ class ProjectTest < ActiveSupport::TestCase
       name: "Is test",
       repository: nil,
       cost: 5,
-      start_at: Date.new);
-    assert !p.valid?
+      start_at: Date.new,
+      user: @user)
+    assert_not p.valid?
   end
 
   test "cost not null" do 
@@ -48,8 +59,20 @@ class ProjectTest < ActiveSupport::TestCase
       name: "Is test",
       repository: "github",
       cost: nil,
-      start_at: Date.new);
-    assert !p.valid?
+      start_at: Date.new,
+      user: @user)
+    assert_not p.valid?
+  end
+
+  test "user_id not null" do 
+    p  = Project.create(
+      name: "Is test",
+      repository: "github",
+      cost: 5,
+      start_at: Date.new,
+      user: nil)
+    p.save
+    assert_not p.valid?
   end
 
   test "length the name is minimum 5 characters" do 
@@ -57,8 +80,9 @@ class ProjectTest < ActiveSupport::TestCase
       name: "test",
       repository: "github",
       cost: 5,
-      start_at: Date.new);
-    assert !p.valid?
+      start_at: Date.new,
+      user: @user)
+    assert_not p.valid?
   end
 
 end

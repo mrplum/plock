@@ -11,3 +11,11 @@ one:
 two:
   name: User Two
   email: a@b2.com
+matias:
+  name: Matias
+  lastname: Brusati
+  email: mail@example.com
+  encrypted_password: dasd13e2234
+#
+two: {}
+# column: value
