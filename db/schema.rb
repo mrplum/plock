@@ -16,13 +16,14 @@ ActiveRecord::Schema.define(version: 2020_01_06_202656) do
   enable_extension "plpgsql"
 
   create_table "projects", force: :cascade do |t|
-    t.string "name"
-    t.string "repository"
-    t.decimal "cost"
+    t.string "name", null: false
+    t.string "repository", null: false
+    t.decimal "cost", null: false
     t.date "start_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.index ["name"], name: "index_projects_on_name", unique: true
   end
 
   create_table "tasks", force: :cascade do |t|
