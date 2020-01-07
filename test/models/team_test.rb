@@ -15,4 +15,9 @@ class TeamTest < ActiveSupport::TestCase
     assert t.valid?
   end
 
+  test "should not save team without name and project_id" do
+    team = Team.new
+    assert_not team.save
+  end
+
 end
