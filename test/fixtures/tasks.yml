@@ -1,15 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# one:
-#   name: MyString
-#   description: MyString
-#   starts_at: 2020-01-06 14:36:25
-#   end_at: 2020-01-06 14:36:25
-#   status: false
-#
-# two:
-#   name: MyString
-#   description: MyString
-#   starts_at: 2020-01-06 14:36:25
-#   end_at: 2020-01-06 14:36:25
-#   status: false
+one:
+  name: MyString
+  description: MyString
+  starts_at: 2020-01-06 14:36:25
+  end_at: 2020-01-06 14:36:25
+  status: false
+  user_id: 1
+  project_id: 1
+
+two:
+  name: MyString
+  description: MyString
+  starts_at: 2020-01-06 14:36:25
+  end_at: 2020-01-06 14:36:25
+  status: false
+  user_id: 1
+  project_id: 1

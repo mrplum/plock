@@ -54,11 +54,6 @@ ActiveRecord::Schema.define(version: 2020_01_07_173825) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "teams_users", id: false, force: :cascade do |t|
-    t.bigint "team_id", null: false
-    t.bigint "user_id", null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "lastname", default: "", null: false
