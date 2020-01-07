@@ -5,9 +5,11 @@ one:
   repository: MyString
   cost: 9.99
   start_at: 2020-01-06
+  user: matias
 
 two:
   name: MyString2
   repository: MyString2
   cost: 9.99
   start_at: 2020-01-06
+  user: matias
