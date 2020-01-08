@@ -4,7 +4,6 @@
 #
 class Project < ApplicationRecord
   belongs_to :user
-  belongs_to :company
   belongs_to :team, optional: true
   has_many :tasks
   has_many :users, through: :team
