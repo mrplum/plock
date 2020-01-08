@@ -20,10 +20,6 @@ class ProjectTest < ActiveSupport::TestCase
       start_at: Date.new,
       user: @user
     )
-<<<<<<< HEAD
-=======
-    p.save
->>>>>>> cf0214ece4a928ad94318db906fc6ea2c2a8f689
     assert p.valid?
   end
 
