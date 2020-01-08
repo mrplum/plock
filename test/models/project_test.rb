@@ -6,10 +6,10 @@ class ProjectTest < ActiveSupport::TestCase
     @user = users(:matias)
   end
 
-  test "create project" do
+  test 'create project' do
     p  = Project.new(
-      name: "Is test",
-      repository: "github",
+      name: 'Is test',
+      repository: 'github',
       cost: 5,
       start_at: Date.new,
       user: @user)
@@ -17,16 +17,16 @@ class ProjectTest < ActiveSupport::TestCase
     assert p.valid?
   end
 
-  test "name uniqueness" do
+  test 'name uniqueness' do
     p  = Project.create(
-      name: "Is test",
-      repository: "github",
+      name: 'Is test',
+      repository: 'github',
       cost: 5,
       start_at: Date.new,
       user: @user)
     p1 = Project.new(
-      name: "Is test",
-      repository: "github",
+      name: 'Is test',
+      repository: 'github',
       cost: 5,
       start_at: Date.new,
       user: @user)
@@ -34,19 +34,19 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not p1.valid?
   end
 
-  test "name not null" do 
+  test 'name not null' do 
     p  = Project.create(
       name: nil,
-      repository: "github",
+      repository: 'github',
       cost: 5,
       start_at: Date.new,
       user: @user)
     assert_not p.valid?
   end
 
-  test "repository not null" do 
+  test 'repository not null' do 
     p  = Project.create(
-      name: "Is test",
+      name: 'Is test',
       repository: nil,
       cost: 5,
       start_at: Date.new,
@@ -54,20 +54,20 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not p.valid?
   end
 
-  test "cost not null" do 
+  test 'cost not null' do 
     p  = Project.create(
-      name: "Is test",
-      repository: "github",
+      name: 'Is test',
+      repository: 'github',
       cost: nil,
       start_at: Date.new,
       user: @user)
     assert_not p.valid?
   end
 
-  test "user_id not null" do 
+  test 'user_id not null' do 
     p  = Project.create(
-      name: "Is test",
-      repository: "github",
+      name: 'Is test',
+      repository: 'github',
       cost: 5,
       start_at: Date.new,
       user: nil)
@@ -75,10 +75,10 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not p.valid?
   end
 
-  test "length the name is minimum 5 characters" do 
+  test 'length the name is minimum 5 characters' do 
     p  = Project.create(
-      name: "test",
-      repository: "github",
+      name: 'test',
+      repository: 'github',
       cost: 5,
       start_at: Date.new,
       user: @user)

@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
+# Project class
+#
 class Project < ApplicationRecord
     belongs_to :user
-    has_many :teams
-<<<<<<< HEAD
-
-    validates :name, :repository, :cost ,presence: true
-=======
+    has_one :team
     has_many :tasks
+    has_many :users, through: :team
 
     validates :name, :repository, :cost, :user_id, presence: true
->>>>>>> change in bd
     validates :name, uniqueness: true
     validates :name, :repository, length: { minimum: 5 }
 end
