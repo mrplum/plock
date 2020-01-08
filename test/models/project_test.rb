@@ -8,17 +8,18 @@ class ProjectTest < ActiveSupport::TestCase
   def setup
     @user = users(:matias)
     @project = projects(:one)
+    @project1 = projects(:two)
+    @team = teams(:one)
   end
 
   test 'create project' do
-    p = Project.new(
+    p = Project.create(
       name: 'Is test',
       repository: 'github',
       cost: 5,
       start_at: Date.new,
       user: @user
     )
-    p.save
     assert p.valid?
   end
 
@@ -100,9 +101,14 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not_nil (@project.user)
   end
 
-  # test 'check not exists tasks' do
-  #   assert_empty (@project.tasks)
-  # end
+  test 'check not exists tasks' do
+    assert_empty (@project.tasks)
+  end
+
+  test 'check if there are tasks' do
+    p =  projects(:two)
+    assert_not_empty (p.tasks)
+  end
 
   test 'check not users in the project' do
     p = Project.create(
@@ -114,4 +120,11 @@ class ProjectTest < ActiveSupport::TestCase
     )
     assert_empty (p.users)
   end
+
+  test 'create project with team' do
+    p = @project1
+    p.team = @team
+    assert p.valid?
+  end
+
 end 
