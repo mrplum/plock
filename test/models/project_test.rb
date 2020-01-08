@@ -94,4 +94,15 @@ class ProjectTest < ActiveSupport::TestCase
     )
     assert_not p.valid?
   end
+
+  test 'there are no users in the project' do
+    p = Project.create(
+      name: 'test',
+      repository: 'github',
+      cost: 5,
+      start_at: Date.new,
+      user: @user
+    )
+    assert_empty (p.users)
+  end
 end
