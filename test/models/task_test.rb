@@ -1,17 +1,21 @@
 require 'test_helper'
 
 class TaskTest < ActiveSupport::TestCase
-  test "You can't save a task with name empty" do
 
-    task = Task.create(
+  def setup
+    @user = users(:one)
+    @project = projects(:one)
+  end
+
+  test "You can save a task" do
+    task = Task.new(
       name: "asdasadfas",
       description: "asd",
       starts_at: Date.new,
       end_at: Date.new,
-      user_id: u.id,
-      project_id: p.id)
-      puts task.user_id
-    assert_not task.valid?
+      user: @user,
+      project: @project)
+    assert task.valid?
    end
 
    # test "You can't save a task with description empty" do
