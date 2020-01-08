@@ -1,8 +1,11 @@
 require "application_system_test_case"
 
 class ProjectsTest < ApplicationSystemTestCase
+  include Devise::Test::IntegrationHelpers
   setup do
     @project = projects(:one)
+    @user = users(:one)
+    sign_in @user
   end
 
   test "visiting the index" do
@@ -17,7 +20,6 @@ class ProjectsTest < ApplicationSystemTestCase
     fill_in "Cost", with: @project.cost
     fill_in "Name", with: @project.name
     fill_in "Repository", with: @project.repository
-    fill_in "Start at", with: @project.start_at
     click_on "Create Project"
 
     assert_text "Project was successfully created"
@@ -31,7 +33,6 @@ class ProjectsTest < ApplicationSystemTestCase
     fill_in "Cost", with: @project.cost
     fill_in "Name", with: @project.name
     fill_in "Repository", with: @project.repository
-    fill_in "Start at", with: @project.start_at
     click_on "Update Project"
 
     assert_text "Project was successfully updated"
