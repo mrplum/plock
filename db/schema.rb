@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_01_08_032948) do
     t.date "start_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.bigint "team_id"
     t.index ["name"], name: "index_projects_on_name", unique: true
     t.index ["team_id"], name: "index_projects_on_team_id"
