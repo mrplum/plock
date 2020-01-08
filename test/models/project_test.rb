@@ -20,6 +20,10 @@ class ProjectTest < ActiveSupport::TestCase
       start_at: Date.new,
       user: @user
     )
+<<<<<<< HEAD
+=======
+    p.save
+>>>>>>> cf0214ece4a928ad94318db906fc6ea2c2a8f689
     assert p.valid?
   end
 
@@ -95,6 +99,7 @@ class ProjectTest < ActiveSupport::TestCase
       user: @user
     )
     assert_not p.valid?
+<<<<<<< HEAD
   end
 
   test 'check owner' do
@@ -127,4 +132,26 @@ class ProjectTest < ActiveSupport::TestCase
     assert p.valid?
   end
 
+=======
+  end
+
+  test 'check owner' do
+    assert_not_nil (@project.user)
+  end
+
+  # test 'check not exists tasks' do
+  #   assert_empty (@project.tasks)
+  # end
+
+  test 'check not users in the project' do
+    p = Project.create(
+      name: 'test',
+      repository: 'github',
+      cost: 5,
+      start_at: Date.new,
+      user: @user
+    )
+    assert_empty (p.users)
+  end
+>>>>>>> cf0214ece4a928ad94318db906fc6ea2c2a8f689
 end 
