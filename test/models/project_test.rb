@@ -7,6 +7,7 @@ require 'test_helper'
 class ProjectTest < ActiveSupport::TestCase
   def setup
     @user = users(:matias)
+    @project = projects(:one)
   end
 
   test 'create project' do
@@ -95,7 +96,15 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not p.valid?
   end
 
-  test 'there are no users in the project' do
+  test 'check owner' do
+    assert_not_nil (@project.user)
+  end
+
+  # test 'check not exists tasks' do
+  #   assert_empty (@project.tasks)
+  # end
+
+  test 'check not users in the project' do
     p = Project.create(
       name: 'test',
       repository: 'github',
@@ -105,4 +114,4 @@ class ProjectTest < ActiveSupport::TestCase
     )
     assert_empty (p.users)
   end
-end
+end 
