@@ -33,8 +33,12 @@ ActiveRecord::Schema.define(version: 2020_01_07_173825) do
     t.datetime "starts_at"
     t.datetime "end_at"
     t.boolean "status", default: false
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "team_users", force: :cascade do |t|
