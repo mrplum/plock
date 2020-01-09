@@ -18,7 +18,7 @@ class ProjectsTest < ApplicationSystemTestCase
     click_on "New Project"
 
     fill_in "Cost", with: @project.cost
-    fill_in "Name", with: @project.name
+    fill_in "Name", with: "@project.name"
     fill_in "Repository", with: @project.repository
     click_on "Create Project"
 
