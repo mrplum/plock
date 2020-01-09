@@ -6,7 +6,7 @@ class Project < ApplicationRecord
   belongs_to :user
   # belongs_to :company
   belongs_to :team, optional: true
-  has_many :tasks
+  has_many :tracks
   has_many :users, through: :team
 
   validates :name, :repository, :cost, :user_id, presence: true

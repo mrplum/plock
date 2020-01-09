@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :teams
-  resources :tasks
+  resources :tracks
   resources :projects do
-    resources :tasks
+    resources :tracks
   end
 end
