@@ -1,8 +1,10 @@
 require "application_system_test_case"
 
 class TeamsTest < ApplicationSystemTestCase
+  include Devise::Test::IntegrationHelpers
   setup do
     @team = teams(:one)
+    sign_in users(:one)
   end
 
   test "visiting the index" do
@@ -13,7 +15,7 @@ class TeamsTest < ApplicationSystemTestCase
   test "creating a Team" do
     visit teams_url
     click_on "New Team"
-
+    fill_in "team_name", with: "CreatingTeam"
     click_on "Create Team"
 
     assert_text "Team was successfully created"

@@ -1,9 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @team.name %>
-</p>
+<div class="teams-cont">
+  <div id="teams-2" class="teams">
 
-<%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>
+    <div style="background-color:black; color:white;">
+      <strong> TEAM </strong>
+    </div>
+
+    <ul style="color: black"> <%= @team.name %> </ul>
+
+    <div style="background-color:black; color:white;">
+      <strong> TEAM MEMBERS </strong>
+    </div>
+
+    <ul>
+      <% @team.users.each do |user| %>
+        <li style="color: black"> <%= user.name %> </li>
+      <% end %>
+    </ul>
+
+    <%= link_to 'Edit', edit_team_path(@team), style: 'color: black;' %> |
+    <%= link_to 'Back', teams_path, style: 'color: black;' %>
+
+  </div>
+</div>

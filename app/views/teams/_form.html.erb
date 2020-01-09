@@ -16,6 +16,10 @@
     <%= form.text_field :name %>
   </div>
 
+  <div class="field">
+    <%= form.select :user_ids, options_from_collection_for_select(User.all, "id", "name"), { include_blank: true}, { multiple: true } %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
