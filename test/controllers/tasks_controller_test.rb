@@ -1,10 +1,13 @@
 require 'test_helper'
 
 class TasksControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
     @task = tasks(:one)
     @user = users(:one)
     @project = projects(:one)
+    sign_in @user
   end
 
   test 'should get index' do
