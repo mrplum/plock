@@ -62,13 +62,13 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not_nil (@project.user)
   end
 
-  test 'check not exists tasks' do
-    assert_empty (@project.tasks)
+  test 'check not exists tracks' do
+    assert_empty (@project.tracks)
   end
 
-  test 'check if there are tasks' do
+  test 'check if there are tracks' do
     p =  projects(:two)
-    assert_not_empty (p.tasks)
+    assert_not_empty (p.tracks)
   end
 
   test 'check not users in the project' do
@@ -82,4 +82,4 @@ class ProjectTest < ActiveSupport::TestCase
     assert p.valid?
   end
 
-end 
+end
