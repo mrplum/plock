@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :companies
   root to: "home#index"
+  get 'profile', to: 'users#show'
+  resources :companies
 
   devise_for :users
 
