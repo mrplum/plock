@@ -77,6 +77,6 @@ class TasksController < ApplicationController
     end
 
     def get_project
-      @project = current_user.projects.find(params[:project_id])
+      @project = current_user.projects.find(params[:project_id]) if params.has_key?(:project_id)
     end
 end
