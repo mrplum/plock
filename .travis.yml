@@ -1,30 +1,27 @@
 language: ruby
+
 rvm:
   - 2.6.2
+
 env:
   - DB=postgresql
-script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
-  - bundle exec rake
+
+services:
+  - postgresql
+
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
+
 before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database plock_test' -U postgres
+  - bundle exec rake db:create db:migrate RAILS_ENV=test
 
-# config/database.travis.yml
-postgresql: &postgresql
-  adapter: postgresql
-  username: postgres
-  password:
-  database: plock_<%= Rails.env %>
-  min_messages: ERROR
-
-development:
-  <<: *defaults
-
-test:
-  <<: *defaults
-
-production:
-  <<: *defaults
+script:
+  - bundle exec rails webpacker:compile
+  - bundle exec rails test
 
