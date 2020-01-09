@@ -1,6 +1,9 @@
 class TasksController < ApplicationController
+  before_action :get_project, only: [:create, :new]
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+
+
 
   # GET /tasks
   # GET /tasks.json
@@ -25,7 +28,7 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = Task.new(task_params.merge({user_id:current_user.id, project_id:params[:project_id]}))
 
     respond_to do |format|
       if @task.save
@@ -71,5 +74,9 @@ class TasksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:name, :description, :starts_at, :end_at, :status)
+    end
+
+    def get_project
+      @project = current_user.projects.find(params[:project_id])
     end
 end
