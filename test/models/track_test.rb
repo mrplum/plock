@@ -1,13 +1,13 @@
 require 'test_helper'
 
-class TaskTest < ActiveSupport::TestCase
+class TrackTest < ActiveSupport::TestCase
   def setup
     @user = users(:one)
     @project = projects(:one)
   end
 
-  test 'You can save a task' do
-    task = Task.new(
+  test 'You can save a track' do
+    track = Track.new(
       name: 'asdasadfa',
       description: 'asd',
       starts_at: Date.new,
@@ -15,6 +15,6 @@ class TaskTest < ActiveSupport::TestCase
       user: @user,
       project: @project
     )
-    assert task.valid?
+    assert track.valid?
   end
 end
