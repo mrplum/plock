@@ -20,6 +20,39 @@
   <%= @project.start_at %>
 </p>
 
+<h1> Tracks  </h1>
+  <% if @tracks.empty? %>
+      <p> Not tracks available </p>
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Date start</th>
+          <th>Date end</th>
+          <th>State</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <% @tracks.each do |track| %>
+      <tr>
+          <td><%= track.name %></td>
+          <td><%= track.description %></td>
+          <td><%= track.starts_at %></td>
+          <td><%= track.end_at %></td>
+          <% if track.status %>
+            <td> Finalized </td>
+          <% else %>
+            <td> In progress </td>
+          <% end %>
+          <td><%= link_to 'Show', track %></td>
+      </tr>
+      </tbody>
+    </table>
+  <%end%>
+<% end %>
+
 <%= link_to 'Create new Task', new_project_track_path(@project) %> |
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
