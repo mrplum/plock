@@ -1,3 +1,4 @@
+# Track class is for model the differents tasks of each project
 class TracksController < ApplicationController
   before_action :get_project, only: [:create, :new]
   before_action :set_track, only: [:show, :edit, :update, :destroy]
