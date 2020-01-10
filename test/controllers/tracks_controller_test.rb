@@ -19,19 +19,19 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test "should create track" do
-  #   assert_difference('Track.count') do
-  #     post tracks_url, params: { track: { description: @track.description,
-  #     end_at: @track.end_at,
-  #     name: @track.name,
-  #     starts_at: @track.starts_at,
-  #     status: @track.status,
-  #     user_id: @user.id,
-  #     project_id: @project.id} }
-  #   end
-  #
-  #   assert_redirected_to track_url(Track.last)
-  # end
+  test 'should create track' do
+      post tracks_url, params: { track: { description: @track.description,
+        end_at: @track.end_at,
+        name: @track.name,
+        starts_at: @track.starts_at,
+        status: @track.status,
+        user: @user,
+        project: @project
+        }
+      }
+
+    assert_response :success
+  end
 
   test 'should show track' do
     get track_url(@track)
@@ -43,16 +43,16 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test "should update track" do
-  #   patch track_url(@track), params: { track: { description: @track.description,
-  #     end_at: @track.end_at,
-  #     name: @track.name,
-  #     starts_at: @track.starts_at,
-  #     status: @track.status,
-  #     user_id: @user.id,
-  #     project_id: @project.id} }
-  #   assert_redirected_to track_url(@track)
-  # end
+  test "should update track" do
+    patch track_url(@track), params: { track: { description: @track.description,
+      end_at: @track.end_at,
+      name: @track.name,
+      starts_at: @track.starts_at,
+      status: @track.status,
+      user: @user,
+      project: @project} }
+    assert_redirected_to track_url(@track)
+  end
 
   test 'should destroy track' do
     assert_difference('Track.count', -1) do
