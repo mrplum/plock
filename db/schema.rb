@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_01_09_204101) do
     t.string "name", null: false
     t.string "description", null: false
     t.datetime "starts_at"
-    t.datetime "end_at"
+    t.datetime "ends_at"
     t.boolean "status", default: false
     t.bigint "user_id", null: false
     t.bigint "project_id", null: false
