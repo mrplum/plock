@@ -18,7 +18,7 @@ class TracksTest < ApplicationSystemTestCase
     click_on "New Track"
 
     fill_in "Description", with: @track.description
-    fill_in "End at", with: @track.end_at
+    fill_in "End at", with: @track.ends_at
     fill_in "Name", with: @track.name
     fill_in "Starts at", with: @track.starts_at
     check "Status" if @track.status
@@ -33,7 +33,7 @@ class TracksTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Description", with: @track.description
-    fill_in "End at", with: @track.end_at
+    fill_in "End at", with: @track.ends_at
     fill_in "Name", with: @track.name
     fill_in "Starts at", with: @track.starts_at
     check "Status" if @track.status

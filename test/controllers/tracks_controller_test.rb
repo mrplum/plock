@@ -21,7 +21,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create track' do
       post tracks_url, params: { track: { description: @track.description,
-        end_at: @track.end_at,
+        ends_at: @track.ends_at,
         name: @track.name,
         starts_at: @track.starts_at,
         status: @track.status,
@@ -45,7 +45,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
   test "should update track" do
     patch track_url(@track), params: { track: { description: @track.description,
-      end_at: @track.end_at,
+      ends_at: @track.ends_at,
       name: @track.name,
       starts_at: @track.starts_at,
       status: @track.status,

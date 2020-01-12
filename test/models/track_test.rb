@@ -11,7 +11,7 @@ class TrackTest < ActiveSupport::TestCase
       name: 'asdasadfa',
       description: 'asd',
       starts_at: Date.new,
-      end_at: Date.new,
+      ends_at: Date.new,
       user: @user,
       project: @project
     )
