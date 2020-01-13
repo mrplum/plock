@@ -3,6 +3,7 @@ class CreateCompanies < ActiveRecord::Migration[6.0]
     create_table :companies do |t|
       t.string :name
       t.string :description
+      t.belongs_to :user, null: false
 
       t.timestamps
     end

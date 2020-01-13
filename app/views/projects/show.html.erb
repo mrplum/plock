@@ -37,18 +37,18 @@
       </thead>
       <% @tracks.each do |track| %>
       <tr>
-          <td><%= track.name %></td>
-          <td><%= track.description %></td>
-          <td><%= track.starts_at %></td>
-          <td><%= track.end_at %></td>
+          <td><%= track.name %>&nbsp&nbsp</td>
+          <td><%= track.description %>&nbsp</td>
+          <td><%= track.starts_at %>&nbsp</td>
+          <td><%= track.ends_at %>&nbsp</td>
           <% if track.status %>
-            <td> Finalized </td>
+            <td> Finalized&nbsp </td>
           <% else %>
-            <td> In progress </td>
+            <td> In progress&nbsp </td>
           <% end %>
-          <td><%= link_to 'Show', track %></td>
+          <td><%= link_to 'Show' , track %>&nbsp</td>
+          <td><%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-      </tbody>
     </table>
   <%end%>
 <% end %>
