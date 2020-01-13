@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!
+  before_action :authenticate_user!
 
-    def show
-        @user = current_user
-        @projects = @user.projects
-    end
+  def show
+    @user = current_user
+    @projects = @user.projects
+  end
 
 end
-  
