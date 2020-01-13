@@ -4,7 +4,7 @@ class CreateTracks < ActiveRecord::Migration[6.0]
       t.string :name, null: false
       t.string :description, null: false
       t.datetime :starts_at
-      t.datetime :end_at
+      t.datetime :ends_at
       t.boolean :status, default: false
       t.belongs_to :user, null: false
       t.belongs_to :project, null: false
