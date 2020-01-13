@@ -7,20 +7,17 @@ class UsersController < ApplicationController
     end
 
     def data
-      array = [] 
-      current_user.tracks.all.each do |track|
-         array << {
-          task: track.name,
-          hour: calchs(track)
-        } 
-      end
-      render json: array.to_a.reject(&:empty?).to_json
+      render json: current_user.tracks.map {|track| {
+        task: track.name,
+        hour: calchs(track)}
+      }.reject(&:empty?)
     end
-
+    
     private
-      def calchs (track)
-        hs = ((track.ends_at - track.starts_at) / 3600).floor
-        min = (((track.ends_at - track.starts_at) / 60) - (hs * 60)).floor
-        return (hs.to_s+"."+min.to_s).to_f
+    def calchs (track)
+        difference = ((track.ends_at - track.starts_at)).to_i
+        hours =  (difference / 1.hour)
+        minutes = (difference / 1.minute) % 1.minute.to_i
+        "#{hours}.#{minutes}".to_f
       end
 end
