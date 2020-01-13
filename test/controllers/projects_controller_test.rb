@@ -30,8 +30,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
           cost: @project.cost,
           name: @project.name,
           repository: @project.repository,
-          start_at: @project.start_at 
-          } 
+          start_at: @project.start_at
+          }
         }
     end
 

@@ -1,3 +1,4 @@
+# Track class is for model the differents tasks of each project
 class TracksController < ApplicationController
   before_action :get_project, only: [:create, :new]
   before_action :set_track, only: [:show, :edit, :update, :destroy]
@@ -73,7 +74,7 @@ class TracksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:name, :description, :starts_at, :end_at, :status)
+      params.require(:track).permit(:name, :description, :starts_at, :ends_at, :status)
     end
 
     def get_project
