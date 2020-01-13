@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1> Hello <%= @user.name %> </h1>
+    <p> You have been invited to join the team <%= @team.name %> </p>
+    <%= link_to 'Accept', accept_invitation_teams_url(team_id: @team, user_id: @user),only_path: true %>
+  </body>
+</html>
