@@ -30,11 +30,15 @@ class TeamsController < ApplicationController
   # POST /teams
   # POST /teams.json
   def create
-    
+
     @team = Team.new(team_params)
 
     respond_to do |format|
       if @team.save
+        TeamUser.create(team_id: @team.id,user_id: current_user.id, joined: DateTime.now)
+        @team.users.each { |user|
+          UserMailer.with(user: user, team: @team).welcome_email.deliver_later
+        }
         format.html do
           redirect_to @team, notice: 'Team was successfully created.'
         end
@@ -81,6 +85,13 @@ class TeamsController < ApplicationController
     end
   end
 
+  def accept_invitation
+    team_id = params[:team_id]
+    user_id = params[:user_id]
+    team_user = TeamUser.find_by(team_id: team_id, user_id: user_id)
+    team_user.update(joined: DateTime.now)    
+    redirect_to new_user_session_path
+  end
   private
 
   # Use callbacks to share common setup or constraints between actions.
