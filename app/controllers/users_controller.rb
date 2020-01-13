@@ -4,32 +4,23 @@ class UsersController < ApplicationController
     def show
         @user = current_user
         @projects = @user.projects
-
-
-        # respond_to do |format|
-            # format.csv  {
-            #     send_data @User.to_csv(), :filename => "data.csv"
-            # }
-
-            # format.tsv  {
-            #     send_data @User.to_tsv(), :filename => "data.tsv"
-            # }
-        # end
     end
 
     def data
-        # current_user.tracks.group_by('DATE(created_at)').collect do |date, track|
-        #     { letter: date, frequency: track.sum(&:hours)}
-        # end.to_json
-
-        render json: [
-            {'letter' => "T", "frequency" => 5},
-            {'letter' => "R", "frequency" => 4},
-            {'letter' => "O", "frequency" => 3},
-            {'letter' => "L", "frequency" => 10},
-            {'letter' => "A", "frequency" => 7},
-            {'letter' => "S", "frequency" => 1},
-            {'letter' => "O", "frequency" => 1}
-        ].to_json
+      array = [] 
+      current_user.tracks.all.each do |track|
+         array << {
+          task: track.name,
+          hour: calchs(track)
+        } 
+      end
+      render json: array.to_a.reject(&:empty?).to_json
     end
+
+    private
+      def calchs (track)
+        hs = ((track.ends_at - track.starts_at) / 3600).floor
+        min = (((track.ends_at - track.starts_at) / 60) - (hs * 60)).floor
+        return (hs.to_s+"."+min.to_s).to_f
+      end
 end

@@ -7,7 +7,8 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
-
+require("packs/d3.v3.min")
+require("packs/d3.tip.v0.6.3")
 require("packs/custom/user_show")
 
 
@@ -21,4 +22,3 @@ require("packs/custom/user_show")
 
 import 'bootstrap' 
 import '../stylesheets/application'
-

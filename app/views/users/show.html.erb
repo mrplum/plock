@@ -1,51 +1,48 @@
-<p id="notice"><%= notice %></p>
+  <p id="notice"><%= notice %></p>
 
-<h1> User Profile </h1>
+  <h1> User Profile </h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+  <p>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </p>
 
-<p>
-  <strong>Lastname:</strong>
-  <%= @user.lastname %>
-</p>
+  <p>
+    <strong>Lastname:</strong>
+    <%= @user.lastname %>
+  </p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
 
-<h1> Working in </h1>
-  <% if @projects.empty? %>
-      <p> Not working in any project </p>
-  <% else %>
-    <table>
-      <thead>
+  <h1> Working in </h1>
+    <% if @projects.empty? %>
+        <p> Not working in any project </p>
+    <% else %>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Repository</th>
+            <th>Cost</th>
+            <th>Start at</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <% @projects.each do |project| %>
         <tr>
-          <th>Name</th>
-          <th>Repository</th>
-          <th>Cost</th>
-          <th>Start at</th>
-          <th colspan="3"></th>
+            <td><%= project.name %></td>
+            <td><%= project.repository %></td>
+            <td><%= project.cost %></td>
+            <td><%= project.start_at %></td>
+            <td><%= link_to 'Show', project %></td>
         </tr>
-      </thead>
-      <% @projects.each do |project| %>
-      <tr>
-          <td><%= project.name %></td>
-          <td><%= project.repository %></td>
-          <td><%= project.cost %></td>
-          <td><%= project.start_at %></td>
-          <td><%= link_to 'Show', project %></td>
-      </tr>
-      </tbody>
-    </table>
-  <%end%>
-<% end %>
-
-<div id="graph"></div>
-
-<div id="graph-cuestita"></div>
-
-<%= render "users/d3" %>
+        </tbody>
+      </table>
+    <%end%>
+  <% end %>
+  
+  <div id="graph-d3"> </div>
+  <%= render "users/d3" %> 

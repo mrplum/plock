@@ -7,15 +7,4 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  def as_csv(options = {})
-    csv = {
-      name: name,
-      lastname: lastname,
-      email: email,
-      created_at: created_at,
-      updated_at: updated_at,
-      }
-  end
-
 end
