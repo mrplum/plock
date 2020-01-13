@@ -4,9 +4,10 @@ Rails.application.routes.draw do
   resources :companies
 
   devise_for :users
-
   resources :users
-  resources :teams
+  resources :teams do
+    get 'accept_invitation', on: :collection
+  end
   resources :tracks
   resources :projects do
     resources :tracks
