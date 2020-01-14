@@ -15,29 +15,29 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import 'bootstrap' 
-import '../stylesheets/application'
-import '../../../vendor/javascript/jquery.min'
-import '../../../vendor/javascript/bootstrap.bundle.min'
-import '../../../vendor/javascript/fastclick'
-import '../../../vendor/javascript/nprogress'
-import '../../../vendor/javascript/Chart.min'
-import '../../../vendor/javascript/gauge.min'
-import '../../../vendor/javascript/bootstrap-progressbar.min'
-import '../../../vendor/javascript/icheck.min'
-import '../../../vendor/javascript/skycons'
-import '../../../vendor/javascript/jquery.flot'
-import '../../../vendor/javascript/jquery.flot.pie'
-import '../../../vendor/javascript/jquery.flot.time'
-import '../../../vendor/javascript/jquery.flot.stack'
-import '../../../vendor/javascript/jquery.flot.resize'
-import '../../../vendor/javascript/jquery.flot.orderBars'
-import '../../../vendor/javascript/jquery.flot.spline.min'
-import '../../../vendor/javascript/curvedLines'
-import '../../../vendor/javascript/date'
-import '../../../vendor/javascript/jquery.vmap'
-import '../../../vendor/javascript/jquery.vmap.world'
-import '../../../vendor/javascript/jquery.vmap.sampledata'
-import '../../../vendor/javascript/moment.min'
-import '../../../vendor/javascript/daterangepicker'
-import '../../../vendor/javascript/custom.min'
+require('bootstrap' )
+require('../stylesheets/application')
+require('packs/jquery.min')
+require('packs/bootstrap.bundle.min')
+require('packs/fastclick')
+require('packs/nprogress')
+require('packs/Chart.min')
+require('packs/gauge.min')
+//require('packs/bootstrap-progressbar.min')
+//require('packs/icheck.min')
+require('packs/skycons')
+//require('packs/jquery.flot')
+// require('packs/jquery.flot.pie')
+// require('packs/jquery.flot.time')
+// require('packs/jquery.flot.stack')
+// require('packs/jquery.flot.resize')
+// require('packs/jquery.flot.orderBars')
+// require('packs/jquery.flot.spline.min')
+require('packs/curvedLines')
+require('packs/date')
+require('packs/jquery.vmap')
+require('packs/jquery.vmap.world')
+require('packs/jquery.vmap.sampledata')
+require('packs/moment.min')
+require('packs/daterangepicker')
+require('packs/custom.min')
