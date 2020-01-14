@@ -31,6 +31,14 @@
     <%= form.date_select :start_at %>
   </div>
 
+  <div class="field">
+  <a> select team please pelado</a>
+    <%= form.select :team_id, options_from_collection_for_select(
+        current_user.teams,"id", "name"),
+        { include_blank: true}, { multiple: false } 
+    %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

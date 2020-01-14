@@ -32,17 +32,15 @@
           </tr>
         </thead>
         <% @projects.each do |project| %>
-        <tr>
-            <td><%= project.name %></td>
-            <td><%= project.repository %></td>
-            <td><%= project.cost %></td>
-            <td><%= project.start_at %></td>
-            <td><%= link_to 'Show', project %></td>
-        </tr>
-        </tbody>
+          <tr>
+              <td><%= project.name %></td>
+              <td><%= project.repository %></td>
+              <td><%= project.cost %></td>
+              <td><%= project.start_at %></td>
+              <td><%= link_to 'Show', project %></td>
+          </tr>
+        <%end%>
       </table>
-    <%end%>
   <% end %>
   
-  <div id="graph-d3"> </div>
-  <%= render "users/d3" %> 
+  <div id="graph-d3-user"> </div>

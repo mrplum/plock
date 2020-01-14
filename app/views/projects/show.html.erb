@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<%= hidden_field_tag :project_id, @project.id %>
 <p>
   <strong>Name:</strong>
   <%= @project.name %>
@@ -19,6 +20,13 @@
   <strong>Start at:</strong>
   <%= @project.start_at %>
 </p>
+
+<% if @project.team != nil %>
+  <p>
+    <strong>Team:</strong>
+    <%= @project.team.name %>
+  </p>
+<%end%>
 
 <h1> Tracks  </h1>
   <% if @tracks.empty? %>
@@ -53,6 +61,8 @@
   <%end%>
 <% end %>
 
-<%= link_to 'Create new Task', new_project_track_path(@project) %> |
+<%= link_to 'Create new Track', new_project_track_path(@project) %> |
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
+
+<div id="graph-d3-project"></div>

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :users
-  get 'me/data' => 'users#data', :defaults => { :format => 'json' }
+  get 'me/dataUser' => 'users#dataUser', :defaults => { :format => 'json' }
 
   resources :teams
   resources :teams do
@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   resources :tracks
   resources :projects do
     resources :tracks
+    
   end
+  get 'me/dataProject' => 'projects#dataProject', :defaults => { :format => 'json' }
 end
