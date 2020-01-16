@@ -10,5 +10,8 @@
   <%= @company.description %>
 </p>
 
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+<td><%= link_to 'Edit', edit_company_path(@company) %></td> |
+<td><%= link_to 'Destroy', @company, method: :delete, data: { confirm: 'Are you sure?' } %></td> |
+<td><%= link_to 'Add User to Company', company_subscribe_user_path(@company)%></td> |
+
+<%= link_to 'Back', profile_path %>

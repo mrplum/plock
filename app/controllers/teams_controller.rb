@@ -35,7 +35,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        TeamUser.create(team_id: @team.id,user_id: current_user.id, joined: DateTime.now)
+        TeamUser.create(team_id: @team.id,user_id: current_user.id, incorporated_at: DateTime.now)
         @team.users.each { |user|
           UserMailer.with(user: user, team: @team).welcome_email.deliver_later
         }
@@ -89,7 +89,7 @@ class TeamsController < ApplicationController
     team_id = params[:team_id]
     user_id = params[:user_id]
     team_user = TeamUser.find_by(team_id: team_id, user_id: user_id)
-    team_user.update(joined: DateTime.now)    
+    team_user.update(incorporated_at: DateTime.now)
     redirect_to new_user_session_path
   end
   private
@@ -103,7 +103,7 @@ class TeamsController < ApplicationController
   # only allow the white list through.
   def team_params
     params[:team][:user_ids] = params.dig(:team, :user_ids).to_a.reject(&:empty?).map(&:to_i).compact
-    
+
     params.require(:team).permit(:name, user_ids: [])
   end
 end

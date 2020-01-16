@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   root to: "home#index"
   get 'profile', to: 'users#show'
-  resources :companies
+  resources :companies do
+      get 'subscribe_user'
+      get 'send_email'
+      get 'accept_invitation_to_company', on: :collection
+  end
+
 
   devise_for :users
   resources :users
