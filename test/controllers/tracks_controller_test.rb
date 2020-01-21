@@ -21,10 +21,9 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create track' do
       post tracks_url, params: { track: { description: @track.description,
-        ends_at: @track.ends_at,
         name: @track.name,
-        starts_at: @track.starts_at,
         status: @track.status,
+        plock_time: @track.plock_time,
         user: @user,
         project: @project
         }
@@ -45,10 +44,9 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
 
   test "should update track" do
     patch track_url(@track), params: { track: { description: @track.description,
-      ends_at: @track.ends_at,
       name: @track.name,
-      starts_at: @track.starts_at,
       status: @track.status,
+      plock_time: @track.plock_time,
       user: @user,
       project: @project} }
     assert_redirected_to track_url(@track)
@@ -58,7 +56,6 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Track.count', -1) do
       delete track_url(@track)
     end
-
     assert_redirected_to tracks_url
   end
 end

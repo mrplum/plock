@@ -10,8 +10,7 @@ class TrackTest < ActiveSupport::TestCase
     track = Track.new(
       name: 'asdasadfa',
       description: 'asd',
-      starts_at: Date.new,
-      ends_at: Date.new,
+      plock_time: 225,
       user: @user,
       project: @project
     )

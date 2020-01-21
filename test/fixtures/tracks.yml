@@ -3,8 +3,7 @@
 one:
   name: MyString
   description: MyString
-  starts_at: 2020-01-06 14:36:25
-  ends_at: 2020-01-06 14:36:25
+  plock_time: 160
   status: false
   user: one
   project: two
@@ -12,8 +11,7 @@ one:
 two:
   name: MyString
   description: MyString
-  starts_at: 2020-01-06 14:36:25
-  ends_at: 2020-01-06 14:36:25
+  plock_time: 200
   status: false
   user: two
   project: two

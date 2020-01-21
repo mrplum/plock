@@ -4,8 +4,6 @@ class TracksController < ApplicationController
   before_action :set_track, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-
-
   # GET /tracks
   # GET /tracks.json
   def index
@@ -74,7 +72,7 @@ class TracksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:name, :description, :starts_at, :ends_at, :status)
+      params.require(:track).permit(:name, :description, :plock_time, :status)
     end
 
     def get_project
