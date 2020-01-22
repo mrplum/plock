@@ -86,7 +86,7 @@ class TeamsController < ApplicationController
   end
 
   def accept_invitation
-    team_id = params[:team_id]
+    team_id = params[:id]
     user_id = params[:user_id]
     team_user = TeamUser.find_by(team_id: team_id, user_id: user_id)
     team_user.update(incorporated_at: DateTime.now)

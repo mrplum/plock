@@ -49,7 +49,14 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update project' do
-    patch project_url(@project), params: { project: { cost: @project.cost, name: @project.name, repository: @project.repository, start_at: @project.start_at } }
+    patch project_url(@project), params: {
+      project: {
+        cost: @project.cost,
+        name: @project.name,
+        repository: @project.repository,
+        start_at: @project.start_at 
+      }
+    }
     assert_redirected_to project_url(@project)
   end
 

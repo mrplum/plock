@@ -59,21 +59,21 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   test 'check owner' do
-    assert_not_nil (@project.user)
+    assert_not_nil @project.user
   end
 
   test 'check not exists tracks' do
-    assert_empty (@project.tracks)
+    assert_not_empty @project.tracks
   end
 
   test 'check if there are tracks' do
     p =  projects(:two)
-    assert_not_empty (p.tracks)
+    assert_not_empty p.tracks
   end
 
   test 'check not users in the project' do
     p = @project
-    assert_empty (p.users)
+    assert_not_empty p.users
   end
 
   test 'create project with team' do
