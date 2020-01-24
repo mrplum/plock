@@ -23,7 +23,7 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @company = Company.new(company_params.merge({user_id:current_user.id} ) )
+    @company = Company.new(company_params.merge({user_id: current_user.id}))
 
     respond_to do |format|
       if @company.save
@@ -69,34 +69,34 @@ class CompaniesController < ApplicationController
   end
 
   def send_email
-    company_id = params[:company_id]
-    email = params[:company][:email]
+    email = params[:user][:email]
     pass = "password"
-    @company = Company.find_by(id: company_id)
-    @user = User.new(name: "temporary", lastname: "temporary", email: email, password: pass, company_id: company_id, incorporated_at: DateTime.now)
-    if @user.save!
-      respond_to do |format|
+    @company = Company.find_by(id: params[:company_id])
+    @user = User.new(name: "your name", lastname: "your lastname", email: email, password: pass, company_id: params[:company_id], incorporated_at: DateTime.now)
+    respond_to do |format|
+      if @user.save
         UserMailer.with( company: @company, user: @user).welcome_to_company.deliver_later
-        format.html { redirect_to @company, company: @company  }
+        format.html { redirect_to @user }
+        format.json { render :show, status: :created, location: company_subscribe_user_path }
+      else
+        format.html { render :_addUsers, user: @user }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+    
+    def subscribe_user
+      company_id = params[:company_id]
+      @company = Company.find_by(id: company_id)
+      @user = User.find(@company.id)
+      respond_to do |format|
+        format.html { render :_addUsers, user: @user  }
         format.json { render :show, status: :created, location: company_subscribe_user_path }
       end
-    else
-      format.html { redirect_to  }
-      format.json { render json: @company.errors, status: :unprocessable_entity }
     end
-  end
-
-  def subscribe_user
-    company_id = params[:company_id]
-    @company = Company.find_by(id: company_id)
-    respond_to do |format|
-        format.html { render :_addUsers, company: @company  }
-        format.json { render :show, status: :created, location: company_subscribe_user_path }
-    end
-  end
-
+    
   def accept_invitation_to_company
-    redirect_to new_user_session_path
+    redirect_to edit_user_path(params[:user_id])
   end
 
   private

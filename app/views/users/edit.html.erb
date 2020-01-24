@@ -1,0 +1,35 @@
+<h1> Enter your information </h1>
+ 
+<%= form_with(model: @user, local: true, id: 'user_edit_form') do |form| %>
+
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name , id: 'user_name' %>
+  </p>
+ 
+  <p>
+    <%= form.label :lastname %><br>
+    <%= form.text_area :lastname, id: 'user_lastname'%>
+  </p>
+
+  <%= render "devise/shared/error_messages", resource: @user %>
+  <%= form.hidden_field :reset_password_token %>
+
+  <div class="field">
+    <%= form.label :password, "Password (6 characters minimum)" %><br />
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <% end %>
+    <%= form.password_field :password, id: 'user_password', autofocus: true, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation, "Password confirmation" %><br />
+    <%= form.password_field :password_confirmation, id: 'user_confirmation_password', autocomplete: "new-password" %>
+  </div>
+
+  <p>
+    <%= form.submit 'Submit' %>
+  </p>
+ 
+<% end %>
