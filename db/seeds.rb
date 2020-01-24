@@ -1,9 +1,9 @@
 
 # Create Owner User Company
-owner = User.new(name: 'Owner', lastname: 'One', email: 'a@b.com', password: '123123')
+owner = User.new(name: 'Owner', lastname: 'Plock', email: 'owner@plock.com', password: '123123')
 
 # Craete the company of owner user
-c = Company.new(name: 'Company', description: 'This company not exist', user: owner)
+c = Company.new(name: 'Plock', description: 'The company', user: owner)
 
 # Owner company also belong to company
 owner.company = c
@@ -12,7 +12,7 @@ owner.save
 c.save
 
 # Create company member user
-member_user = User.create(name: 'Slave', lastname: 'Two', email: 'b@b.com', password: '123123', company: c)
+member_user = User.create(name: 'Slave', lastname: 'One', email: 'slave_1@plock.com', password: '123123', company: c)
 
 # Create the Plockers Team
 t = Team.create(name: 'Plockers Team')
