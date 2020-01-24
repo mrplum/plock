@@ -5,16 +5,28 @@ module Mutations
     argument :email, String, required: true
     argument :password, String, required: true
 
-    type Types::UserType
+    field :user, Types::UserType, null: true
+    field :errors, String, null: false
 
     def resolve(email:, password:)
       user = User.find_for_authentication(email: email)
-      return nil if !user
 
-      is_valid_for_auth = user.valid_for_authentication?{
-        user.valid_password?(password)
+      if user.blank?
+        respond_with('Auth error')
+      else
+        is_valid_for_auth = user.valid_for_authentication? {
+          user.valid_password?(password)
+        }
+
+        is_valid_for_auth ? respond_with(user) : respond_with('Auth error')
+      end
+    end
+
+    def respond_with(response)
+      {
+        user: response.is_a?(User) ? response : nil,
+        errors: response.is_a?(String) ? response : ''
       }
-      return is_valid_for_auth ? user : nil
     end
   end
 end

@@ -24,13 +24,16 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
   end
 
   test 'success login' do
-    post graphql_path,
-      params: { query: @query_string },
-      headers: { 'Authorization' => "Bearer #{bearer_token}" }
+    token = bearer_token('test@example.com', '123123')['user']['token']
 
-		response_body = JSON.parse(response.body)
-    assert_response :success
-    assert_equal(response_body['data']['user']['name'], 'Test')
+    assert(token.present?)
+    assert_equal(token.class, String)
+  end
+
+  test 'failing login' do
+    token = bearer_token('invalid@user.com', 'INVALID PASS')['errors']
+
+    assert_equal(token, 'Auth error')
   end
 
   test "not logged user doesn't has results" do
@@ -43,22 +46,39 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     assert_nil(response_body['data']['user'])
   end
 
-  def bearer_token
+  test 'logged user has results from query' do
+    token = bearer_token('test@example.com', '123123')['user']['token']
+    post graphql_path,
+      params: { query: @query_string },
+      headers: { 'Authorization' => "Bearer #{token}" }
+
+    response_body = JSON.parse(response.body)
+    assert_response :success
+
+
+    assert_equal(response_body['data']['user']['name'], 'Test')
+  end
+
+  def bearer_token(email, password)
     query = <<-GRAPHQL
       mutation login($email: String!, $password: String!){
         login(email: $email, password: $password){
-          token
+          user {
+            token
+          }
+          errors
         }
       }
     GRAPHQL
+
     result = PlockSchema.execute(
       query,
       variables: {
-        email: 'test@example.com',
-        password: '123123'
+        email: email,
+        password: password
       }
     )
 
-    result['data']['login']['token']
+    result['data']['login']
   end
 end
