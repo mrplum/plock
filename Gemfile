@@ -13,6 +13,8 @@ gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
+# Flexible tool to use React with rails rendering React serve-side or client-side
+gem 'react-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -40,7 +42,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem "letter_opener"
+  gem 'letter_opener'
+  gem 'graphiql-rails'
+  gem 'pry'
 end
 
 group :test do
@@ -57,3 +61,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 
 gem 'awesome_print'
+gem 'devise-jwt'
+
+gem 'awesome_print'
+
+gem 'd3-rails'
+
+gem 'graphql'

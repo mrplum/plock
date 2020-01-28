@@ -1,3 +1,8 @@
+<div class='pull-right'>
+<%= link_to 'Edit', edit_track_path(@track), class:'btn btn-info' %>
+<%= link_to 'Back', project_path(@track.project), class:'btn btn-secondary' %>
+</div>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -11,19 +16,50 @@
 </p>
 
 <p>
-  <strong>Starts at:</strong>
-  <%= @track.starts_at %>
-</p>
-
-<p>
-  <strong>Ends at:</strong>
-  <%= @track.ends_at %>
-</p>
-
-<p>
   <strong>Status:</strong>
-  <%= @track.status %>
+    <% if @track.status %>
+      <td> Finalized&nbsp </td>
+    <% else %>
+      <td> In progress&nbsp </td>
+    <% end %>
 </p>
 
-<%= link_to 'Edit', edit_track_path(@track) %> |
-<%= link_to 'Back', tracks_path %>
+<h1> Work intervals </h1>
+  <% if @track.intervals.empty? %>
+      <p> Not intervals available </p>
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th> Begin </th>
+          <th> End </th>
+          <th> User </th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <% @intervals.each do |interval| %>
+        <tr>
+          <td><%= interval.created_at %>&nbsp&nbsp</td>
+          <td><%= interval.updated_at %>&nbsp</td>
+          <td><%= interval.user.name + ' ' + interval.user.lastname %>&nbsp</td>
+          <td>
+            <%=
+              link_to 'Destroy', track_interval_path(track_id: @track.id, id: interval.id),
+              method: :delete, data: { confirm: 'Are you sure?' }
+            %>
+          </td>
+          <% if interval.created_at == interval.updated_at %>
+            <td>|
+              <%=
+                link_to 'Close interval', track_interval_path(track_id: @track.id, id: interval.id), method: :patch
+              %>
+            </td>
+          <% end %>
+        </tr>
+      <%end%>
+    </table>
+<% end %>
+
+<% if not(@track.status) %>
+  <%= link_to 'Create interval', track_intervals_path(@track), method: :post, class: 'btn btn-success' %>
+<% end %>

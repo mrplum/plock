@@ -11,11 +11,9 @@ one:
 two:
   name: User Two
   email: a@b2.com
+  company: one
 
 matias:
   name: Matias
   email: email@example.com
-
-#
-two: {}
-# column: value
+  company: one

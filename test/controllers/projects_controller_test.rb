@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-# ProjectTest class
+# ProjectsControllerTest class
 #
 class ProjectsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -22,7 +22,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create project" do
+  test 'should create project' do
     Project.destroy_all
     assert_difference('Project.count') do
       post projects_url, params: {
@@ -49,7 +49,14 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update project' do
-    patch project_url(@project), params: { project: { cost: @project.cost, name: @project.name, repository: @project.repository, start_at: @project.start_at } }
+    patch project_url(@project), params: {
+      project: {
+        cost: @project.cost,
+        name: @project.name,
+        repository: @project.repository,
+        start_at: @project.start_at 
+      }
+    }
     assert_redirected_to project_url(@project)
   end
 

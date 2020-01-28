@@ -18,9 +18,8 @@ class TracksTest < ApplicationSystemTestCase
     click_on "New Track"
 
     fill_in "Description", with: @track.description
-    fill_in "End at", with: @track.ends_at
+    fill_in "Plock Time", with: @track.plock_time
     fill_in "Name", with: @track.name
-    fill_in "Starts at", with: @track.starts_at
     check "Status" if @track.status
     click_on "Create Track"
 
@@ -33,9 +32,8 @@ class TracksTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Description", with: @track.description
-    fill_in "End at", with: @track.ends_at
+    fill_in "Plock Time", with: @track.plock_time
     fill_in "Name", with: @track.name
-    fill_in "Starts at", with: @track.starts_at
     check "Status" if @track.status
     click_on "Update Track"
 

@@ -32,3 +32,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+/App-Plock/node_modules
+.rvmrc

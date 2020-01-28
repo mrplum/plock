@@ -1,0 +1,19 @@
+<% if flash.any? %>
+  <div class="row">
+    <div class="col-xs-12" id="flash_wrapper">
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %> ">
+          <button type="button" class="cFlose" data-dismiss="alert" aria-hidden="true"> x
+          </button>
+          <% if message.is_a? Array %>
+            <% message.each do |msg| %>
+              <p><%= msg %></p>
+            <% end %>
+          <% else %>
+            <p><%= message.html_safe %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
