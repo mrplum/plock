@@ -4,7 +4,7 @@ module Types
   # class QueryType
   #
   class QueryType < Types::BaseObject
-    def current_user 
+    def current_user
       context[:current_user]
     end
 

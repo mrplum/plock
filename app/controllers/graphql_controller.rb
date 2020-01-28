@@ -9,6 +9,9 @@ class GraphqlController < ApplicationController
       current_user: current_user,
       login: method(:sign_in)
     }
+    #binding.pry
+    puts('controlaso')
+    puts current_user.to_json
     result = PlockSchema.execute(
       query,
       variables: variables,
@@ -44,12 +47,12 @@ class GraphqlController < ApplicationController
       logger.error e.message
       logger.error e.backtrace.join("\n")
 
-      render json: { 
-        error: { 
-          message: e.message, 
-          backtrace: e.backtrace 
-        }, 
-        data: {} 
+      render json: {
+        error: {
+          message: e.message,
+          backtrace: e.backtrace
+        },
+        data: {}
       }, status: 500
     end
 end

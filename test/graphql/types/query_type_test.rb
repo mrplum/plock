@@ -47,7 +47,7 @@ class QueryTypeTest < ActiveSupport::TestCase
     result = PlockSchema.execute(
       query_string,
       variables: {},
-      context: context 
+      context: context
     )
     project_one_name = result['data']['projects'][0]['name']
     project_one_tracks_one_name = result['data']['projects'][0]['tracks']['edges'][0]['node']['name']
@@ -88,7 +88,7 @@ class QueryTypeTest < ActiveSupport::TestCase
         }
       }
       GRAPHQL
-    
+
     project_id = @project.id
     result = PlockSchema.execute(
       query_string,
