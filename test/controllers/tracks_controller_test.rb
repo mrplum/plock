@@ -4,7 +4,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
     @track = tracks(:one)
-    @user = users(:one)
+    @user = users(:matias)
     @project = projects(:one)
     sign_in @user
   end
@@ -15,21 +15,23 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get new' do
-    get new_track_url
+    get new_track_url(project_id: @project.id)
     assert_response :success
   end
 
   test 'should create track' do
-      post tracks_url, params: { track: { description: @track.description,
+    post tracks_url, params: {
+      project_id: @project.id,
+      track: {
+        description: @track.description,
         name: @track.name,
         status: @track.status,
         plock_time: @track.plock_time,
         user: @user,
         project: @project
-        }
       }
-
-    assert_response :success
+    }
+    assert_response :redirect
   end
 
   test 'should show track' do
@@ -43,12 +45,17 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update track" do
-    patch track_url(@track), params: { track: { description: @track.description,
-      name: @track.name,
-      status: @track.status,
-      plock_time: @track.plock_time,
-      user: @user,
-      project: @project} }
+    patch track_url(@track), params: {
+      project_id: @project.id,
+      track: { 
+        description: @track.description,
+        name: @track.name,
+        status: @track.status,
+        plock_time: @track.plock_time,
+        user: @user,
+        project: @project
+      }
+    }
     assert_redirected_to track_url(@track)
   end
 

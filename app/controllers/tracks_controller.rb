@@ -1,6 +1,7 @@
 # Track class is for model the differents tasks of each project
 class TracksController < ApplicationController
-  before_action :get_project, only: [:create, :new]
+  before_action :get_project, only: [:new, :create, :update]
+  before_action :check_permissions, only: [:new, :create, :update]
   before_action :set_track, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
@@ -13,6 +14,8 @@ class TracksController < ApplicationController
   # GET /tracks/1
   # GET /tracks/1.json
   def show
+    @track = Track.find(params[:id])
+    @intervals = @track.intervals
   end
 
   # GET /tracks/new
@@ -27,7 +30,7 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.json
   def create
-    @track = Track.new(track_params.merge({user_id:current_user.id, project_id:params[:project_id]}))
+    @track = Track.new(track_params.merge({user_id: current_user.id, project_id: params[:project_id]}))
 
     respond_to do |format|
       if @track.save
@@ -76,6 +79,15 @@ class TracksController < ApplicationController
     end
 
     def get_project
-      @project = current_user.projects.find(params[:project_id]) if params.has_key?(:project_id)
+      @project = current_user.projects.find_by(id: params[:project_id])
+      if @project.nil?
+        redirect_to track_path(params[:track_id]), flash: {danger: 'You do not have permission to clear the interval'}          
+      end
+    end
+
+    def check_permissions
+      unless @project.team_id.in?(current_user.teams.pluck(:id))
+        redirect_to project_path(params[:project_id]), flash: {danger: 'Unathorized for create track!'}
+      end
     end
 end

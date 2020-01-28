@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
-
   root to: "home#index"
   get 'profile', to: 'users#show'
   resources :companies do
@@ -11,15 +10,15 @@ Rails.application.routes.draw do
       get 'send_email'
       get 'accept_invitation_to_company', on: :collection
   end
-
-
   devise_for :users
   resources :users
   get 'me/data' => 'users#data', :defaults => { :format => 'json' }
   resources :teams do
     get 'accept_invitation', on: :member
   end
-  resources :tracks
+  resources :tracks do
+    resources :intervals
+  end
   resources :projects do
     resources :tracks
   end

@@ -5,4 +5,8 @@ class Track < ApplicationRecord
   belongs_to :user, dependent: :destroy
 
   validates :name, :description, presence: true
+
+  def has_open_intervals?
+    intervals.any?(&:open?)
+  end
 end

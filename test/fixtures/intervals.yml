@@ -2,8 +2,12 @@
 
 one:
   track: one
+  user: one
   created_at: "1999-01-22 15:31:10 UTC"  
-  updated_at: "1999-01-22 15:31:10 UTC"
+  updated_at: "1999-01-22 17:31:00 UTC"
 
 two:
   track: two
+  user: one
+  created_at: "1999-01-22 15:31:10 UTC"  
+  updated_at: "1999-01-22 15:31:10 UTC"

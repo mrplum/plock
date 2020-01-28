@@ -20,10 +20,12 @@ class CompaniesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create company' do
     Company.destroy_all
-      post companies_url, params: { company: {
-        description: @company.description,
-        name: @company.name
-      } }
+      post companies_url, params: { 
+        company: {
+          description: @company.description,
+          name: @company.name
+        } 
+      }
 
     assert_redirected_to company_url(Company.last)
   end
@@ -39,11 +41,13 @@ class CompaniesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update company' do
-    patch company_url(@company), params: { company: {
-      description: @company.description,
-      name: @company.name
-    } }
-    assert_response :success
+    patch company_url(@company), params: {
+      company: {
+        description: @company.description,
+        name: @company.name
+      }
+    }
+    assert_redirected_to company_url(@company.id)
   end
 
   test 'should destroy company' do

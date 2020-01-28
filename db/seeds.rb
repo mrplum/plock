@@ -61,10 +61,11 @@ track_values.each { |t| Track.create(t) }
 t1, t2, t3 = Track.all
 t1.intervals.create
 
-interval_1_track_2 = Interval.create(track: t2)
+interval_1_track_2 = Interval.create(track: t2, user: member_user)
+interval_1_track_2 = Interval.create(track: t2, user: owner)
 interval_1_track_2.update_attribute(:updated_at, 2.hours.from_now)
 
-interval_2_track_2 = Interval.create(track: t2)
+interval_2_track_2 = Interval.create(track: t2, user: member_user)
 interval_2_track_2.update_attribute(:updated_at, 2.hours.from_now)
 
 t3.intervals.create

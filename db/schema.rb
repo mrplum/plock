@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_183500) do
+ActiveRecord::Schema.define(version: 2020_01_27_200216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,9 @@ ActiveRecord::Schema.define(version: 2020_01_21_183500) do
     t.bigint "track_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["track_id"], name: "index_intervals_on_track_id"
+    t.index ["user_id"], name: "index_intervals_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|

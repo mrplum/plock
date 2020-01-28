@@ -7,13 +7,14 @@ require 'test_helper'
 class MutationTypeTest < ActiveSupport::TestCase
 	def setup
 		@track = tracks(:one)
+		@user = users(:one)
 		@interval = intervals(:one)
 	end
 
 	test 'interval start' do
 		query_string = <<-GRAPHQL
-		mutation trackSetIntervalStart($track_id: ID!) {
-			intervalStart(trackId: $track_id) {
+		mutation trackSetIntervalStart($track_id: Int!, $user_id: Int!) {
+			intervalStart(trackId: $track_id, userId: $user_id) {
 				track {
 					name
 				}
@@ -26,7 +27,7 @@ class MutationTypeTest < ActiveSupport::TestCase
 		track_id = @track.id
 		result = PlockSchema.execute(
 		query_string,
-			variables: { track_id: track_id },
+			variables: { track_id: track_id, user_id: @user.id },
 			context: {}
 		)
 		track_name = result['data']['intervalStart']['track']['name']
