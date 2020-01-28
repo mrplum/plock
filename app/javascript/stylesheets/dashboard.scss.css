@@ -1,0 +1,105 @@
+@font-face {
+  font-family: digital;
+  src: url(digital-7.ttf);
+}
+
+
+.mainContainer {
+    display: grid;
+    grid-area: body;
+    grid-template-columns: 30% 30% 30%;
+}
+
+.model-list-container {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  margin-left: 5%;
+  margin-right: 5%;
+  justify-content: center;
+}
+
+.box {
+  background-color: #272C31;
+  color: white;
+  text-align: center;
+  margin: 2.5%;
+  border-color: black;
+  border-width: 2px;
+  border-style: inset;
+  font-family: digital;
+}
+
+.box a:link, .box a:visited, .box a:hover, .box a:active {
+  color: white;
+  text-decoration: none;
+}
+
+.model-count {
+  background-color: black;
+  color: red;
+  font-size: 2rem;
+  margin-top: 10%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.model-name {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.add-button {
+  background-color: lightgreen;
+  margin: 10%;
+}
+
+.list-button {
+  background-color: sandybrown;
+  margin: 10%;
+}
+
+.admin-footer {
+  padding: 2%;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+}
+
+.admin-table{
+  width:80%;
+  margin: 5% 10% 5% 10%;
+  text-align: center;   
+  border-collapse:collapse; 
+  border: 1px solid black;
+}
+.admin-table td{ 
+  padding:7px; border:#4e95f4 1px solid;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+.admin-table tbody tr{
+  background: #b8d1f3;
+}
+/*  Define the background color for all the ODD background rows  */
+.admin-table tbody tr:nth-child(odd){ 
+  background: #b8d1f3;
+}
+/*  Define the background color for all the EVEN background rows  */
+.admin-table tbody tr:nth-child(even){
+  background: #dae5f4;
+}
+
+.admin-form {
+  width: 80%;
+  margin: 5% 10% 5% 10%;
+  text-align: center;
+}
+
+.admin-form label {
+  width: 20%;
+}
+
+.admin-form input, .admin-form select {
+  width: 80%;
+}

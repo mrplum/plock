@@ -59,6 +59,10 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     awesome_print (1.8.0)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.5)
@@ -76,6 +80,7 @@ GEM
     childprocess (3.0.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
+    connection_pool (2.2.2)
     crass (1.0.6)
     d3-rails (5.9.2)
       railties (>= 3.1)
@@ -99,6 +104,7 @@ GEM
     dry-core (0.4.9)
       concurrent-ruby (~> 1.0)
     erubi (1.9.0)
+    execjs (2.7.0)
     ffi (1.12.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -178,6 +184,12 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    react-rails (2.6.1)
+      babel-transpiler (>= 0.7.0)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
     regexp_parser (1.6.0)
     responders (3.0.0)
       actionpack (>= 5.0)
@@ -263,6 +275,7 @@ DEPENDENCIES
   pry
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.1)
+  react-rails
   sass-rails (>= 6)
   selenium-webdriver
   spring
@@ -277,4 +290,4 @@ RUBY VERSION
    ruby 2.6.2p47
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
