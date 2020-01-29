@@ -15,3 +15,11 @@ two:
 three:
     user: matias
     team: one
+
+teamUser1:
+    user_id: 999
+    team_id: 999
+
+teamUser2:
+    user_id: 888
+    team_id: 888

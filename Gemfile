@@ -58,6 +58,15 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+#elastic search
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-transport'
+gem 'faraday', '0.17.3'
+
+gem 'sidekiq'
+gem 'searchkick'
+
 gem 'devise'
 
 gem 'devise-jwt'
@@ -67,3 +76,4 @@ gem 'awesome_print'
 gem 'd3-rails'
 
 gem 'graphql'
+

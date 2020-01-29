@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2020_01_27_200216) do
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "plock_time"
+    t.integer "plock_time", default: 0
     t.index ["project_id"], name: "index_tracks_on_project_id"
     t.index ["user_id"], name: "index_tracks_on_user_id"
   end

@@ -16,4 +16,15 @@ two:
 matias:
   name: Matias
   email: email@example.com
-  company: one
+
+user1:
+  id: 999
+  name: user1
+  lastname: user1Je
+  email: user1@gmail.com
+
+user2:
+  id: 888
+  name: user2
+  lastname: user2Je
+  email: user2@gmail.com

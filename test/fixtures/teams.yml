@@ -9,3 +9,11 @@ one:
 
 two:
   name: Team two
+
+team1:
+  id: 999
+  name: team1t
+
+team2:
+  id: 888
+  name: team2t

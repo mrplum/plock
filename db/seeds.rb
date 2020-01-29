@@ -26,6 +26,14 @@ project = Project.create(
     user: owner,
     team: t)
 
+project2 = Project.create(
+    name: 'Plock2',
+    repository: 'Plock is the best2',
+    cost: 240,
+    start_at: DateTime.now,
+    user: owner,
+    team: t)
+
 # Add a members to team
 t.users << owner
 t.users << member_user
@@ -43,7 +51,7 @@ track_values = [
         description: 'Is a example',
         status: true,
         user: member_user,
-        project: project
+        project: project2
     },
 
     {
@@ -59,13 +67,48 @@ track_values.each { |t| Track.create(t) }
 
 # Creating intervals for tracks
 t1, t2, t3 = Track.all
-t1.intervals.create
 
-interval_1_track_2 = Interval.create(track: t2, user: member_user)
-interval_1_track_2 = Interval.create(track: t2, user: owner)
-interval_1_track_2.update_attribute(:updated_at, 2.hours.from_now)
+i1 = t2.intervals.create(user: member_user)
+i1.update(updated_at: 2.hours.from_now)
 
-interval_2_track_2 = Interval.create(track: t2, user: member_user)
-interval_2_track_2.update_attribute(:updated_at, 2.hours.from_now)
+i2 = t2.intervals.create(user: member_user)
+i2.update(updated_at: 1.hours.from_now)
 
-t3.intervals.create
+i3 = t2.intervals.create(user: member_user)
+i3.update(updated_at: 30.minutes.from_now)
+
+i4 = t1.intervals.create(user: member_user)
+i4.update(updated_at: 4.hours.from_now)
+
+i5 = t1.intervals.create(user: member_user)
+i5.update(updated_at: 20.minutes.from_now)
+
+i6 = t3.intervals.create(user: member_user)
+i6.update(updated_at: 50.minutes.from_now)
+
+i7 = t3.intervals.create(user: member_user)
+i7.update(updated_at: 5.hours.from_now)
+
+t1.reload
+t1.touch
+
+t2.reload
+t2.touch
+
+t3.reload
+t3.touch
+
+# 1000.times do |i|
+#   t = Track.create({
+#         name: "Track #{i}",
+#         description: 'It\'s a example',
+#         user: member_user,
+#         project: project
+#     })
+
+#   10.times do |i|
+#       i = Interval.create(track: t2)
+#       i.update_attribute(:updated_at, 10.minutes.from_now)
+#     end
+# end
+

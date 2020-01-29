@@ -8,6 +8,8 @@ env:
 
 services:
   - postgresql
+  - elasticsearch
+  - redis-server
 
 install:
   - bundle install

@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
+    @user = current_user
     @projects = Project.all
   end
 
@@ -68,6 +69,17 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def dataProject
+    @project = Project.find(params[:project_id])
+    result = @project.team.users.to_a.map do |user|
+      {
+        user: user.name,
+        hour: ProjectUserStat.new(user).call
+      }
+    end
+    render json: result.present? ? result : [].to_json
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
@@ -76,6 +88,7 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :repository, :cost, :start_at, :user_id)
+      params.require(:project).permit(:name, :repository, :cost, :start_at, :user_id, :team_id)
+
     end
 end

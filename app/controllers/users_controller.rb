@@ -23,13 +23,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def data
+  def dataUser
     render json: current_user.tracks.map {|track| {
       task: track.name,
-      hour: UserTrackStat.new(track).call }
+      hour: track.plock_time }
     }.reject(&:empty?)  
-  end
-
+  end 
+    
   private
     def user_params
       params.require(:user).permit(:name, :lastname, :password, :reset_password_token, :password_confirmation)
