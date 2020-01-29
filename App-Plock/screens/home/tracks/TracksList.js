@@ -1,25 +1,17 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Button,
-  TouchableOpacity,
-  View,
+  Platform, StyleSheet, Text, Button, View
 } from 'react-native';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
-import { useEffect, useState } from 'react';
 
 
 const httpLink = createHttpLink({
-  uri: 'http://192.168.0.126:3300/graphql' ,
+  uri: 'http://192.168.0.126:3300/graphql',
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -29,70 +21,69 @@ const authLink = setContext(async (_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: userToken ? `Bearer ${userToken}` : "",
-    }
-  }
+      Authorization: userToken ? `Bearer ${userToken}` : '',
+    },
+  };
 });
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
-
-
-const TracksList = ({props}) => {
-
+const TracksList = props => {
   const [list, setList] = useState([]);
+  const [flag, setFlag] = useState(true);
+
 
   useEffect(() => {
-    client.query({
-      query: gql`{
-        user {
-          name
-          email
-          tracks {
-            id
-            name
-            status
+    client
+      .query({
+        query: gql`
+          {
+            user {
+              name
+              email
+              tracks {
+                id
+                name
+                status
+              }
+            }
           }
-        }  
-      }`,
-    }).then(result => JSON.parse(JSON.stringify(result)))
-      .then(result => {
-        setList( result.data.user.tracks );
-    }).catch((error) => {
-        alert("Username o Password incorrecto");
-        console.log(error)
-        return;
-    });        
-  }, [list]);
+        `,
+      })
+      .then((result) => JSON.parse(JSON.stringify(result)))
+      .then((result) => {
+        setList(result.data.user.tracks);
+      })
+      .catch((error) => {
+        alert('Username o Password incorrecto');
+      });
+  }, [flag]);
 
-const hackerList = list.map(track => {
-
-  _handleWorkTrack = async () => {
-
+  _handleWorkTrack = id => {
+    props.navigation.navigate('Tracker', { id });
   };
 
-  return (
+  const hackerList = list.map((track) => (
     <View key={track.id}>
       <Text style={styles.welcome}>
-       The name of the track is: {track.name}
+        The name of the track is:
+        {track.name}
       </Text>
       <View style={styles.button}>
-        <Button color="#F2B558" title="Start to work in this track" onPress={_handleWorkTrack} ></Button>
+        <Button
+          color="#F2B558"
+          title="Start to work in this track"
+          onPress={() => _handleWorkTrack(track.id)}
+        />
       </View>
     </View>
-  );
-});
+  ));
 
-  return(
-    <View style={styles.container}>
-      {hackerList}
-
-    </View>
-    );
-}
+  return <View style={styles.container}>{hackerList}</View>;
+};
 
 export default TracksList;
 
@@ -120,7 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: 'center',
     color: 'white',
-    marginTop:18,
+    marginTop: 18,
   },
   getStartedContainer: {
     alignItems: 'center',
@@ -183,18 +174,18 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   logout: {
-    marginTop:90,
+    marginTop: 90,
     fontSize: 16,
     color: '#ffffff',
     textAlign: 'center',
   },
   button: {
-    marginTop:15,
+    marginTop: 15,
     color: 'rgba(0,0,0, 1)',
     paddingRight: 40,
     paddingLeft: 40,
   },
   move: {
     marginTop: 10,
-  }
+  },
 });

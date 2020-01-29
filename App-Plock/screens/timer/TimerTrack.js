@@ -1,55 +1,140 @@
-import React, { Component } from 'react';
-//import React in our project
+import React from 'react';
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { AsyncStorage, Text, View, TouchableHighlight } from 'react-native';
+import ApolloClient from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
 
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-//import all the required components
+import { Stopwatch } from 'react-native-stopwatch-timer';
 
-import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
-//importing library to use Stopwatch and Timer
+const { useState } = React;
 
-export default class TimerTrack extends Component {
+const httpLink = createHttpLink({
+  uri: 'http://192.168.0.126:3300/graphql'
+});
 
+const authLink = setContext(async (_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const userToken = await AsyncStorage.getItem('userToken');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      Authorization: userToken ? `Bearer ${userToken}` : ''
+    }
+  };
+});
 
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+});
+//  importing library to use Stopwatch and Timer
+const TimerTrack = props => {
+  const [idInterval, setIdInterval] = useState(0);
+  const [isStopwatchStart, setStopwatchStart] = useState(false);
+  const [resetStopwatch, setResetStopwatch] = useState(false);
 
+  const resetStopwatchFunction = () => {
+    setStopwatchStart(false);
+    setResetStopwatch(true);
+  };
 
-  
-  constructor(props) {
-    super(props);
-    this.state = {
-      isTimerStart: false,
-      isStopwatchStart: false,
-      timerDuration: 90000,
-      resetTimer: false,
-      resetStopwatch: false,
-    };
-    this.startStopTimer = this.startStopTimer.bind(this);
-    this.resetTimer = this.resetTimer.bind(this);
-    this.startStopStopWatch = this.startStopStopWatch.bind(this);
-    this.resetStopwatch = this.resetStopwatch.bind(this);
+  const startStopStopWatch = id => {
+    setStopwatchStart(!isStopwatchStart);
+    setResetStopwatch(false);
+
+    if (!isStopwatchStart) {
+      client
+        .mutate({
+          mutation: gql`
+            mutation trackSetIntervalStart($track_id: ID!) {
+              intervalStart(trackId: $track_id) {
+                id
+                track {
+                  name
+                }
+                createdAt
+                updatedAt
+              }
+            }
+          `,
+          variables: {
+            track_id: id
+          }
+        })
+        .then(result => JSON.parse(JSON.stringify(result)))
+        .then(result => {
+          setIdInterval(result.data.intervalStart.id);
+        });
+    } else {
+      client
+        .mutate({
+          mutation: gql`
+            mutation trackSetIntervalEnd($id: Int!) {
+              intervalEnd(id: $id) {
+                id
+                createdAt
+                updatedAt
+                track {
+                  name
+                }
+              }
+            }
+          `,
+          variables: {
+            id: idInterval
+          }
+        })
+        .then(result => console.log(result));
+    }
+<<<<<<< HEAD
+  };
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View
+        style={{
+          flex: 1,
+          marginTop: 32,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Stopwatch
+          laps
+          msecs
+          start={isStopwatchStart}
+          // To start
+          reset={resetStopwatch}
+          // To reset
+          options={options}
+          // options for the styling
+        />
+        <TouchableHighlight
+          onPress={() =>
+            startStopStopWatch(props.navigation.getParam('id', 'nada'))
+          }
+        >
+          <Text style={{ fontSize: 20, marginTop: 10 }}>
+            {isStopwatchStart ? 'STOP' : 'START'}
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={resetStopwatchFunction}>
+          <Text style={{ fontSize: 20, marginTop: 10 }}>RESET</Text>
+        </TouchableHighlight>
+      </View>
+    </View>
+  );
+};
+=======
   }
-  startStopTimer() {
-    this.setState({
-      isTimerStart: !this.state.isTimerStart,
-      resetTimer: false,
-    });
+  resetStopwatchFunction = () => {
+    setStopwatchStart(false);
+    setResetStopwatch(true);
   }
 
-  resetTimer() {
-    this.setState({ isTimerStart: false, resetTimer: true });
-  }
-
-  startStopStopWatch() {
-    this.setState({
-      isStopwatchStart: !this.state.isStopwatchStart,
-      resetStopwatch: false,
-    });
-  }
-
-  resetStopwatch() {
-    this.setState({ isStopwatchStart: false, resetStopwatch: true });
-  }
-
-  render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <View
@@ -62,30 +147,41 @@ export default class TimerTrack extends Component {
           <Stopwatch
             laps
             msecs
-            start={this.state.isStopwatchStart}
+
+            start={isStopwatchStart}
             //To start
-            reset={this.state.resetStopwatch}
+            reset={resetStopwatch}
             //To reset
             options={options}
             //options for the styling
-            getTime={this.getFormattedTime}
           />
-          <TouchableHighlight onPress={this.startStopStopWatch}>
+          <TouchableHighlight onPress={() => startStopStopWatch(props.navigation.getParam('id','nada'))}>
             <Text style={{ fontSize: 20, marginTop: 10 }}>
-              {!this.state.isStopwatchStart ? 'START' : 'STOP'}
+              {isStopwatchStart ? 'STOP' : 'START'}
             </Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={this.resetStopwatch}>
+          <TouchableHighlight onPress={resetStopwatchFunction}>
+
             <Text style={{ fontSize: 20, marginTop: 10 }}>RESET</Text>
           </TouchableHighlight>
         </View>
 
       </View>
     );
-  }
+
+
 }
 
 const handleTimerComplete = () => alert('Custom Completion Function');
+>>>>>>> 51dceaa824ed403cec4497599f79483f8f0a1ed3
+
+
+export default TimerTrack;
+
+<<<<<<< HEAD
+/* eslint no-use-before-define: ["error", { "variables": false }] */
+=======
+>>>>>>> 51dceaa824ed403cec4497599f79483f8f0a1ed3
 
 const options = {
   container: {
@@ -93,11 +189,11 @@ const options = {
     padding: 5,
     borderRadius: 5,
     width: 200,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   text: {
     fontSize: 25,
     color: '#FFF',
-    marginLeft: 7,
-  },
+    marginLeft: 7
+  }
 };

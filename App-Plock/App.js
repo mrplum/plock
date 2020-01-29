@@ -4,17 +4,8 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { NativeRouter, Route, Link } from "react-router-native";
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider, Query } from 'react-apollo';
 import AppNavigator from './navigation/AppNavigator';
 
-
-
-import Login from './screens/signIn/SignInScreen';
-import Home from './screens/home/HomeScreen';
-
-//const client = new ApolloClient({ uri: 'http://192.168.1.103:3300/graphql' })
 
 export default function App(props) {
 

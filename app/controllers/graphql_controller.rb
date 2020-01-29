@@ -9,6 +9,9 @@ class GraphqlController < ApplicationController
       current_user: current_user,
       login: method(:sign_in)
     }
+    #binding.pry
+    puts('controlaso')
+    puts current_user.to_json
     result = PlockSchema.execute(
       query,
       variables: variables,
