@@ -49,7 +49,7 @@ track_values = [
     {
         name: 'Track Two',
         description: 'Is a example',
-        status: true,
+        status: 'Finished',
         user: member_user,
         project: project2
     },
@@ -68,26 +68,28 @@ track_values.each { |t| Track.create(t) }
 # Creating intervals for tracks
 t1, t2, t3 = Track.all
 
-i1 = t2.intervals.create(user: member_user)
-i1.update(updated_at: 2.hours.from_now)
+datetime = DateTime.now
 
-i2 = t2.intervals.create(user: member_user)
-i2.update(updated_at: 1.hours.from_now)
+i1 = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i1.update(end_at: 2.hours.from_now)
 
-i3 = t2.intervals.create(user: member_user)
-i3.update(updated_at: 30.minutes.from_now)
+i2 = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i2.update(end_at: 1.hours.from_now)
 
-i4 = t1.intervals.create(user: member_user)
-i4.update(updated_at: 4.hours.from_now)
+i3 = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i3.update(end_at: 30.minutes.from_now)
 
-i5 = t1.intervals.create(user: member_user)
-i5.update(updated_at: 20.minutes.from_now)
+i4 = t1.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i4.update(end_at: 4.hours.from_now)
 
-i6 = t3.intervals.create(user: member_user)
-i6.update(updated_at: 50.minutes.from_now)
+i5 = t1.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i5.update(end_at: 20.minutes.from_now)
 
-i7 = t3.intervals.create(user: member_user)
-i7.update(updated_at: 5.hours.from_now)
+i6 = t3.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i6.update(end_at: 50.minutes.from_now)
+
+i7 = t3.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i7.update(end_at: 5.hours.from_now)
 
 t1.reload
 t1.touch

@@ -23,3 +23,7 @@ teamUser1:
 teamUser2:
     user_id: 888
     team_id: 888
+
+t1:
+    user: user_in_team_one
+    team: one

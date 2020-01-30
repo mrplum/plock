@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_27_200216) do
+ActiveRecord::Schema.define(version: 2020_01_30_122426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(version: 2020_01_27_200216) do
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.bigint "user_id", null: false
+    t.bigint "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_companies_on_user_id"
+    t.index ["owner_id"], name: "index_companies_on_owner_id"
   end
 
   create_table "intervals", force: :cascade do |t|
@@ -29,6 +29,9 @@ ActiveRecord::Schema.define(version: 2020_01_27_200216) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.string "description", default: ""
     t.index ["track_id"], name: "index_intervals_on_track_id"
     t.index ["user_id"], name: "index_intervals_on_user_id"
   end
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 2020_01_27_200216) do
   create_table "tracks", force: :cascade do |t|
     t.string "name", null: false
     t.string "description", null: false
-    t.boolean "status", default: false
+    t.string "status", default: "Unstarted"
     t.bigint "user_id", null: false
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false

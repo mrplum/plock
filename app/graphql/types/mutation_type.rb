@@ -8,5 +8,6 @@ module Types
     field :logout, mutation: Mutations::Logout
     field :interval_start, mutation: Mutations::IntervalStart
     field :interval_end, mutation: Mutations::IntervalEnd
+    field :interval_destroy, mutation: Mutations::IntervalDestroy
   end
 end

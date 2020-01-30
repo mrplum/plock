@@ -1,8 +1,8 @@
 # Track class is for model the differents tasks of each project
 class TracksController < ApplicationController
+  before_action :get_track, only: [:show, :edit, :update, :destroy]
   before_action :get_project, only: [:new, :create, :update]
   before_action :check_permissions, only: [:new, :create, :update]
-  before_action :set_track, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /tracks
@@ -14,8 +14,7 @@ class TracksController < ApplicationController
   # GET /tracks/1
   # GET /tracks/1.json
   def show
-    @track = Track.find(params[:id])
-    @intervals = @track.intervals
+    @track = Track.includes(:intervals => :user).find(params[:id])
   end
 
   # GET /tracks/new
@@ -31,7 +30,6 @@ class TracksController < ApplicationController
   # POST /tracks.json
   def create
     @track = Track.new(track_params.merge({user_id: current_user.id, project_id: params[:project_id]}))
-
     respond_to do |format|
       if @track.save
         format.html { redirect_to @track, notice: 'track was successfully created.' }
@@ -68,18 +66,18 @@ class TracksController < ApplicationController
   end
 
   private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def track_params
+      params.require(:track).permit(:id, :name, :description, :plock_time, :status,:project_id)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
-    def set_track
+    def get_track
       @track = Track.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def track_params
-      params.require(:track).permit(:name, :description, :plock_time, :status)
-    end
-
     def get_project
-      @project = current_user.projects.find_by(id: params[:project_id])
+      @project = current_user.projects.find_by(id: params[:project_id]) || @track.project
       if @project.nil?
         redirect_to track_path(params[:track_id]), flash: {danger: 'You do not have permission to clear the interval'}          
       end

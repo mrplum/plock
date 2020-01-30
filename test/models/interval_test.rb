@@ -11,23 +11,17 @@ class IntervalTest < ActiveSupport::TestCase
   end
 
   test 'update plock time on update' do
-    # interval = Interval.create(track: @track)
-    @interval.created_at = 2.hours.ago
-    @interval.touch
-    # @interval.save
-    # puts @interval.created_at
-    # @interval.run_callbacks :update
+    @interval.start_at = 2.hours.ago
+    @interval.touch(:end_at)
     assert_equal(@interval.track.plock_time, 120)
   end
 
   test 'update plock time with the sum of each interval' do
-    # craete an interval of two hours
-    interval = Interval.create(track: @track, user: @user, created_at: 2.hours.ago)
-    interval.touch
+    # create an interval of two hours
+    interval = Interval.create(track: @track, user: @user, start_at: 2.hours.ago, end_at: DateTime.now)
 
     # create another interval of 1 hour
-    interval = Interval.create(track: @track, user: @user, created_at: 1.hour.ago)
-    interval.touch
+    interval = Interval.create(track: @track, user: @user, start_at: 1.hour.ago, end_at: DateTime.now)
 
     # 3 hours as result
     assert_equal(@track.plock_time, 180)
@@ -43,5 +37,38 @@ class IntervalTest < ActiveSupport::TestCase
     user = @interval.user
     assert_not_nil user
     assert_equal(@user.name, user.name)
+  end
+
+  test 'start not valid' do
+    @interval.track.project.start_at = Date.parse('2020-01-01')
+    @interval.start_at = Date.parse('2020-02-01')
+    assert @interval.valid_start_date?
+  end
+
+  test 'interval not valid' do
+    interval = intervals(:three)
+
+    assert interval.valid_interval_dates?
+  end
+
+  test 'associated track is closed when close_track is on' do
+    @interval.close_track = true
+    @interval.save
+
+    assert @interval.track.status == 'Finished'
+  end
+
+  test 'associated track is NOT closed when close_track is off' do
+    @interval.close_track = false
+    @interval.save
+
+    assert @interval.track.status != 'Finished'
+  end
+
+  test 'associated track is closed when start_track is on' do
+    @interval.start_track = true
+    @interval.save
+
+    assert @interval.track.status == 'In progress'
   end
 end

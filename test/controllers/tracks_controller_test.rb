@@ -4,6 +4,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   setup do
     @track = tracks(:one)
+    @track1 = tracks(:two)
     @user = users(:matias)
     @project = projects(:one)
     sign_in @user

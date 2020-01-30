@@ -21,8 +21,12 @@ class IntervalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update interval' do
-    patch track_interval_path(@track1.id, @interval.id)
-    assert_redirected_to track_path(@track1.id)
+    patch track_interval_path(
+      @track1,
+      @interval,
+      { interval: { start_at: DateTime.now } })
+
+    assert_redirected_to track_path(@track1)
   end
 
   test 'should delete interval' do

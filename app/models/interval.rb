@@ -7,16 +7,33 @@ class Interval < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks unless Rails.env.test?
 
+  attr_accessor :close_track, :start_track
+
   belongs_to :track, touch: true
   belongs_to :user
-  validate :no_other_open_interval
 
-  after_touch :calculate_plock_time
-  after_commit :index_elasticsearch
+  validate :no_other_open_interval
+  validate :valid_date
+
+  after_commit :calculate_plock_time, :index_elasticsearch
+  before_save :change_track_status, if: -> { close_track || start_track }
+
   searchkick callbacks: false
 
   def open?
-    created_at == updated_at
+    start_at == end_at
+  end
+
+  def close?
+    !open?
+  end
+
+  def valid_start_date?
+    track.project.start_at <= start_at
+  end
+
+  def valid_interval_dates?
+    self.start_at <= self.end_at
   end
 
   def no_other_open_interval
@@ -25,24 +42,30 @@ class Interval < ApplicationRecord
     end
   end
 
+  def valid_date
+    if !valid_start_date? || !valid_interval_dates?
+      errors.add :base, 'invalid Dates!'
+    end
+  end
+
   def search_data
     {
-      created_at: created_at,
-      updated_at: updated_at
+      start_at: start_at,
+      end_at: end_at
     }
   end
 
   settings index: { number_of_shards: 1 } do
     mapping dynamic: false do
-      indexes :created_at, type: :date
-      indexes :updated_at, type: :date
+      indexes :start_at, type: :date
+      indexes :end_at, type: :date
     end
   end
 
   def as_indexed_json(_options = nil)
     as_json(
       only: %i[
-        created_at updated_at
+        start_at end_at
       ]
     )
   end
@@ -50,8 +73,18 @@ class Interval < ApplicationRecord
   private
 
   def calculate_plock_time
-    minutes = (updated_at - created_at) / 1.minute
+    minutes = (end_at - start_at) / 1.minute
     track.plock_time = track.plock_time + minutes.to_i
+    track.save
+  end
+
+  def change_track_status
+    if start_track
+      track.status = 'In progress'
+    elsif close_track
+      track.status = 'Finished'
+    end
+
     track.save
   end
 end

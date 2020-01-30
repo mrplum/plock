@@ -21,6 +21,26 @@ class Track < ApplicationRecord
     intervals.any?(&:open?)
   end
 
+  def unstarted?
+    status == 'Unstarted'
+  end
+
+  def ready?
+    status == 'Finished'
+  end
+
+  def progress?
+    status == 'In progress'
+  end
+
+  def pause?
+    status == 'In Progress' && intervals.all?(&:close)
+  end
+
+  def open_interval
+    intervals&.find(&:open?)
+  end
+
   def search_data
     {
       name: name,
@@ -51,7 +71,7 @@ class Track < ApplicationRecord
       include: {
         intervals: {
           only: %i[
-            id created_at updated_at
+            id start_at end_at
           ]
         }
       }

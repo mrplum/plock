@@ -8,7 +8,8 @@ module Mutations
     type Types::IntervalType
 
     def resolve(track_id:, user_id:)
-      Interval.create(track_id: track_id, user_id: user_id)
+      datetime = DateTime.now
+      Interval.create(track_id: track_id, user_id: user_id, start_at: datetime, end_at: datetime)
     end
   end
 end

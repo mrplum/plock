@@ -141,7 +141,7 @@ class QueryTypeTest < ActiveSupport::TestCase
 
     assert_not_nil result
     assert_equal(@user.name, user_name_result)
-    assert_not state_track_one
+    assert_equal('Unstarted', state_track_one)
     assert_equal(@project.name, project_one_name)
     assert_equal(@team.name, team_one_name)
   end

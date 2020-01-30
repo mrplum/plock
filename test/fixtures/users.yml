@@ -28,3 +28,11 @@ user2:
   name: user2
   lastname: user2Je
   email: user2@gmail.com
+
+user_in_team_one:
+  name: User One
+  email: user@team1.com
+
+user_without_team:
+  name: without Team
+  email: w@t.com

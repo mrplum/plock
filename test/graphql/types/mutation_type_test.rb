@@ -18,8 +18,8 @@ class MutationTypeTest < ActiveSupport::TestCase
 				track {
 					name
 				}
-				createdAt
-				updatedAt
+				startAt
+				endAt
 			}
 		}
 		GRAPHQL
@@ -31,13 +31,13 @@ class MutationTypeTest < ActiveSupport::TestCase
 			context: {}
 		)
 		track_name = result['data']['intervalStart']['track']['name']
-		interval_created_at = result['data']['intervalStart']['createdAt']
-		interval_updated_at = result['data']['intervalStart']['updatedAt']
+		interval_start_at = result['data']['intervalStart']['startAt']
+		interval_end_at = result['data']['intervalStart']['endAt']
 
 
 		assert_not_nil result
 		assert_equal(@track.name, track_name)
-		assert_equal(interval_created_at, interval_updated_at)
+		assert_equal(interval_start_at, interval_end_at)
 	end
 
 	test 'interval end' do
@@ -46,8 +46,8 @@ class MutationTypeTest < ActiveSupport::TestCase
 		mutation trackSetIntervalEnd($id: Int!) {
 			intervalEnd(id: $id){
 				id
-				createdAt
-				updatedAt
+				startAt
+				endAt
 				track {
 					name
 				}
@@ -60,9 +60,34 @@ class MutationTypeTest < ActiveSupport::TestCase
 			context: {}
 		)
 
-		interval_created_at = result['data']['intervalEnd']['createdAt']
-		interval_updated_at = result['data']['intervalEnd']['updatedAt']
+		interval_start_at = result['data']['intervalEnd']['startAt']
+		interval_end_at = result['data']['intervalEnd']['endAt']
 		assert_not_nil result
-		assert_not_equal(interval_created_at, interval_updated_at)
+		assert_not_equal(interval_start_at, interval_end_at)
+	end
+
+	test 'interval destroy' do
+		interval_id = @interval.id
+		query_string = <<-GRAPHQL
+		mutation intervalDestroy($id: Int!) {
+			intervalDestroy(id: $id){
+				id
+				startAt
+				endAt
+				track {
+					name
+				}
+			}
+		}
+		GRAPHQL
+		result = PlockSchema.execute(
+			query_string,
+			variables: { id: interval_id },
+			context: {}
+		)
+
+		interval_track_name = result['data']['intervalDestroy']['track']['name']
+		assert_not_nil result
+		assert_equal(@track.name, interval_track_name)
 	end
 end

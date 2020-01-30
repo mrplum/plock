@@ -7,6 +7,8 @@ module Types
     field :id, Int, null: false
     field :track_id, Int, null: false
     field :user_id, Int, null: false
+    field :start_at, String, null: false
+    field :end_at, String, null: false
     field :created_at, String, null: false
     field :updated_at, String, null: false
     field :user, UserType, null: true

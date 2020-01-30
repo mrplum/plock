@@ -28,4 +28,9 @@ class TrackTest < ActiveSupport::TestCase
     test 'test of the validation  open intervals.' do
       assert @track1.has_open_intervals?
     end
+    
+    test 'ready?' do
+      assert_not @track.ready?
+    end
+
 end

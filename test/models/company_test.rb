@@ -11,7 +11,7 @@ class CompanyTest < ActiveSupport::TestCase
     c = Company.create(
       name: 'The shelby company',
       description:'Gang',
-      user: @user
+      owner: @user
     )
     assert c.valid?
   end
@@ -32,15 +32,15 @@ class CompanyTest < ActiveSupport::TestCase
 
   test 'validate presence owner' do
     c = @company
-    c.user = nil
+    c.owner = nil
     assert_not c.valid?
   end
   
   # associoations
 
   test 'owner of company exists' do
-    assert_not_nil @company.user
-    assert_equal(@user.name, @company.user.name)
+    assert_not_nil @company.owner
+    assert_equal(@user.name, @company.owner.name)
   end
 
   test 'has many projects' do

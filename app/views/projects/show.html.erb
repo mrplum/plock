@@ -47,11 +47,7 @@
           <td><%= track.name %>&nbsp&nbsp</td>
           <td><%= track.description %>&nbsp</td>
           <td><%= track.plock_time %>&nbsp</td>
-          <% if track.status %>
-            <td> Finalized&nbsp </td>
-          <% else %>
-            <td> In progress&nbsp </td>
-          <% end %>
+          <td><%= track.status %>&nbsp</td>
           <td><%= link_to 'Show' , track %>&nbsp</td>
           <td><%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyString
-  user: one
+  name: Company One
+  description: this is a  tesxt
+  owner: one
 
 two:
-  name: MyString
-  description: MyString
-  user: one
+  name: Company Two
+  description: this is a test
+  owner: two

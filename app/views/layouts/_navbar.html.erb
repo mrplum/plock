@@ -2,14 +2,14 @@
     <a class="navbar-brand" href="/"> <b> Plock </b> </a>
     <div class="navbar-nav ml-auto" >
 
-      <% if current_user.present?%>
-        <%if Company.find_by(user_id: current_user.id).nil? %>
+      <% if current_user.present? %>
+        <% if current_user&.company&.owner == current_user %>
+          <%= link_to 'Company', company_path(current_user.company), class: "nav-item nav-link", style: "color:white" %>
+        <% end %>
 
-        <% else %>
-          <% mylink = "/companies/" + Company.find_by(user_id: current_user.id).id.to_s%>
-          <a class="nav-item nav-link" style="color:white" href="<%=mylink %>">Company</a>
-        <%end%>
-        <a class="nav-item nav-link active" data-turbolinks="false" href="/profile">Profile<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" data-turbolinks="false" href="/profile">
+          Profile<span class="sr-only">(current)</span>
+        </a>
         <a class="nav-item nav-link" style="color:white" href="/teams">Team</a>
         <a class="nav-item nav-link" style="color:white" href="/projects">Project</a>
         <div style="background-color: gray">

@@ -23,7 +23,7 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @company = Company.new(company_params.merge({user_id: current_user.id}))
+    @company = Company.new(company_params.merge({owner_id: current_user.id}))
 
     respond_to do |format|
       if @company.save
@@ -96,7 +96,7 @@ class CompaniesController < ApplicationController
     end
     
   def accept_invitation_to_company
-    redirect_to edit_user_path(params[:user_id])
+    redirect_to edit_user_path(params[:owner_id])
   end
 
   private
@@ -108,6 +108,6 @@ class CompaniesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def company_params
-    params.require(:company).permit(:id, :name, :description, :company, :email, :user_id)
+    params.require(:company).permit(:id, :name, :description, :company, :email, :owner_id)
   end
 end

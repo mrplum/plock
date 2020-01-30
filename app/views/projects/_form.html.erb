@@ -32,10 +32,10 @@
   </div>
 
   <div class="field">
-  <a> select team please pelado</a>
+    <a> Select team</a>
     <%= form.select :team_id, options_from_collection_for_select(
-        current_user.teams,"id", "name"),
-        { include_blank: true}, { multiple: false } 
+      current_user.teams,"id", "name"),
+      { include_blank: true}, { multiple: false } 
     %>
   </div>
 

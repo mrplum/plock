@@ -1,15 +1,14 @@
 module Mutations
   # class IntervalEnd
   #
-  class IntervalEnd < BaseMutation
+  class IntervalDestroy < BaseMutation
     argument :id, Int, required: true
 
     type Types::IntervalType
 
     def resolve(id:)
       i = Interval.find(id)
-      i.update(end_at: DateTime.now)
-      return i
+      i.destroy
     end
   end
 end

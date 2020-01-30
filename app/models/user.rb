@@ -83,4 +83,8 @@ class User < ApplicationRecord
   def time_worked_user
     ProjectUserStat.new(self).call
   end
+
+  def member_of?(project)
+    project.team.in?(teams)
+  end
 end
