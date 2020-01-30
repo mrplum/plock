@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import {
   Platform, StyleSheet, Text, Button, View
 } from 'react-native';
@@ -31,7 +31,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const TracksList = props => {
+const ProjectsList = props => {
   const [list, setList] = useState([]);
   const [flag, setFlag] = useState(true);
 
@@ -41,56 +41,58 @@ const TracksList = props => {
       .query({
         query: gql`
           {
-            user {
+            projects {
+              id
               name
-              email
-              tracks {
-                id
-                name
-                status
-              }
             }
-          }
-        `,
+          }`,
       })
       .then((result) => JSON.parse(JSON.stringify(result)))
       .then((result) => {
-        setList(result.data.user.tracks);
+        setList(result.data.projects);
       })
       .catch((error) => {
-        alert('Username o Password incorrecto');
+        alert('You dont have projects for work');
       });
   }, [flag]);
 
-  _handleWorkTrack = id => {
-    props.navigation.navigate('Tracker', { id });
+  const selectProject = track => {
+    props.navigation.navigate('Tracker', { project });
   };
 
-  const hackerList = list.map((track) => (
-    <View key={track.id}>
+  const projectList = list.map((project) => (
+    <View key={project.id}>
       <Text style={styles.welcome}>
-        The name of the track is:
-        {track.name}
+        The name of the project is:
+        {project.name}
       </Text>
       <View style={styles.button}>
         <Button
-          color="#F2B558"
-          title="Start to work in this track"
-          onPress={() => _handleWorkTrack(track.id)}
+          color="#ad0404"
+          title="Select this project to create a track"
+          onPress={() => selectProject(project)}
         />
       </View>
     </View>
   ));
 
-  return <View style={styles.container}>{hackerList}</View>;
+  return <View style={styles.container}>{projectList}</View>;
 };
 
-export default TracksList;
+export default ProjectsList;
+
+ProjectsList.navigationOptions = {
+  title: 'List of Projects',
+  headerStyle: {
+      backgroundColor: '#808080',
+     },headerTintColor: '#fff',
+
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#6b7a8f',
+    backgroundColor: '#808080',
   },
   contentContainer: {
     paddingTop: 30,

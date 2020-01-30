@@ -37,7 +37,9 @@ const client = new ApolloClient({
 });
 
 const HomeScreen = props => {
-  const _handleCreateTrack = async () => {};
+  const _handleCreateTrack = async () => {
+    props.navigation.navigate('Projects');
+  };
 
   const _handleSeeTracks = async () => {
     props.navigation.navigate('Tracks');
@@ -75,7 +77,7 @@ const HomeScreen = props => {
         <View style={styles.move}>
           <View style={styles.button}>
             <Button
-              color="#F2B558"
+              color="#ad0404"
               title="Create Track"
               onPress={_handleCreateTrack}
             />
@@ -109,7 +111,7 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#6b7a8f'
+    backgroundColor: '#808080'
   },
   contentContainer: {
     paddingTop: 30
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
   welcomeImage: {
     width: 251,
     height: 251,
-    marginTop: 70,
+    marginTop: 35,
     resizeMode: 'contain',
     marginLeft: 0
   },
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: 'center',
     color: 'white',
-    marginTop: 30
+    marginTop: 1
   },
   getStartedContainer: {
     alignItems: 'center',
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
     color: '#2e78b7'
   },
   logout: {
-    marginTop: 90,
+    marginTop: 130,
     fontSize: 16,
     color: '#ffffff',
     textAlign: 'center'

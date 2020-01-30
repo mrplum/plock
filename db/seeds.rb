@@ -3,7 +3,7 @@
 owner = User.new(name: 'Owner', lastname: 'Plock', email: 'owner@plock.com', password: '123123')
 
 # Craete the company of owner user
-c = Company.new(name: 'Plock', description: 'The company', user: owner)
+c = Company.new(name: 'Plock', description: 'The company', owner: owner)
 
 # Owner company also belong to company
 owner.company = c

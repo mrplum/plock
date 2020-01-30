@@ -6,7 +6,8 @@ import {createSwitchNavigator, createAppContainer} from 'react-navigation';
 import MainTabNavigator from './MainTabNavigator';
 import SignInScreen from '../screens/signIn/SignInScreen';
 import HomeScreen from '../screens/home/HomeScreen';
-import TracksListScreen from '../screens/home/tracks/TracksList';
+import TracksListScreen from '../screens/home/tracks/TracksListScreen';
+import ProjectListScreen from '../screens/home/projects/ProjectListScreen';
 import Tracker from '../screens/timer/TimerTrack';
 
 const config = Platform.select({
@@ -33,6 +34,7 @@ const HomeScreenStack = createStackNavigator(
   {
     Home: HomeScreen,
     Tracks: TracksListScreen,
+    Projects: ProjectListScreen,
     Tracker: Tracker,
   },
   config

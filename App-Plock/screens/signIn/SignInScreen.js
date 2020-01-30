@@ -61,7 +61,7 @@ export const SignInScreen = props => {
         <Image
           source={
             __DEV__
-              ? require('../home/68930.png')
+              ? require('../home/plock.png')
               : require('../home/robot-prod.png')
           }
           style={styles.welcomeImage}
@@ -91,7 +91,7 @@ export const SignInScreen = props => {
         </View>
         <View style={styles.centerButton}>
           <View style={styles.button}>
-            <Button color="#F2B558" title="Iniciar Sesion" onPress={signIn} />
+            <Button color="#ad0404" title="Iniciar Sesion" onPress={signIn} />
           </View>
 
           <View style={styles.button}>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#6b7a8f'
+    backgroundColor: '#808080'
   },
   welcomeImage: {
     width: 250,
