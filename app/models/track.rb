@@ -77,5 +77,4 @@ class Track < ApplicationRecord
       }
     )
   end
-
 end

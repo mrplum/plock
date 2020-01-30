@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :team_users
   has_many :tracks
   has_many :teams, through: :team_users
-  has_many :projects #, through: :teams, source: :projects
+  has_many :projects, through: :teams, source: :projects
   has_many :intervals
   belongs_to :company
 
@@ -73,15 +73,8 @@ class User < ApplicationRecord
             :time_worked_project
           ]
         }
-      },
-      methods: [
-        :time_worked_user
-      ]
+      }
     )
-  end
-
-  def time_worked_user
-    ProjectUserStat.new(self).call
   end
 
   def member_of?(project)

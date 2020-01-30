@@ -84,7 +84,7 @@ class Interval < ApplicationRecord
     elsif close_track
       track.status = 'Finished'
     end
-
     track.save
   end
+
 end

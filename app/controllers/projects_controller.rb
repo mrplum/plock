@@ -73,8 +73,8 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:project_id])
     result = @project.team.users.to_a.map do |user|
       {
-        user: user.name,
-        hour: ProjectUserStat.new(user).call
+        name: user.name,
+        time: ProjectUserStat.new(user, @project).call
       }
     end
     render json: result.present? ? result : [].to_json

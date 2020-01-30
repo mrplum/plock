@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   get 'me/dataUser' => 'users#dataUser', :defaults => { :format => 'json' }
   get 'me/dataProject' => 'projects#dataProject', :defaults => { :format => 'json' }
+  get 'me/dataTeam' => 'teams#dataTeam', :defaults => { :format => 'json' }
   
   scope :admin do
     get '/', to: 'statics#dashboard'

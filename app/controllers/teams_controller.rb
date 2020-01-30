@@ -92,6 +92,18 @@ class TeamsController < ApplicationController
     team_user.update(incorporated_at: DateTime.now)
     redirect_to new_user_session_path
   end
+
+  def dataTeam
+    @team = Team.find(params[:team_id])
+    result = @team.projects.to_a.map do |project|
+      {
+        name: project.name,
+        time: project.time_worked_project
+      }
+    end
+    render json: result.present? ? result : [].to_json
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

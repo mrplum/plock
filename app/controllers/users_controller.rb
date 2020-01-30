@@ -25,8 +25,8 @@ class UsersController < ApplicationController
 
   def dataUser
     render json: current_user.tracks.map {|track| {
-      task: track.name,
-      hour: track.plock_time }
+      name: "#{track.project.name}: #{track.name}",
+      time: track.plock_time }
     }.reject(&:empty?)  
   end 
     
