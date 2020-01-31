@@ -79,13 +79,13 @@ class TracksController < ApplicationController
     def get_project
       @project = current_user.projects&.find_by(id: params[:project_id]) || @track&.project
       if @project.nil?
-        redirect_to project_path(params[:project_id]), flash: {danger: 'You do not have permission'}          
+        redirect_to project_path(params[:project_id]), flash: { danger: 'You do not have permission' }
       end
     end
 
     def check_permissions
       unless @project.team_id.in?(current_user.teams.pluck(:id))
-        redirect_to project_path(params[:project_id]), flash: {danger: 'Unathorized for create track!'}
+        redirect_to project_path(params[:project_id]), flash: { danger: 'Unathorized for create track!' }
       end
     end
 end

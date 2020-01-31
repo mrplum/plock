@@ -4,7 +4,7 @@ one:
   name: MyString
   description: MyString
   plock_time: 0
-  status: 'Unstarted'
+  status: unstarted
   user: matias
   project: one
 
@@ -12,7 +12,7 @@ two:
   name: MyString
   description: MyString
   plock_time: 200
-  status: 'Unstarted'
+  status: unstarted
   user: matias
   project: two
 
@@ -20,7 +20,7 @@ track11:
   name: track11
   description: track1 jeje
   plock_time: 240
-  status: 'Unstarted'
+  status: unstarted
   user_id: 999
   project_id: 999
 
@@ -28,7 +28,7 @@ track12:
   name: track12
   description: track12 jeje
   plock_time: 360
-  status: 'Unstarted'
+  status: unstarted
   user_id: 999
   project_id: 999
 
@@ -36,7 +36,7 @@ track15:
   name: track15
   description: track15 jeje
   plock_time: 360
-  status: 'Unstarted'
+  status: unstarted
   user_id: 888
   project_id: 888
 
@@ -44,7 +44,7 @@ track16:
   name: track16
   description: track16 jeje
   plock_time: 240
-  status: 'Unstarted'
+  status: unstarted
   user_id: 888
   project_id: 888
 
@@ -52,7 +52,7 @@ track17:
   name: track17
   description: track17 jeje
   plock_time: 600
-  status: 'Unstarted'
+  status: unstarted
   user_id: 888
   project_id: 888
 
@@ -60,6 +60,6 @@ track18:
   name: track18
   description: track18 jeje
   plock_time: 600
-  status: 'Unstarted'
+  status: unstarted
   user_id: 888
   project_id: 777

@@ -80,9 +80,9 @@ class Interval < ApplicationRecord
 
   def change_track_status
     if start_track
-      track.status = 'In progress'
+      track.status = :in_progress
     elsif close_track
-      track.status = 'Finished'
+      track.status = :finished
     end
     track.save
   end

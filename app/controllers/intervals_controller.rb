@@ -74,14 +74,14 @@ class IntervalsController < ApplicationController
     def check_owner_interval
       interval = Interval.find(params[:id])
       if interval.user_id != current_user.id
-        redirect_to track_path(params[:track_id]), flash: {danger: 'You do not have permission to clear the interval'}
+        redirect_to track_path(params[:track_id]), flash: { danger: 'You do not have permission to clear the interval' }
       end
     end
 
     def check_owner_track
       track = Track.find(params[:track_id])
       if track.user_id != current_user.id
-        redirect_to track_path(params[:track_id]), flash: {danger: 'You do not have permission to create the interval'}
+        redirect_to track_path(params[:track_id]), flash: { danger: 'You do not have permission to create the interval' }
       end
     end
 end

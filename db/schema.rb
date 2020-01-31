@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_122426) do
   create_table "tracks", force: :cascade do |t|
     t.string "name", null: false
     t.string "description", null: false
-    t.string "status", default: "Unstarted"
+    t.integer "status", default: 0
     t.bigint "user_id", null: false
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false

@@ -55,20 +55,20 @@ class IntervalTest < ActiveSupport::TestCase
     @interval.close_track = true
     @interval.save
 
-    assert @interval.track.status == 'Finished'
+    assert @interval.track.status == 'finished'
   end
 
   test 'associated track is NOT closed when close_track is off' do
     @interval.close_track = false
     @interval.save
 
-    assert @interval.track.status != 'Finished'
+    assert @interval.track.status != 'finished'
   end
 
   test 'associated track is closed when start_track is on' do
     @interval.start_track = true
     @interval.save
 
-    assert @interval.track.status == 'In progress'
+    assert @interval.track.status == 'in_progress'
   end
 end

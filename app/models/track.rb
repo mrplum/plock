@@ -4,6 +4,8 @@
 require 'elasticsearch/model'
 
 class Track < ApplicationRecord
+  enum status: [ :unstarted, :in_progress, :finished ]
+
   include Indexable
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks unless Rails.env.test?
@@ -21,20 +23,8 @@ class Track < ApplicationRecord
     intervals.any?(&:open?)
   end
 
-  def unstarted?
-    status == 'Unstarted'
-  end
-
-  def ready?
-    status == 'Finished'
-  end
-
-  def progress?
-    status == 'In progress'
-  end
-
   def pause?
-    status == 'In Progress' && intervals.all?(&:close)
+    status == in_progress? && intervals.all?(&:close)
   end
 
   def open_interval

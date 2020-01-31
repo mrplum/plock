@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class TeamUserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  def setup
+    @team_user = team_users(:one)
+  end
+
+  test "incorporated?" do
+    assert_not @team_user.incorporated?
+  end
 end

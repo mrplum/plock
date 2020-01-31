@@ -7,5 +7,8 @@ class TeamUser < ApplicationRecord
   belongs_to :user
 
   validates :user_id, presence: true
-  # validates :team_id, presence: true
+
+  def incorporated?
+    !incorporated_at.nil?
+  end
 end

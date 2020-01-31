@@ -29,8 +29,16 @@ class TrackTest < ActiveSupport::TestCase
       assert @track1.has_open_intervals?
     end
     
+    test 'unstarted?' do
+      assert @track.unstarted?
+    end
+
+    test 'in_progress?' do
+      assert_not @track.in_progress?
+    end
+
     test 'ready?' do
-      assert_not @track.ready?
+      assert_not @track.finished?
     end
 
 end
