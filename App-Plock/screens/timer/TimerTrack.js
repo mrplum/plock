@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Button,
 } from 'react-native';
+import { API_HOST } from 'react-native-dotenv';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { AsyncStorage, Text, View, TouchableHighlight } from 'react-native';
@@ -18,7 +19,7 @@ import { Stopwatch } from 'react-native-stopwatch-timer';
 const { useState } = React;
 
 const httpLink = createHttpLink({
-  uri: 'http://192.168.0.126:3300/graphql'
+  uri: API_HOST
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -48,27 +49,27 @@ const TimerTrack = props => {
     setResetStopwatch(true);
   };
 
-  const startStopStopWatch = id => {
+  const startStopStopWatch = async id => {
     setStopwatchStart(!isStopwatchStart);
     setResetStopwatch(false);
+
+    const userId = await AsyncStorage.getItem('userId');
 
     if (!isStopwatchStart) {
       client
         .mutate({
           mutation: gql`
-            mutation trackSetIntervalStart($track_id: ID!) {
-              intervalStart(trackId: $track_id) {
-                id
+            mutation trackSetIntervalStart($track_id: Int!, $user_id: Int!) {
+              intervalStart(trackId: $track_id, userId: $user_id) {
                 track {
                   name
                 }
-                createdAt
-                updatedAt
               }
             }
           `,
           variables: {
-            track_id: id
+            track_id: id,
+            user_id: userId
           }
         })
         .then(result => JSON.parse(JSON.stringify(result)))
@@ -139,8 +140,6 @@ const TimerTrack = props => {
     </View>
   );
 };
-
-
 
 export default TimerTrack;
 

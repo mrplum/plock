@@ -9,6 +9,9 @@ class MutationTypeTest < ActiveSupport::TestCase
 		@track = tracks(:one)
 		@user = users(:one)
 		@interval = intervals(:one)
+		@project = projects(:one)
+		@name = 'testear'
+		@description = 'test'
 	end
 
 	test 'interval start' do
@@ -89,5 +92,27 @@ class MutationTypeTest < ActiveSupport::TestCase
 		interval_track_name = result['data']['intervalDestroy']['track']['name']
 		assert_not_nil result
 		assert_equal(@track.name, interval_track_name)
+	end
+
+	test 'track create' do
+		query_string = <<-GRAPHQL
+		mutation createTrack($project_id: Int!, $user_id: Int!, $name: String!, $description: String!) {
+			trackCreate(projectId: $project_id, userId: $user_id, name: $name, description: $description) {
+				name
+				description
+			}
+		}
+		GRAPHQL
+		
+		result = PlockSchema.execute(
+		query_string,
+			variables: { project_id: @project.id, user_id: @user.id, name: @name, description: @description },
+			context: {}
+		)
+		puts result.inspect
+		track_name = result['data']['trackCreate']['name']
+
+
+		assert_not_nil result
 	end
 end

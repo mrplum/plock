@@ -3,16 +3,20 @@ import {
   View,
   Image,
   Text,
-  TextInput,
-  Button,
   StyleSheet,
-  AsyncStorage
+  AsyncStorage,
+  KeyboardAvoidingView
 } from 'react-native';
-
+import {
+	Input,
+	Button,
+	Icon
+} from 'react-native-elements';
+import { API_HOST } from 'react-native-dotenv';
 import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
 
-const client = new ApolloClient({ uri: 'http://192.168.0.126:3300/graphql' });
+const client = new ApolloClient({ uri: API_HOST });
 const { useState } = React;
 
 export const SignInScreen = props => {
@@ -51,12 +55,22 @@ export const SignInScreen = props => {
       })
       .catch(error => {
         alert('Username o Password incorrecto'); // eslint-disable-line no-alert
-        console.log(error);
       });
   };
 
   return (
     <View style={styles.container}>
+      
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior='position'
+        keyboardVerticalOffset={28}
+      >
+
+      
+      
+      
+      
       <View style={styles.welcomeContainer}>
         <Image
           source={
@@ -68,37 +82,49 @@ export const SignInScreen = props => {
         />
       </View>
 
-      <View style={styles.acomodar}>
-        <Text style={styles.getStartedText}>Inicia sesión</Text>
+      <Text style={styles.getStartedText}>Log in</Text>
 
-        <View style={styles.inputPlus}>
-          <TextInput
-            placeholder="Email"
-            style={styles.input1}
-            onChangeText={value => setEmail({ email: value })}
-            value={email.email}
-            maxLength={30}
+      <Input
+        placeholder=' Email'
+        style={styles.input}
+        onChangeText={value => setEmail({ email: value })}
+        value={email.email}
+        maxLength={30}
+        leftIcon={
+          <Icon
+            name='portrait'
+            color='#000000'
           />
+        }
+      />
 
-          <TextInput
-            maxLength={20}
-            placeholder="Password"
-            style={styles.input2}
-            secureTextEntry
-            onChangeText={value => setPass({ password: value })}
-            value={pass.password}
+      <Input
+        maxLength={20}
+        placeholder=' Password'
+        style={styles.input}
+        secureTextEntry
+        onChangeText={value => setPass({ password: value })}
+        value={pass.password}
+        leftIcon={
+          <Icon
+            name='lock'
+            color='#000000'
           />
-        </View>
-        <View style={styles.centerButton}>
-          <View style={styles.button}>
-            <Button color="#ad0404" title="Iniciar Sesion" onPress={signIn} />
-          </View>
+        }
+      />
 
-          <View style={styles.button}>
-            <Button color="#37435D" title="Crear usuario" />
-          </View>
-        </View>
+      <View style={styles.SeparatorLine} />
+
+      <View style={styles.center}>
+          <Button 
+            buttonStyle={styles.button}
+            title='Log in'
+            onPress={signIn}
+          />
       </View>
+
+      </KeyboardAvoidingView>
+
     </View>
   );
 };
@@ -109,7 +135,6 @@ SignInScreen.navigationOptions = {
   header: null
 };
 
-/* eslint no-use-before-define: ["error", { "variables": false }] */
 
 const styles = StyleSheet.create({
   container: {
@@ -134,36 +159,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10
   },
-  input1: {
-    margin: 15,
-    marginTop: 8,
-    height: 30,
-    padding: 5,
-    paddingRight: 144,
-    paddingLeft: 15,
-    fontSize: 16,
-    marginBottom: 10,
-    color: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#FFFFFF',
-    alignSelf: 'flex-start'
-  },
-  input2: {
-    margin: 15,
-    marginTop: 8,
-    height: 30,
-    padding: 5,
-    paddingRight: 104,
-    paddingLeft: 15,
-    fontSize: 16,
-    marginBottom: 10,
-    color: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#FFFFFF',
-    alignSelf: 'flex-start'
-  },
+  input: {
+		margin: 15,
+		height: 40,
+		padding: 5,
+		fontSize: 16,
+		borderBottomWidth: 1,
+		borderBottomColor: '#000000'
+	},
   inputPlus: {
-    paddingLeft: 89,
     paddingTop: 20
   },
   getStartedText: {
@@ -176,20 +180,16 @@ const styles = StyleSheet.create({
     height: 35
   },
   button: {
-    margin: 10,
-    paddingTop: 4,
-    paddingBottom: 1,
-    paddingRight: 40,
-    paddingLeft: 40,
-    marginTop: 5,
-    width: 300,
-    color: '#F13E3E'
+    height: 50,
+    width: 150,
+    backgroundColor: '#8b0000',
+    borderRadius: 10
   },
-  acomodar: {
-    marginBottom: 50
+  center: {
+    alignItems:'center',
+  	justifyContent:'center'
   },
-  centerButton: {
-    alignItems: 'center',
-    paddingTop: 25
-  }
+  SeparatorLine :{
+		height: 40
+	}
 });

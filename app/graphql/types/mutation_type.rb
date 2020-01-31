@@ -9,5 +9,6 @@ module Types
     field :interval_start, mutation: Mutations::IntervalStart
     field :interval_end, mutation: Mutations::IntervalEnd
     field :interval_destroy, mutation: Mutations::IntervalDestroy
+    field :track_create, mutation: Mutations::TrackCreate
   end
 end
