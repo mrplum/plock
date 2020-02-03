@@ -1,0 +1,68 @@
+.pull-right2{
+  color: #343a40;
+  float: right!important;
+}
+.aa{
+  color: #343a40;
+}
+.fa{ 
+  color: #343a40;
+  width: 15px;
+  height: 15px;
+}
+.login-form {
+  width: 430px;
+  margin: 30px auto;
+  text-align: center;
+  align-content: center;
+  background: #fff;
+}
+.login-form form {        
+  margin-bottom: 15px;
+  background: #fff;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  border: solid 1px #cbc9c9;
+  padding: 30px;
+  border-radius: 5px;
+}
+.login-form h2 {
+  margin: 0 0 15px;
+}
+.form-control, .login-btn {
+  min-height: 38px;
+  border-radius: 2px;
+}
+.input-group-addon2 .fa {
+  font-size: 18px;
+}
+.login-btn {
+  font-size: 15px;
+  font-weight: bold;
+}
+.btn-primaryy {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+.btn-primaryy:hover {
+  color: #343a40;
+  background-color:#fff;
+  border: solid 2px #343a40;
+}
+.or-seperator {
+  margin-top: 20px;
+  margin-bottom: 20px;;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+.or-seperator i {
+  padding: 0 10px;
+  background: #f7f7f7;
+  position: relative;
+  top: -11px;
+  z-index: 1;
+}
+
+.input-group-text:first-child {
+  border-right: 0;
+}
