@@ -1,26 +1,22 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
 <div class="login-form">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>   
     <h2 class="text-center">Log in</h2>
 
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+      <div class="form-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
            <%= f.text_field :email, input_html: {class: 'form-control'}, class: "form-control",placeholder: 'Email' %>
 			  </div>
       </div>
 
-			<div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></span>
+			<div class="form-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-lock" aria-hidden="true" ></i></span>
           <%= f.password_field :password, input_html: {class: 'form-control'}, class: 'form-control', placeholder: 'Password' %>
 				</div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group  mb-3">
         <%= f.submit "Sign in", class: "btn btn-primaryy login-btn btn-block" %>
 		  </div>
 
