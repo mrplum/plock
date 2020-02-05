@@ -7,7 +7,8 @@ import {
   Text,
   Button,
   View,
-  AsyncStorage
+  AsyncStorage,
+  TouchableHighlight
 } from 'react-native';
 import { API_HOST } from 'react-native-dotenv';
 import { createHttpLink } from 'apollo-link-http';
@@ -15,6 +16,9 @@ import { setContext } from 'apollo-link-context';
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
+import { Stopwatch } from 'react-native-stopwatch-timer';
+
+const { useState } = React;
 
 const httpLink = createHttpLink({
   uri: API_HOST
@@ -38,15 +42,19 @@ const client = new ApolloClient({
 });
 
 const HomeScreen = props => {
-  const _handleCreateTrack = async () => {
+
+  const [isStopwatchStart, setStopwatchStart] = useState(false);
+  const [resetStopwatch, setResetStopwatch] = useState(false);
+
+  const handleCreateTrack = async () => {
     props.navigation.navigate('Projects');
   };
 
-  const _handleSeeTracks = async () => {
+  const handleSeeTracks = async () => {
     props.navigation.navigate('Tracks');
   };
 
-  const _handleLogout = async () => {
+  const handleLogout = async () => {
     client
       .mutate({
         mutation: gql`
@@ -59,6 +67,10 @@ const HomeScreen = props => {
       .then(AsyncStorage.removeItem('userId'))
       .then(props.navigation.navigate('Auth'));
   };
+
+  const handleWorkTrack = track => {
+    props.navigation.navigate('Tracker', { 'track': track });
+  }; 
 
   return (
     <View style={styles.container}>
@@ -74,13 +86,15 @@ const HomeScreen = props => {
             style={styles.welcomeImage}
           />
         </View>
+
         <Text style={styles.welcome}>¿What do you want to do?</Text>
+
         <View style={styles.move}>
           <View style={styles.button}>
             <Button
               color="#ad0404"
               title="Create Track"
-              onPress={_handleCreateTrack}
+              onPress={handleCreateTrack}
             />
           </View>
 
@@ -88,15 +102,29 @@ const HomeScreen = props => {
             <Button
               color="#37435D"
               title="See my tracks"
-              onPress={_handleSeeTracks}
+              onPress={handleSeeTracks}
             />
           </View>
 
-          <Text onPress={_handleLogout} style={styles.logout}>
+          <Text onPress={handleLogout} style={styles.logout}>
             Cerrar Sesión
           </Text>
         </View>
       </ScrollView>
+
+      <TouchableHighlight onPress={ handleWorkTrack } >
+        <Stopwatch
+          laps
+          msecs
+          start={isStopwatchStart}
+          // To start
+          reset={resetStopwatch}
+          // To reset
+          options={options}
+          // options for the styling
+        />
+
+      </TouchableHighlight>
     </View>
   );
 };
@@ -211,3 +239,20 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 });
+
+const options = {
+  container: {
+    marginTop: 35,
+    backgroundColor: '#ad0404',
+    padding: 5,
+    borderRadius: 5,
+    width: 200,
+    alignItems: 'center',
+    marginLeft: 80
+  },
+  text: {
+    fontSize: 25,
+    color: '#ffffff',
+    marginLeft: 7,
+  }
+};

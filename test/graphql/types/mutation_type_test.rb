@@ -16,8 +16,8 @@ class MutationTypeTest < ActiveSupport::TestCase
 
 	test 'interval start' do
 		query_string = <<-GRAPHQL
-		mutation trackSetIntervalStart($track_id: Int!, $user_id: Int!) {
-			intervalStart(trackId: $track_id, userId: $user_id) {
+		mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String! ) {
+              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at) {
 				track {
 					name
 				}
@@ -27,10 +27,11 @@ class MutationTypeTest < ActiveSupport::TestCase
 		}
 		GRAPHQL
 		
+		datetime = DateTime.now
 		track_id = @track.id
 		result = PlockSchema.execute(
 		query_string,
-			variables: { track_id: track_id, user_id: @user.id },
+			variables: { track_id: track_id, user_id: @user.id, start_at: datetime.to_s },
 			context: {}
 		)
 		track_name = result['data']['intervalStart']['track']['name']
@@ -46,8 +47,8 @@ class MutationTypeTest < ActiveSupport::TestCase
 	test 'interval end' do
 		interval_id = @interval.id
 		query_string = <<-GRAPHQL
-		mutation trackSetIntervalEnd($id: Int!) {
-			intervalEnd(id: $id){
+		mutation trackSetIntervalEnd($id: Int!, $end_at: String!) {
+              intervalEnd(id: $id, endAt: $end_at) {
 				id
 				startAt
 				endAt
@@ -59,7 +60,7 @@ class MutationTypeTest < ActiveSupport::TestCase
 		GRAPHQL
 		result = PlockSchema.execute(
 			query_string,
-			variables: { id: interval_id },
+			variables: { id: interval_id, end_at: 2.hours.from_now.to_s },
 			context: {}
 		)
 
@@ -96,7 +97,7 @@ class MutationTypeTest < ActiveSupport::TestCase
 
 	test 'track create' do
 		query_string = <<-GRAPHQL
-		mutation createTrack($project_id: Int!, $user_id: Int!, $name: String!, $description: String!) {
+		mutation createTrack($project_id: ID!, $user_id: ID!, $name: String!, $description: String!) {
 			trackCreate(projectId: $project_id, userId: $user_id, name: $name, description: $description) {
 				name
 				description
@@ -109,7 +110,6 @@ class MutationTypeTest < ActiveSupport::TestCase
 			variables: { project_id: @project.id, user_id: @user.id, name: @name, description: @description },
 			context: {}
 		)
-		puts result.inspect
 		track_name = result['data']['trackCreate']['name']
 
 

@@ -23,7 +23,7 @@ export const CreateTrackScreen = props => {
     name: ''
   });
 
-  const [desc, setDesc] = useState({
+  const [trackDesc, setTrackDesc] = useState({
     description: ''
   });
 
@@ -31,10 +31,12 @@ export const CreateTrackScreen = props => {
     console.log(id);
     console.log(trackName);
     const userid = await AsyncStorage.getItem('userId');
+    console.log(userid);
+    console.log(id);
     client
       .mutate({
         mutation: gql`
-          mutation createTrack($project_id: Int!, $user_id: Int!, $name: String!, $description: String!) {
+          mutation createTrack($project_id: ID!, $user_id: ID!, $name: String!, $description: String!) {
             trackCreate(projectId: $project_id, userId: $user_id, name: $name, description: $description) {
               name
               description
@@ -45,7 +47,7 @@ export const CreateTrackScreen = props => {
           project_id: id,
           user_id: userid,
           name: trackName.name,
-          description: desc.description,
+          description: trackDesc.description,
         }
       })
       .then(result => JSON.parse(JSON.stringify(result)))
@@ -65,7 +67,7 @@ export const CreateTrackScreen = props => {
         {choose.name}
       </Text>
 
-      <View style={styles.inputPlus}>
+      <View >
         <TextInput
           placeholder="Name of the track"
           style={styles.input1}
@@ -77,11 +79,11 @@ export const CreateTrackScreen = props => {
         <TextInput
           style={styles.TextInputStyleClass}
           underlineColorAndroid="transparent"
-          placeholder={"Enter the description of the track."}
-          onChangeText={value => setDesc({ description: value })}
-          value={desc.description}
+          placeholder="Enter the description of the track."
+          onChangeText={value => setTrackDesc({ description: value })}
+          value={trackDesc.description}
           placeholderTextColor={"#ffffff"}
-          numberOfLines={10}
+          numberOfLines={15}
           multiline={true}
         />
 
@@ -114,24 +116,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#808080'
   },
-  welcomeImage: {
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-    marginTop: -10,
-    marginLeft: 0
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 25
-  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     color: 'white',
-    marginBottom: 80
-
+    marginBottom: 80,
   },
   input1: {
     margin: 15,
@@ -146,31 +135,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
   },
-  input2: {
-    margin: 1,
-    marginTop: 8,
-    height: 30,
-    padding: 5,
-    paddingRight: 104,
-    paddingLeft: 15,
-    fontSize: 16,
-    marginBottom: 10,
-    color: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#FFFFFF',
-    alignSelf: 'flex-start'
-  },
-  inputPlus: {
-  },
-  getStartedText: {
-    marginTop: -10,
-    fontSize: 17,
-    color: '#37435D',
-    lineHeight: 32,
-    textAlign: 'center',
-    backgroundColor: '#FFFFFF',
-    height: 35
-  },
   button: {
     margin: 10,
     paddingTop: 4,
@@ -179,7 +143,7 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
     marginTop: 5,
     width: 300,
-    color: '#F13E3E'
+    color: '#F13E3E',
   },
   acomodar: {
     marginBottom: 50
@@ -189,13 +153,13 @@ const styles = StyleSheet.create({
     paddingTop: 25
   },
   TextInputStyleClass:{
- 
+    fontSize: 18,
     textAlign: 'center',
     height: 50,
     borderWidth: 2,
-    borderColor: '#9E9E9E',
+    borderColor: 'white',
     borderRadius: 20 ,
-    backgroundColor : "#808080",
+    backgroundColor: "#a0a0a0",
     height: 150,
     color: 'white',
     }

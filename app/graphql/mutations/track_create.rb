@@ -2,8 +2,8 @@ module Mutations
   # class IntervalStart
   #
   class TrackCreate < BaseMutation
-    argument :project_id, Int, required: true
-    argument :user_id, Int, required: true
+    argument :project_id, ID, required: true
+    argument :user_id, ID, required: true
     argument :name, String, required: true
     argument :description, String, required: true
 

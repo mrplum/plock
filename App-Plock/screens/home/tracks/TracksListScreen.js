@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from 'react';
 import {
-  Platform, StyleSheet, Text, Button, View
+  Platform, StyleSheet, Text, Button, View, ScrollView
 } from 'react-native';
 
 import { API_HOST } from 'react-native-dotenv';
@@ -33,10 +33,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const TracksList = props => {
-  const [list, setList] = useState([]);
-  const [flag, setFlag] = useState(true);
 
+const TracksList = props => {
+  const [list, setList] = useState([]); 
+  const [uId, setUid] = useState();
 
   useEffect(() => {
     client
@@ -44,11 +44,11 @@ const TracksList = props => {
         query: gql`
           {
             user {
+              id
               tracks {
                 id
                 name
                 description
-                status
               }
             }
           }
@@ -57,15 +57,20 @@ const TracksList = props => {
       .then((result) => JSON.parse(JSON.stringify(result)))
       .then((result) => {
         setList(result.data.user.tracks);
+        setUid(result.data.user.id);
       })
       .catch((error) => {
         alert('You dont have tracks for work');
       });
-  }, [flag]);
+  }, [uId]);
 
   const handleWorkTrack = track => {
-    props.navigation.navigate('Tracker', { track });
+    props.navigation.navigate('Tracker', { 'track': track });
   };
+
+  const handleSetTimeTrack = track => {
+    props.navigation.navigate('SetTime', { 'track': track });
+  }
 
   const trackList = list.map((track) => (
     <View key={track.id}>
@@ -80,10 +85,23 @@ const TracksList = props => {
           onPress={() => handleWorkTrack(track)}
         />
       </View>
+      <View style={styles.button}>
+        <Button
+          color="#ad0404"
+          title="Set date that you have been worked in this track"
+          onPress={() => handleSetTimeTrack(track)}
+        />
+      </View>
     </View>
   ));
 
-  return <View style={styles.container}>{trackList}</View>;
+  return(
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <View style={styles.container}>
+          {trackList}
+        </View>
+      </ScrollView>
+  );
 };
 
 export default TracksList;

@@ -47,41 +47,13 @@ const TimerTrack = props => {
   const resetStopwatchFunction = () => {
     setStopwatchStart(false);
     setResetStopwatch(true);
-  };
 
-  const startStopStopWatch = async id => {
-    setStopwatchStart(!isStopwatchStart);
-    setResetStopwatch(false);
-
-    const userId = await AsyncStorage.getItem('userId');
-
-    if (!isStopwatchStart) {
+    if (isStopwatchStart) {
       client
         .mutate({
           mutation: gql`
-            mutation trackSetIntervalStart($track_id: Int!, $user_id: Int!) {
-              intervalStart(trackId: $track_id, userId: $user_id) {
-                track {
-                  name
-                }
-              }
-            }
-          `,
-          variables: {
-            track_id: id,
-            user_id: userId
-          }
-        })
-        .then(result => JSON.parse(JSON.stringify(result)))
-        .then(result => {
-          setIdInterval(result.data.intervalStart.id);
-        });
-    } else {
-      client
-        .mutate({
-          mutation: gql`
-            mutation trackSetIntervalEnd($id: Int!) {
-              intervalEnd(id: $id) {
+            mutation intervalDestroy($id: Int!) {
+              intervalDestroy(id: $id) {
                 id
                 createdAt
                 updatedAt
@@ -93,6 +65,67 @@ const TimerTrack = props => {
           `,
           variables: {
             id: idInterval
+          }
+        }).then(result => JSON.parse(JSON.stringify(result)))
+          .then(result => {
+            console.log(result);
+        });
+    }
+
+  };
+
+  const startStopStopWatch = async id => {
+    setStopwatchStart(!isStopwatchStart);
+    setResetStopwatch(false);
+
+    const userId = await AsyncStorage.getItem('userId');
+
+    if (!isStopwatchStart) {
+      const Datetime = new Date();
+    const f = Datetime.toString();
+      client
+        .mutate({
+          mutation: gql`
+            mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String! ) {
+              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at) {
+                id
+                track {
+                  name
+                }
+              }
+            }
+          `,
+          variables: {
+            track_id: id,
+            user_id: userId,
+            start_at: f,
+            
+          }
+        })
+        .then(result => JSON.parse(JSON.stringify(result)))
+        .then(result => {
+          setIdInterval(result.data.intervalStart.id);
+        });
+    } else {
+    const Datetime = new Date();
+    const fecha = Datetime.toString();
+      client
+        .mutate({
+          mutation: gql`
+            mutation trackSetIntervalEnd($id: Int!, $end_at: String!) {
+              intervalEnd(id: $id, endAt: $end_at) {
+                id
+                createdAt
+                updatedAt
+                track {
+                  name
+                }
+              }
+            }
+          `,
+          variables: {
+            id: idInterval,
+            end_at: fecha
           }
         })
         .then(result => console.log(result));
