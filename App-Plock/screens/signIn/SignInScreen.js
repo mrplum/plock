@@ -92,7 +92,7 @@ export const SignInScreen = props => {
         maxLength={30}
         leftIcon={
           <Icon
-            name='portrait'
+            name='email'
             color='#000000'
           />
         }

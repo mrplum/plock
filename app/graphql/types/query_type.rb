@@ -24,6 +24,33 @@ module Types
       current_user
     end
 
+    field :stats_by_day,
+      [GraphQL::Types::JSON],
+      null: true,
+      description: 'hours worked per day'
+    def stats_by_day
+      UserTracksStatByDay.new(current_user).call
+    end
+
+    field :stats_by_projects,
+      [GraphQL::Types::JSON],
+      null: true,
+      description: 'hours worked per project'
+    def stats_by_projects
+      current_user.projects.map do |project| 
+        name = project.name,
+        time = ProjectUserStat.new(current_user, project).call
+      end
+    end
+
+    field :stats_by_status,
+      [GraphQL::Types::JSON],
+      null: true,
+      description: 'count quantity tracks per state'
+    def stats_by_status
+      StatusTracksStat.new(current_user).call
+    end
+
     field :projects,
       [ProjectType],
       null: true,

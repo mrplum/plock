@@ -11,12 +11,13 @@ class QueryTypeTest < ActiveSupport::TestCase
     @team = teams(:one)
     @track = tracks(:one)
     @track1 = tracks(:two)
+    @track2 = tracks(:three)
     @project = projects(:one)
     @project1 = projects(:two)
     @company = companies(:one)
   end
 
-  test 'all project create by current user' do
+  test 'projects created by current user' do
     query_string = <<-GRAPHQL
       query {
         projects {
@@ -49,14 +50,26 @@ class QueryTypeTest < ActiveSupport::TestCase
       variables: {},
       context: context
     )
-    project_one_name = result['data']['projects'][0]['name']
-    project_one_tracks_one_name = result['data']['projects'][0]['tracks']['edges'][0]['node']['name']
-    project_one_team_name = result['data']['projects'][0]['team']['name']
-    project_one_team_members_one_name = result['data']['projects'][0]['team']['users'][0]['name']
+
+    project_names = result['data']['projects'].map { |project| project.dig('name') }
+    project_one = result['data']['projects'].find { |p| p['name'] == 'MyString' }
+
+    project_one_tracks_names = project_one.dig('tracks', 'edges').map { |track| track.dig('node', 'name') }
+
+    project_one_team_name = project_one['team']['name']
+    project_one_team_members_one_name = project_one['team']['users'][0]['name']
 
     assert_not_nil result
-    assert_equal(@project.name, project_one_name)
-    assert_equal(@track.name, project_one_tracks_one_name)
+
+    # We got all projects of user @matias
+    assert_equal(2, result['data']['projects'].count)
+
+    assert_includes(project_names, @project.name)
+    assert_includes(project_names, @project1.name)
+
+    assert_equal(1, project_one_tracks_names.count)
+    assert_includes(project_one_tracks_names, @track.name)
+
     assert_equal(@team.name, project_one_team_name)
     assert_equal(@user1.name, project_one_team_members_one_name)
   end
@@ -113,8 +126,13 @@ class QueryTypeTest < ActiveSupport::TestCase
         user {
           name
           email
-          tracks {
-            status
+          tracks(first: 3) {
+            edges{
+              node{
+                name
+                status
+              }
+            }
           }
           projects {
             name
@@ -134,15 +152,92 @@ class QueryTypeTest < ActiveSupport::TestCase
       variables: {},
       context: context
     )
+
     user_name_result = result['data']['user']['name']
-    state_track_one = result['data']['user']['tracks'][0]['status']
-    project_one_name = result['data']['user']['projects'][0]['name']
+
+    project_names = result['data']['user']['projects'].map { |project| project.dig('name') }
+    project_one = result['data']['user']['projects'].find { |p| p['name'] == 'MyString' }.dig('name')
+
+    project_one_tracks_names = result['data']['user'].dig('tracks', 'edges').map { |track| track.dig('node', 'name') }
+
     team_one_name = result['data']['user']['teams'][0]['name']
 
     assert_not_nil result
+
     assert_equal(@user.name, user_name_result)
-    assert_equal('unstarted', state_track_one)
-    assert_equal(@project.name, project_one_name)
+    
+    assert_equal(2, project_names.count)
+    assert_includes(project_names, @project.name)
+    assert_includes(project_names, @project1.name)
+
+    assert_equal(@project.name, project_one)
+
+    assert_equal(3, project_one_tracks_names.count)
+    assert_includes(project_one_tracks_names, @track.name)
+    assert_includes(project_one_tracks_names, @track1.name)
+    assert_includes(project_one_tracks_names, @track2.name)
+
     assert_equal(@team.name, team_one_name)
+  end
+
+  test 'stats user by day' do
+    Track.create(
+      name: 'Test',
+      description: 'is a test',
+      plock_time: 200,
+      user_id: 999,
+      project: @project,
+      created_at: DateTime.now,
+      updated_at: 1.day.from_now
+    )
+
+    query_string = <<-GRAPHQL
+      query {
+        statsByDay
+      }
+    GRAPHQL
+
+    user = users(:user1)
+    context = {
+      current_user: user,
+    }
+    result = PlockSchema.execute(
+      query_string,
+      variables: {},
+      context: context
+    )
+
+    date = result['data']['statsByDay'].map(&:first)[0]
+    minutes = result['data']['statsByDay'].map(&:last)[0]
+
+    assert_not_nil result
+    assert_not_empty result['data']['statsByDay']
+    assert_equal(date, Date.today)
+    assert_equal(minutes, 600)
+  end
+
+  test 'stats user by status of the track' do
+    query_string = <<-GRAPHQL
+      query {
+        statsByStatus
+      }
+    GRAPHQL
+
+    context = {
+      current_user: @user,
+    }
+    result = PlockSchema.execute(
+      query_string,
+      variables: {},
+      context: context
+    )
+
+    data = result['data']['statsByStatus']
+    values = data.map(&:second)
+
+    assert_not_nil result
+    assert_equal(2, values[0], 'quantity tracks unstarted for @user')
+    assert_equal(1, values[1], 'quantity tracks finished for @user')
+    assert_equal(1, values[2], 'quantity tracks in progress for @user')
   end
 end

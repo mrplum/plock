@@ -5,7 +5,7 @@ require 'test_helper'
 class IntervalTest < ActiveSupport::TestCase
   setup do
     @track = tracks(:one)
-    @track2 = tracks(:two)
+    @track1 = tracks(:two)
     @user = users(:one)
     @interval = intervals(:one)
   end
@@ -30,7 +30,7 @@ class IntervalTest < ActiveSupport::TestCase
   test 'associate with track' do
     track = @interval.track
     assert_not_nil track
-    assert_equal(@track2.name, track.name)
+    assert_equal(@track.name, track.name)
   end
 
   test 'associate with user' do
