@@ -1,4 +1,6 @@
-document.onreadystatechange = () => { 
+console.log(document.readyState)
+document.onreadystatechange = () => {
+  console.log(document.readyState) 
   if (document.readyState === 'complete') {
     
     if (document.getElementById("graph-d3-project") !== null) {
@@ -66,6 +68,8 @@ document.onreadystatechange = () => {
       var margin = {top: 40, right: 20, bottom: 30, left: 40},
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
+
+      console.log(nameModel)
       
       var formatPercent = d3.format("0");    
       var x = d3.scale.ordinal()
@@ -88,7 +92,7 @@ document.onreadystatechange = () => {
       .offset([-10, 0])
       .html(function(d) { return "<strong> time: </strong> <span style='color:green'>" + d.time + " min </span>"; })
 
-      var svg = d3.select("body").append("svg")
+      var svg = d3.select(`#graph-d3-${nameModel}`).append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -96,7 +100,7 @@ document.onreadystatechange = () => {
 
       svg.call(tip);
 
-      d3.select("#graph-d3-"+nameModel)
+      d3.select(`#graph-d3-${nameModel}`)
       x.domain(data.map(function(d) { return d.name; }));
       y.domain([0, d3.max(data, function(d) { return d.time; })]);
 
