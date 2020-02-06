@@ -1,0 +1,38 @@
+<div id='about-project' class=''>
+
+  <div class="user-about">
+
+    <h1> About project </h1>
+  
+    <p>
+      <strong class="strong-about">Name:</strong>
+      <%= project.name %>
+    </p>
+
+    <p>
+      <strong class="strong-about">Repository:</strong>
+      <%= project.repository %>
+    </p>
+
+    <p>
+      <strong class="strong-about">Cost:</strong>
+      <%= project.cost %>
+    </p>
+
+    <p>
+      <strong class="strong-about">Start at:</strong>
+      <%= project.start_at %>
+    </p>
+
+    <% if project.team != nil %>
+      <p>
+        <strong class="strong-about">Team:</strong>
+        <%= project.team.name %>
+      </p>
+    <%end%>
+
+    <%= link_to '<i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit'.html_safe, edit_project_path(@project), html_options = {class: "btn btn-light navbar-btn"}%>
+
+  </div>
+  
+</div>
