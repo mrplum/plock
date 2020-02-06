@@ -1,24 +1,23 @@
-<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/"> <b> Plock </b> </a>
+<nav class="navbar-left navbar-expand-lg navbar navbar-dark bg-dark">
+  <a class="navbar-brand text-light" href="/"> <b> Plock </b> </a>
+
     <div class="navbar-nav ml-auto" >
 
       <% if current_user.present? %>
-        <% if current_user&.company&.owner == current_user %>
-          <%= link_to 'Company', company_path(current_user.company), class: "nav-item nav-link", style: "color:white" %>
-        <% end %>
 
-        <a class="nav-item nav-link active" data-turbolinks="false" href="/profile">
+        <% if current_user&.company&.owner == current_user %>
+          <%= link_to 'Company', company_path(current_user.company), class: "btn btn-dark navbar-btn" %>
+        <% end %>
+        <a class="btn btn-dark navbar-btn" href="/profile">
           Profile<span class="sr-only">(current)</span>
         </a>
-        <a class="nav-item nav-link" style="color:white" href="/teams">Team</a>
-        <a class="nav-item nav-link" style="color:white" href="/projects">Project</a>
-        <div style="background-color: gray">
-          <a class="nav-item nav-link" style="color:black" data-method="delete" href="/users/sign_out">Sign Out</a>
-        </div>
-
+        <a class="btn btn-dark navbar-btn" href="/teams">Team</a>
+        <a class="btn btn-dark navbar-btn" href="/projects">Project</a>
+        <a class="btn btn-dark navbar-btn" data-method="delete" href="/users/sign_out"><i class="fa fa-sign-out text-light"></i></a>
+   
       <% else %>
-        <a class="nav-item nav-link" href="/users/sign_in" style="color:white">Sign In</a>
-        <a class="nav-item nav-link" href="/users/sign_up" style="color:white">Sign Up</a>
+        <a class="btn btn-dark navbar-btn" href="/users/sign_in">Sign In</a>
+        <a class="btn btn-dark navbar-btn" href="/users/sign_up">Sign Up</a>
       <% end %>
 
     </div>
