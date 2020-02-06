@@ -8,8 +8,9 @@ import SignInScreen from '../screens/signIn/SignInScreen';
 import HomeScreen from '../screens/home/HomeScreen';
 import TracksListScreen from '../screens/home/tracks/TracksListScreen';
 import ProjectListScreen from '../screens/home/projects/ProjectListScreen';
-import CreateTrackScreen from '../screens/home/projects/CreateTrackScreen';
+import StatsUserScreen from '../screens/home/user/StatsUserScreen';
 import Tracker from '../screens/timer/TimerTrack';
+import CreateTrackScreen from '../screens/home/projects/CreateTrackScreen';
 import SetTimeTrack from '../screens/timer/SetTimer';
 
 const config = Platform.select({
@@ -40,6 +41,7 @@ const HomeScreenStack = createStackNavigator(
     Track: CreateTrackScreen,
     Tracker: Tracker,
     SetTime: SetTimeTrack,
+    StatsUser: StatsUserScreen
   },
   config
 );

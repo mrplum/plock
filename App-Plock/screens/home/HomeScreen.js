@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  TouchableHighlight,
   Image,
   Platform,
   ScrollView,
@@ -7,8 +8,7 @@ import {
   Text,
   Button,
   View,
-  AsyncStorage,
-  TouchableHighlight
+  AsyncStorage
 } from 'react-native';
 import { API_HOST } from 'react-native-dotenv';
 import { createHttpLink } from 'apollo-link-http';
@@ -54,6 +54,14 @@ const HomeScreen = props => {
     props.navigation.navigate('Tracks');
   };
 
+  const handleStatsTracksUser = async () => {
+    props.navigation.navigate('StatsUser');
+  };
+
+  const handleWorkTrack = track => {
+      props.navigation.navigate('Tracker', { 'track': track });
+  };
+
   const handleLogout = async () => {
     client
       .mutate({
@@ -67,10 +75,6 @@ const HomeScreen = props => {
       .then(AsyncStorage.removeItem('userId'))
       .then(props.navigation.navigate('Auth'));
   };
-
-  const handleWorkTrack = track => {
-    props.navigation.navigate('Tracker', { 'track': track });
-  }; 
 
   return (
     <View style={styles.container}>
@@ -86,23 +90,29 @@ const HomeScreen = props => {
             style={styles.welcomeImage}
           />
         </View>
-
         <Text style={styles.welcome}>¿What do you want to do?</Text>
-
         <View style={styles.move}>
           <View style={styles.button}>
             <Button
-              color="#ad0404"
-              title="Create Track"
+              color = '#ad0404'
+              title = 'Create Track'
               onPress={handleCreateTrack}
             />
           </View>
 
           <View style={styles.button}>
             <Button
-              color="#37435D"
-              title="See my tracks"
+              color = '#37435D'
+              title = 'See my tracks'
               onPress={handleSeeTracks}
+            />
+          </View>
+
+          <View style={styles.button}>
+            <Button
+              color = '#37435D'
+              title = 'Stats for tracks'
+              onPress={handleStatsTracksUser}
             />
           </View>
 
@@ -111,20 +121,16 @@ const HomeScreen = props => {
           </Text>
         </View>
       </ScrollView>
-
       <TouchableHighlight onPress={ handleWorkTrack } >
         <Stopwatch
           laps
           msecs
           start={isStopwatchStart}
-          // To start
           reset={resetStopwatch}
-          // To reset
           options={options}
-          // options for the styling
         />
-
       </TouchableHighlight>
+
     </View>
   );
 };
