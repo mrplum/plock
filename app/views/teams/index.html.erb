@@ -1,27 +1,29 @@
-<p id="notice"><%= notice %></p>
+<div class="teams-card-container">
 
-<h1>Teams</h1>
+  <% @teams.each do |team| %>
+    <div class="card-teams">
+      <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+        <div class="card-header" style="text-align: center;"> <%= team.name %> </div>
+        <div class="card-body">
+          <h5 class="card-title"> created at </h5>
+          <p class="card-text"> <%= team.created_at.strftime("%F %T") %> </p>
+          <%= link_to '<i class="fa fa-eye text-light"></i>'.html_safe, team, class: "btn btn-light navbar-btn", data: { turbolinks: false } %>
+          <%= link_to '<i class="fa fa-edit text-light"></i>'.html_safe, edit_team_path(team), class: "btn btn-light navbar-btn" %>
+          <%= link_to '<i class="fa fa-trash text-light"></i>'.html_safe, team, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light navbar-btn" %>
+        </div>  
+      </div>
+    </div>
+  <%end%>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @teams.each do |team| %>
-      <tr>
-        <td><%= team.name %></td>
-        <td data-turbolinks="false"><%= link_to 'Show', team %></td>
-        <td><%= link_to 'Edit', edit_team_path(team) %></td>
-        <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Team', new_team_path %>
+  <div class="card-teams">
+    <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+      <div class="card-header" style="text-align: center;"> New team</div>
+      <div class="card-body">
+        <p class="card-text"></p>
+        <%= link_to '<i class="fa fa-plus text-light"></i>'.html_safe, new_team_path, class: "btn btn-light navbar-btn"%>
+        <p class="card-text"></p>
+      </div>  
+    </div>
+  </div>
+  
+</div>
