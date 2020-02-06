@@ -3,12 +3,13 @@ module Mutations
   #
   class IntervalEnd < BaseMutation
     argument :id, Int, required: true
+    argument :end_at, String, required: true
 
     type Types::IntervalType
 
-    def resolve(id:)
+    def resolve(id:, end_at:)
       i = Interval.find(id)
-      i.update(end_at: DateTime.now)
+      i.update(end_at: end_at)
       return i
     end
   end

@@ -7,6 +7,7 @@ module Types
     field :id, ID, null: false
     field :name, String, null: false
     field :description, String, null: false
+    field :plock_time, Int, null: false
     field :status, String, null: false
     field :user, UserType, null: false
     field :project, ProjectType, null: false

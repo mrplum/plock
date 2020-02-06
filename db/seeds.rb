@@ -1,9 +1,9 @@
 
 # Create Owner User Company
 owner = User.new(name: 'Owner', lastname: 'Plock', email: 'owner@plock.com', password: '123123')
-
+owner.save
 # Craete the company of owner user
-c = Company.new(name: 'Plock', description: 'The company', owner: owner)
+c = Company.new(name: 'Plock', description: 'The company', owner_id: owner.id)
 
 # Owner company also belong to company
 owner.company = c

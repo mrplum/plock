@@ -1,18 +1,34 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyString
+  name: Track1
+  description: is a test
   plock_time: 0
   status: unstarted
   user: matias
   project: one
 
 two:
-  name: MyString
-  description: MyString
+  name: Track2
+  description: is a test
   plock_time: 200
   status: unstarted
+  user: matias
+  project: two
+
+three:
+  name: Track3
+  description: is a test
+  plock_time: 10
+  status: in_progress
+  user: matias
+  project: two
+
+four:
+  name: Track2
+  description: is a test
+  plock_time: 15
+  status: finished
   user: matias
   project: two
 

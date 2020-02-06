@@ -17,6 +17,11 @@ matias:
   name: Matias
   email: email@example.com
 
+user:
+  name: does not work
+  lastname: example for stats
+  email: notWork@example.com
+
 user1:
   id: 999
   name: user1

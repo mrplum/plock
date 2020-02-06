@@ -16,6 +16,7 @@ two:
   start_at: 2020-01-06
   user: matias
   company: one
+  team: one
 
 three:
   id: 999

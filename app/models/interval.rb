@@ -12,7 +12,7 @@ class Interval < ApplicationRecord
   belongs_to :track, touch: true
   belongs_to :user
 
-  validate :no_other_open_interval
+  validate :no_other_open_interval, on: %i[create]
   validate :valid_date
 
   after_commit :calculate_plock_time, :index_elasticsearch
