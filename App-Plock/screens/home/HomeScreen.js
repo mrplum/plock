@@ -54,7 +54,7 @@ const HomeScreen = props => {
     props.navigation.navigate('Tracks');
   };
 
-  const handleStatsTracksUser = async () => {
+  const handleStatsUser = () => {
     props.navigation.navigate('StatsUser');
   };
 
@@ -84,9 +84,7 @@ const HomeScreen = props => {
       >
         <View style={styles.welcomeContainer}>
           <Image
-            source={
-              __DEV__ ? require('./plock.png') : require('./robot-prod.png')
-            }
+            source={ require('../../assets/images/plock.png') }
             style={styles.welcomeImage}
           />
         </View>
@@ -111,8 +109,8 @@ const HomeScreen = props => {
           <View style={styles.button}>
             <Button
               color = '#37435D'
-              title = 'Stats for tracks'
-              onPress={handleStatsTracksUser}
+              title = 'Stats'
+              onPress={handleStatsUser}
             />
           </View>
 

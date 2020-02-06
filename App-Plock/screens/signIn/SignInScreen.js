@@ -73,11 +73,7 @@ export const SignInScreen = props => {
       
       <View style={styles.welcomeContainer}>
         <Image
-          source={
-            __DEV__
-              ? require('../home/plock.png')
-              : require('../home/robot-prod.png')
-          }
+          source={ require('../../assets/images/plock.png') }
           style={styles.welcomeImage}
         />
       </View>

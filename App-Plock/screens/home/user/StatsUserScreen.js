@@ -2,44 +2,25 @@ import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
   View,
-  Dimensions
+  Dimensions,
+  Image
 } from 'react-native'
 import {
   ButtonGroup,
   Text
 } from 'react-native-elements'
-import { API_HOST } from 'react-native-dotenv'
+import clientApollo from '../../../util/clientApollo'
 import gql from 'graphql-tag'
-import { AsyncStorage } from 'react-native'
-import ApolloClient from 'apollo-client'
-import { setContext } from 'apollo-link-context'
-import { createHttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import BarChartComponent from '../graphics/BarChartComponent'
-import PieChartComponent from '../graphics/PieChartComponent'
+import BarChartComponent from '../../components/graphics/BarChartComponent'
+import PieChartComponent from '../../components/graphics/PieChartComponent'
 
-const httpLink = createHttpLink({
-  uri: API_HOST,
-});
-
-const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const userToken = await AsyncStorage.getItem('userToken');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      Authorization: userToken ? `Bearer ${userToken}` : '',
-    },
-  };
-});
-
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
+const screenWidth = Dimensions.get('window').width
+const screenHeight = Dimensions.get('window').height
 
 const StatsUserScreen = () => {
+
+  const client = clientApollo()
+
 
   const [typeStats, setTypeStats] = useState()
   const [dataStatus, setDataStatus] = useState([]);
@@ -84,43 +65,50 @@ const StatsUserScreen = () => {
     
   }, [flag]);
 
-  const screenWidth = Dimensions.get('window').width
-
   const handleChange = (type) => {
     setTypeStats(type)
   }
 
-  const component1 = () => <Text onPress = {() => handleChange('status')}>Status</Text>
-  const component2 = () => <Text onPress = {() => handleChange('projects')}>Projects</Text>
-  const component3 = () => <Text onPress = {() => handleChange('days')}>Days</Text>
+  const component1 = () => <Text style = { styles.textButtonGroup } onPress = {() => handleChange('status')}>STATUS</Text>
+  const component2 = () => <Text style = { styles.textButtonGroup } onPress = {() => handleChange('projects')}>PROJECTS</Text>
+  const component3 = () => <Text style = { styles.textButtonGroup } onPress = {() => handleChange('days')}>DAYS</Text>
   const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
 
   const renderGraphs = () => {
     if (typeStats === 'status') {
       return (
-        <PieChartComponent
-          chartData = { dataStatus }
-          screenWidth = { screenWidth }
-          styleHorizontal = { styles.horizontal }
-        />
+        <View>
+          <Text style = { styles.text }></Text>
+          <PieChartComponent
+            chartData = { dataStatus }
+            screenWidth = { screenWidth }
+            styleHorizontal = { styles.horizontal }
+          />
+        </View>
       );
     }
     if (typeStats === 'projects') {
       return (
-        <BarChartComponent
-          chartData = { dataProjects }
-          screenWidth = { screenWidth }
-          styleHorizontal = { styles.horizontal }
-        />
+        <View>
+          <Text style = { styles.text }>Minutes worked per project</Text>
+          <BarChartComponent
+            chartData = { dataProjects }
+            screenWidth = { screenWidth }
+            styleHorizontal = { styles.horizontal }
+          />
+        </View>
       );
     }
     if (typeStats === 'days') {
       return (
-        <BarChartComponent
-          chartData = { dataDays }
-          screenWidth = { screenWidth }
-          styleHorizontal = { styles.horizontal }
-        />
+        <View>
+          <Text style = { styles.text }>Minutes worked per day</Text>
+          <BarChartComponent
+            chartData = { dataDays }
+            screenWidth = { screenWidth }
+            styleHorizontal = { styles.horizontal }
+          />
+        </View>
       );
     }
   }
@@ -130,10 +118,23 @@ const StatsUserScreen = () => {
         buttons = { buttons }
         containerStyle={styles.buttonGroup}
       />
-      {renderGraphs()}
+      {!typeStats &&
+        <View>
+          <View style={styles.separatorLine}></View>
+          <Text style = {styles.text}> Select the type of statistics you want to see </Text>
+          <Text style = {styles.text}> * Press on the text </Text>
+          <Image
+            source={ require('../../../assets/images/stats.png') }
+            style={styles.image}
+          />
+        </View>
+      }
+      { renderGraphs() }
     </View>
   );
 }
+
+export default StatsUserScreen
 
 StatsUserScreen.navigationOptions = {
   title: 'Statistics',
@@ -142,8 +143,6 @@ StatsUserScreen.navigationOptions = {
     backgroundColor: '#808080',
   }
 };
-
-export default StatsUserScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -168,9 +167,30 @@ const styles = StyleSheet.create({
   },
   buttonGroup: {
     position: 'absolute',
+    backgroundColor: '#37435D',
     top: 0,
     left: 0,
     right: 0,
-    height: 70
-  }
+    height: 70,
+    borderRadius: 12
+  },
+  textButtonGroup: {
+		alignItems: 'center',
+		fontSize: 22,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  text: {
+		alignItems: 'center',
+		fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000'
+  },
+  image: {
+    width: screenWidth,
+    height: screenHeight-250
+  },
+  separatorLine :{
+		height: 40
+	}
 });
