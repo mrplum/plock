@@ -1,0 +1,25 @@
+<div id='project-user' class='project-user hidden'>
+
+  <div class="user-card-container">
+
+    <% if projects.empty? %>
+      <p> Not working in any project </p>
+    <% else %>  
+      <% projects.each do |project| %>
+        <div class="card-project">
+          <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header" style="text-align: center;"> <%= project.name %> </div>
+            <div class="card-body">
+              <h5 class="card-title"> <%= project.repository %> </h5>
+              <p class="card-text"> cost: <%= project.cost %> </p>
+              <p class="card-text"> start at: <%= project.start_at %> </p>
+              <%= link_to '<i class="fa fa-eye text-light"></i>'.html_safe, project, class: "btn btn-dark navbar-btn" %>
+            </div>  
+          </div>
+        </div>
+      <%end%>
+    <% end %>
+
+  </div>
+  
+</div>

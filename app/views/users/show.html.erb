@@ -1,44 +1,12 @@
-  <h1> User Profile </h1>
+<%= render 'navbar-user', user: @user %>
 
-  <p>
-    <strong>Name:</strong>
-    <%= @user.name %>
-  </p>
+<div class="page-content p-5" id="content">
 
-  <p>
-    <strong>Lastname:</strong>
-    <%= @user.lastname %>
-  </p>
+  <%= render 'about-user', user: @user %>
+  <%= render 'projects-user', projects: @projects %>
 
-  <p>
-    <strong>Email:</strong>
-    <%= @user.email %>
-  </p>
-
-  <h1> Working in </h1>
-    <% if @projects.empty? %>
-        <p> Not working in any project </p>
-    <% else %>  
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Repository</th>
-            <th>Cost</th>
-            <th>Start at</th>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
-        <% @projects.each do |project| %>
-          <tr>
-              <td><%= project.name %></td>
-              <td><%= project.repository %></td>
-              <td><%= project.cost %></td>
-              <td><%= project.start_at %></td>
-              <td><%= link_to 'Show', project %></td>
-          </tr>
-        <%end%>
-      </table>
-  <% end %>
+  <div id='statics-user' class='statics-user hidden'>
+    <div id="graph-d3-user"> </div>
+  </div>
   
-  <div id="graph-d3-user"> </div>
+</div>
