@@ -1,4 +1,3 @@
-    
     if (document.getElementById("graph-d3-project") !== null) {
       let project_id = document.getElementById('project_id').value;  
       $.ajax({
@@ -64,8 +63,6 @@
       var margin = {top: 40, right: 20, bottom: 30, left: 40},
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
-
-      console.log(nameModel)
       
       var formatPercent = d3.format("0");    
       var x = d3.scale.ordinal()

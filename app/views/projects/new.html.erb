@@ -1,5 +1,7 @@
 <div class="form-team-b">
     <p> <h2 class="text-center text-white">New Project</h2></p>
     <%= render 'form', project: @project %>
-    <%= link_to '<i class="fa fa-backward mr-3 text-light fa-fw"></i>Back'.html_safe, projects_path, html_options = {class: "btn btn-light navbar-btn-team"}%>
+    <%= link_to projects_path, html_options = {class: "btn btn-light navbar-btn-team"} do %>
+        <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back
+    <% end %>
 </div>

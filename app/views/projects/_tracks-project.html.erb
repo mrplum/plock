@@ -11,8 +11,12 @@
             <div class="card-body">
               <h5 class="card-title"> description </h5>
               <p class="card-text"> <%= track.description %> </p>
-              <%= link_to '<i class="fa fa-eye text-light"></i>'.html_safe, track, class: "btn btn-light navbar-btn" %>
-              <%= link_to '<i class="fa fa-trash text-light"></i>'.html_safe, track, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light navbar-btn" %>
+              <%= link_to track, class: "btn btn-light navbar-btn" do %>
+                <i class="fa fa-eye text-light"></i>
+              <% end %>
+              <%= link_to track, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light navbar-btn" do %>
+                <i class="fa fa-trash text-light"></i>
+              <% end %>
             </div>  
           </div>
         </div>
@@ -24,7 +28,9 @@
         <div class="card-header" style="text-align: center;"> Create new track</div>
         <div class="card-body">
           <p class="card-text"></p>
-          <%= link_to '<i class="fa fa-plus text-light"></i>'.html_safe, new_project_track_path(@project), class: "btn btn-light navbar-btn"%>
+          <%= link_to new_project_track_path(@project), class: "btn btn-light navbar-btn" do %>
+            <i class="fa fa-plus text-light"></i>
+          <% end %>
           <p class="card-text"></p>
         </div>  
       </div>

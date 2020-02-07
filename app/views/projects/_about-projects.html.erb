@@ -24,19 +24,19 @@
       <%= project.start_at %>
     </p>
 
-    <% if project.team != nil %>
-      <p>
-        <strong class="strong-about">Team:</strong>
-        <%= project.team.name %>
-      </p>
-    <%end%>
+    <p>
+      <strong class="strong-about">Team:</strong>
+      <%= project.team&.name %>
+    </p>
 
     <p>
       <strong class="strong-about">Owner:</strong>
       <%= "#{project.user.name} #{project.user.lastname}" %>
     </p>
 
-    <%= link_to '<i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit'.html_safe, edit_project_path(@project), html_options = {class: "btn btn-light navbar-btn"}%>
+    <%= link_to edit_project_path(@project), html_options = {class: "btn btn-light navbar-btn"} do %>
+      <i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit
+    <% end %>
 
   </div>
   

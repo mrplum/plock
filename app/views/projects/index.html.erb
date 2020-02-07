@@ -6,9 +6,15 @@
         <div class="card-body">
           <h5 class="card-title"> start at </h5>
           <p class="card-text"> <%= project.start_at.strftime("%F %T") %> </p>
-          <%= link_to '<i class="fa fa-eye text-light"></i>'.html_safe, project, class: "btn btn-light navbar-btn" %>
-          <%= link_to '<i class="fa fa-edit text-light"></i>'.html_safe, edit_project_path(project), class: "btn btn-light navbar-btn" %>
-          <%= link_to '<i class="fa fa-trash text-light"></i>'.html_safe, project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light navbar-btn" %>
+          <%= link_to project, class: "btn btn-light navbar-btn" do %>
+            <i class="fa fa-eye text-light"></i>
+          <% end %>
+          <%= link_to edit_project_path(project), class: "btn btn-light navbar-btn" do %>
+            <i class="fa fa-edit text-light"></i>
+          <% end %>
+          <%= link_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light navbar-btn" do %>
+            <i class="fa fa-trash text-light"></i>
+          <% end %>
         </div>  
       </div>
     </div>
@@ -19,7 +25,9 @@
       <div class="card-header" style="text-align: center;"> New project</div>
       <div class="card-body">
         <p class="card-text"></p>
-        <%= link_to '<i class="fa fa-plus text-light"></i>'.html_safe, new_project_path, class: "btn btn-light navbar-btn"%>
+        <%= link_to new_project_path, class: "btn btn-light navbar-btn" do %>
+          <i class="fa fa-plus text-light"></i>
+        <% end %>
         <p class="card-text"></p>
       </div>  
     </div>
