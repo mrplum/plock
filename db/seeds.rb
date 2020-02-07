@@ -1,9 +1,9 @@
 
 # Create Owner User Company
 owner = User.new(name: 'Owner', lastname: 'Plock', email: 'owner@plock.com', password: '123123')
-owner.save
+
 # Craete the company of owner user
-c = Company.new(name: 'Plock', description: 'The company', owner_id: owner.id)
+c = Company.new(name: 'Plock', description: 'The company', owner: owner)
 
 # Owner company also belong to company
 owner.company = c
@@ -12,7 +12,8 @@ owner.save
 c.save
 
 # Create company member user
-member_user = User.create(name: 'Slave', lastname: 'One', email: 'slave_1@plock.com', password: '123123', company: c)
+member_user = User.create(name: 'Slave 1', lastname: 'One', email: 'slave_1@plock.com', password: '123123', company: c)
+member_user1 = User.create(name: 'Slave 2', lastname: 'Two', email: 'slave_2@plock.com', password: '123123', company: c)
 
 # Create the Plockers Team
 t = Team.create(name: 'Plockers Team')
@@ -24,7 +25,9 @@ project = Project.create(
     cost: 25000,
     start_at: DateTime.now,
     user: owner,
-    team: t)
+    team: t,
+    company: c
+)
 
 project2 = Project.create(
     name: 'Plock2',
@@ -32,11 +35,23 @@ project2 = Project.create(
     cost: 240,
     start_at: DateTime.now,
     user: owner,
-    team: t)
+    team: t,
+    company: c
+)
+
+project3 = Project.create(
+    name: 'Plock3',
+    repository: 'Plock is the best3',
+    cost: 2400,
+    start_at: DateTime.now,
+    user: member_user1,
+    company: c
+)
 
 # Add a members to team
 t.users << owner
 t.users << member_user
+t.users << member_user1
 
 # Creating Tracks for this project
 track_values = [
@@ -44,21 +59,70 @@ track_values = [
         name: 'Track One',
         description: 'Is a example',
         user: owner,
-        project: project
+        project: project,
+        status: :in_progress
     },
     {
         name: 'Track Two',
         description: 'Is a example',
         status: :finished,
         user: member_user,
-        project: project2
+        project: project2,
     },
-
     {
         name: 'Track Three',
         description: 'Is a example',
         user: member_user,
-        project: project
+        project: project,
+    },
+    {
+        name: 'Track Four',
+        description: 'Is a example',
+        user: member_user1,
+        project: project,
+        status: :finished
+    },
+    {
+        name: 'Track Five',
+        description: 'Is a example',
+        user: owner,
+        project: project2,
+        status: :in_progress
+    },
+    {
+        name: 'Track Six',
+        description: 'Is a example',
+        user: member_user,
+        project: project2,
+        status: :finished
+    },
+    {
+        name: 'Track Seven',
+        description: 'Is a example',
+        user: member_user1,
+        project: project2,
+        status: :finished
+    },
+    {
+        name: 'Track Eigth',
+        description: 'Is a example',
+        user: member_user,
+        project: project2,
+        status: :in_progress
+    },
+    {
+        name: 'Track Nine',
+        description: 'Is a example',
+        user: member_user1,
+        project: project2,
+        status: :in_progress
+    },
+    {
+        name: 'Track Ten',
+        description: 'Is a example',
+        user: member_user1,
+        project: project3,
+        status: :finished
     }
 ]
 
@@ -66,39 +130,95 @@ track_values.each { |t| Track.create(t) }
 
 
 # Creating intervals for tracks
-t1, t2, t3 = Track.all
+t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = Track.all
 
 datetime = DateTime.now
 
-i1 = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
-i1.update(end_at: 2.hours.from_now)
+i = t1.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i.update(end_at: 4.hours.from_now)
 
-i2 = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
-i2.update(end_at: 1.hours.from_now)
+i = t1.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i.update(end_at: 20.minutes.from_now)
 
-i3 = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
-i3.update(end_at: 30.minutes.from_now)
+t1.update(updated_at: 1.day.from_now)
 
-i4 = t1.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
-i4.update(end_at: 4.hours.from_now)
+i = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i.update(end_at: 2.hours.from_now)
 
-i5 = t1.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
-i5.update(end_at: 20.minutes.from_now)
+i = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i.update(end_at: 1.hours.from_now)
 
-i6 = t3.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
-i6.update(end_at: 50.minutes.from_now)
+t2.update(updated_at: 1.day.from_now)
 
-i7 = t3.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
-i7.update(end_at: 5.hours.from_now)
+i = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i.update(end_at: 30.minutes.from_now)
 
-t1.reload
-t1.touch
+t2.update(updated_at: 2.day.from_now)
 
-t2.reload
-t2.touch
+i = t3.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i.update(end_at: 1.hours.from_now)
 
-t3.reload
-t3.touch
+i = t3.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i.update(end_at: 1.hours.from_now)
+
+t3.update(updated_at: 3.day.from_now)
+
+i = t4.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i.update(end_at: 5.hours.from_now)
+
+t4.update(updated_at: 1.day.from_now)
+
+i = t4.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i.update(end_at: 10.minutes.from_now)
+
+t4.update(updated_at: 1.day.from_now)
+
+i = t4.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i.update(end_at: 3.hours.from_now)
+
+t4.update(updated_at: 2.day.from_now)
+
+i = t5.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i.update(end_at: 20.minutes.from_now)
+
+i = t5.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i.update(end_at: 10.minutes.from_now)
+
+t5.update(updated_at: 1.day.from_now)
+
+i = t5.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i.update(end_at: 1.hours.from_now)
+
+i = t6.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i.update(end_at: 50.minutes.from_now)
+
+i = t6.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i.update(end_at: 1.hours.from_now)
+
+t6.update(updated_at: 1.day.from_now)
+
+i = t7.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i.update(end_at: 5.minutes.from_now)
+
+i = t7.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i.update(end_at: 2.hours.from_now)
+
+t7.update(updated_at: 1.day.from_now)
+
+i = t8.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i.update(end_at: 25.minutes.from_now)
+
+i = t9.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i.update(end_at: 30.minutes.from_now)
+
+i = t9.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i.update(end_at: 5.hours.from_now)
+
+t9.update(updated_at: 1.day.from_now)
+
+i = t10.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i.update(end_at: 5.hours.from_now)
+
 
 # 1000.times do |i|
 #   t = Track.create({
@@ -113,4 +233,3 @@ t3.touch
 #       i.update_attribute(:updated_at, 10.minutes.from_now)
 #     end
 # end
-

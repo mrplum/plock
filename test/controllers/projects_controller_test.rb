@@ -8,7 +8,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @project = projects(:one)
-    @user = users(:one)
+    @user = users(:matias)
     sign_in @user
   end
 

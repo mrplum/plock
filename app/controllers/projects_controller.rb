@@ -4,6 +4,7 @@
 #
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :check_permissions, only: [ :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /projects
@@ -32,7 +33,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(project_params.merge({user_id:current_user.id}))
+    @project = Project.new(project_params.merge({ user_id: current_user.id, company_id: current_user.company_id }))
 
     respond_to do |format|
       if @project.save
@@ -88,7 +89,13 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :repository, :cost, :start_at, :user_id, :team_id)
+      params.require(:project).permit(:name, :repository, :cost, :start_at, :team_id)
 
+    end
+
+    def check_permissions
+      unless @project.user_id == current_user.id
+        redirect_to project_path(params[:id]), flash: { danger: 'Not authorized!' }
+      end
     end
 end

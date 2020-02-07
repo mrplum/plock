@@ -1,6 +1,6 @@
 # #Company class used for create company for add users to work
 class CompaniesController < ApplicationController
-  before_action :set_company, only: %i[show edit update destroy]
+  before_action :get_company, only: %i[show edit update]
   before_action :authenticate_user!, except: %i[accept_invitation_to_company]
   # GET /companies
   # GET /companies.json
@@ -10,7 +10,9 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1
   # GET /companies/1.json
-  def show; end
+  def show
+    @projects = @company.projects
+  end
 
   # GET /companies/new
   def new
@@ -58,16 +60,6 @@ class CompaniesController < ApplicationController
     end
   end
 
-  # DELETE /companies/1
-  # DELETE /companies/1.json
-  def destroy
-    @company.destroy
-    respond_to do |format|
-      format.html { redirect_to @company, notice: 'Company was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   def send_email
     email = params[:user][:email]
     pass = "password"
@@ -102,7 +94,7 @@ class CompaniesController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_company
+  def get_company
     @company = Company.find(params[:id])
   end
 

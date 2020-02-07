@@ -49,12 +49,4 @@ class CompaniesControllerTest < ActionDispatch::IntegrationTest
     }
     assert_redirected_to company_url(@company.id)
   end
-
-  test 'should destroy company' do
-    assert_difference('Company.count', -1) do
-      delete company_url(@company)
-    end
-
-    assert_redirected_to companies_url
-  end
 end

@@ -85,7 +85,7 @@ class TracksController < ApplicationController
 
     def check_permissions
       unless @project.team_id.in?(current_user.teams.pluck(:id))
-        redirect_to project_path(params[:project_id]), flash: { danger: 'Unathorized for create track!' }
+        redirect_to project_path(params[:project_id]), flash: { danger: 'Not authorized for create track!' }
       end
     end
 end
