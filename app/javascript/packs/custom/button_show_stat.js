@@ -1,5 +1,5 @@
-document.onreadystatechange = () => { 
-  if (document.readyState === 'complete') {
+// document.onreadystatechange = () => { 
+//   if (document.readyState === 'complete') {
     
     if (document.getElementById('about-user-button') !== null) {
       let buttonAboutUser = document.getElementById('about-user-button')
@@ -49,8 +49,8 @@ document.onreadystatechange = () => {
       });  
     }    
 
-    }
-  }
+  //   }
+  // }
   
   function startButton(name1,name2,name3){
     if (document.getElementById(name1).classList.contains('hidden') &&

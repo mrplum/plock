@@ -1,3 +1,4 @@
+<div class="form-team-c">
 <%= form_with(model: project, local: true) do |form| %>
   <% if project.errors.any? %>
     <div id="error_explanation">
@@ -11,35 +12,45 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"></span>
+        <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
+      </div>
+    </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon"></span>
+      <%= form.text_field :repository, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Repository' %>				
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :repository %>
-    <%= form.text_field :repository %>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon"></span>
+      <%= form.text_field :cost, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Cost' %>				
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :cost %>
-    <%= form.text_field :cost %>
+  <div class="form-group">
+    <a style="color: white;"> start at: </a>
+    <%= form.date_select :start_at, :class => 'form-control' %>				
   </div>
 
-  <div class="field">
-    <%= form.label :start_at %>
-    <%= form.date_select :start_at %>
-  </div>
-
-  <div class="field">
-    <a> Select team</a>
-    <%= form.select :team_id, options_from_collection_for_select(
+  <div class="form-group">
+    <a style="color: white;"> select team </a>
+    <%= form.select( :team_id, options_from_collection_for_select(
       current_user.teams,"id", "name"),
-      { include_blank: true}, { multiple: false } 
+      {}, { :class => 'form-control', include_blank: true,  multiple: false })
     %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit "submit", class: "btn btn-new-team login-btn btn-block" %>
   </div>
+
+  <div class="or-seperator"></div>
+
 <% end %>
+</div>

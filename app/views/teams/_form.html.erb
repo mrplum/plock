@@ -1,5 +1,6 @@
 <div class="form-team-c">
   <%= form_with(model: team, local: true) do |form| %>
+  
     <% if team.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h2>
@@ -19,11 +20,13 @@
     </div>
 
     <div class="form-group">
-      <%= form.select :user_ids, options_from_collection_for_select(
+      <%= form.select( :user_ids, options_from_collection_for_select(
         User.where.not("id = ?", current_user.id),"id", "name"),
-        { include_blank: true}, { multiple: true }
+        {}, { :class => 'form-control', include_blank: true,  multiple: true })
       %>
     </div>
+
+    
 
     <div class="form-group">
       <%= form.submit "Submit", class: "btn btn-new-team login-btn btn-block" %>

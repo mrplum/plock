@@ -31,6 +31,11 @@
       </p>
     <%end%>
 
+    <p>
+      <strong class="strong-about">Owner:</strong>
+      <%= "#{project.user.name} #{project.user.lastname}" %>
+    </p>
+
     <%= link_to '<i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit'.html_safe, edit_project_path(@project), html_options = {class: "btn btn-light navbar-btn"}%>
 
   </div>

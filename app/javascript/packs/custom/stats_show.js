@@ -1,7 +1,3 @@
-console.log(document.readyState)
-document.onreadystatechange = () => {
-  console.log(document.readyState) 
-  if (document.readyState === 'complete') {
     
     if (document.getElementById("graph-d3-project") !== null) {
       let project_id = document.getElementById('project_id').value;  
@@ -128,5 +124,3 @@ document.onreadystatechange = () => {
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
     };    
-  }
-}
