@@ -1,27 +1,33 @@
-<%= form_with(model: [@project, track], local: true) do |form| %>
-  <% if track.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(track.errors.count, "error") %> prohibited this track from being saved:</h2>
+<div class="form-team-c">
+  <%= form_with(model: [@project, track], local: true) do |form| %>
 
-      <ul>
-        <% track.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <% if track.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(track.errors.count, "error") %> prohibited this track from being saved:</h2>
+        <ul>
+          <% track.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"></span>
+        <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"></span>
+        <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit "Submit", class: "btn btn-new-team login-btn btn-block" %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

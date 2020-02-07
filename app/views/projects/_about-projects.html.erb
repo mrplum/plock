@@ -1,0 +1,43 @@
+<div id='about-project' class=''>
+
+  <div class="user-about">
+
+    <h1> About project </h1>
+  
+    <p>
+      <strong class="strong-about">Name:</strong>
+      <%= project.name %>
+    </p>
+
+    <p>
+      <strong class="strong-about">Repository:</strong>
+      <%= project.repository %>
+    </p>
+
+    <p>
+      <strong class="strong-about">Cost:</strong>
+      <%= project.cost %>
+    </p>
+
+    <p>
+      <strong class="strong-about">Start at:</strong>
+      <%= project.start_at %>
+    </p>
+
+    <p>
+      <strong class="strong-about">Team:</strong>
+      <%= project.team&.name %>
+    </p>
+
+    <p>
+      <strong class="strong-about">Owner:</strong>
+      <%= "#{project.user.name} #{project.user.lastname}" %>
+    </p>
+
+    <%= link_to edit_project_path(@project), html_options = {class: "btn btn-light navbar-btn"} do %>
+      <i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit
+    <% end %>
+
+  </div>
+  
+</div>

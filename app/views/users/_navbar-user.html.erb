@@ -1,0 +1,40 @@
+<div class="vertical-nav navbar-light bg-light" id="sidebar" style='{background-color: gray !important;}'>
+
+  <div class="py-4 px-3 mb-4 bg-dark">
+    <div class="media d-flex align-items-center">
+      <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+      <div class="media-body">
+        <h4 class="m-0 text-light"> <%= user.name %> </h4>
+        <p class="font-weight-light text-muted mb-0"> <%= user.company.name %> </p>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Main</p>
+
+  <ul class="nav flex-column bg-light mb-0">
+
+    <li class="nav-item">
+      <a href=""  data-turbolinks="false" class="nav-link text-dark font-italic" id='about-user-button'>
+        <i class="fa fa-address-card mr-3 text-dark fa-fw"></i>
+        About
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href=""  data-turbolinks="false" class="nav-link text-dark font-italic" id='project-user-button'>
+        <i class="fa fa-cubes mr-3 text-dark fa-fw"></i>
+        Projects
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="" data-turbolinks="false" class="nav-link text-dark font-italic" id='statics-user-button'>
+        <i class="fa fa-bar-chart mr-3 text-dark fa-fw"></i>
+        Statistics
+      </a>
+    </li>
+
+  </ul>
+  
+</div>

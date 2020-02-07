@@ -1,6 +1,3 @@
-document.onreadystatechange = () => { 
-  if (document.readyState === 'complete') {
-    
     if (document.getElementById("graph-d3-project") !== null) {
       let project_id = document.getElementById('project_id').value;  
       $.ajax({
@@ -88,7 +85,7 @@ document.onreadystatechange = () => {
       .offset([-10, 0])
       .html(function(d) { return "<strong> time: </strong> <span style='color:green'>" + d.time + " min </span>"; })
 
-      var svg = d3.select("body").append("svg")
+      var svg = d3.select(`#graph-d3-${nameModel}`).append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -96,7 +93,7 @@ document.onreadystatechange = () => {
 
       svg.call(tip);
 
-      d3.select("#graph-d3-"+nameModel)
+      d3.select(`#graph-d3-${nameModel}`)
       x.domain(data.map(function(d) { return d.name; }));
       y.domain([0, d3.max(data, function(d) { return d.time; })]);
 
@@ -124,5 +121,3 @@ document.onreadystatechange = () => {
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
     };    
-  }
-}

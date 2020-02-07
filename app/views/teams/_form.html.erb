@@ -1,29 +1,37 @@
-<%= form_with(model: team, local: true) do |form| %>
-  <% if team.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h2>
+<div class="form-team-c">
+  <%= form_with(model: team, local: true) do |form| %>
+  
+    <% if team.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h2>
+        <ul>
+          <% team.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-      <ul>
-        <% team.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"></span>
+        <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
+      </div>
     </div>
+
+    <div class="form-group">
+      <%= form.select( :user_ids, options_from_collection_for_select(
+        User.where.not("id = ?", current_user.id),"id", "name"),
+        {}, { :class => 'form-control', include_blank: true,  multiple: true })
+      %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit "Submit", class: "btn btn-new-team login-btn btn-block" %>
+    </div>
+
+    <div class="or-seperator"></div>
+    
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.select :user_ids, options_from_collection_for_select(
-        User.where.not("id = ?", current_user.id),"id", "name"),
-        { include_blank: true}, { multiple: true } 
-    %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

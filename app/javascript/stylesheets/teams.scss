@@ -2,17 +2,53 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-.teams-cont{
-
-  display: flex;
-  justify-content: center;
-  div.teams {
-    ul {
-      padding-left: 0;
-    };
-    text-align:center;
-    background-color:gray;
-    width: 50%;
-    
-  }
+.card-teams{
+  text-align: -webkit-center;
+  float:left;margin-left:5px;
+  margin: 10px;
+}
+.tems-card-container{
+  padding: 5px;
+}
+.form-team-b{
+  position: relative;
+  width: 500px;
+  justify-content:center;
+  background: #343a40;
+  border-radius: 5px;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 5%;
+}
+.form-team-c{
+  text-align:center;
+  padding: 30px;
+  margin-bottom: 15px;
+}
+.btn-new-team {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #fff;
+}
+.btn-new-team:hover {
+  color: #343a40;
+  background-color:#fff;
+  border: solid 2px #fff;
+}
+.link-back-team{
+  color: white;
+}
+.btn.navbar-btn-team {
+  border-color: white;
+  text-transform: uppercase;
+  color: white;
+  background-color: #343a40;
+  margin: 8%;
+  white-space: nowrap;
+  padding: 6px 12px !important;
+}
+.btn.navbar-btn-team:hover {
+  color: #343a40;
+  background-color: white;
+  border: solid 1px #343a40;
 }

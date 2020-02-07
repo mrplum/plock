@@ -1,5 +1,7 @@
-<h1>New Track</h1>
-
-<%= render 'form', track: @track %>
-
-<%= link_to 'Back', project_path(@project) %>
+<div class="form-team-b">
+    <p> <h2 class="text-center text-white">New Track</h2></p>
+    <%= render 'form', track: @track %>
+    <%= link_to project_path(@project), html_options = {class: "btn btn-light navbar-btn-team"} do %>
+        <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back
+    <% end %>
+</div>

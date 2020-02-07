@@ -1,6 +1,6 @@
-<h1>Editing Team</h1>
-
-<%= render 'form', team: @team %>
-
-<%= link_to 'Show', @team %> |
-<%= link_to 'Back', teams_path %>
+<div class="form-team-b">
+    <h2 class="text-center text-white"> Editing Team </h2>
+    <%= render 'form', team: @team %>
+    <%= link_to '<i class="fa fa-backward mr-3 text-light fa-fw"></i>Back'.html_safe, teams_path, html_options = {class: "btn btn-light navbar-btn-team"}%>
+    <%= link_to '<i class="fa fa-eye mr-3 text-light"></i>Show'.html_safe, @team, html_options = {class: "btn btn-light navbar-btn-team"}%>
+</div>

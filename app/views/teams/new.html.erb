@@ -1,5 +1,7 @@
-<h1>New Team</h1>
-
-<%= render 'form', team: @team %>
-
-<%= link_to 'Back', teams_path %>
+<div class="form-team-b">
+    <p> <h2 class="text-center text-white">New team</h2></p>
+    <%= render 'form', team: @team %>
+    <%= link_to teams_path, html_options = {class: "btn btn-light navbar-btn-team"} do %>
+        <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back
+    <% end %>
+</div>

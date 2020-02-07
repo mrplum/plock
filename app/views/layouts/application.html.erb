@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html>
+
   <head>
     <title>Plock</title>
     <%= csrf_meta_tags %>
@@ -11,7 +13,8 @@
 
   <body>
     <%= render "layouts/navbar" %>
-    <%= render 'layouts/flashes' %>
     <%= yield %>
+    <%= render 'layouts/footer' %>
   </body>
+
 </html>

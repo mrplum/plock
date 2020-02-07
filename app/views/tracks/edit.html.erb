@@ -1,6 +1,10 @@
-<h1>Editing Task</h1>
-
-<%= render 'form', track: @track %>
-
-<%= link_to 'Show', @track %> |
-<%= link_to 'Back', track_path(@track) %>
+<div class="form-team-b">
+    <h2 class="text-center text-white"> Editing Track </h2>
+    <%= render 'form', track: @track %>
+    <%= link_to track_path(@track), html_options = {class: "btn btn-light navbar-btn-team"} do %>
+        <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back
+    <% end %>
+    <%= link_to @track, html_options = {class: "btn btn-light navbar-btn-team"} do %>
+        <i class="fa fa-eye mr-3 text-light"></i>Show
+    <% end %>
+</div>
