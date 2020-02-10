@@ -207,13 +207,12 @@ class QueryTypeTest < ActiveSupport::TestCase
       context: context
     )
 
-    date = result['data']['statsByDay'].map(&:first)[0]
-    minutes = result['data']['statsByDay'].map(&:last)[0]
+    minutes = result['data']['statsByDay'].map(&:last)
 
     assert_not_nil result
     assert_not_empty result['data']['statsByDay']
-    assert_equal(date, Date.today)
-    assert_equal(minutes, 600)
+    assert_includes(minutes, 600)
+    assert_includes(minutes, 200)
   end
 
   test 'stats user by status of the track' do
