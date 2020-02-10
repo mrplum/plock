@@ -16,7 +16,7 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get new' do
-    get new_track_url(project_id: @project.id)
+    get new_track_url, params: { project_id: @project.id }
     assert_response :success
   end
 
@@ -28,7 +28,6 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
         name: @track.name,
         status: @track.status,
         plock_time: @track.plock_time,
-        user: @user,
         project: @project
       }
     }
@@ -53,7 +52,6 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
         name: @track.name,
         status: @track.status,
         plock_time: @track.plock_time,
-        user: @user,
         project: @project
       }
     }
@@ -64,6 +62,6 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Track.count', -1) do
       delete track_url(@track)
     end
-    assert_redirected_to tracks_url
+    assert_redirected_to project_url(@project.id)
   end
 end

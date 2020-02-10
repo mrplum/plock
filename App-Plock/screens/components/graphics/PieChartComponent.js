@@ -74,7 +74,7 @@ const PieChartComponent = (props) => {
           <PieChart
             data = { data }
             width = { props.screenWidth }
-            height = {235}
+            height = { 235 }
             chartConfig = { pieChartConfig }
             accessor = 'cant'
             backgroundColor = 'transparent'

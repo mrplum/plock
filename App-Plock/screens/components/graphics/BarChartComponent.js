@@ -10,12 +10,12 @@ import {
 const BarChartComponent = (props) => {
   
   const barChartConfig = {
-    backgroundGradientFrom: "#1E2923",
     backgroundGradientFromOpacity: 0,
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(0,0,0, ${opacity})`,
+    backgroundGradientToOpacity: 0.9,
+    fillShadowGradientOpacity: 10,
+    color: () => `rgba(61, 105, 6, 1)`,
     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    barPercentage: 0.9
+    barPercentage: 0.9,
   };
 
   if (props.chartData.length) {
@@ -35,7 +35,8 @@ const BarChartComponent = (props) => {
                 ]
               }
             }
-            yAxisSuffix = ''
+            fromZero = { true }
+            segments = { 10 } 
             width = { props.screenWidth }
             height = { 350 }
             chartConfig = { barChartConfig }

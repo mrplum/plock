@@ -7,23 +7,29 @@
 one:
     user: one
     team: one
+    incorporated_at: '2020-01-22 15:31:10 UTC'
 
 two:
     user: two
     team: one
+    incorporated_at: '2020-01-22 15:31:10 UTC'
 
 three:
     user: matias
     team: one
+    incorporated_at: '2020-01-22 15:31:10 UTC'
 
 teamUser1:
     user_id: 999
     team_id: 999
+    incorporated_at: '2020-01-22 15:31:10 UTC'
 
 teamUser2:
     user_id: 888
     team_id: 888
+    incorporated_at: '2020-01-22 15:31:10 UTC'
 
 t1:
     user: user_in_team_one
     team: one
+    incorporated_at: '2020-01-22 15:31:10 UTC'
