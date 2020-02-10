@@ -95,7 +95,7 @@ class ProjectsController < ApplicationController
 
     def check_permissions
       unless @project.user_id == current_user.id
-        redirect_to project_path(params[:id]), flash: { danger: 'Not authorized!' }
+        redirect_to projects_path, flash: { danger: 'Not authorized!' }
       end
     end
 end

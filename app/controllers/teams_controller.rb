@@ -3,6 +3,7 @@
 # TeamsController class
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :check_permissions, only: [ :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /teams
@@ -118,4 +119,11 @@ class TeamsController < ApplicationController
 
     params.require(:team).permit(:name, user_ids: [])
   end
+
+  def check_permissions
+    unless @team.team_users.minimum(:incorporated_at) == @team.team_users.find_by(user_id: current_user.id)&.incorporated_at
+      redirect_to teams_path, flash: { danger: 'Not authorized!' }
+    end
+  end
 end
+
