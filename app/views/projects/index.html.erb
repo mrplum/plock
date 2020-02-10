@@ -12,7 +12,7 @@
           <%= link_to edit_project_path(project), class: "btnIcon btnIconColor btnEdit" do %>
             <i class="fa fa-edit text-light"></i>
           <% end %>
-          <%= link_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btnIcon btnIconColor btnTrash" do %>
+          <%= link_to project, method: :delete, data: { confirm: 'Do you really want to delete it?', title: 'Confirm Deletion', commit: 'YES', cancel: 'NO' }, class: "btnIcon btnIconColor btnTrash" do %>
             <i class="fa fa-trash text-light"></i>
           <% end %>
         </div>  
