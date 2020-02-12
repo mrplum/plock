@@ -4,7 +4,6 @@ import {
   Image,
   Text,
   StyleSheet,
-  AsyncStorage,
   KeyboardAvoidingView
 } from 'react-native';
 import {
@@ -15,6 +14,9 @@ import {
 import { API_HOST } from 'react-native-dotenv';
 import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
+
+import { AuthContext } from "../../components/StateContextProvider";
+
 
 const client = new ApolloClient({ uri: API_HOST });
 const { useState } = React;
@@ -28,6 +30,8 @@ export const SignInScreen = props => {
     email: ''
   });
 
+  const { dispatch } = React.useContext(AuthContext);
+  
   const signIn = async () => {
     client
       .mutate({
@@ -49,11 +53,14 @@ export const SignInScreen = props => {
       })
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(result => {
-        AsyncStorage.setItem('userToken', result.data.login.user.token);
-        AsyncStorage.setItem('userId', result.data.login.user.id);
+        dispatch({
+          type: "LOGIN",
+          payload: result.data.login
+        });
         props.navigation.navigate('Home');
       })
       .catch(error => {
+        console.log(error);
         alert('Username o Password incorrecto'); // eslint-disable-line no-alert
       });
   };
@@ -66,58 +73,62 @@ export const SignInScreen = props => {
         behavior='position'
         keyboardVerticalOffset={28}
       >
+      
+        <View style={styles.welcomeContainer}>
+          <Image
+            source={ require('../../assets/images/plock.png') }
+            style={styles.welcomeImage}
+          />
+        </View>
 
-      
-      
-      
-      
-      <View style={styles.welcomeContainer}>
-        <Image
-          source={ require('../../assets/images/plock.png') }
-          style={styles.welcomeImage}
+        <Text style={styles.getStartedText}>Log in</Text>
+
+        <Input
+          placeholder=' Email'
+          style={styles.input}
+          onChangeText={value => setEmail({ email: value })}
+          value={email.email}
+          maxLength={30}
+          leftIcon={
+            <Icon
+              name='email'
+              color='#000000'
+            />
+          }
         />
-      </View>
 
-      <Text style={styles.getStartedText}>Log in</Text>
+        <Input
+          maxLength={20}
+          placeholder=' Password'
+          style={styles.input}
+          secureTextEntry
+          onChangeText={value => setPass({ password: value })}
+          value={pass.password}
+          leftIcon={
+            <Icon
+              name='lock'
+              color='#000000'
+            />
+          }
+        />
 
-      <Input
-        placeholder=' Email'
-        style={styles.input}
-        onChangeText={value => setEmail({ email: value })}
-        value={email.email}
-        maxLength={30}
-        leftIcon={
-          <Icon
-            name='email'
-            color='#000000'
-          />
-        }
-      />
+        <View style={styles.SeparatorLine} />
 
-      <Input
-        maxLength={20}
-        placeholder=' Password'
-        style={styles.input}
-        secureTextEntry
-        onChangeText={value => setPass({ password: value })}
-        value={pass.password}
-        leftIcon={
-          <Icon
-            name='lock'
-            color='#000000'
-          />
-        }
-      />
-
-      <View style={styles.SeparatorLine} />
-
-      <View style={styles.center}>
-          <Button 
-            buttonStyle={styles.button}
-            title='Log in'
-            onPress={signIn}
-          />
-      </View>
+        <View style={styles.center}>
+            <Button
+              buttonStyle={styles.button}
+              title=' Log in'
+              onPress={signIn}
+              icon={
+                <Icon
+                  name="sign-in"
+                  size={15}
+                  color="white"
+                  type='font-awesome'
+                /> 
+              }
+            />
+        </View>
 
       </KeyboardAvoidingView>
 
@@ -163,9 +174,6 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderBottomColor: '#000000'
 	},
-  inputPlus: {
-    paddingTop: 20
-  },
   getStartedText: {
     marginTop: -10,
     fontSize: 17,

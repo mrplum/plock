@@ -47,7 +47,7 @@ class MutationTypeTest < ActiveSupport::TestCase
 	test 'interval end' do
 		interval_id = @interval.id
 		query_string = <<-GRAPHQL
-		mutation trackSetIntervalEnd($id: Int!, $end_at: String!) {
+		mutation trackSetIntervalEnd($id: ID!, $end_at: String!) {
               intervalEnd(id: $id, endAt: $end_at) {
 				id
 				startAt

@@ -10,47 +10,32 @@ import {
   View,
   AsyncStorage
 } from 'react-native';
-import { API_HOST } from 'react-native-dotenv';
-import { createHttpLink } from 'apollo-link-http';
-import { setContext } from 'apollo-link-context';
-import ApolloClient from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {
+Icon
+} from 'react-native-elements';
 import gql from 'graphql-tag';
 import { Stopwatch } from 'react-native-stopwatch-timer';
+import clientApollo from '../../util/clientApollo';
+import stateContext from '../../components/StateContext';
+import { AuthContext } from "../../components/StateContextProvider";
 
 const { useState } = React;
 
-const httpLink = createHttpLink({
-  uri: API_HOST
-});
 
-const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const userToken = await AsyncStorage.getItem('userToken');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      Authorization: userToken ? `Bearer ${userToken}` : ''
-    }
-  };
-});
+const HomeScreen = (props) => {
 
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
-});
+  const { state, dispatch } = React.useContext(AuthContext);
 
-const HomeScreen = props => {
+  const client = clientApollo();
 
   const [isStopwatchStart, setStopwatchStart] = useState(false);
   const [resetStopwatch, setResetStopwatch] = useState(false);
 
-  const handleCreateTrack = async () => {
+  const handleCreateTrack = () => {
     props.navigation.navigate('Projects');
   };
 
-  const handleSeeTracks = async () => {
+  const handleSeeTracks = () => {
     props.navigation.navigate('Tracks');
   };
 
@@ -61,7 +46,7 @@ const HomeScreen = props => {
   const handleWorkTrack = track => {
       props.navigation.navigate('Tracker', { 'track': track });
   };
-
+  
   const handleLogout = async () => {
     client
       .mutate({
@@ -72,65 +57,128 @@ const HomeScreen = props => {
         `
       })
       .then(AsyncStorage.removeItem('userToken'))
-      .then(AsyncStorage.removeItem('userId'))
       .then(props.navigation.navigate('Auth'));
   };
 
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={ require('../../assets/images/plock.png') }
-            style={styles.welcomeImage}
-          />
-        </View>
-        <Text style={styles.welcome}>¿What do you want to do?</Text>
-        <View style={styles.move}>
-          <View style={styles.button}>
-            <Button
-              color = '#ad0404'
-              title = 'Create Track'
-              onPress={handleCreateTrack}
-            />
-          </View>
-
-          <View style={styles.button}>
-            <Button
-              color = '#37435D'
-              title = 'See my tracks'
-              onPress={handleSeeTracks}
-            />
-          </View>
-
-          <View style={styles.button}>
-            <Button
-              color = '#37435D'
-              title = 'Stats'
-              onPress={handleStatsUser}
-            />
-          </View>
-
-          <Text onPress={handleLogout} style={styles.logout}>
-            Cerrar Sesión
-          </Text>
-        </View>
-      </ScrollView>
-      <TouchableHighlight onPress={ handleWorkTrack } >
-        <Stopwatch
-          laps
-          msecs
-          start={isStopwatchStart}
-          reset={resetStopwatch}
-          options={options}
+  return !state.working ? (
+      <View style={styles.container}>
+        <Icon
+          name='sign-out'
+          color='#ffffff'
+          type='font-awesome'
+          onPress={handleLogout}
+          iconStyle={styles.iconPos}
+          size={30}
         />
-      </TouchableHighlight>
 
-    </View>
-  );
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={ require('../../assets/images/plock.png') }
+              style={styles.welcomeImage}
+            />
+          </View>
+
+          <Text style={styles.welcome}>¿What do you want to do?</Text>
+
+          <View style={styles.move}>
+
+            <View style={styles.button}>
+              <Button
+                color = '#ad0404'
+                title = 'Create Track'
+                onPress={handleCreateTrack}
+              />
+            </View>
+
+            <View style={styles.button}>
+              <Button
+                color = '#37435D'
+                title = 'See my tracks'
+                onPress={handleSeeTracks}
+              />
+            </View>
+
+            <View style={styles.button}>
+              <Button
+                color = '#37435D'
+                title = 'Stats'
+                onPress={handleStatsUser}
+              />
+            </View>
+
+
+          </View>
+        </ScrollView>
+      </View>
+  ): (
+    <View style={styles.container}>
+        <Icon
+          name='sign-out'
+          color='#ffffff'
+          type='font-awesome'
+          onPress={handleLogout}
+          iconStyle={styles.iconPos}
+          size={30}
+        />
+
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={ require('../../assets/images/plock.png') }
+              style={styles.welcomeImage}
+            />
+          </View>
+
+          <Text style={styles.welcome}>¿What do you want to do?</Text>
+
+          <View style={styles.move}>
+
+            <View style={styles.button}>
+              <Button
+                color = '#ad0404'
+                title = 'Create Track'
+                onPress={handleCreateTrack}
+              />
+            </View>
+
+            <View style={styles.button}>
+              <Button
+                color = '#37435D'
+                title = 'See my tracks'
+                onPress={handleSeeTracks}
+              />
+            </View>
+
+            <View style={styles.button}>
+              <Button
+                color = '#37435D'
+                title = 'Stats'
+                onPress={handleStatsUser}
+              />
+            </View>
+
+          </View>
+        </ScrollView>
+        <TouchableHighlight onPress={ handleWorkTrack } >
+          <Stopwatch
+            laps
+            msecs
+            start={isStopwatchStart}
+            reset={resetStopwatch}
+            options={options}
+          />
+        </TouchableHighlight>
+    </View>      
+  )
 };
 
 export default HomeScreen;
@@ -151,8 +199,7 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20
+    marginTop: -50,
   },
   welcomeImage: {
     width: 251,
@@ -241,6 +288,11 @@ const styles = StyleSheet.create({
   },
   move: {
     marginTop: 10
+  },
+  iconPos: {
+    marginTop: 38,
+    marginLeft: 300
+
   }
 });
 

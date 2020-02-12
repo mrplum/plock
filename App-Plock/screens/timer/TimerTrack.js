@@ -5,41 +5,24 @@ import {
   ScrollView,
   StyleSheet,
   Button,
+  AsyncStorage,
+  Text,
+  View,
+  TouchableHighlight,
 } from 'react-native';
-import { API_HOST } from 'react-native-dotenv';
-import { createHttpLink } from 'apollo-link-http';
-import { setContext } from 'apollo-link-context';
-import { AsyncStorage, Text, View, TouchableHighlight } from 'react-native';
-import ApolloClient from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import clientApollo from '../../util/clientApollo';
 import gql from 'graphql-tag';
-
 import { Stopwatch } from 'react-native-stopwatch-timer';
+import { AuthContext } from "../../components/StateContextProvider";
 
 const { useState } = React;
 
-const httpLink = createHttpLink({
-  uri: API_HOST
-});
-
-const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const userToken = await AsyncStorage.getItem('userToken');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      Authorization: userToken ? `Bearer ${userToken}` : ''
-    }
-  };
-});
-
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
-});
-//  importing library to use Stopwatch and Timer
 const TimerTrack = props => {
+
+  const { state, dispatch } = React.useContext(AuthContext);
+
+  const client = clientApollo();
+
   const [idInterval, setIdInterval] = useState(0);
   const [isStopwatchStart, setStopwatchStart] = useState(false);
   const [resetStopwatch, setResetStopwatch] = useState(false);
@@ -49,6 +32,7 @@ const TimerTrack = props => {
     setResetStopwatch(true);
 
     if (isStopwatchStart) {
+
       client
         .mutate({
           mutation: gql`
@@ -68,21 +52,21 @@ const TimerTrack = props => {
           }
         }).then(result => JSON.parse(JSON.stringify(result)))
           .then(result => {
-            console.log(result);
         });
     }
 
   };
 
-  const startStopStopWatch = async id => {
+  const startStopWatch = async id => {
     setStopwatchStart(!isStopwatchStart);
     setResetStopwatch(false);
 
-    const userId = await AsyncStorage.getItem('userId');
+    const userId = state.user;
 
     if (!isStopwatchStart) {
       const Datetime = new Date();
-    const f = Datetime.toString();
+      const fech = Datetime.toString();
+
       client
         .mutate({
           mutation: gql`
@@ -98,28 +82,26 @@ const TimerTrack = props => {
           variables: {
             track_id: id,
             user_id: userId,
-            start_at: f,
-            
+            start_at: fech,
           }
         })
         .then(result => JSON.parse(JSON.stringify(result)))
         .then(result => {
           setIdInterval(result.data.intervalStart.id);
+          dispatch({
+            type: "START"
+          });
         });
     } else {
-    const Datetime = new Date();
-    const fecha = Datetime.toString();
+      const Datetime = new Date();
+      const fecha = Datetime.toString();
+
       client
         .mutate({
           mutation: gql`
-            mutation trackSetIntervalEnd($id: Int!, $end_at: String!) {
+            mutation trackSetIntervalEnd($id: ID!, $end_at: String!) {
               intervalEnd(id: $id, endAt: $end_at) {
                 id
-                createdAt
-                updatedAt
-                track {
-                  name
-                }
               }
             }
           `,
@@ -128,7 +110,11 @@ const TimerTrack = props => {
             end_at: fecha
           }
         })
-        .then(result => console.log(result));
+        .then(result => {
+          dispatch({
+            type: "FINISHED"
+          });
+        })
     }
   };
   const choose = props.navigation.getParam('track', 'nothing');
@@ -136,6 +122,7 @@ const TimerTrack = props => {
 
   return (
     <View style={styles.container}>
+
       <View
         style={{
           flex: 1,
@@ -147,6 +134,7 @@ const TimerTrack = props => {
         <Text style={styles.welcomeContainer}>
           Description of the track: {choose.description}
         </Text>
+
         <Stopwatch
           laps
           msecs
@@ -157,19 +145,23 @@ const TimerTrack = props => {
           options={options}
           // options for the styling
         />
+
         <TouchableHighlight
           onPress={() =>
-            startStopStopWatch(id)
+            startStopWatch(choose.id)
           }
         >
           <Text style={styles.welcome}>
             {isStopwatchStart ? 'STOP' : 'START'}
           </Text>
         </TouchableHighlight>
+
         <TouchableHighlight onPress={resetStopwatchFunction}>
           <Text style={styles.welcome}>RESET</Text>
         </TouchableHighlight>
+
       </View>
+
     </View>
   );
 };
@@ -191,101 +183,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#808080'
   },
-  contentContainer: {
-    paddingTop: 30
-  },
   welcomeContainer: {
     textAlign: 'center',
     fontSize: 20,
     color: 'white',
-  },
-  welcomeImage: {
-    width: 251,
-    height: 251,
-    marginTop: 35,
-    resizeMode: 'contain',
-    marginLeft: 0
   },
   welcome: {
     fontSize: 25,
     textAlign: 'center',
     color: 'white',
     marginTop: 15
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50
-  },
-  homeScreenFilename: {
-    marginVertical: 7
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)'
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center'
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center'
-  },
-  navigationFilename: {
-    marginTop: 5
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center'
-  },
-  helpLink: {
-    paddingVertical: 15
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7'
-  },
-  logout: {
-    marginTop: 130,
-    fontSize: 16,
-    color: '#ffffff',
-    textAlign: 'center'
-  },
-  button: {
-    marginTop: 15,
-    color: 'rgba(0,0,0, 1)',
-    paddingRight: 40,
-    paddingLeft: 40
-  },
-  move: {
-    marginTop: 10
   }
 });
 
