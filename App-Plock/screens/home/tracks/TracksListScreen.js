@@ -37,6 +37,7 @@ const TracksList = props => {
                     id
                     name
                     description
+                    status
                   }
                 }
               }
@@ -63,25 +64,37 @@ const TracksList = props => {
   };
 
   const trackList = list.map(track => (
+
     <View key={track.node.id}>
+
       <Text style={styles.welcome}>
         The name of the track is:
         {track.node.name}
       </Text>
+
+      <Text style={styles.welcome}>
+        The status of the track is:
+        {track.node.status}   
+      </Text>
+
       <View style={styles.button}>
         <Button
           color="#ad0404"
           title="Start to work on this track"
           onPress={() => handleWorkTrack(track.node)}
+          disabled={track.node.status == 'finished'}
         />
       </View>
+
       <View style={styles.button}>
         <Button
           color="#ad0404"
           title="Set date that you had worked on this track"
           onPress={() => handleSetTimeTrack(track.node)}
+          disabled={track.node.status == 'finished'}
         />
       </View>
+
     </View>
   ));
 
