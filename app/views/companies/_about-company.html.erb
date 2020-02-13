@@ -1,0 +1,19 @@
+<div id='about-company' class=''>
+
+  <div class="user-about">
+    <p>
+      <strong>Name:</strong>
+      <%= company.name %>
+    </p>
+
+    <p>
+      <strong>Description:</strong>
+      <%= company.description %>
+    </p>
+
+    <%= link_to edit_company_path(@company), class:"btnIcon btnIconColor btnEdit" do %>
+      <i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit
+    <% end %>
+
+    </div>
+</div>

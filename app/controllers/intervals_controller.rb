@@ -14,22 +14,31 @@ class IntervalsController < ApplicationController
   end
 
   def create
-    start_at = params[:start_at] || DateTime.now
-    end_at = params[:end_at] || start_at
+    
+    # puts '*'*50
+    # puts params
 
-    interval = interval_params.merge({
-      user_id: current_user.id,
-      track_id: params[:track_id],
-      start_at: start_at,
-      end_at: end_at
-    })
+    # start_at = params[:start_at] || DateTime.now
+    # end_at = params[:end_at] || start_at
 
-    interval = Interval.new(interval)
+    # interval = interval_params.merge({
+    #   user_id: current_user.id,
+    #   track_id: params[:track_id],
+    #   start_at: start_at,
+    #   end_at: end_at
+    # })
+
+    # interval = Interval.new(interval)
 
     respond_to do |format|
-      if interval.save
+      if true
+        # format.json { redirect_to track_path(interval.track), status: :created, location: interval }
+        format.json do
+          track = Track.includes(:intervals => :user).find(params[:track_id])
+          render 'tracks/_track_interval'#, track: track
+        end
+        format.js { 'ok' }
         format.html { redirect_to track_path(interval.track), notice: 'Interval was successfully created.' }
-        format.json { redirect_to track_path(interval.track), status: :created, location: interval }
       else
         format.html { redirect_to track_path(interval.track), flash: {danger: interval.errors.full_messages.join('. ')}}
         format.json { render json: interval.errors, status: :unprocessable_entity }
@@ -42,6 +51,7 @@ class IntervalsController < ApplicationController
       if @interval.update(interval_params.merge({end_at: DateTime.now}))
         format.html { redirect_to track_path(@interval.track), notice: 'Interval was successfully updated.' }
         format.json { redirect_to track_path(@interval.track), status: :ok, location: @interval }
+        format.js { "ok" }
       else
         format.html { redirect_to track_path(@interval.track), notice: @interval.error }
         format.json { render json: @interval.errors, status: :unprocessable_entity }

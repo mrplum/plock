@@ -1,4 +1,7 @@
-<h1>New intertval</h1>
+<div class="form-team-b">
+  <div class="form-team-c">
+
+<p> <h2 class="text-center text-white">New Interval</h2></p>
 
 <%= form_with(model: [@track, @interval], local: true) do |form| %>
   <% if @interval.errors.any? %>
@@ -15,12 +18,14 @@
 
   <%= form.hidden_field :close_track %>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
+  <div class="form-group">
+    <div class="input-group">
+      <span class="input-group-addon"></span>
+      <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
+    </div>
   </div>
 
-  <div class="field">
+   <div class="field">
     <%= form.label :start_at %>
     <%= form.datetime_select :start_at %>
   </div>
@@ -30,9 +35,15 @@
     <%= form.datetime_select :end_at %>
   </div>
 
-  <div class="actions">
-    <%= form.submit 'Submit' %>
+  <div class="form-group">
+    <%= form.submit class: "btn btn-new-team login-btn btn-block" %>
   </div>
 
-  <%= link_to 'Back', track_path(@track) %>
+  <div class="or-seperator"></div>
+
+  <%= link_to track_path(@track), html_options = {class: "btn btn-light navbar-btn-team"} do %>
+        <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back
+    <% end %>
 <% end %>
+</div>
+</div>

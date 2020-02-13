@@ -5,7 +5,7 @@
         <div class="card-header" style="text-align: center;"> <%= project.name %> </div>
         <div class="card-body">
           <h5 class="card-title"> start at </h5>
-          <p class="card-text"> <%= project.start_at.strftime("%F %T") %> </p>
+          <p class="card-text"> <%= project.start_at&.strftime("%F %T") %> </p>
           <%= link_to project, class: "btnIcon btnIconColor btnShow" do %>
             <i class="fa fa-eye text-light"></i>
           <% end %>

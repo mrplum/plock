@@ -1,0 +1,71 @@
+<div id='track-interval' class='track-interval hidden'>
+
+  <% if track.intervals.empty? %>
+      <p> </p>
+  <% else %>
+    <table class = "table table-hover table-dark" style="width: 80%; margin-left: 10%;">
+      <thead>
+        <tr class="text-center">
+          <th> Start </th>
+          <th> End </th>
+          <th> User </th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <% track.intervals.each do |interval| %>
+        <tr class="text-center">
+          <td><%= interval.start_at.strftime("%F %T") %>&nbsp&nbsp</td>
+          <td> <%= interval.end_at.strftime("%F %T") %> &nbsp</td>
+          <td><%= "#{interval.user.name} #{interval.user.lastname}" %>&nbsp</td>
+          <td>
+            <%= link_to track_interval_path(track_id: track.id, id: interval.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btnIcon btnIconColor btnTrash" do %>
+              <i class="fa fa-trash text-light"></i>
+            <% end %>
+          </td>
+        </tr>
+      <%end%>
+    </table>
+  <% end %>
+
+<div class="cent-button">
+  <% if track.unstarted? %>
+    <%= form_with(model: [track, Interval.new], remove: true, id: "id-form-start") do |form| %>
+      <div class="actions">
+        <%= form.hidden_field 'start_track', value: true %>
+        <%= form.button class: 'btnIcon btnIconColor btnStartResume' do %>
+          <i class="fa fa-play text-white"></i> start
+        <% end %>
+    <% end %>
+    <%= link_to new_track_interval_path(track.id, close_track: true), class: 'btnIcon btnIconColor btnComplete' do %>
+        <i class="fa fa-list-ul text-white"></i> complete
+    <% end %>
+  </div>
+
+  <% elsif track.in_progress? %>
+    <% if track.open_interval %>
+      <%= form_with(model: [track, @track.open_interval], remove: true, id: "id-form-pause") do |form| %>
+        <div class="actions">
+          <%= form.hidden_field 'start_track', value: true %>
+          <%= form.button id: "button-pause-interval", class: 'btnIcon btnIconColor btnFinishPause' do %>
+            <i class="fa fa-pause text-white"></i> Pause
+          <% end %>
+        </div>
+      <% end %>
+
+    <% else %>
+      <%= form_with(model: [track, Interval.new], remove: true,id: "id-form-resume") do |form| %>
+        <div class="actions">
+          <%= form.hidden_field 'start_track', value: true %>
+          <%= form.button id: "button-resume-interval", class: 'btnIcon btnIconColor btnStartResume' do %>
+            <i class="fa fa-retweet text-white"></i> resume
+          <% end %>
+        <% end %>
+        <%= link_to new_track_interval_path(track.id, close_track: true), class: 'btnIcon btnIconColor btnComplete' do %>
+          <i class="fa fa-list-ul text-white"></i> complete
+        <% end %>
+      </div>
+
+    <% end %>
+  <% end %>
+</div>
+</div>

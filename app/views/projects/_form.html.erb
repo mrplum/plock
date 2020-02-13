@@ -1,3 +1,7 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
 <div class="form-team-c">
 <%= form_with(model: project, local: true) do |form| %>
   <% if project.errors.any? %>
@@ -32,10 +36,12 @@
       <%= form.text_field :cost, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Cost' %>				
     </div>
   </div>
-
+  
   <div class="form-group">
-    <a style="color: white;"> start at: </a>
-    <%= form.date_select :start_at, :class => 'form-control' %>				
+    <div class="input-group">
+      <span class="input-group-addon"></span>
+      <%= form.text_field :start_at, id: "datepicker", placeholder: "Selected date", class: "form-control", data: {date_format: 'YYYY/MM/DD'} %>
+    </div>
   </div>
 
   <div class="form-group">
@@ -54,3 +60,9 @@
 
 <% end %>
 </div>
+
+<script>
+  $("#datepicker").datepicker({
+      uiLibrary: 'bootstrap4'
+  });
+</script>

@@ -1,0 +1,26 @@
+<div id='company-project' class='company-project hidden'>
+  <div class="user-card-container">
+
+    <% if projects.empty? %>
+      <p> Not any project </p>
+    <% else %>  
+      <% projects.each do |project| %>
+        <div class="card-project">
+          <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header" style="text-align: center;"> <%= project.name %> </div>
+            <div class="card-body">
+              <h5 class="card-title"> <%= project.repository %> </h5>
+              <p class="card-text"> cost: <%= project.cost %> </p>
+              <p class="card-text"> start at: <%= project.start_at %> </p>
+              <%= link_to project, class: "btnIcon btnIconColor btnShow" do %>
+                <i class="fa fa-eye text-light"></i>
+              <% end %>
+            </div>  
+          </div>
+        </div>
+      <%end%>
+    <% end %>
+
+  </div>
+  
+</div>

@@ -1,44 +1,9 @@
-<p id="notice"><%= notice %></p>
+<%= render 'navbar-company', company: @company %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+<div class="page-content p-5" id="content">
 
-<p>
-  <strong>Description:</strong>
-  <%= @company.description %>
-</p>
-
-<td><%= link_to 'Edit', edit_company_path(@company) %></td> | 
-<td><%= link_to 'Add User to Company', company_subscribe_user_path(@company)%></td> 
-
-
-
-<h1> Projects </h1>
-  <% if @projects.empty? %>
-      <p> Not working in any project </p>
-  <% else %>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Repository</th>
-          <th>Cost</th>
-          <th>Start at</th>
-          <th colspan="3"></th>
-        </tr>
-      </thead>
-      <% @projects.each do |project| %>
-        <tr>
-            <td><%= project.name %></td>
-            <td><%= project.repository %></td>
-            <td><%= project.cost %></td>
-            <td><%= project.start_at %></td>
-            <td><%= link_to 'Show', project %></td>
-        </tr>
-      <%end%>
-    </table>
-<% end %>
-
-<%= link_to 'Back', profile_path %>
+  <%= render 'about-company', company: @company %>
+  <%= render 'company-user', users: @company.users %>
+  <%= render 'company-project', projects: @projects %>
+  
+</div>
