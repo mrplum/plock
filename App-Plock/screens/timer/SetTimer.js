@@ -7,7 +7,7 @@ import { AuthContext } from "../../components/StateContextProvider";
 
 const SetTimer = (props) => {
 
-  const { state } = React.useContext(AuthContext);
+  const { state, dispatch } = React.useContext(AuthContext);
 
   const client = clientApollo();
 
@@ -34,10 +34,10 @@ const SetTimer = (props) => {
   };
 
   const handleInit = async (date) => {
-    
+
     const userId = state.user;
     const dateTime = date.toString();
-    
+
     client
         .mutate({
           mutation: gql`
@@ -58,11 +58,12 @@ const SetTimer = (props) => {
         }).then(result => JSON.parse(JSON.stringify(result)))
           .then(result => {
             setIdInterval(result.data.intervalStart.id);
-            hideDatePicker()
+
+            hideDatePicker();
         })
-          .catch(error => {
-            console.log(error);
-            alert(error); // eslint-disable-line no-alert
+        .catch(error => {
+          console.log(error);
+          alert(error); // eslint-disable-line no-alert
       });
 
   };
@@ -71,26 +72,25 @@ const SetTimer = (props) => {
     const dateTime = date.toString();
 
     client
-        .mutate({
-          mutation: gql`
-            mutation trackSetIntervalEnd($id: ID!, $end_at: String!) {
-              intervalEnd(id: $id, endAt: $end_at) {
-                id
-              }
+      .mutate({
+        mutation: gql`
+          mutation trackSetIntervalEnd($id: ID!, $end_at: String!) {
+            intervalEnd(id: $id, endAt: $end_at) {
+              id
             }
-          `,
-          variables: {
-            id: idInterval,
-            end_at: dateTime
           }
-        })
-        .then(result => console.log(result))
-        .then(result => {
-          alert('Plock-Time loaded succesfully');
-          hideDatePicker();
-        }).catch(error => {
-            console.log(error);
-      });
+        `,
+        variables: {
+          id: idInterval,
+          end_at: dateTime
+      }
+      .then(result => {
+        alert('Plock-Time loaded succesfully');
+        hideDatePicker();
+      }).catch(error => {
+        console.log(error);
+      })
+    });
   };
 
   return (
@@ -124,8 +124,8 @@ const SetTimer = (props) => {
 
         <View style={ styles.button }>
           <Button title="Set End Date" onPress={ seeDatePick } color="#ad0404" />
-        </View>      
-      
+        </View>
+
         <DateTimePickerModal
           isVisible={ datePickSee }
           mode="datetime"

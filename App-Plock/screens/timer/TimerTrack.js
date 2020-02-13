@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Platform,
@@ -13,25 +13,24 @@ import {
 import clientApollo from '../../util/clientApollo';
 import gql from 'graphql-tag';
 import { Stopwatch } from 'react-native-stopwatch-timer';
-import { AuthContext } from "../../components/StateContextProvider";
-
-const { useState } = React;
+import { StackActions } from '@react-navigation/native';
+import { AuthContext, Chronometer } from "../../components/StateContextProvider";
 
 const TimerTrack = props => {
-
+  
   const { state, dispatch } = React.useContext(AuthContext);
 
   const client = clientApollo();
 
-  const [idInterval, setIdInterval] = useState(0);
-  const [isStopwatchStart, setStopwatchStart] = useState(false);
-  const [resetStopwatch, setResetStopwatch] = useState(false);
+  const choose = props.navigation.getParam('track', 'nothing');
+  const timePast = props.navigation.getParam('timerStart', 0);
+  const id = choose.id;
+  const userId = state.user;
+  const intervalId = state.interval;
 
   const resetStopwatchFunction = () => {
-    setStopwatchStart(false);
-    setResetStopwatch(true);
 
-    if (isStopwatchStart) {
+    if (state.working) {
 
       client
         .mutate({
@@ -48,7 +47,7 @@ const TimerTrack = props => {
             }
           `,
           variables: {
-            id: idInterval
+            id: intervalId
           }
         }).then(result => JSON.parse(JSON.stringify(result)))
           .then(result => {
@@ -57,16 +56,11 @@ const TimerTrack = props => {
 
   };
 
-  const startStopWatch = async id => {
-    setStopwatchStart(!isStopwatchStart);
-    setResetStopwatch(false);
+  const startStopWatch = () => {
 
-    const userId = state.user;
-
-    if (!isStopwatchStart) {
+    if (state.working == false) {
       const Datetime = new Date();
       const fech = Datetime.toString();
-
       client
         .mutate({
           mutation: gql`
@@ -80,22 +74,30 @@ const TimerTrack = props => {
             }
           `,
           variables: {
-            track_id: id,
+            track_id: choose.id,
             user_id: userId,
             start_at: fech,
           }
         })
         .then(result => JSON.parse(JSON.stringify(result)))
         .then(result => {
-          setIdInterval(result.data.intervalStart.id);
+          dispatch({
+            type: "SETINTERVAL",
+            payload: result.data.intervalStart.id
+          });
           dispatch({
             type: "START"
           });
+          dispatch({
+            type: "SETDATE",
+            payload: Datetime
+          });
         });
     } else {
-      const Datetime = new Date();
-      const fecha = Datetime.toString();
-
+      const Dateclock = new Date();
+      const fecha = Dateclock.toString();
+      //const diff = Dateclock.getTime() - newFecha.getTime();
+      //const dateDiff = new Date(diff);
       client
         .mutate({
           mutation: gql`
@@ -106,19 +108,23 @@ const TimerTrack = props => {
             }
           `,
           variables: {
-            id: idInterval,
+            id: intervalId,
             end_at: fecha
           }
         })
         .then(result => {
           dispatch({
+            type: "REMOVEINTERVAL"
+          });
+          dispatch({
             type: "FINISHED"
+          });
+          dispatch({
+            type: "REMOVEDATE"
           });
         })
     }
   };
-  const choose = props.navigation.getParam('track', 'nothing');
-  const id = choose.id;
 
   return (
     <View style={styles.container}>
@@ -135,30 +141,30 @@ const TimerTrack = props => {
           Description of the track: {choose.description}
         </Text>
 
-        <Stopwatch
-          laps
-          msecs
-          start={isStopwatchStart}
-          // To start
-          reset={resetStopwatch}
-          // To reset
-          options={options}
-          // options for the styling
-        />
+        <Chronometer running={state.working} workDate={timePast} />
 
         <TouchableHighlight
-          onPress={() =>
-            startStopWatch(choose.id)
-          }
-        >
+          onPress={startStopWatch} >
+
           <Text style={styles.welcome}>
-            {isStopwatchStart ? 'STOP' : 'START'}
+            {state.working ? 'STOP' : 'START'}
           </Text>
+
         </TouchableHighlight>
 
         <TouchableHighlight onPress={resetStopwatchFunction}>
+
           <Text style={styles.welcome}>RESET</Text>
+
         </TouchableHighlight>
+
+        <View style={styles.button}>
+          <Button
+            color = '#37435D'
+            title = 'Back to home'
+            onPress={() => props.navigation.navigate('Home')}
+          />
+        </View>
 
       </View>
 
@@ -193,6 +199,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     marginTop: 15
+  },
+  button: {
+    marginTop: 15,
+    color: 'rgba(0,0,0, 1)',
+    paddingRight: 40,
+    paddingLeft: 40
   }
 });
 

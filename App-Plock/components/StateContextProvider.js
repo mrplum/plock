@@ -1,5 +1,6 @@
 import React from 'react';
 import { AsyncStorage } from 'react-native';
+import { Stopwatch } from 'react-native-stopwatch-timer'
 
 export const AuthContext = React.createContext(); // added this
 
@@ -8,6 +9,8 @@ const initialState = {
   user: null,
   token: null,
   working: false,
+  interval: null,
+  workingDate: null,
 };
 
 const reducer = (state, action) => {
@@ -37,9 +40,59 @@ const reducer = (state, action) => {
         ...state,
         working: true
       };
+    case "SETINTERVAL":
+      return {
+        ...state,
+        interval: action.payload
+      };
+    case "REMOVEINTERVAL":
+      return {
+        ...state,
+        interval: null
+      };
+    case "SETDATE":
+      return {
+        ...state,
+        workingDate: action.payload
+      };
+    case "REMOVEDATE":
+      return {
+        ...state,
+        workingDate: null
+      };  
     default:
       return state;
   }
 };
 
-export { initialState, reducer };
+const Chronometer = (props) => {
+  return(
+    <Stopwatch
+      laps
+      start={props.running}
+      startTime= { props.workDate }
+      reset={false}
+      // To reset
+      options={options}
+      // options for the styling
+    />
+  )
+};
+
+export { initialState, reducer, Chronometer };
+
+const options = {
+  container: {
+    marginTop: 35,
+    backgroundColor: '#ad0404',
+    padding: 5,
+    borderRadius: 5,
+    width: 200,
+    alignItems: 'center'
+  },
+  text: {
+    fontSize: 25,
+    color: '#ffffff',
+    marginLeft: 7,
+  }
+};

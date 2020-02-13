@@ -12,7 +12,9 @@ import { setContext } from 'apollo-link-context';
 import clientApollo from '../../../util/clientApollo'
 import StateContext from '../../../components/StateContext';
 import gql from 'graphql-tag';
-
+import {
+Icon
+} from 'react-native-elements';
 import { AuthContext } from "../../../components/StateContextProvider";
 
 const TracksList = props => {
@@ -24,32 +26,32 @@ const TracksList = props => {
   const { state, dispatch } = React.useContext(AuthContext);
 
   useEffect(() => {
-      client
-        .query({
-          query: gql`
-            {
-              user {
-                tracks {
-                  edges{
-                    node{
-                      id
-                      name
-                      description
-                    }
+    client
+      .query({
+        query: gql`
+          {
+            user {
+              tracks {
+                edges{
+                  node{
+                    id
+                    name
+                    description
                   }
                 }
               }
             }
-          `
-        })
-        .then(result => JSON.parse(JSON.stringify(result)))
-        .then(result => {
-          setList(result.data.user.tracks.edges);
-        })
-        .catch(error => {
-          console.log(error);
-          alert('You dont have tracks for work');
-        });
+          }
+        `
+      })
+      .then(result => JSON.parse(JSON.stringify(result)))
+      .then(result => {
+        setList(result.data.user.tracks.edges);
+      })
+      .catch(error => {
+        console.log(error);
+        alert('You dont have tracks for work');
+      });
   },[flag]);
 
   const handleWorkTrack = track => {
@@ -84,6 +86,7 @@ const TracksList = props => {
   ));
 
   return (
+
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
@@ -122,5 +125,13 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0, 1)',
     paddingRight: 40,
     paddingLeft: 40
+  },
+  iconPos: {
+    marginTop: 15,
+    marginRight: 300
+
+  },
+  position:{
+    marginTop: 5
   }
 });

@@ -31,7 +31,7 @@ export const CreateTrackScreen = props => {
 
   const createTrack = async (id) => {
     const userid = state.user;
-    
+
     client
       .mutate({
         mutation: gql`
@@ -52,7 +52,7 @@ export const CreateTrackScreen = props => {
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(result => {
         Alert.alert(
-          'The track had created succesfully',
+          'The track has been created succesfully',
           'Choose an option: ',
             [
               {

@@ -16,6 +16,7 @@
     "@expo/samples": "~36.0.0",
     "@expo/vector-icons": "~10.0.0",
     "@react-native-community/datetimepicker": "2.1.0",
+    "@react-navigation/native": "^5.0.3",
     "@react-navigation/web": "~1.0.0-alpha.9",
     "apollo-boost": "^0.4.7",
     "apollo-cache-inmemory": "^1.6.5",
