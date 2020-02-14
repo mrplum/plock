@@ -16,8 +16,8 @@ class MutationTypeTest < ActiveSupport::TestCase
 
 	test 'interval start' do
 		query_string = <<-GRAPHQL
-		mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String! ) {
-              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at) {
+		mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String!, $description: String ) {
+              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at, description: $description) {
 				track {
 					name
 				}
@@ -31,7 +31,7 @@ class MutationTypeTest < ActiveSupport::TestCase
 		track_id = @track.id
 		result = PlockSchema.execute(
 		query_string,
-			variables: { track_id: track_id, user_id: @user.id, start_at: datetime.to_s },
+			variables: { track_id: track_id, user_id: @user.id, start_at: datetime.to_s, description: @description },
 			context: {}
 		)
 		track_name = result['data']['intervalStart']['track']['name']
@@ -47,8 +47,8 @@ class MutationTypeTest < ActiveSupport::TestCase
 	test 'interval end' do
 		interval_id = @interval.id
 		query_string = <<-GRAPHQL
-		mutation trackSetIntervalEnd($id: ID!, $end_at: String!) {
-              intervalEnd(id: $id, endAt: $end_at) {
+		mutation trackSetIntervalEnd($id: ID!, $end_at: String!, $description: String) {
+              intervalEnd(id: $id, endAt: $end_at, description: $description) {
 				id
 				startAt
 				endAt
@@ -60,7 +60,7 @@ class MutationTypeTest < ActiveSupport::TestCase
 		GRAPHQL
 		result = PlockSchema.execute(
 			query_string,
-			variables: { id: interval_id, end_at: 2.hours.from_now.to_s },
+			variables: { id: interval_id, end_at: 2.hours.from_now.to_s, description: @description },
 			context: {}
 		)
 
