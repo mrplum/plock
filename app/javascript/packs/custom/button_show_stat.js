@@ -89,7 +89,27 @@ if (document.getElementById('button-pause-interval') !== null) {
   let buttonPauseInterval = document.getElementById('button-pause-interval')
   buttonPauseInterval.addEventListener('click', function(event){
     event.preventDefault();
-    
+    let form = document.getElementById("id-form-pause");
+    let token = document.head.querySelector('meta[name="csrf-token"]').content;
+    let start_track = document.getElementById('interval_start_track').value;
+    $.ajax({
+      type: form.method,
+      url: form.action,
+      headers: {
+        'X-CSRF-Token': token 
+      },
+      data: {
+        interval:{
+          start_track: start_track
+        }
+      },
+      success: function(response) {
+        document.getElementById('track-interval').innerHTML = response.responseText;
+      },
+      error: function(response) {
+        console.log('error')
+        }
+    }); 
   });
 } 
 
@@ -100,61 +120,57 @@ if (document.getElementById('button-resume-interval') !== null) {
     let form = document.getElementById("id-form-resume");
     let token = document.head.querySelector('meta[name="csrf-token"]').content;
     let start_track = document.getElementById('interval_start_track').value;
-    // fetch(form.action, {
-      // method: form.method,
-      // headers: {
-        // 'X-CSRF-Token': token
-      // }, 
-      // body: JSON.stringify({start_track: start_track}),
-    // } )
-      // .then( response => {console.log(response) })
-      $.ajax({
-        type: form.method,
-        url: form.action,
-        // dataType: 'json',
-        // contentType: 'application/json',
-        data: {
-          interval:{
-            start_track: start_track
-          }
-        },
-        success: function(response) {
-          container = document.getElementById('track-interval')
-          container.HMTL(response)
-        },
-        error: function(response) {
-          console.log('im here with some error');
+    $.ajax({
+      type: form.method,
+      url: form.action,
+      headers: {
+        'X-CSRF-Token': token 
+      },
+      data: {
+        interval:{
+          start_track: start_track
         }
-      });  
-      
+      },
+      success: function(response) {
+        document.getElementById('track-interval').innerHTML = response.responseText;
+      },
+      error: function(response) {
+          document.getElementById('track-interval').innerHTML = response.responseText;
+          console.log('/////////////');
+          console.log(document.getElementById('track-interval').innerHTML);
+          
+        }
+    }); 
   });
-} 
+}
 
-if (document.getElementById('id-form-start') !== null) {
-  let buttonIdFormStart = document.getElementById('id-form-start')
-  buttonIdFormStart.addEventListener('click', function(event){
+if (document.getElementById('button-start-interval') !== null) {
+  let buttonStartInterval = document.getElementById('button-start-interval')
+  buttonStartInterval.addEventListener('click', function(event){
     event.preventDefault();
-    
+    let form = document.getElementById("id-form-start");
+    let token = document.head.querySelector('meta[name="csrf-token"]').content;
+    let start_track = document.getElementById('interval_start_track').value;
+    $.ajax({
+      type: form.method,
+      url: form.action,
+      headers: {
+        'X-CSRF-Token': token 
+      },
+      data: {
+        interval:{
+          start_track: start_track
+        }
+      },
+      success: function(response) {
+        document.getElementById('track-interval').innerHTML = response.responseText;
+      },
+      error: function(response) {
+          console.log('error');
+        }
+    }); 
   });
-} 
-
-
-if (document.getElementById('id-form-pause') !== null) {
-  let buttonIdFormPause = document.getElementById('id-form-pause')
-  buttonIdFormPause.addEventListener('click', function(event){
-    event.preventDefault();
-    
-  });
-} 
-
-
-if (document.getElementById('id-form-Resume') !== null) {
-  let buttonIdFormResume = document.getElementById('id-form-Resume')
-  buttonIdFormResume.addEventListener('click', function(event){
-    event.preventDefault();
-    
-  });
-} 
+}
   
 function startButton(name1,name2,name3){
   if (document.getElementById(name1).classList.contains('hidden') &&
@@ -167,4 +183,4 @@ function startButton(name1,name2,name3){
           document.getElementById(name3).classList.add('hidden')
           document.getElementById(name1).classList.remove('hidden')
     }
-  }
+}

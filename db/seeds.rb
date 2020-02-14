@@ -72,6 +72,7 @@ track_values = [
     {
         name: 'Track Three',
         description: 'Is a example',
+        status: :finished,
         user: member_user,
         project: project,
     },

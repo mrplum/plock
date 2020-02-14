@@ -18,7 +18,7 @@
           <td> <%= interval.end_at.strftime("%F %T") %> &nbsp</td>
           <td><%= "#{interval.user.name} #{interval.user.lastname}" %>&nbsp</td>
           <td>
-            <%= link_to track_interval_path(track_id: track.id, id: interval.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btnIcon btnIconColor btnTrash" do %>
+            <%= link_to track_interval_path(track_id: @track.id, id: interval.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btnIcon btnIconColor btnTrash" do %>
               <i class="fa fa-trash text-light"></i>
             <% end %>
           </td>
@@ -32,7 +32,7 @@
     <%= form_with(model: [track, Interval.new], remove: true, id: "id-form-start") do |form| %>
       <div class="actions">
         <%= form.hidden_field 'start_track', value: true %>
-        <%= form.button class: 'btnIcon btnIconColor btnStartResume' do %>
+        <%= form.button id: "button-start-interval", class: 'btnIcon btnIconColor btnStartResume' do %>
           <i class="fa fa-play text-white"></i> start
         <% end %>
     <% end %>
@@ -43,7 +43,7 @@
 
   <% elsif track.in_progress? %>
     <% if track.open_interval %>
-      <%= form_with(model: [track, @track.open_interval], remove: true, id: "id-form-pause") do |form| %>
+      <%= form_with(model: [track, track.open_interval], remove: true, id: "id-form-pause") do |form| %>
         <div class="actions">
           <%= form.hidden_field 'start_track', value: true %>
           <%= form.button id: "button-pause-interval", class: 'btnIcon btnIconColor btnFinishPause' do %>

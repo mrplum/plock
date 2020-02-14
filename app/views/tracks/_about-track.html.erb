@@ -17,8 +17,8 @@
       <%= track.status %>
     </p>
 
-  <% if @track.in_progress? %>
-    <%= form_with(model: [@track, @track.intervals.last], local: true) do |form| %>
+  <% if track.in_progress? %>
+    <%= form_with(model: [track, track.intervals.last], local: true) do |form| %>
       <div class="actions">
         <%= form.hidden_field 'close_track', value: true %>
         <%= form.submit 'Finish', class: 'btnIcon btnIconColor btnFinishPause pull-right' %>
@@ -26,7 +26,7 @@
     <% end %>
   <% end %>
   
-    <%= link_to edit_track_path(@track), class:"btnIcon btnIconColor btnEdit" do %>
+    <%= link_to edit_track_path(track), class:"btnIcon btnIconColor btnEdit" do %>
       <i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit
     <% end %>
 

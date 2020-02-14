@@ -14,28 +14,24 @@ class IntervalsController < ApplicationController
   end
 
   def create
-    
-    # puts '*'*50
-    # puts params
-
-    # start_at = params[:start_at] || DateTime.now
-    # end_at = params[:end_at] || start_at
-
-    # interval = interval_params.merge({
-    #   user_id: current_user.id,
-    #   track_id: params[:track_id],
-    #   start_at: start_at,
-    #   end_at: end_at
-    # })
-
-    # interval = Interval.new(interval)
+  
+    start_at = params[:start_at] || DateTime.now
+    end_at = params[:end_at] || start_at
+ 
+    interval = interval_params.merge({
+      user_id: current_user.id,
+      track_id: params[:track_id],
+      start_at: start_at,
+      end_at: end_at
+    })
+ 
+    interval = Interval.new(interval)
 
     respond_to do |format|
-      if true
-        # format.json { redirect_to track_path(interval.track), status: :created, location: interval }
+      if interval.save
         format.json do
           track = Track.includes(:intervals => :user).find(params[:track_id])
-          render 'tracks/_track_interval'#, track: track
+          render partial: "tracks/track_interval.html.erb", locals: {track: track} 
         end
         format.js { 'ok' }
         format.html { redirect_to track_path(interval.track), notice: 'Interval was successfully created.' }
@@ -49,8 +45,11 @@ class IntervalsController < ApplicationController
   def update
     respond_to do |format|
       if @interval.update(interval_params.merge({end_at: DateTime.now}))
+        format.json do
+          track = Track.includes(:intervals => :user).find(params[:track_id])
+          render partial: "tracks/track_interval.html.erb", locals: {track: track} 
+        end
         format.html { redirect_to track_path(@interval.track), notice: 'Interval was successfully updated.' }
-        format.json { redirect_to track_path(@interval.track), status: :ok, location: @interval }
         format.js { "ok" }
       else
         format.html { redirect_to track_path(@interval.track), notice: @interval.error }
@@ -62,8 +61,11 @@ class IntervalsController < ApplicationController
   def destroy
     @interval.destroy
     respond_to do |format|
+      format.json do
+        track = Track.includes(:intervals => :user).find(params[:track_id])
+        render partial: "tracks/track_interval.html.erb", locals: {track: track} 
+      end
       format.html { redirect_to track_url(@interval.track), notice: 'Project was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
