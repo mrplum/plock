@@ -53,11 +53,8 @@ const HomeScreen = (props) => {
           }
         `
       })
-      .then(dispatch({
-            type: "LOGOUT"
-          });
-      .then(props.navigation.navigate('Auth'))
-      );
+      .then(dispatch({ type: "LOGOUT" }))
+      .then(props.navigation.navigate('Auth'));
   };
 
   return (
