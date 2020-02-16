@@ -1,42 +1,29 @@
 import React,{ useEffect, useState } from 'react';
 import {
-  Platform, StyleSheet, Text, Button, View, ScrollView
+  Platform,
+  StyleSheet,
+  Text,
+  Button,
+  View,
+  ScrollView,
+  AsyncStorage
 } from 'react-native';
-
-import { API_HOST } from 'react-native-dotenv';
-import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import { AsyncStorage } from 'react-native';
-import ApolloClient from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import clientApollo from '../../../util/clientApollo'
+import StateContext from '../../../components/StateContext';
 import gql from 'graphql-tag';
-
-
-const httpLink = createHttpLink({
-  uri: API_HOST,
-});
-
-const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const userToken = await AsyncStorage.getItem('userToken');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      Authorization: userToken ? `Bearer ${userToken}` : '',
-    },
-  };
-});
-
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
-
+import {
+Icon
+} from 'react-native-elements';
+import { AuthContext } from "../../../components/StateContextProvider";
 
 const TracksList = props => {
-  const [list, setList] = useState([]); 
-  const [uId, setUid] = useState();
+  const [list, setList] = useState([]);
+  const [flag, setFlag] = useState(true);
+  const client = clientApollo();
+
+  // Context changes are using dispatch function
+  const { state, dispatch } = React.useContext(AuthContext);
 
   useEffect(() => {
     client
@@ -44,63 +31,81 @@ const TracksList = props => {
         query: gql`
           {
             user {
-              id
               tracks {
-                id
-                name
-                description
+                edges{
+                  node{
+                    id
+                    name
+                    description
+                    status
+                  }
+                }
               }
             }
           }
-        `,
+        `
       })
-      .then((result) => JSON.parse(JSON.stringify(result)))
-      .then((result) => {
-        setList(result.data.user.tracks);
-        setUid(result.data.user.id);
+      .then(result => JSON.parse(JSON.stringify(result)))
+      .then(result => {
+        setList(result.data.user.tracks.edges);
       })
-      .catch((error) => {
+      .catch(error => {
+        console.log(error);
         alert('You dont have tracks for work');
       });
-  }, [uId]);
+  },[flag]);
 
   const handleWorkTrack = track => {
-    props.navigation.navigate('Tracker', { 'track': track });
+    props.navigation.navigate('Tracker', { track });
   };
 
   const handleSetTimeTrack = track => {
-    props.navigation.navigate('SetTime', { 'track': track });
-  }
+    props.navigation.navigate('SetTime', { track });
+  };
 
-  const trackList = list.map((track) => (
-    <View key={track.id}>
+  const trackList = list.map(track => (
+
+    <View key={track.node.id}>
+
       <Text style={styles.welcome}>
         The name of the track is:
-        {track.name}
+        {track.node.name}
       </Text>
+
+      <Text style={styles.welcome}>
+        The status of the track is:
+        {track.node.status}   
+      </Text>
+
       <View style={styles.button}>
         <Button
           color="#ad0404"
-          title="Start to work in this track"
-          onPress={() => handleWorkTrack(track)}
+          title="Start to work on this track"
+          onPress={() => handleWorkTrack(track.node)}
+          disabled={track.node.status == 'finished'}
         />
       </View>
+
       <View style={styles.button}>
         <Button
           color="#ad0404"
-          title="Set date that you have been worked in this track"
-          onPress={() => handleSetTimeTrack(track)}
+          title="Set date that you had worked on this track"
+          onPress={() => handleSetTimeTrack(track.node)}
+          disabled={track.node.status == 'finished'}
         />
       </View>
+
     </View>
   ));
 
-  return(
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.container}>
-          {trackList}
-        </View>
-      </ScrollView>
+  return (
+
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
+      <View style={styles.container}>{trackList}</View>
+    </ScrollView>
   );
 };
 
@@ -109,110 +114,37 @@ export default TracksList;
 TracksList.navigationOptions = {
   title: 'List of Tracks',
   headerStyle: {
-      backgroundColor: '#808080',
-     },headerTintColor: '#fff',
-
+    backgroundColor: '#808080'
+  },
+  headerTintColor: '#fff'
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#808080',
+    backgroundColor: '#808080'
   },
   contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 251,
-    height: 251,
-    marginTop: 70,
-    resizeMode: 'contain',
-    marginLeft: 0,
+    paddingTop: 30
   },
   welcome: {
     fontSize: 17,
     textAlign: 'center',
     color: 'white',
-    marginTop: 18,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-  logout: {
-    marginTop: 90,
-    fontSize: 16,
-    color: '#ffffff',
-    textAlign: 'center',
+    marginTop: 18
   },
   button: {
     marginTop: 15,
     color: 'rgba(0,0,0, 1)',
     paddingRight: 40,
-    paddingLeft: 40,
+    paddingLeft: 40
   },
-  move: {
-    marginTop: 10,
+  iconPos: {
+    marginTop: 15,
+    marginRight: 300
+
   },
+  position:{
+    marginTop: 5
+  }
 });

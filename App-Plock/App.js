@@ -1,15 +1,19 @@
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import * as React from "react";
+
+import { useState } from 'react';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
+import { AuthContext, initialState, reducer } from './components/StateContextProvider';
 
 
-export default function App(props) {
+function App (props) {
 
     const [isLoadingComplete, setLoadingComplete] = useState(false);
+    const [state, dispatch] = React.useReducer(reducer, initialState);
 
     if (!isLoadingComplete && !props.skipLoadingScreen) {
       return (
@@ -21,15 +25,23 @@ export default function App(props) {
       );
     } else {
       return (
-        
+        <AuthContext.Provider
+          value={{
+            state,
+            dispatch
+          }}
+        >
+
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <AppNavigator />
           </View>
-        
+
+        </AuthContext.Provider>
       );
     }
 }
+export default App;
 
 async function loadResourcesAsync() {
   await Promise.all([

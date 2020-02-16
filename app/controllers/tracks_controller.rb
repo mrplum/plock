@@ -1,8 +1,8 @@
 # Track class is for model the differents tasks of each project
 class TracksController < ApplicationController
   before_action :get_track, only: [:show, :edit, :update, :destroy]
-  before_action :get_project, only: [:new, :create, :update]
-  before_action :check_permissions, only: [:new, :create, :update]
+  before_action :get_project, only: [:new, :create, :update, :destroy]
+  before_action :check_permissions, only: [:new, :create, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /tracks
@@ -60,7 +60,7 @@ class TracksController < ApplicationController
   def destroy
     @track.destroy
     respond_to do |format|
-      format.html { redirect_to tracks_url, notice: 'Track was successfully destroyed.' }
+      format.html { redirect_to project_path(@project.id), notice: 'Track was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -83,9 +83,13 @@ class TracksController < ApplicationController
       end
     end
 
+    def check_team_invitation
+      @project.team.team_users.find_by(user_id: current_user.id).incorporated?
+    end
+
     def check_permissions
-      unless @project.team_id.in?(current_user.teams.pluck(:id))
-        redirect_to project_path(params[:project_id]), flash: { danger: 'Not authorized for create track!' }
+      unless @project.team_id.in?(current_user.teams.pluck(:id)) && check_team_invitation
+        redirect_to project_path(@project.id), flash: { danger: 'Not authorized!' }
       end
     end
 end

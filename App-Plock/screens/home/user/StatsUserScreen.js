@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import {
   ButtonGroup,
+  Button,
   Text
 } from 'react-native-elements'
 import clientApollo from '../../../util/clientApollo'
@@ -69,9 +70,39 @@ const StatsUserScreen = () => {
     setTypeStats(type)
   }
 
-  const component1 = () => <Text style = { styles.textButtonGroup } onPress = {() => handleChange('status')}>STATUS</Text>
-  const component2 = () => <Text style = { styles.textButtonGroup } onPress = {() => handleChange('projects')}>PROJECTS</Text>
-  const component3 = () => <Text style = { styles.textButtonGroup } onPress = {() => handleChange('days')}>DAYS</Text>
+  const component1 = () => {
+    return(
+      <Button 
+        title = 'STATUS'
+        titleStyle = { styles.titleStyle }
+        type = 'clear'
+        onPress = {() => handleChange('status')}
+      />
+    )
+  }
+
+  const component2 = () => {
+    return (
+      <Button
+        title = 'PROJECTS'
+        titleStyle = { styles.titleStyle }
+        type = 'clear'
+        onPress = {() => handleChange('projects')}
+      />
+    )
+  }
+
+  const component3 = () => {
+    return (
+      <Button 
+        title = 'DAYS'
+        titleStyle = { styles.titleStyle }
+        type = 'clear'
+        onPress = {() => handleChange('days')}
+      />
+    )
+  }
+
   const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
 
   const renderGraphs = () => {
@@ -172,13 +203,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 70,
-    borderRadius: 12
-  },
-  textButtonGroup: {
-		alignItems: 'center',
-		fontSize: 22,
-    fontWeight: 'bold',
-    color: 'white'
+    borderRadius: 5
   },
   text: {
 		alignItems: 'center',
@@ -192,5 +217,8 @@ const styles = StyleSheet.create({
   },
   separatorLine :{
 		height: 40
-	}
+  },
+  titleStyle: {
+    color: 'white'
+  }
 });

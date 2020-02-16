@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import {
   TouchableHighlight,
   Image,
@@ -10,47 +10,26 @@ import {
   View,
   AsyncStorage
 } from 'react-native';
-import { API_HOST } from 'react-native-dotenv';
-import { createHttpLink } from 'apollo-link-http';
-import { setContext } from 'apollo-link-context';
-import ApolloClient from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {
+Icon
+} from 'react-native-elements';
 import gql from 'graphql-tag';
 import { Stopwatch } from 'react-native-stopwatch-timer';
+import clientApollo from '../../util/clientApollo';
+import stateContext from '../../components/StateContext';
+import { AuthContext, Chronometer } from "../../components/StateContextProvider";
 
-const { useState } = React;
+const HomeScreen = (props) => {
 
-const httpLink = createHttpLink({
-  uri: API_HOST
-});
+  const { state, dispatch } = React.useContext(AuthContext);
 
-const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const userToken = await AsyncStorage.getItem('userToken');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      Authorization: userToken ? `Bearer ${userToken}` : ''
-    }
-  };
-});
+  const client = clientApollo();
 
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
-});
-
-const HomeScreen = props => {
-
-  const [isStopwatchStart, setStopwatchStart] = useState(false);
-  const [resetStopwatch, setResetStopwatch] = useState(false);
-
-  const handleCreateTrack = async () => {
+  const handleCreateTrack = () => {
     props.navigation.navigate('Projects');
   };
 
-  const handleSeeTracks = async () => {
+  const handleSeeTracks = () => {
     props.navigation.navigate('Tracks');
   };
 
@@ -59,7 +38,10 @@ const HomeScreen = props => {
   };
 
   const handleWorkTrack = track => {
-      props.navigation.navigate('Tracker', { 'track': track });
+      const date = new Date();
+      const contextDate = state.workingDate;
+      const timer = date.getTime() - contextDate.getTime();
+      props.navigation.navigate('Tracker', { timerStart: timer});
   };
 
   const handleLogout = async () => {
@@ -71,25 +53,40 @@ const HomeScreen = props => {
           }
         `
       })
-      .then(AsyncStorage.removeItem('userToken'))
-      .then(AsyncStorage.removeItem('userId'))
+      .then(dispatch({ type: "LOGOUT" }))
       .then(props.navigation.navigate('Auth'));
   };
 
   return (
     <View style={styles.container}>
+
+      <Icon
+        name='sign-out'
+        color='#ffffff'
+        type='font-awesome'
+        onPress={handleLogout}
+        iconStyle={styles.iconPos}
+        size={30}
+      />
+
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
+
         <View style={styles.welcomeContainer}>
+
           <Image
             source={ require('../../assets/images/plock.png') }
             style={styles.welcomeImage}
           />
+
         </View>
+
         <Text style={styles.welcome}>¿What do you want to do?</Text>
+
         <View style={styles.move}>
+
           <View style={styles.button}>
             <Button
               color = '#ad0404'
@@ -103,6 +100,7 @@ const HomeScreen = props => {
               color = '#37435D'
               title = 'See my tracks'
               onPress={handleSeeTracks}
+              disabled={state.working}
             />
           </View>
 
@@ -114,23 +112,20 @@ const HomeScreen = props => {
             />
           </View>
 
-          <Text onPress={handleLogout} style={styles.logout}>
-            Cerrar Sesión
-          </Text>
         </View>
+
       </ScrollView>
-      <TouchableHighlight onPress={ handleWorkTrack } >
-        <Stopwatch
-          laps
-          msecs
-          start={isStopwatchStart}
-          reset={resetStopwatch}
-          options={options}
-        />
-      </TouchableHighlight>
+
+      {state.working &&
+        <TouchableHighlight onPress={ handleWorkTrack } >
+          <View style={styles.cen}>
+            <Chronometer running={state.working} />
+          </View>
+        </TouchableHighlight>
+      }
 
     </View>
-  );
+  )
 };
 
 export default HomeScreen;
@@ -151,8 +146,7 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20
+    marginTop: -50,
   },
   welcomeImage: {
     width: 251,
@@ -167,72 +161,6 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop: 1
   },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50
-  },
-  homeScreenFilename: {
-    marginVertical: 7
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)'
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center'
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center'
-  },
-  navigationFilename: {
-    marginTop: 5
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center'
-  },
-  helpLink: {
-    paddingVertical: 15
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7'
-  },
-  logout: {
-    marginTop: 130,
-    fontSize: 16,
-    color: '#ffffff',
-    textAlign: 'center'
-  },
   button: {
     marginTop: 15,
     color: 'rgba(0,0,0, 1)',
@@ -241,6 +169,13 @@ const styles = StyleSheet.create({
   },
   move: {
     marginTop: 10
+  },
+  iconPos: {
+    marginTop: 38,
+    marginLeft: 300
+  },
+  cen: {
+    alignItems: 'center',
   }
 });
 

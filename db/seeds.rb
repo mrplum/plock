@@ -53,6 +53,11 @@ t.users << owner
 t.users << member_user
 t.users << member_user1
 
+t.team_users.each { |team_user|
+    team_user.incorporated_at = DateTime.now
+    team_user.save
+}
+
 # Creating Tracks for this project
 track_values = [
     {

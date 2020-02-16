@@ -2,7 +2,7 @@ module Mutations
   # class IntervalEnd
   #
   class IntervalEnd < BaseMutation
-    argument :id, Int, required: true
+    argument :id, ID, required: true
     argument :end_at, String, required: true
 
     type Types::IntervalType

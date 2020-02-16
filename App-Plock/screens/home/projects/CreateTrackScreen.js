@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -6,16 +6,18 @@ import {
   TextInput,
   Button,
   StyleSheet,
-  AsyncStorage
+  AsyncStorage,
+  Alert,
+  KeyboardAvoidingView
 } from 'react-native';
-import { API_HOST } from 'react-native-dotenv';
-import ApolloClient from 'apollo-boost';
+import clientApollo from '../../../util/clientApollo';
 import gql from 'graphql-tag';
-
-const client = new ApolloClient({ uri: API_HOST });
-const { useState } = React;
+import { AuthContext } from "../../../components/StateContextProvider";
 
 export const CreateTrackScreen = props => {
+
+  const { state } = React.useContext(AuthContext);
+  const client = clientApollo();
   const choose = props.navigation.getParam('project', 'nothing');
   const id = choose.id;
 
@@ -28,11 +30,8 @@ export const CreateTrackScreen = props => {
   });
 
   const createTrack = async (id) => {
-    console.log(id);
-    console.log(trackName);
-    const userid = await AsyncStorage.getItem('userId');
-    console.log(userid);
-    console.log(id);
+    const userid = state.user;
+
     client
       .mutate({
         mutation: gql`
@@ -52,7 +51,18 @@ export const CreateTrackScreen = props => {
       })
       .then(result => JSON.parse(JSON.stringify(result)))
       .then(result => {
-        console.log(result);
+        Alert.alert(
+          'The track has been created succesfully',
+          'Choose an option: ',
+            [
+              {
+                text: 'Back to main menu',
+                onPress: async () => props.navigation.navigate('Home'),
+                style: 'cancel',
+              },
+              {text: 'Create another track' },
+            ]
+        );
       })
       .catch(error => {
         alert('Username o Password incorrecto'); // eslint-disable-line no-alert
@@ -62,39 +72,47 @@ export const CreateTrackScreen = props => {
   return (
     <View style={styles.container}>
 
-      <Text style={styles.welcome}>
-        The name of the project is:
-        {choose.name}
-      </Text>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior='position'
+        keyboardVerticalOffset={28}
+      >
 
-      <View >
-        <TextInput
-          placeholder="Name of the track"
-          style={styles.input1}
-          onChangeText={value => setTrackName({ name: value })}
-          value={trackName.name}
-          maxLength={30}
-        />
+        <Text style={styles.welcome}>
+          The name of the project is:
+          {choose.name}
+        </Text>
 
-        <TextInput
-          style={styles.TextInputStyleClass}
-          underlineColorAndroid="transparent"
-          placeholder="Enter the description of the track."
-          onChangeText={value => setTrackDesc({ description: value })}
-          value={trackDesc.description}
-          placeholderTextColor={"#ffffff"}
-          numberOfLines={15}
-          multiline={true}
-        />
+        <View >
+          <TextInput
+            placeholder="Name of the track"
+            style={styles.input1}
+            onChangeText={value => setTrackName({ name: value })}
+            value={trackName.name}
+            maxLength={30}
+          />
 
-      </View>
-      <View style={styles.centerButton}>
-        <View style={styles.button}>
-          <Button color="#ad0404" title="Create Track" onPress={() =>
-            createTrack(id)
-          } />
+          <TextInput
+            style={styles.TextInputStyleClass}
+            underlineColorAndroid="transparent"
+            placeholder="Enter the description of the track."
+            onChangeText={value => setTrackDesc({ description: value })}
+            value={trackDesc.description}
+            placeholderTextColor={"#ffffff"}
+            numberOfLines={15}
+            multiline={true}
+          />
+
         </View>
-      </View>
+        <View style={styles.centerButton}>
+          <View style={styles.button}>
+            <Button color="#ad0404" title="Create Track" onPress={() =>
+              createTrack(id)
+            } />
+          </View>
+        </View>
+
+      </KeyboardAvoidingView>
     </View>
   );
 };

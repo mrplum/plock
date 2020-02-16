@@ -6,6 +6,6 @@ class TeamUserTest < ActiveSupport::TestCase
   end
 
   test "incorporated?" do
-    assert_not @team_user.incorporated?
+    assert @team_user.incorporated?
   end
 end
