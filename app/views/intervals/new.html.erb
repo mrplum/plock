@@ -1,42 +1,46 @@
 <div class="form-team-b">
   <div class="form-team-c">
 
-<p> <h2 class="text-center text-white">New Interval</h2></p>
+  <p> <h2 class="text-center text-white">New Interval</h2></p>
 
-<%= form_with(model: [@track, @interval], local: true) do |form| %>
-  <% if @interval.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@interval.errors.count, "error") %> prohibited this interval from being saved:</h2>
+  <%= form_with(model: [@track, @interval], local: true) do |form| %>
+  
+  <%= form.hidden_field :start_track %>
 
-      <ul>
-        <% @interval.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <% if @interval.errors[:description].any? %>
+    <div class="form-group">
+      <div style='border: 3px solid red !important'>
+        <span class="input-group-addon"></span>
+        <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: @interval.errors[:description][0] %>				
+      </div>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"></span>
+        <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
+      </div>
     </div>
   <% end %>
 
-  <%= form.hidden_field :close_track %>
-
   <div class="form-group">
+    <p class="newCenterInterval"> start at: </p>
     <div class="input-group">
       <span class="input-group-addon"></span>
-      <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
+      <%= form.datetime_select( :start_at, {}, {:class => 'form-control'}) %>
     </div>
   </div>
 
-   <div class="field">
-    <%= form.label :start_at %>
-    <%= form.datetime_select :start_at %>
-  </div>
-
-  <div class="field">
-    <%= form.label :end_at %>
-    <%= form.datetime_select :end_at %>
-  </div>
+  <div class="form-group">
+  <p class="newCenterInterval"> end at: </p>
+    <div class="input-group">
+      <span class="input-group-addon"></span>
+        <%= form.datetime_select( :end_at, {}, {:class => 'form-control'}) %>
+    </div>
+  </div>  
 
   <div class="form-group">
-    <%= form.submit class: "btn btn-new-team login-btn btn-block" %>
+    <%= form.submit class: "btn btn-new-team login-btn btn-block" %> 
   </div>
 
   <div class="or-seperator"></div>

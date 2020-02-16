@@ -1,30 +1,37 @@
 <div class="form-team-c">
   <%= form_with(model: [@project, track], local: true) do |form| %>
 
-    <% if track.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(track.errors.count, "error") %> prohibited this track from being saved:</h2>
-        <ul>
-          <% track.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+    <% if track.errors[:name].any? %>	
+      <div class="form-group">
+        <div style='border: 3px solid red !important'>
+          <span class="input-group-addon"></span>
+          <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: track.errors[:name][0] %>				
+        </div>
+      </div>
+    <% else %>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
+        </div>
       </div>
     <% end %>
 
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"></span>
-        <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
+    <% if track.errors[:description].any? %>
+      <div class="form-group">
+        <div style='border: 3px solid red !important'>
+          <span class="input-group-addon"></span>
+          <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: track.errors[:description][0] %>				
+        </div>
       </div>
-    </div>
-
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"></span>
-        <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
+    <% else %>	
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="form-group">
       <%= form.submit class: "btn btn-new-team login-btn btn-block" %>

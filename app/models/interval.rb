@@ -12,6 +12,7 @@ class Interval < ApplicationRecord
   belongs_to :track, touch: true
   belongs_to :user
 
+  validates :description, presence: true
   validate :no_other_open_interval, on: %i[create]
   validate :valid_date
 
@@ -43,7 +44,7 @@ class Interval < ApplicationRecord
   end
 
   def valid_date
-    if !valid_start_date? || !valid_interval_dates?
+    if !valid_start_date? || !valid_interval_dates?     
       errors.add :base, 'invalid Dates!'
     end
   end

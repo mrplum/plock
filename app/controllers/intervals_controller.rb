@@ -17,7 +17,7 @@ class IntervalsController < ApplicationController
   
     start_at = params[:start_at] || DateTime.now
     end_at = params[:end_at] || start_at
- 
+
     interval = interval_params.merge({
       user_id: current_user.id,
       track_id: params[:track_id],
@@ -29,14 +29,10 @@ class IntervalsController < ApplicationController
 
     respond_to do |format|
       if interval.save
-        format.json do
-          track = Track.includes(:intervals => :user).find(params[:track_id])
-          render partial: "tracks/track_interval.html.erb", locals: {track: track} 
-        end
-        format.js { 'ok' }
         format.html { redirect_to track_path(interval.track), notice: 'Interval was successfully created.' }
+        format.json { redirect_to track_path(interval.track), status: :created, location: interval }
       else
-        format.html { redirect_to track_path(interval.track), flash: {danger: interval.errors.full_messages.join('. ')}}
+        format.html { redirect_to track_path(interval.track) }
         format.json { render json: interval.errors, status: :unprocessable_entity }
       end
     end
@@ -45,12 +41,8 @@ class IntervalsController < ApplicationController
   def update
     respond_to do |format|
       if @interval.update(interval_params.merge({end_at: DateTime.now}))
-        format.json do
-          track = Track.includes(:intervals => :user).find(params[:track_id])
-          render partial: "tracks/track_interval.html.erb", locals: {track: track} 
-        end
         format.html { redirect_to track_path(@interval.track), notice: 'Interval was successfully updated.' }
-        format.js { "ok" }
+        format.json { redirect_to track_path(@interval.track), status: :ok, location: @interval }
       else
         format.html { redirect_to track_path(@interval.track), notice: @interval.error }
         format.json { render json: @interval.errors, status: :unprocessable_entity }
@@ -61,11 +53,8 @@ class IntervalsController < ApplicationController
   def destroy
     @interval.destroy
     respond_to do |format|
-      format.json do
-        track = Track.includes(:intervals => :user).find(params[:track_id])
-        render partial: "tracks/track_interval.html.erb", locals: {track: track} 
-      end
       format.html { redirect_to track_url(@interval.track), notice: 'Project was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 

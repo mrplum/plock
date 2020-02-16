@@ -18,10 +18,10 @@ class IntervalTest < ActiveSupport::TestCase
 
   test 'update plock time with the sum of each interval' do
     # create an interval of two hours
-    interval = Interval.create(track: @track, user: @user, start_at: 2.hours.ago, end_at: DateTime.now)
+    interval = Interval.create(track: @track, user: @user, start_at: 2.hours.ago, end_at: DateTime.now, description: "description98")
 
     # create another interval of 1 hour
-    interval = Interval.create(track: @track, user: @user, start_at: 1.hour.ago, end_at: DateTime.now)
+    interval = Interval.create(track: @track, user: @user, start_at: 1.hour.ago, end_at: DateTime.now, description: "description99")
 
     # 3 hours as result
     assert_equal(@track.plock_time, 180)

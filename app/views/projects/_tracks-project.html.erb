@@ -6,11 +6,13 @@
           <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
             <div class="card-header" style="text-align: center;"> 
               <%= track.name %>
-              <% if track.in_progress? || track.unstarted? %>
-                  <i class="fa fa-circle mr-3 text-warning fa-fw"></i> 
-                <% else %>  
-                  <i class="fa fa-check mr-3 text-success fa-fw"></i> 
-                <% end %>  
+              <% if track.in_progress?%>
+                <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
+              <% elsif track.unstarted?%>
+                <i class="fa fa-circle mr-3 text-danger fa-fw"></i> 
+              <% else %>  
+                <i class="fa fa-check mr-3 text-success fa-fw"></i> 
+              <% end %>  
             </div>
             <div class="card-body">
               <h5 class="card-title"> Description </h5>

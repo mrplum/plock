@@ -1,31 +1,37 @@
 <div class="form-team-c">
   <%= form_with(model: company, local: true) do |form| %>
-    <% if company.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:</h2>
-
-        <ul>
-          <% company.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="form-group">
+  
+    <% if company.errors[:name].any? %>
+      <div class="form-group">
+        <div style='border: 3px solid red !important'>
+          <span class="input-group-addon"></span>
+          <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: company.errors[:name][0] %>				
+        </div>
+      </div>	  
+    <% else %>
+      <div class="form-group">
         <div class="input-group">
           <span class="input-group-addon"></span>
           <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
         </div>
       </div>
+    <% end %>  
 
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"></span>
-          <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
+    <% if company.errors[:description].any? %>
+      <div class="form-group">
+        <div style='border: 3px solid red !important'>
+          <span class="input-group-addon"></span>
+            <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: company.errors[:description][0] %>				
+        </div>
+      </div>	  
+    <% else %>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+            <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
+        </div>
       </div>
-    </div>
-
+    <% end %>
     <div class="form-group">
       <%= form.submit class: "btn btn-new-team login-btn btn-block" %>
     </div>
