@@ -112,7 +112,7 @@ const SetTimer = (props) => {
             status: 'finished'
           }
       }).then(result => {
-        console.log(result);
+        alert('Track finished succesfully');
       }).catch(error => {
         console.log(error);
       })

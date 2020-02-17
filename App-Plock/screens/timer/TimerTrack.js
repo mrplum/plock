@@ -149,7 +149,7 @@ const TimerTrack = props => {
             status: 'finished'
           }
       }).then(result => {
-        console.log(result);
+        alert('Track finished succesfully');
       }).catch(error => {
         console.log(error);
       })
@@ -210,7 +210,7 @@ const TimerTrack = props => {
         <View style={ styles.button }>
           <Button title="Set finish to the track" onPress={ handleFinishTrack } color="#ad0404" />
         </View>
-        
+
       </View>
 
     </View>
