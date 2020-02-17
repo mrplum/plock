@@ -97,6 +97,27 @@ const SetTimer = (props) => {
       });
   };
 
+  const handleFinishTrack = () => {
+    client
+      .mutate({
+        mutation: gql`
+          mutation finishTrack($id: ID!, $status: String!) {
+            trackFinish(id: $id, status: $status) {
+              name
+              description
+            }
+          }`,
+          variables: {
+            id: choose.id,
+            status: 'finished'
+          }
+      }).then(result => {
+        console.log(result);
+      }).catch(error => {
+        console.log(error);
+      })
+  };
+
   return (
     <View style={ styles.container }>
 
@@ -149,6 +170,15 @@ const SetTimer = (props) => {
           onConfirm={ handleEnd }
           onCancel={ unseeDatePick }
         />
+
+        <Text style={ styles.welcome }>
+          Press the button down for finish the track.
+        </Text>
+
+        <View style={ styles.button }>
+          <Button title="Set finish to the track" onPress={ handleFinishTrack } color="#ad0404" />
+        </View>
+
       </View>
 
     </View>
@@ -173,6 +203,7 @@ const styles = StyleSheet.create({
   contain: {
     flex: 1,
     marginTop: 25,
+    marginBottom: -15,
     backgroundColor: '#808080',
   },
   containerdoor: {

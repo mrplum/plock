@@ -7,11 +7,13 @@ require 'test_helper'
 class MutationTypeTest < ActiveSupport::TestCase
 	def setup
 		@track = tracks(:one)
+		@track_test_finish = tracks(:three)
 		@user = users(:one)
 		@interval = intervals(:one)
 		@project = projects(:one)
 		@name = 'testear'
 		@description = 'test'
+    @status = 'finished'
 	end
 
 	test 'interval start' do
@@ -113,6 +115,25 @@ class MutationTypeTest < ActiveSupport::TestCase
 		track_name = result['data']['trackCreate']['name']
 
 
+		assert_not_nil result
+	end
+
+	test 'track finish' do
+		query_string = <<-GRAPHQL
+		mutation finishTrack($id: ID!, $status: String!) {
+			trackFinish(id: $id, status: $status) {
+				name
+				description
+			}
+		}
+		GRAPHQL
+		
+		result = PlockSchema.execute(
+		query_string,
+			variables: { id: @track_test_finish.id , status: @status},
+			context: {}
+		)
+		
 		assert_not_nil result
 	end
 end

@@ -21,8 +21,7 @@ const TracksList = props => {
   const [list, setList] = useState([]);
   const [flag, setFlag] = useState(true);
   const client = clientApollo();
-
-  // Context changes are using dispatch function
+  
   const { state, dispatch } = React.useContext(AuthContext);
 
   useEffect(() => {

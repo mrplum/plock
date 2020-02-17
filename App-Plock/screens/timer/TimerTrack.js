@@ -134,6 +134,27 @@ const TimerTrack = props => {
     }
   };
 
+  const handleFinishTrack = () => {
+    client
+      .mutate({
+        mutation: gql`
+          mutation finishTrack($id: ID!, $status: String!) {
+            trackFinish(id: $id, status: $status) {
+              name
+              description
+            }
+          }`,
+          variables: {
+            id: choose.id,
+            status: 'finished'
+          }
+      }).then(result => {
+        console.log(result);
+      }).catch(error => {
+        console.log(error);
+      })
+  };
+
   return (
     <View style={styles.container}>
 
@@ -186,6 +207,10 @@ const TimerTrack = props => {
           />
         </View>
 
+        <View style={ styles.button }>
+          <Button title="Set finish to the track" onPress={ handleFinishTrack } color="#ad0404" />
+        </View>
+        
       </View>
 
     </View>
