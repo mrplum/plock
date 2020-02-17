@@ -95,7 +95,7 @@ const TracksList = props => {
             />
           </View>
         </View>
-      }  
+      }
     </View>
   ));
 
