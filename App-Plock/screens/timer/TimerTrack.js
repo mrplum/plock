@@ -9,6 +9,8 @@ import {
   Text,
   View,
   TouchableHighlight,
+  TextInput, 
+  KeyboardAvoidingView,
 } from 'react-native';
 import clientApollo from '../../util/clientApollo';
 import gql from 'graphql-tag';
@@ -21,6 +23,10 @@ const TimerTrack = props => {
   const { state, dispatch } = React.useContext(AuthContext);
 
   const client = clientApollo();
+
+  const [intervalDesc, setIntervalDesc] = useState({
+    description: ''
+  });
 
   const choose = props.navigation.getParam('track', 'nothing');
   const timePast = props.navigation.getParam('timerStart', 0);
@@ -61,11 +67,12 @@ const TimerTrack = props => {
     if (state.working == false) {
       const Datetime = new Date();
       const fech = Datetime.toString();
+
       client
         .mutate({
           mutation: gql`
-            mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String! ) {
-              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at) {
+            mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String!, $description: String ) {
+              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at, description: $description) {
                 id
                 track {
                   name
@@ -77,6 +84,7 @@ const TimerTrack = props => {
             track_id: choose.id,
             user_id: userId,
             start_at: fech,
+            description: intervalDesc.description
           }
         })
         .then(result => JSON.parse(JSON.stringify(result)))
@@ -96,8 +104,7 @@ const TimerTrack = props => {
     } else {
       const Dateclock = new Date();
       const fecha = Dateclock.toString();
-      //const diff = Dateclock.getTime() - newFecha.getTime();
-      //const dateDiff = new Date(diff);
+
       client
         .mutate({
           mutation: gql`
@@ -109,7 +116,7 @@ const TimerTrack = props => {
           `,
           variables: {
             id: intervalId,
-            end_at: fecha
+            end_at: fecha,
           }
         })
         .then(result => {
@@ -122,6 +129,7 @@ const TimerTrack = props => {
           dispatch({
             type: "REMOVEDATE"
           });
+          alert('Plock-Time loaded succesfully');
         })
     }
   };
@@ -141,6 +149,18 @@ const TimerTrack = props => {
           Description of the track: {choose.description}
         </Text>
 
+        {!state.working &&
+          <TextInput
+            style={styles.TextInputStyleClass}
+            underlineColorAndroid="transparent"
+            placeholder="What are you going to work today."
+            onChangeText={value => setIntervalDesc({ description: value })}
+            value={intervalDesc.description}
+            placeholderTextColor={"#ffffff"}
+            numberOfLines={15}
+            multiline={true}
+          />
+        }
         <Chronometer running={state.working} workDate={timePast} />
 
         <TouchableHighlight
@@ -152,7 +172,7 @@ const TimerTrack = props => {
 
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={resetStopwatchFunction}>
+        <TouchableHighlight disabled={!state.working} onPress={resetStopwatchFunction}>
 
           <Text style={styles.welcome}>RESET</Text>
 
@@ -205,7 +225,18 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0, 1)',
     paddingRight: 40,
     paddingLeft: 40
-  }
+  },
+  TextInputStyleClass:{
+    fontSize: 18,
+    textAlign: 'auto', 
+    height: 50,
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 20 ,
+    backgroundColor: "#a0a0a0",
+    height: 150,
+    color: 'white',
+    }
 });
 
 const options = {

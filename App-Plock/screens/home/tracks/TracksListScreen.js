@@ -68,7 +68,6 @@ const TracksList = props => {
     <View key={track.node.id}>
 
       <Text style={styles.welcome}>
-        The name of the track is:
         {track.node.name}
       </Text>
 
