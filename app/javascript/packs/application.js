@@ -18,7 +18,6 @@ require("packs/custom/require-show-stat")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 //= require d3
-//= require ("bootstrap-datepicker")
 
 import 'bootstrap'
 import '../stylesheets/application'

@@ -39,13 +39,13 @@ class Interval < ApplicationRecord
 
   def no_other_open_interval
     if track.has_open_intervals?
-      errors.add :base, 'There is already an open interval, please close before starting a new one'
+      self.errors.add :base, 'There is already an open interval, please close before starting a new one'
     end
   end
 
   def valid_date
     if !valid_start_date? || !valid_interval_dates?     
-      errors.add :base, 'invalid Dates!'
+      self.errors.add :base, 'invalid Dates!'
     end
   end
 

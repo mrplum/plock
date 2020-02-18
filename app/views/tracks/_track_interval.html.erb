@@ -63,7 +63,7 @@
               <i class="fa fa-play text-white"></i> start
             <% end %>
     <% end %>
-    <%= link_to new_track_interval_path(track.id, start_track: true), class: 'btnIcon btnIconColor btnComplete' do %>
+    <%= link_to new_track_interval_path(track.id, start_track: true), class: 'btnIcon btnIconColor btnComplete', data: { turbolinks: false } do %>
         <i class="fa fa-list-ul text-white"></i> complete
     <% end %>
     </div>
@@ -96,7 +96,7 @@
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"></span>
-                <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'what will you do in this time?' %>				
+                <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: '(*) What will you do in this time?' %>				
               </div>
             </div>
           <% end %>
@@ -106,7 +106,7 @@
             <i class="fa fa-retweet text-white"></i> resume
           <% end %>
         <% end %>
-        <%= link_to new_track_interval_path(track.id, start_track: true), class: 'btnIcon btnIconColor btnComplete' do %>
+        <%= link_to new_track_interval_path(track.id, start_track: true), class: 'btnIcon btnIconColor btnComplete', data: { turbolinks: false } do %>
           <i class="fa fa-list-ul text-white"></i> complete
         <% end %>
       </div>

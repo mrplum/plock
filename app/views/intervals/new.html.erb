@@ -7,6 +7,7 @@
   
   <%= form.hidden_field :start_track %>
 
+
   <% if @interval.errors[:description].any? %>
     <div class="form-group">
       <div style='border: 3px solid red !important'>
@@ -25,25 +26,31 @@
 
   <div class="form-group">
     <p class="newCenterInterval"> start at: </p>
-    <div class="input-group">
+    <div class="input-group handleElement">
       <span class="input-group-addon"></span>
-      <%= form.datetime_select( :start_at, {}, {:class => 'form-control'}) %>
+      <%= form.datetime_select( :start_at, {}, {:class => 'form-control', data: { turbolinks: false }}) %>
     </div>
   </div>
 
   <div class="form-group">
   <p class="newCenterInterval"> end at: </p>
-    <div class="input-group">
+    <div class="input-group handleElement">
       <span class="input-group-addon"></span>
-        <%= form.datetime_select( :end_at, {}, {:class => 'form-control'}) %>
+        <%= form.datetime_select( :end_at, {}, {:class => 'form-control', data: { turbolinks: false }}) %>
     </div>
   </div>  
 
-  <div class="form-group">
-    <%= form.submit class: "btn btn-new-team login-btn btn-block" %> 
+  <div class="form-group" id="date-view-interval">
+  <div id="create-button" class="hidden">
+      <%= form.submit class: "btn btn-new-team login-btn btn-block", data: { turbolinks: false } %> 
+      <div class="or-seperator"></div>
   </div>
 
-  <div class="or-seperator"></div>
+  <div id="invalid-form" class="" >    
+      <div class="or-seperator"></div>
+      <p style="color:red;"> invalid date time </p>
+  </div>
+</div>
 
   <%= link_to track_path(@track), html_options = {class: "btn btn-light navbar-btn-team"} do %>
         <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back

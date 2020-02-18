@@ -18,22 +18,31 @@ class IntervalsController < ApplicationController
     start_at = params[:start_at] || DateTime.now
     end_at = params[:end_at] || start_at
 
-    interval = interval_params.merge({
-      user_id: current_user.id,
-      track_id: params[:track_id],
-      start_at: start_at,
-      end_at: end_at
-    })
- 
-    interval = Interval.new(interval)
+    @interval = Interval.new(
+      interval_params.merge({
+        user_id: current_user.id,
+        track_id: params[:track_id],
+        start_at: start_at,
+        end_at: end_at
+      })
+    )
 
     respond_to do |format|
-      if interval.save
-        format.html { redirect_to track_path(interval.track), notice: 'Interval was successfully created.' }
-        format.json { redirect_to track_path(interval.track), status: :created, location: interval }
+      if @interval.save
+        format.html { redirect_to track_path(@interval.track), notice: 'Interval was successfully created.' }
+        format.json { redirect_to track_path(@interval.track), status: :created, location: @interval }
       else
-        format.html { redirect_to track_path(interval.track) }
-        format.json { render json: interval.errors, status: :unprocessable_entity }
+        format.html do
+          get_track 
+          if params[:interval].as_json.count == 2
+            redirect_to track_path(@interval.track)
+          else
+            render :new
+          end
+        end
+        format.json do
+          render json: @interval.errors, status: :unprocessable_entity
+        end
       end
     end
   end
