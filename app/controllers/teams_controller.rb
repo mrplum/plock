@@ -94,7 +94,7 @@ class TeamsController < ApplicationController
   end
 
   def dataTeam
-    @team = Team.find(params[:team_id])
+    @team = Team.find(params[:m_id])
     result = @team.projects.to_a.map do |project|
       {
         name: project.name,
