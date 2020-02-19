@@ -1,9 +1,10 @@
-require 'elasticsearch/model'
 
 config = {
   	host: "http://localhost:9200/",
 	transport_options: {
-	request: { timeout: 5 }
+		request: { 
+			timeout: 5 
+		}
 	}
 }
 if File.exists?("config/elasticsearch.yml")

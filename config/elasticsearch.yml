@@ -2,7 +2,8 @@ development: &default
   host: 'http://localhost:9200/'
   transport_options:
     request:
-      timeout: !!integer 300test:
+      timeout: !!integer 300
+test:
   <<: *default
 staging:
   <<: *default
