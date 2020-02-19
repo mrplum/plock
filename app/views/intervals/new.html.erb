@@ -1,5 +1,5 @@
 <div class="form-team-b">
-  <div class="form-team-c">
+  <div class="form-team-c" id="date-view-interval">
 
   <p> <h2 class="text-center text-white">New Interval</h2></p>
 
@@ -10,14 +10,14 @@
 
   <% if @interval.errors[:description].any? %>
     <div class="form-group">
-      <div style='border: 3px solid red !important'>
+      <div class="handleElement" style='border: 3px solid red !important'>
         <span class="input-group-addon"></span>
         <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: @interval.errors[:description][0] %>				
       </div>
     </div>
   <% else %>
     <div class="form-group">
-      <div class="input-group">
+      <div class="input-group handleElement">
         <span class="input-group-addon"></span>
         <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
       </div>
@@ -40,7 +40,7 @@
     </div>
   </div>  
 
-  <div class="form-group" id="date-view-interval">
+  <div class="form-group" >
   <div id="create-button" class="hidden">
       <%= form.submit class: "btn btn-new-team login-btn btn-block", data: { turbolinks: false } %> 
       <div class="or-seperator"></div>

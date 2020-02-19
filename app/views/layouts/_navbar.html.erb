@@ -1,5 +1,10 @@
 <nav class="navbar-left navbar-expand-lg navbar navbar-dark bg-dark">
-  <a class="navbar-brand text-light" href="/"> <b> Plock </b> </a>
+  
+  <% if current_user.present? %>
+    <a class="navbar-brand text-light" href="/profile"> <b> Plock </b> </a>
+  <% else %>
+    <a class="navbar-brand text-light" href="/"> <b> Plock </b> </a>
+  <% end %>
 
     <div class="navbar-nav ml-auto" >
 
@@ -7,13 +12,14 @@
 
         <% if current_user&.company&.owner == current_user %>
           <%= link_to 'Company', company_path(current_user.company), class: "btn btn-dark navbar-btn" %>
+          <a class="btn btn-dark navbar-btn" href="/profile">
+            Profile<span class="sr-only">(current)</span>
+          </a>
         <% end %>
-        <a class="btn btn-dark navbar-btn" href="/profile">
-          Profile<span class="sr-only">(current)</span>
+      
+        <a class="btn btn-dark navbar-btn" data-method="delete" href="/users/sign_out">
+          <i class="fa fa-sign-out text-light"></i>
         </a>
-        <a class="btn btn-dark navbar-btn" href="/teams">Team</a>
-        <a class="btn btn-dark navbar-btn" href="/projects">Project</a>
-        <a class="btn btn-dark navbar-btn" data-method="delete" href="/users/sign_out"><i class="fa fa-sign-out text-light"></i></a>
    
       <% else %>
         <a class="btn btn-dark navbar-btn" href="/users/sign_in">Sign In</a>

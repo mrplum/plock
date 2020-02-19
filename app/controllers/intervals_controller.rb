@@ -34,7 +34,7 @@ class IntervalsController < ApplicationController
       else
         format.html do
           get_track 
-          if params[:interval].as_json.count == 2
+          if automatic_interval_creation?
             redirect_to track_path(@interval.track)
           else
             render :new
@@ -68,6 +68,7 @@ class IntervalsController < ApplicationController
   end
 
   private
+
     def interval_params
       params.require(:interval)
         .permit(:track_id, :user_id, :start_at, :end_at, :description, :close_track, :start_track)
@@ -93,5 +94,9 @@ class IntervalsController < ApplicationController
       if track.user_id != current_user.id
         redirect_to track_path(params[:track_id]), flash: { danger: 'You do not have permission to create the interval' }
       end
+    end
+
+    def automatic_interval_creation?
+      params[:interval][:start_track] == 'true'
     end
 end

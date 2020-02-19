@@ -7,9 +7,11 @@
   float:left;margin-left:5px;
   margin: 10px;
 }
+
 .tems-card-container{
   padding: 5px;
 }
+
 .form-team-b{
   position: relative;
   width: 500px;
@@ -20,24 +22,23 @@
   margin-right: 30%;
   margin-top: 5%;
 }
+
 .form-team-c{
   text-align:center;
   padding: 30px;
   margin-bottom: 15px;
 }
+
 .btn-new-team {
   color: #fff;
   background-color: green;
   border-color: #fff;
 }
-.btn-new-team:hover {
-  color: #343a40;
-  background-color:#fff;
-  border: solid 2px #343a40;
-}
+
 .link-back-team{
   color: white;
 }
+
 .btn.navbar-btn-team {
   border-color: white;
   text-transform: uppercase;
@@ -47,12 +48,23 @@
   white-space: nowrap;
   padding: 6px 12px !important;
 }
-.btn.navbar-btn-team:hover {
-  color: #343a40;
-  background-color: white;
-  border: solid 1px #343a40;
-}
+
 .btnIconColor{
+  &.btnIcon{
+    &.btnTrash { background-color: red; }
+    &.btnShow { background-color: orange; }
+    &.btnEdit { background-color: blue; }
+    &.btnNew { background-color: green; }
+    &.btnFinishPause { background-color: red; }
+    &.btnStartResume { background-color: green;}
+    &.btnComplete { background-color: blue; }
+    border-color: white;
+    text-transform: uppercase;
+    color: white;
+    margin: 3px;
+    white-space: nowrap;
+    padding: 6px 12px !important;
+  }
   display: inline-block;
   font-weight: 400;
   color: #212529;
@@ -72,24 +84,3 @@
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.btnIconColor.btnIcon {
-  border-color: white;
-  text-transform: uppercase;
-  color: white;
-  margin: 3px;
-  white-space: nowrap;
-  padding: 6px 12px !important;
-}
-.btnIconColor.btnIcon.btnTrash {
-  background-color: red;
-}
-.btnIconColor.btnIcon.btnShow {
-  background-color: orange;
-}
-.btnIconColor.btnEdit {
-  background-color: blue;
-}
-.btnIconColor.btnNew {
-  background-color: green;
-}
-
