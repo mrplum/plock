@@ -55,10 +55,6 @@
 .user-about{
   text-align: center;
   background-color:  #f8f9fa;
-  color: #343a40;
-  margin-left: 20%;
-  margin-right: 20%;
-  margin-top: 5%;
   border: solid 1px #f8f9fa;;
   border-radius: 5px;
 }
@@ -72,4 +68,8 @@
 }
 .user-card-container{
   padding: 5px;
+}
+.cent-div{
+  position :relative !important; 
+  left: 20% !important;
 }

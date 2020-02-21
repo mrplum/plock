@@ -1,43 +1,41 @@
 <div id='about-project' class=''>
 
-  <div class="user-about">
+  <div class="user-about col-xs-12">
 
-    <h1> About project </h1>
-  
-    <p>
-      <strong class="strong-about">Name:</strong>
-      <%= project.name %>
-    </p>
+    <div class="text-center" style="margin:5px;">
+      <h2>About Project</h2>
+    </div>
 
-    <p>
-      <strong class="strong-about">Repository:</strong>
-      <%= project.repository %>
-    </p>
-
-    <p>
-      <strong class="strong-about">Cost:</strong>
-      <%= project.cost %>
-    </p>
-
-    <p>
-      <strong class="strong-about">Start at:</strong>
-      <%= project.start_at %>
-    </p>
-
-    <p>
-      <strong class="strong-about">Team:</strong>
-      <%= project.team&.name %>
-    </p>
-
-    <p>
-      <strong class="strong-about">Owner:</strong>
-      <%= "#{project.user.name} #{project.user.lastname}" %>
-    </p>
+    <div class="cent-div">
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Name</label>
+        <input class="form-control" type="text" value="<%= project.name %>" readonly="readonly">
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Repository</label>
+        <input class="form-control" type="text" value="<%= project.repository %>" readonly="readonly">
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Cost</label>
+        <input class="form-control" type="text" value="<%= project.cost %>" readonly="readonly">
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Start at</label>
+        <input class="form-control" type="text" value="<%= project.start_at %>" readonly="readonly">
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Team</label>
+        <input class="form-control" type="text" value="<%= project.team&.name %>" readonly="readonly">
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Owner</label>
+        <input class="form-control" type="text" value="<%= "#{project.user.name} #{project.user.lastname}" %>" readonly="readonly">
+      </div>
+    </div>
 
     <%= link_to edit_project_path(@project), html_options = {class: "btnIcon btnIconColor btnEdit"} do %>
       <i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit
     <% end %>
 
   </div>
-  
 </div>

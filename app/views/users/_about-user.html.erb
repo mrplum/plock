@@ -1,28 +1,28 @@
 <div id='about-user' class=''>
 
-  <div class="user-about">
+  <div class="user-about col-xs-12">
 
-    <h1> About user </h1>
-   
-    <p>
-      <strong class="strong-about">Name:</strong>
-      <%= user.name %>
-    </p>
+    <div class="text-center" style="margin:5px;">
+      <h2>About user</h2>
+    </div>
 
-    <p>
-      <strong class="strong-about">Lastname:</strong>
-      <%= user.lastname %>
-    </p>
-
-    <p>
-      <strong class="strong-about">Company:</strong>
-      <%= user.company.name %>
-    </p>
-
-    <p>
-      <strong class="strong-about">Email:</strong>
-      <%= user.email %>
-    </p>
+  <div class="cent-div">
+    <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+      <label class="pull-left">Name</label>
+      <input class="form-control" type="text" value="<%= user.name %>" readonly="readonly">
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+      <label class="pull-left">Lastname</label>
+      <input class="form-control" type="text" value="<%= user.lastname %>" readonly="readonly">
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+      <label class="pull-left">Company</label>
+      <input class="form-control" type="text" value="<%= user.company.name %>" readonly="readonly">
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+      <label class="pull-left">Email</label>
+      <input class="form-control" type="text" value="<%= user.email %>" readonly="readonly">
+    </div>
   </div>
-  
+  </div>
 </div>
