@@ -14,6 +14,7 @@ c.save
 # Create company member user
 member_user = User.create(name: 'Slave 1', lastname: 'One', email: 'slave_1@plock.com', password: '123123', company: c)
 member_user1 = User.create(name: 'Slave 2', lastname: 'Two', email: 'slave_2@plock.com', password: '123123', company: c)
+User.create(name: 'Slave 3', lastname: 'Three', email: 'slave_3@plock.com', password: '123123', company: c)
 
 # Create the Plockers Team
 t = Team.create(name: 'Plockers Team')

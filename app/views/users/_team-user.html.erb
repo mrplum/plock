@@ -2,9 +2,7 @@
 
   <div class="user-card-container">
 
-    <% if user.teams.empty? %>
-      <p>  </p>
-    <% else %>  
+    <% if user.teams.present? %> 
       <% user.teams.each do |team| %>
         <div class="card-project">
           <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">

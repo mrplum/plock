@@ -35,8 +35,9 @@ class IntervalsController < ApplicationController
         format.html do
           get_track 
           if automatic_interval_creation?
-            redirect_to track_path(@interval.track)
+            redirect_to track_path(@interval.track), alert: @interval.errors.full_messages.join(', ')
           else
+            flash.now[:error] = @interval.errors.full_messages.join(', ')
             render :new
           end
         end

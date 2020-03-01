@@ -1,9 +1,7 @@
 <div id='company-project' class='company-project hidden'>
   <div class="user-card-container">
 
-    <% if projects.empty? %>
-      <p> Not any project </p>
-    <% else %>  
+    <% if projects.present? %> 
       <% projects.each do |project| %>
         <div class="card-project">
           <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -15,7 +13,7 @@
               <%= link_to project, class: "btnIcon btnIconColor btnShow" do %>
                 <i class="fa fa-eye text-light"></i>
               <% end %>
-            </div>  
+            </div>
           </div>
         </div>
       <%end%>
