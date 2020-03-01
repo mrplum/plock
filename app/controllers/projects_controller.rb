@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def dataProject
+  def data_project
     @project = Project.find(params[:m_id])
     result = @project.team.users.to_a.map do |user|
       {

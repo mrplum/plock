@@ -97,7 +97,7 @@ class TeamsController < ApplicationController
     redirect_to new_user_session_path
   end
 
-  def dataTeam
+  def data_team
     @team = Team.find(params[:m_id])
     result = @team.projects.to_a.map do |project|
       {

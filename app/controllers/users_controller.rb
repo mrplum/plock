@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def dataUser
+  def data_user
     render json: current_user.tracks.map {|track| {
       name: "#{track.project.name}: #{track.name}",
       time: track.plock_time }
