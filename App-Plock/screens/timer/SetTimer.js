@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, View, Text, Platform, StyleSheet, AsyncStorage } from "react-native";
+import { Button, View, Text, Platform, StyleSheet, AsyncStorage, TextInput, KeyboardAvoidingView } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import clientApollo from '../../util/clientApollo';
 import gql from 'graphql-tag';
@@ -14,6 +14,10 @@ const SetTimer = (props) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [datePickSee, setDatePickVisible] = useState(false);
   const [idInterval, setIdInterval] = useState(0);
+
+  const [intervalDesc, setIntervalDesc] = useState({
+    description: ''
+  });
 
   const choose = props.navigation.getParam('track', 'nothing');
 
@@ -41,8 +45,8 @@ const SetTimer = (props) => {
     client
         .mutate({
           mutation: gql`
-            mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String! ) {
-              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at) {
+            mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String!, $description: String ) {
+              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at, description: $description) {
                 id
                 track {
                   name
@@ -53,17 +57,17 @@ const SetTimer = (props) => {
           variables: {
             track_id: choose.id,
             user_id: userId,
-            start_at: dateTime
+            start_at: dateTime,
+            description: intervalDesc.description
           }
         }).then(result => JSON.parse(JSON.stringify(result)))
           .then(result => {
             setIdInterval(result.data.intervalStart.id);
-
             hideDatePicker();
         })
         .catch(error => {
           console.log(error);
-          alert(error); // eslint-disable-line no-alert
+          alert('Invalid date'); // eslint-disable-line no-alert
       });
 
   };
@@ -83,20 +87,53 @@ const SetTimer = (props) => {
         variables: {
           id: idInterval,
           end_at: dateTime
-      }
+        }
+      })
       .then(result => {
         alert('Plock-Time loaded succesfully');
-        hideDatePicker();
+        unseeDatePick();
+      }).catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleFinishTrack = () => {
+    client
+      .mutate({
+        mutation: gql`
+          mutation finishTrack($id: ID!, $status: String!) {
+            trackFinish(id: $id, status: $status) {
+              name
+              description
+            }
+          }`,
+          variables: {
+            id: choose.id,
+            status: 'finished'
+          }
+      }).then(result => {
+        alert('Track finished succesfully');
       }).catch(error => {
         console.log(error);
       })
-    });
   };
 
   return (
     <View style={ styles.container }>
 
-       <View style={ styles.contain }>
+      <TextInput
+        style={styles.TextInputStyleClass}
+        underlineColorAndroid="transparent"
+        placeholder="What have you been working on."
+        onChangeText={value => setIntervalDesc({ description: value })}
+        value={intervalDesc.description}
+        placeholderTextColor={"#ffffff"}
+        numberOfLines={15}
+        multiline={true}
+        editable={!isDatePickerVisible}
+      />
+
+      <View style={ styles.contain }>
 
         <Text style={ styles.welcome }>
           Select the date and time that you begin to work on the track.
@@ -129,12 +166,21 @@ const SetTimer = (props) => {
         <DateTimePickerModal
           isVisible={ datePickSee }
           mode="datetime"
-          display="spinner"
           is24Hour={true}
-          onConfirm={ handleEnd  }
+          onConfirm={ handleEnd }
           onCancel={ unseeDatePick }
         />
+
+        <Text style={ styles.welcome }>
+          Press the button down for finish the track.
+        </Text>
+
+        <View style={ styles.button }>
+          <Button title="Set finish to the track" onPress={ handleFinishTrack } color="#ad0404" />
+        </View>
+
       </View>
+
     </View>
   );
 };
@@ -156,7 +202,8 @@ const styles = StyleSheet.create({
   },
   contain: {
     flex: 1,
-    marginTop: 80,
+    marginTop: 25,
+    marginBottom: -15,
     backgroundColor: '#808080',
   },
   containerdoor: {
@@ -187,5 +234,17 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0, 1)',
     paddingRight: 40,
     paddingLeft: 40,
-  }
+  },
+  TextInputStyleClass:{
+    fontSize: 18,
+    textAlign: 'center',
+    height: 50,
+    borderWidth: 2,
+    marginTop: 15,
+    borderColor: 'white',
+    borderRadius: 20 ,
+    backgroundColor: "#a0a0a0",
+    height: 150,
+    color: 'white',
+    }
 });

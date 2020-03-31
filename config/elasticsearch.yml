@@ -1,0 +1,14 @@
+development: &default
+  host: 'http://localhost:9200/'
+  transport_options:
+    request:
+      timeout: !!integer 300
+test:
+  <<: *default
+staging:
+  <<: *default
+production:
+  host: 'https://sxvkrp02t6:vvmms6q4rn@yew-522866683.us-east-1.bonsaisearch.net:443'
+  transport_options:
+    request:
+      timeout: !!integer 300

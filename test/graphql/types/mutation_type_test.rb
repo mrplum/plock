@@ -7,17 +7,19 @@ require 'test_helper'
 class MutationTypeTest < ActiveSupport::TestCase
 	def setup
 		@track = tracks(:one)
+		@track_test_finish = tracks(:three)
 		@user = users(:one)
 		@interval = intervals(:one)
 		@project = projects(:one)
 		@name = 'testear'
 		@description = 'test'
+    @status = 'finished'
 	end
 
 	test 'interval start' do
 		query_string = <<-GRAPHQL
-		mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String! ) {
-              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at) {
+		mutation trackSetIntervalStart($track_id: ID!, $user_id: ID!, $start_at: String!, $description: String ) {
+              intervalStart(trackId: $track_id, userId: $user_id, startAt: $start_at, description: $description) {
 				track {
 					name
 				}
@@ -31,7 +33,7 @@ class MutationTypeTest < ActiveSupport::TestCase
 		track_id = @track.id
 		result = PlockSchema.execute(
 		query_string,
-			variables: { track_id: track_id, user_id: @user.id, start_at: datetime.to_s },
+			variables: { track_id: track_id, user_id: @user.id, start_at: datetime.to_s, description: @description },
 			context: {}
 		)
 		track_name = result['data']['intervalStart']['track']['name']
@@ -113,6 +115,25 @@ class MutationTypeTest < ActiveSupport::TestCase
 		track_name = result['data']['trackCreate']['name']
 
 
+		assert_not_nil result
+	end
+
+	test 'track finish' do
+		query_string = <<-GRAPHQL
+		mutation finishTrack($id: ID!, $status: String!) {
+			trackFinish(id: $id, status: $status) {
+				name
+				description
+			}
+		}
+		GRAPHQL
+		
+		result = PlockSchema.execute(
+		query_string,
+			variables: { id: @track_test_finish.id , status: @status},
+			context: {}
+		)
+		
 		assert_not_nil result
 	end
 end
