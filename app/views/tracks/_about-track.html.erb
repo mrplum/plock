@@ -1,0 +1,29 @@
+<div id='about-track' class='about-track hidden'>
+
+  <div class="user-about col-xs-12">
+
+    <div class="text-center" style="margin:5px;">
+      <h2>About Track</h2>
+    </div>
+
+    <div class="cent-div">
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Name</label>
+        <input class="form-control" type="text" value="<%= track.name %>" readonly="readonly">
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Description</label>
+        <input class="form-control" type="text" value="<%= track.description %>" readonly="readonly">
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="margin:5px;">
+        <label class="pull-left">Status</label>
+        <input class="form-control" type="text" value="<%= track.status %>" readonly="readonly">
+      </div>
+    </div>
+
+    <%= link_to edit_track_path(track), class:"btnIcon btnIconColor btnEdit" do %>
+      <i class="fa fa-edit mr-3 text-light fa-fw"></i>Edit
+    <% end %>
+
+  </div>
+</div>

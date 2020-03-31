@@ -59,6 +59,10 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
+        TeamUser.create(team_id: @team.id,user_id: current_user.id, incorporated_at: DateTime.now)
+        @team.users.each { |user|
+          UserMailer.with(user: user, team: @team).welcome_email.deliver_later
+        }
         format.html do
           redirect_to @team, notice: 'Team was successfully updated.'
         end
@@ -93,8 +97,8 @@ class TeamsController < ApplicationController
     redirect_to new_user_session_path
   end
 
-  def dataTeam
-    @team = Team.find(params[:team_id])
+  def data_team
+    @team = Team.find(params[:m_id])
     result = @team.projects.to_a.map do |project|
       {
         name: project.name,

@@ -1,8 +1,7 @@
-<div id='project-user' class='project-user hidden'>
-
+<div id='company-project' class='company-project hidden'>
   <div class="user-card-container">
 
-    <% if projects.present? %>
+    <% if projects.present? %> 
       <% projects.each do |project| %>
         <div class="card-project">
           <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -14,24 +13,11 @@
               <%= link_to project, class: "btnIcon btnIconColor btnShow" do %>
                 <i class="fa fa-eye text-light"></i>
               <% end %>
-            </div>  
+            </div>
           </div>
         </div>
-      <% end %>
+      <%end%>
     <% end %>
-
-  <div class="card-teams">
-    <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-      <div class="card-header" style="text-align: center;"> New project</div>
-      <div class="card-body">
-        <p class="card-text"></p>
-        <%= link_to new_project_path, class: "btnIcon btnIconColor btnNew" do %>
-          <i class="fa fa-plus text-light"></i>
-        <% end %>
-        <p class="card-text"></p>
-      </div>  
-    </div>
-  </div>
 
   </div>
   

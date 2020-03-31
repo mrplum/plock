@@ -1,0 +1,26 @@
+<div id='team-company' class='team-company hidden'>
+
+  <div class="user-card-container">
+
+    <% if projects.present? %> 
+      <% projects.to_a.uniq(&:team_id).each do |project| %>
+        <% if project.team&.name %>
+          <div class="card-project">
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+              <div class="card-header text-center"> <%= project.team&.name %> </div>
+              <div class="card-body">
+                <h5 class="card-title"> created at </h5>
+                <p class="card-text"> <%= project.team&.created_at&.strftime("%F %T") %> </p>
+                <%= link_to project.team, class: "btnIcon btnIconColor btnShow", data: { turbolinks: false } do %>
+                  <i class="fa fa-eye text-light"></i>
+                <% end %>
+              </div>  
+            </div>
+          </div>
+        <% end %>   
+      <% end %>
+    <% end %>
+
+  </div>
+  
+</div>

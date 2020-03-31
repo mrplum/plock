@@ -14,25 +14,36 @@ class IntervalsController < ApplicationController
   end
 
   def create
+  
     start_at = params[:start_at] || DateTime.now
     end_at = params[:end_at] || start_at
 
-    interval = interval_params.merge({
-      user_id: current_user.id,
-      track_id: params[:track_id],
-      start_at: start_at,
-      end_at: end_at
-    })
-
-    interval = Interval.new(interval)
+    @interval = Interval.new(
+      interval_params.merge({
+        user_id: current_user.id,
+        track_id: params[:track_id],
+        start_at: start_at,
+        end_at: end_at
+      })
+    )
 
     respond_to do |format|
-      if interval.save
-        format.html { redirect_to track_path(interval.track), notice: 'Interval was successfully created.' }
-        format.json { redirect_to track_path(interval.track), status: :created, location: interval }
+      if @interval.save
+        format.html { redirect_to track_path(@interval.track), notice: 'Interval was successfully created.' }
+        format.json { redirect_to track_path(@interval.track), status: :created, location: @interval }
       else
-        format.html { redirect_to track_path(interval.track), flash: {danger: interval.errors.full_messages.join('. ')}}
-        format.json { render json: interval.errors, status: :unprocessable_entity }
+        format.html do
+          get_track 
+          if automatic_interval_creation?
+            redirect_to track_path(@interval.track), alert: @interval.errors.full_messages.join(', ')
+          else
+            flash.now[:error] = @interval.errors.full_messages.join(', ')
+            render :new
+          end
+        end
+        format.json do
+          render json: @interval.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -58,6 +69,7 @@ class IntervalsController < ApplicationController
   end
 
   private
+
     def interval_params
       params.require(:interval)
         .permit(:track_id, :user_id, :start_at, :end_at, :description, :close_track, :start_track)
@@ -83,5 +95,9 @@ class IntervalsController < ApplicationController
       if track.user_id != current_user.id
         redirect_to track_path(params[:track_id]), flash: { danger: 'You do not have permission to create the interval' }
       end
+    end
+
+    def automatic_interval_creation?
+      params[:interval][:start_track] == 'true'
     end
 end

@@ -7,13 +7,13 @@
         <div class="card-body">
           <h5 class="card-title"> created at </h5>
           <p class="card-text"> <%= team.created_at.strftime("%F %T") %> </p>
-          <%= link_to team, class: "btn btn-light navbar-btn", data: { turbolinks: false } do %>
+          <%= link_to team, class: "btnIcon btnIconColor btnShow", data: { turbolinks: false } do %>
             <i class="fa fa-eye text-light"></i>
           <% end %>
-          <%= link_to edit_team_path(team), class: "btn btn-light navbar-btn" do %>
+          <%= link_to edit_team_path(team), class: "btnIcon btnIconColor btnEdit" do %>
             <i class="fa fa-edit text-light"></i>
           <% end %>
-          <%= link_to team, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light navbar-btn" do %>
+          <%= link_to team, method: :delete, data: { confirm: 'Are you sure?' }, class: "btnIcon btnIconColor btnTrash" do %>
             <i class="fa fa-trash text-light"></i>
           <% end %>
         </div>  
@@ -26,7 +26,7 @@
       <div class="card-header" style="text-align: center;"> New team</div>
       <div class="card-body">
         <p class="card-text"></p>
-        <%= link_to new_team_path, class: "btn btn-light navbar-btn" do %>
+        <%= link_to new_team_path, class: "btnIcon btnIconColor btnNew" do %>
           <i class="fa fa-plus text-light"></i>
         <% end %>
         <p class="card-text"></p>

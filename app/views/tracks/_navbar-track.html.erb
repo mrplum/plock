@@ -1,0 +1,61 @@
+<div class="vertical-nav navbar-light bg-light" id="sidebar">
+
+  <div class="py-4 px-3 mb-4 bg-dark">
+    <div class="media d-flex align-items-center">
+      <div class="media-body">
+        <h4 class="m-0 text-light"> 
+          <i class="fa fa-clipboard mr-3 text-light fa-fw"></i> 
+          <%= track.name %>
+          <% if @track.in_progress?%>
+            <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
+          <% elsif @track.unstarted?%>
+           <i class="fa fa-circle mr-3 text-danger fa-fw"></i>   
+          <% else %>  
+            <i class="fa fa-check mr-3 text-success fa-fw"></i> 
+          <% end %>  
+          </h4>
+      </div>
+    </div>
+  </div>
+
+    
+  <% if track.in_progress? %>
+    <%= form_with(model: [track, track.intervals.last], local: true) do |form| %>
+      <div class="actions">
+        <%= form.hidden_field 'close_track', value: true %>
+        <%= form.button class: 'btnIcon btnIconColor btnStartResume' do %>
+          Finish track<i class="fa fa-check ml-3 text-light fa-fw"></i>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0"> </p>
+
+  <ul class="nav flex-column bg-light mb-0">
+
+
+    <li class="nav-item">
+      <a href=""  data-turbolinks="false" class="nav-link text-dark font-italic" id='about-track-button'>
+        <i class="fa fa-info mr-3 text-dark fa-fw"></i>
+        About
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href=""  data-turbolinks="false" class="nav-link text-dark font-italic" id='track-interval-button'>
+        <i class="fa fa-history mr-3 text-dark fa-fw"></i>
+        Intervals
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="<%= project_path(@track.project) %>" class="nav-link text-dark font-italic">
+        <i class="fa fa-backward mr-3 text-dark fa-fw"></i>
+        Back
+      </a>
+    </li>
+
+  </ul>
+  
+</div>

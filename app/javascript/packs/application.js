@@ -18,5 +18,6 @@ require("packs/custom/require-show-stat")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 //= require d3
+
 import 'bootstrap'
 import '../stylesheets/application'

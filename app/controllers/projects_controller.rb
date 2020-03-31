@@ -70,8 +70,8 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def dataProject
-    @project = Project.find(params[:project_id])
+  def data_project
+    @project = Project.find(params[:m_id])
     result = @project.team.users.to_a.map do |user|
       {
         name: user.name,
@@ -90,7 +90,6 @@ class ProjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
       params.require(:project).permit(:name, :repository, :cost, :start_at, :team_id)
-
     end
 
     def check_permissions

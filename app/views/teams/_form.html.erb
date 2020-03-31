@@ -1,23 +1,25 @@
 <div class="form-team-c">
   <%= form_with(model: team, local: true) do |form| %>
   
-    <% if team.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h2>
-        <ul>
-          <% team.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+    <% if team.errors[:name].any? %>	
+      <div class="form-group">
+        <div style='border: 3px solid red !important'>
+          <span class="input-group-addon"></span>
+          <% if team.errors.count == 1%>
+            <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: team.errors[:name][0] %>
+          <% else %>
+            <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: team.errors[:name][1] %>
+          <% end %>				
+        </div>
+      </div>
+    <% else %>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
+        </div>
       </div>
     <% end %>
-
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"></span>
-        <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
-      </div>
-    </div>
 
     <div class="form-group">
       <%= form.select( :user_ids, options_from_collection_for_select(
@@ -27,10 +29,19 @@
     </div>
 
     <div class="form-group">
-      <%= form.submit "Submit", class: "btn btn-new-team login-btn btn-block" %>
+      <%= form.submit class: "btn btn-new-team login-btn btn-block" %>
     </div>
 
     <div class="or-seperator"></div>
+
+
+    <% if team.errors.any? %>
+     <% if team.errors.count == 1%>
+        <p  style="color: red;"> Name <%= team.errors[:name][0] %> </p>
+     <% else %>
+        <p  style="color: red;"> Name <%= team.errors[:name][1] %> </p>
+      <% end %>
+    <% end %>  	  
     
   <% end %>
 

@@ -1,26 +1,31 @@
 <div id='track-project' class='track-project hidden'>
 
-  <div class="user-card-container">
-    <% if @tracks.empty? %>
-      <p> Not tracks available </p>
-    <% else %> 
+  <div class="user-card-container"> 
       <% @tracks.each do |track| %>
         <div class="card-project">
           <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header" style="text-align: center;"> <%= track.name %> </div>
+            <div class="card-header" style="text-align: center;"> 
+              <%= track.name %>
+              <% if track.in_progress?%>
+                <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
+              <% elsif track.unstarted?%>
+                <i class="fa fa-circle mr-3 text-danger fa-fw"></i> 
+              <% else %>  
+                <i class="fa fa-check mr-3 text-success fa-fw"></i> 
+              <% end %>  
+            </div>
             <div class="card-body">
-              <h5 class="card-title"> description </h5>
+              <h5 class="card-title"> Description </h5>
               <p class="card-text"> <%= track.description %> </p>
-              <%= link_to track, class: "btn btn-light navbar-btn" do %>
+              <%= link_to track, class: "btnIcon btnIconColor btnShow" do %>
                 <i class="fa fa-eye text-light"></i>
               <% end %>
-              <%= link_to track, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light navbar-btn" do %>
+              <%= link_to track, method: :delete, data: { confirm: 'Are you sure?' }, class: "btnIcon btnIconColor btnTrash" do %>
                 <i class="fa fa-trash text-light"></i>
               <% end %>
             </div>  
           </div>
         </div>
-      <%end%>
     <% end %>
 
     <div class="card-teams">
@@ -28,7 +33,7 @@
         <div class="card-header" style="text-align: center;"> Create new track</div>
         <div class="card-body">
           <p class="card-text"></p>
-          <%= link_to new_project_track_path(@project), class: "btn btn-light navbar-btn" do %>
+          <%= link_to new_project_track_path(@project), class: "btnIcon btnIconColor btnNew" do %>
             <i class="fa fa-plus text-light"></i>
           <% end %>
           <p class="card-text"></p>

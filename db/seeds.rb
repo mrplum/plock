@@ -3,7 +3,7 @@
 owner = User.new(name: 'Owner', lastname: 'Plock', email: 'owner@plock.com', password: '123123')
 
 # Craete the company of owner user
-c = Company.new(name: 'Plock', description: 'The company', owner: owner)
+c = Company.new(name: 'Plum', description: 'The company', owner: owner)
 
 # Owner company also belong to company
 owner.company = c
@@ -14,6 +14,7 @@ c.save
 # Create company member user
 member_user = User.create(name: 'Slave 1', lastname: 'One', email: 'slave_1@plock.com', password: '123123', company: c)
 member_user1 = User.create(name: 'Slave 2', lastname: 'Two', email: 'slave_2@plock.com', password: '123123', company: c)
+User.create(name: 'Slave 3', lastname: 'Three', email: 'slave_3@plock.com', password: '123123', company: c)
 
 # Create the Plockers Team
 t = Team.create(name: 'Plockers Team')
@@ -77,6 +78,7 @@ track_values = [
     {
         name: 'Track Three',
         description: 'Is a example',
+        status: :finished,
         user: member_user,
         project: project,
     },
@@ -139,89 +141,194 @@ t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = Track.all
 
 datetime = DateTime.now
 
-i = t1.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i = t1.intervals.create(
+    user: owner, 
+    start_at: datetime, 
+    end_at: datetime, 
+    description: "this is a description of the interval1"
+)
 i.update(end_at: 4.hours.from_now)
 
-i = t1.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i = t1.intervals.create(
+    user: owner, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval2"
+)
 i.update(end_at: 20.minutes.from_now)
 
 t1.update(updated_at: 1.day.from_now)
 
-i = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i = t2.intervals.create(
+    user: member_user, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval3"
+)
 i.update(end_at: 2.hours.from_now)
 
-i = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i = t2.intervals.create(
+    user: member_user, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval4"
+)
 i.update(end_at: 1.hours.from_now)
 
 t2.update(updated_at: 1.day.from_now)
 
-i = t2.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i = t2.intervals.create(
+    user: member_user, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval5"
+)
 i.update(end_at: 30.minutes.from_now)
 
 t2.update(updated_at: 2.day.from_now)
 
-i = t3.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i = t3.intervals.create(
+    user: member_user, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval6"
+)
 i.update(end_at: 1.hours.from_now)
 
-i = t3.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i = t3.intervals.create(
+    user: member_user, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval7"
+)
 i.update(end_at: 1.hours.from_now)
 
 t3.update(updated_at: 3.day.from_now)
 
-i = t4.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i = t4.intervals.create(
+    user: member_user1, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval8"
+)
 i.update(end_at: 5.hours.from_now)
 
 t4.update(updated_at: 1.day.from_now)
 
-i = t4.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i = t4.intervals.create(
+    user: member_user1, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval9"
+)
 i.update(end_at: 10.minutes.from_now)
 
 t4.update(updated_at: 1.day.from_now)
 
-i = t4.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i = t4.intervals.create(
+    user: member_user1, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval10"
+)
 i.update(end_at: 3.hours.from_now)
 
 t4.update(updated_at: 2.day.from_now)
 
-i = t5.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i = t5.intervals.create(
+    user: owner, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval11"
+)
 i.update(end_at: 20.minutes.from_now)
 
-i = t5.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i = t5.intervals.create(
+    user: owner, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval12"
+)
 i.update(end_at: 10.minutes.from_now)
 
 t5.update(updated_at: 1.day.from_now)
 
-i = t5.intervals.create(user: owner, start_at: datetime, end_at: datetime)
+i = t5.intervals.create(
+    user: owner, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval13"
+)
 i.update(end_at: 1.hours.from_now)
 
-i = t6.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i = t6.intervals.create(
+    user: member_user, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval14"
+)
 i.update(end_at: 50.minutes.from_now)
 
-i = t6.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i = t6.intervals.create(
+    user: member_user, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval16"
+)
 i.update(end_at: 1.hours.from_now)
 
 t6.update(updated_at: 1.day.from_now)
 
-i = t7.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i = t7.intervals.create(
+    user: member_user1, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval17"
+)
 i.update(end_at: 5.minutes.from_now)
 
-i = t7.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i = t7.intervals.create(
+    user: member_user1, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval18"
+)
 i.update(end_at: 2.hours.from_now)
 
 t7.update(updated_at: 1.day.from_now)
 
-i = t8.intervals.create(user: member_user, start_at: datetime, end_at: datetime)
+i = t8.intervals.create(
+    user: member_user, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval19"
+)
 i.update(end_at: 25.minutes.from_now)
 
-i = t9.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i = t9.intervals.create(
+    user: member_user1, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval20"
+)
 i.update(end_at: 30.minutes.from_now)
 
-i = t9.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i = t9.intervals.create(
+    user: member_user1,
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval21"
+)
 i.update(end_at: 5.hours.from_now)
 
 t9.update(updated_at: 1.day.from_now)
 
-i = t10.intervals.create(user: member_user1, start_at: datetime, end_at: datetime)
+i = t10.intervals.create(
+    user: member_user1, 
+    start_at: datetime, 
+    end_at: datetime,
+    description: "this is a description of the interval22"
+)
 i.update(end_at: 5.hours.from_now)
 
 
