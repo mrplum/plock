@@ -1,0 +1,73 @@
+curl -X DELETE 'http://localhost:9200/_all'
+
+----------------------------- ALL TRACKS -----------------------------------------------
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": { 
+    }
+  }
+}'
+
+---------------------------- STATS BY STATUS --------------------------------------------
+
+curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": { 
+      "filter": [
+        { "match": { "user_id": 2 }}
+      ]
+    }
+  },
+  "aggs": {
+    "group_by_state": {
+      "terms": {
+        "field": "status.keyword"
+      },
+      "aggs" : {
+        "tracks count" : { "value_count" : { "field" : "id" } }
+      }
+    }
+  }
+}'
+
+--------------------------------- STATS BY DAY ------------------------------------------
+
+curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": { 
+      "filter": [
+        { "match": { "user_id": 2 }}
+      ]
+    }
+  }, 
+  "aggs": {
+    "simpleDatehHistogram": {
+      "date_histogram": {
+        "field": "updated_at",
+        "interval": "day"
+      },
+      "aggs" : {
+        "time_worked" : { "sum" : { "field" : "plock_time" } }
+      }
+    }
+  }
+}'
+
+------------------------------ STATS BY PROJECT ----------------------------
+
+curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": {
+      "must": [
+        { "term": { "user_id": 1 } },
+        { "term": { "project_id": 1 } }
+      ]
+    }
+  },
+  "aggs": {
+    "time_worked": {
+      "sum": { "field": "plock_time" } 
+    }
+  }
+}'

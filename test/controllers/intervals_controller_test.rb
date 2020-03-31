@@ -10,23 +10,31 @@ class IntervalsControllerTest < ActionDispatch::IntegrationTest
     @track = tracks(:one)
     @track1 = tracks(:two)
     @interval = intervals(:two)
-    @user = users(:one)
+    @user = users(:matias)
     sign_in @user
   end
 
   test 'should create interval' do
-    Interval.destroy_all
-    post track_intervals_path(@track.id)
-    assert_redirected_to track_path(@track.id)
+    post track_intervals_url(@track.id), params: {
+      interval: {
+        user_id: @user.id,
+        track_id: @track.id,
+        start_at: DateTime.now,
+        end_at: 2.minutes.from_now
+      }
+    }
+
+    assert_response :success
   end
 
   test 'should update interval' do
-    patch track_interval_path(
-      @track1,
-      @interval,
-      { interval: { start_at: DateTime.now } })
+    patch track_interval_url(@track.id, @interval.id), params: {
+      interval: {
+        end_at: DateTime.now
+      }
+    }
 
-    assert_redirected_to track_path(@track1)
+    assert_redirected_to track_url(@track.id)
   end
 
   test 'should delete interval' do

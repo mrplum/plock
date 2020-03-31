@@ -1,29 +1,66 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  description: 'interval 1'
   track: one
   user: one
   description: "description1"
   start_at: "2020-01-22 15:31:10 UTC"
   end_at: "2020-01-22 17:31:00 UTC"
+  minutes: 0
 
 two:
+  description: 'interval 2'
   track: two
   user: one
   description: "description2"
   start_at: "2020-01-22 15:31:10 UTC"
   end_at: "2020-01-22 15:31:10 UTC"
+  minutes: 0
 
 three:
+  description: 'interval 3'
   track: two
   user: one
   description: "description3"
   start_at: "2019-01-22 15:31:10 UTC"
-  end_at: "2020-01-22 15:31:10 UTC"
+  end_at: "2020-01-22 16:01:10 UTC"
+  minutes: 30
 
 four: 
+  description: 'interval 4'
   track: two
   user: one
   description: "description4"
   start_at: "2019-01-22 15:31:10 UTC"
   end_at: "2020-01-22 15:31:10 UTC"
+  minutes: 0
+
+five: 
+  description: 'divide interval'
+  track: one
+  user: one
+  start_at: "2019-01-22 23:45:20 UTC"
+  end_at: "2019-01-23 00:05:10 UTC"
+
+six:
+  description: 'test change status track'
+  track: five
+  user: user1
+  start_at: "2019-01-22 23:45:20 UTC"
+  end_at: "2019-01-22 23:55:10 UTC"
+
+seven:
+  description: 'test change status track'
+  track: six
+  user: user1
+  start_at: "2019-01-22 23:45:20 UTC"
+  end_at: "2019-01-22 23:55:10 UTC"
+
+eight:
+  description: 'test change status track'
+  track: seven
+  user: one
+  start_at: "2020-01-22 15:31:10 UTC"
+  end_at: "2020-01-22 16:01:10 UTC"
+  minutes: 30

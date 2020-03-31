@@ -6,8 +6,10 @@
   <%= render 'team-user', user: @user %>
   <%= render 'projects-user', projects: @projects %>
 
-  <div id='statics-user' class='statics-user hidden'>
-    <div id="graph-d3-user"> </div>
+  <div id = 'statics-user' class='statics-user hidden'>
+    <div id = "graph-d3-user"> </div>
+    <%= select_tag :interval, options_for_interval_types, id: 'change_interval'%>
+    <div id = "graph-d3-lineChart"> </div>
   </div>
   
 </div>

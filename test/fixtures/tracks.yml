@@ -32,29 +32,29 @@ four:
   user: matias
   project: two
 
-track11:
-  name: track11
-  description: track1 jeje
+five:
+  name: five
+  description: five
   plock_time: 240
-  status: unstarted
+  status: in_progress
   user_id: 999
   project_id: 999
 
-track12:
-  name: track12
-  description: track12 jeje
+six:
+  name: six
+  description: six
   plock_time: 360
-  status: unstarted
+  status: finished
   user_id: 999
   project_id: 999
 
-track15:
-  name: track15
-  description: track15 jeje
-  plock_time: 360
-  status: unstarted
-  user_id: 888
-  project_id: 888
+seven:
+  name: seven
+  description: seven
+  plock_time: 30
+  status: in_progress
+  user: one
+  project: five
 
 track16:
   name: track16

@@ -24,11 +24,23 @@ class UsersController < ApplicationController
   end
 
   def data_user
-    render json: current_user.tracks.map {|track| {
-      name: "#{track.project.name}: #{track.name}",
-      time: track.plock_time }
-    }.reject(&:empty?)  
-  end 
+    render json: current_user.tracks.map { |track|
+      {
+        name: track.name,
+        time: track.plock_time
+      }
+    }.reject(&:empty?)
+  end
+
+  def hours_interval_time
+    intervals = UserTracksStatIntervalTime.new(current_user, params[:interval]).call
+    render json: intervals.map { |interval| 
+      {
+        date: DateTime.parse(interval.key_as_string).try(:to_f)*1000,
+        time: interval.time_worked.value 
+      }
+    }.reject(&:empty?)
+  end
     
   private
     def user_params

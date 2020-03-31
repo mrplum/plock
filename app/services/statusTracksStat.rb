@@ -4,6 +4,6 @@ class StatusTracksStat
   end
 
   def call
-    @user.tracks.group(:status).count
+    Track.search_by_status(@user.id)
   end
 end

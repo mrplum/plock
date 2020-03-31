@@ -24,12 +24,11 @@ module Types
       current_user
     end
 
-    field :stats_by_day,
-      [GraphQL::Types::JSON],
-      null: true,
-      description: 'hours worked per day'
-    def stats_by_day
-      UserTracksStatByDay.new(current_user).call
+    field :stats_by_time_interval, [GraphQL::Types::JSON], null: false do
+      argument :interval, String, required: true
+    end
+    def stats_by_time_interval(interval:)
+      UserTracksStatIntervalTime.new(current_user, interval).call
     end
 
     field :stats_by_projects,

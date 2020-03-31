@@ -12,19 +12,39 @@ owner.save
 c.save
 
 # Create company member user
-member_user = User.create(name: 'Slave 1', lastname: 'One', email: 'slave_1@plock.com', password: '123123', company: c)
-member_user1 = User.create(name: 'Slave 2', lastname: 'Two', email: 'slave_2@plock.com', password: '123123', company: c)
-User.create(name: 'Slave 3', lastname: 'Three', email: 'slave_3@plock.com', password: '123123', company: c)
+member_user = User.create(
+    name: 'Slave 1',
+    lastname: 'One',
+    email: 'slave_1@plock.com',
+    password: '123123', company: c
+)
+member_user1 = User.create(
+    name: 'Slave 2',
+    lastname: 'Two',
+    email: 'slave_2@plock.com',
+    password: '123123', company: c
+)
+User.create(
+    name: 'Slave 3',
+    lastname: 'Three',
+    email: 'slave_3@plock.com',
+    password: '123123',
+    company: c
+)
 
 # Create the Plockers Team
 t = Team.create(name: 'Plockers Team')
 
-# Create a project
+datetime = DateTime.now
+date_project = 2.months.ago
+
+# Create a projects
+
 project = Project.create(
     name: 'Plock',
     repository: 'Plock is the best',
     cost: 25000,
-    start_at: DateTime.now,
+    start_at: date_project,
     user: owner,
     team: t,
     company: c
@@ -34,7 +54,7 @@ project2 = Project.create(
     name: 'Plock2',
     repository: 'Plock is the best2',
     cost: 240,
-    start_at: DateTime.now,
+    start_at: date_project,
     user: owner,
     team: t,
     company: c
@@ -44,7 +64,7 @@ project3 = Project.create(
     name: 'Plock3',
     repository: 'Plock is the best3',
     cost: 2400,
-    start_at: DateTime.now,
+    start_at: date_project,
     user: member_user1,
     company: c
 )
@@ -130,6 +150,12 @@ track_values = [
         user: member_user1,
         project: project3,
         status: :finished
+    },
+    {
+        name: 'Track Eleven',
+        description: 'Is a example',
+        user: member_user,
+        project: project,
     }
 ]
 
@@ -137,199 +163,204 @@ track_values.each { |t| Track.create(t) }
 
 
 # Creating intervals for tracks
-t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 = Track.all
+t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 = Track.all
 
-datetime = DateTime.now
-
-i = t1.intervals.create(
-    user: owner, 
-    start_at: datetime, 
-    end_at: datetime, 
-    description: "this is a description of the interval1"
+t1.intervals.create(
+    description: "this is a description of the interval",
+    user: owner,
+    start_at: datetime - 4.month,
+    end_at: (datetime - 4.month) + 60.minutes
 )
-i.update(end_at: 4.hours.from_now)
 
-i = t1.intervals.create(
-    user: owner, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval2"
+t1.intervals.create(
+    description: "this is a description of the interval1",
+    user: owner,
+    start_at: datetime - 3.month,
+    end_at: (datetime - 3.month) + 30.minutes
 )
-i.update(end_at: 20.minutes.from_now)
 
-t1.update(updated_at: 1.day.from_now)
-
-i = t2.intervals.create(
-    user: member_user, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval3"
+t1.intervals.create(
+    description: "this is a description of the interval2",
+    user: owner,
+    start_at: datetime - 2.month,
+    end_at: (datetime - 2.month) + 10.minutes
 )
-i.update(end_at: 2.hours.from_now)
 
-i = t2.intervals.create(
-    user: member_user, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval4"
+
+t1.intervals.create(
+    description: "this is a description of the interval3",
+    user: owner,
+    start_at: datetime - 1.month,
+    end_at: (datetime - 1.month) + 25.minutes
 )
-i.update(end_at: 1.hours.from_now)
 
-t2.update(updated_at: 1.day.from_now)
-
-i = t2.intervals.create(
-    user: member_user, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval5"
+t2.intervals.create(
+    description: "this is a description of the interval4",
+    user: owner,
+    start_at: datetime - 4.month,
+    end_at: (datetime - 4.month) + 50.minutes
 )
-i.update(end_at: 30.minutes.from_now)
 
-t2.update(updated_at: 2.day.from_now)
-
-i = t3.intervals.create(
-    user: member_user, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval6"
-)
-i.update(end_at: 1.hours.from_now)
-
-i = t3.intervals.create(
-    user: member_user, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval7"
-)
-i.update(end_at: 1.hours.from_now)
-
-t3.update(updated_at: 3.day.from_now)
-
-i = t4.intervals.create(
-    user: member_user1, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval8"
-)
-i.update(end_at: 5.hours.from_now)
-
-t4.update(updated_at: 1.day.from_now)
-
-i = t4.intervals.create(
-    user: member_user1, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval9"
-)
-i.update(end_at: 10.minutes.from_now)
-
-t4.update(updated_at: 1.day.from_now)
-
-i = t4.intervals.create(
-    user: member_user1, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval10"
-)
-i.update(end_at: 3.hours.from_now)
-
-t4.update(updated_at: 2.day.from_now)
-
-i = t5.intervals.create(
-    user: owner, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval11"
-)
-i.update(end_at: 20.minutes.from_now)
-
-i = t5.intervals.create(
-    user: owner, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval12"
-)
-i.update(end_at: 10.minutes.from_now)
-
-t5.update(updated_at: 1.day.from_now)
-
-i = t5.intervals.create(
-    user: owner, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval13"
-)
-i.update(end_at: 1.hours.from_now)
-
-i = t6.intervals.create(
-    user: member_user, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval14"
-)
-i.update(end_at: 50.minutes.from_now)
-
-i = t6.intervals.create(
-    user: member_user, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval16"
-)
-i.update(end_at: 1.hours.from_now)
-
-t6.update(updated_at: 1.day.from_now)
-
-i = t7.intervals.create(
-    user: member_user1, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval17"
-)
-i.update(end_at: 5.minutes.from_now)
-
-i = t7.intervals.create(
-    user: member_user1, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval18"
-)
-i.update(end_at: 2.hours.from_now)
-
-t7.update(updated_at: 1.day.from_now)
-
-i = t8.intervals.create(
-    user: member_user, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval19"
-)
-i.update(end_at: 25.minutes.from_now)
-
-i = t9.intervals.create(
-    user: member_user1, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval20"
-)
-i.update(end_at: 30.minutes.from_now)
-
-i = t9.intervals.create(
+t4.intervals.create(
+    description: "this is a description of the interval5",
     user: member_user1,
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval21"
+    start_at: datetime - 4.month,
+    end_at: (datetime - 4.month) + 30.minutes
 )
-i.update(end_at: 5.hours.from_now)
 
-t9.update(updated_at: 1.day.from_now)
-
-i = t10.intervals.create(
-    user: member_user1, 
-    start_at: datetime, 
-    end_at: datetime,
-    description: "this is a description of the interval22"
+t4.intervals.create(
+    description: "this is a description of the interval6",
+    user: member_user1,
+    start_at: datetime - 3.month,
+    end_at: (datetime - 3.month) + 20.minutes
 )
-i.update(end_at: 5.hours.from_now)
+
+t4.intervals.create(
+    description: "this is a description of the interval7",
+    user: member_user1,
+    start_at: datetime - 2.month,
+    end_at: (datetime - 2.month) + 10.minutes
+)
+
+t5.intervals.create(
+    description: "this is a description of the interval8",
+    user: owner,
+    start_at: datetime - 4.month,
+    end_at: (datetime - 4.month) + 25.minutes
+)
+
+t5.intervals.create(
+    description: "this is a description of the interval9",
+    user: owner,
+    start_at: datetime - 3.month,
+    end_at: (datetime - 3.month) + 30.minutes
+)
+
+t5.intervals.create(
+    description: "this is a description of the interval10",
+    user: owner,
+    start_at: datetime - 2.month,
+    end_at: (datetime - 2.month) + 12.minutes
+)
+
+t5.intervals.create(
+    description: "this is a description of the interval11",
+    user: owner,
+    start_at: datetime - 1.month,
+    end_at: (datetime - 1.month) + 18.minutes
+)
+
+t6.intervals.create(
+    description: "this is a description of the interval12",
+    user: member_user,
+    start_at: datetime - 2.month,
+    end_at: (datetime - 2.month) + 30.minutes
+)
+
+t6.intervals.create(
+    description: "this is a description of the interval13",
+    user: member_user,
+    start_at: (datetime - 2.month) - 1.day,
+    end_at: ((datetime - 2.month) - 1.day) + 30.minutes
+)
+
+t6.intervals.create(
+    description: "this is a description of the interval14",
+    user: member_user,
+    start_at: datetime - 1.month,
+    end_at: (datetime - 1.month) + 30.minutes
+)
+
+t7.intervals.create(
+    description: "this is a description of the interval15",
+    user: member_user1,
+    start_at: (datetime - 4.month) + 1.day,
+    end_at: ((datetime - 4.month) + 1.day) + 30.minutes
+)
+
+t7.intervals.create(
+    description: "this is a description of the interval16",
+    user: member_user1,
+    start_at: (datetime - 4.month) + 2.day,
+    end_at: ((datetime - 4.month) + 2.day) + 25.minutes
+)
+
+t7.intervals.create(
+    description: "this is a description of the interval17",
+    user: member_user1,
+    start_at: (datetime - 4.month) + 3.day,
+    end_at: ((datetime - 4.month) + 3.day) + 50.minutes
+)
+
+t7.intervals.create(
+    description: "this is a description of the interval18",
+    user: member_user1,
+    start_at: (datetime - 4.month) + 4.day,
+    end_at: ((datetime - 4.month) + 4.day) + 25.minutes
+)
+
+t8.intervals.create(
+    description: "this is a description of the interval19",
+    user: member_user,
+    start_at: (datetime - 3.month) - 2.day,
+    end_at: ((datetime - 3.month) - 2.day) + 25.minutes
+)
+
+t8.intervals.create(
+    description: "this is a description of the interval20",
+    user: member_user,
+    start_at: (datetime - 2.month) - 3.day,
+    end_at: ((datetime - 2.month) - 3.day) + 50.minutes
+)
+
+t8.intervals.create(
+    description: "this is a description of the interval21",
+    user: member_user,
+    start_at: (datetime - 1.month) - 1.day,
+    end_at: ((datetime - 1.month) - 1.day) + 25.minutes
+)
+
+t9.intervals.create(
+    description: "this is a description of the interval22",
+    user: member_user,
+    start_at: (datetime - 3.month) - 2.day,
+    end_at: ((datetime - 3.month) - 2.day) + 30.minutes
+)
+
+t9.intervals.create(
+    description: "this is a description of the interval23",
+    user: member_user,
+    start_at: (datetime - 2.month) - 3.day,
+    end_at: ((datetime - 2.month) - 3.day) + 45.minutes
+)
+
+t9.intervals.create(
+    description: "this is a description of the interval24",
+    user: member_user,
+    start_at: (datetime - 1.month) - 1.day,
+    end_at: ((datetime - 1.month) - 1.day) + 25.minutes
+)
+
+t10.intervals.create(
+    description: "this is a description of the interval25",
+    user: member_user1,
+    start_at: datetime - 2.month,
+    end_at: (datetime - 2.month) + 30.minutes
+)
+
+t10.intervals.create(
+    description: "this is a description of the interval26",
+    user: member_user1,
+    start_at: datetime - 2.month,
+    end_at: (datetime - 2.month) + 30.minutes
+)
+
+t10.intervals.create(
+    description: "this is a description of the interval27",
+    user: member_user1,
+    start_at: datetime - 2.month,
+    end_at: (datetime - 2.month) + 30.minutes
+)
 
 
 # 1000.times do |i|

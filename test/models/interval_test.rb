@@ -16,12 +16,21 @@ class IntervalTest < ActiveSupport::TestCase
     assert_equal(@interval.track.plock_time, 120)
   end
 
+  test 'update plock time on destroy' do
+    interval = intervals(:eight)
+    track = interval.track
+
+    assert_equal(30, track.plock_time)
+    interval.destroy
+    assert_equal(0, track.plock_time)
+  end
+
   test 'update plock time with the sum of each interval' do
     # create an interval of two hours
-    interval = Interval.create(track: @track, user: @user, start_at: 2.hours.ago, end_at: DateTime.now, description: "description98")
+    interval = Interval.create(description: 'test1', track: @track, user: @user, start_at: 2.hours.ago, end_at: DateTime.now)
 
     # create another interval of 1 hour
-    interval = Interval.create(track: @track, user: @user, start_at: 1.hour.ago, end_at: DateTime.now, description: "description99")
+    interval = Interval.create(description: 'test2', track: @track, user: @user, start_at: 1.hour.ago, end_at: DateTime.now)
 
     # 3 hours as result
     assert_equal(@track.plock_time, 180)
@@ -70,5 +79,46 @@ class IntervalTest < ActiveSupport::TestCase
     @interval.save
 
     assert @interval.track.status == 'in_progress'
+  end
+
+  test 'check interval in same day' do
+    assert @interval.same_day?
+  end
+
+  test 'should update time' do
+    interval = intervals(:two)
+    interval.update(end_at: DateTime.now)
+    assert_not_equal(0, interval.minutes)
+  end
+
+  test 'divide the interval if it starts on one day and ends on another' do
+    interval = intervals(:five)
+    interval.check_day
+    i = Interval.find(interval.id)
+    i1 = Interval.find_by(start_at: '2019-01-23 00:00:00 UTC')
+    assert_equal(interval.start_at, i.start_at)
+    assert_equal('2019-01-22 23:59:59 UTC', i.end_at.to_s)
+    assert_equal('2019-01-23 00:00:00 UTC', i1.start_at.to_s)
+    assert_equal('2019-01-23 00:05:10 UTC', i1.end_at.to_s)
+  end
+
+  # In case it is deleted, it is in_progress and has no intervals.
+  test 'should update status' do
+    interval = intervals(:six)
+    track = interval.track
+
+    assert_equal('in_progress', track.status)
+    interval.destroy
+    assert_equal('unstarted', track.status)
+  end
+
+  # In case it is deleted, it is finished and has no intervals.
+  test 'should update status 1' do
+    interval = intervals(:seven)
+    track = interval.track
+
+    assert_equal('finished', track.status)
+    interval.destroy
+    assert_equal('unstarted', track.status)
   end
 end

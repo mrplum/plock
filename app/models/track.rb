@@ -46,25 +46,47 @@ class Track < ApplicationRecord
     mapping dynamic: false do
       indexes :name, analyzer: 'english'
       indexes :description, analyzer: 'english'
-      indexes :status, type: :boolean
+      indexes :status, type: :status
       indexes :plock_time, type: :integer
       indexes :user_id, type: :integer
       indexes :project_id, type: :integer
+      indexes :created_at, type: :date
+      indexes :updated_at, type: :date
     end
   end
 
-  def as_indexed_json(_options = nil)
-    as_json(
-      only: %i[
-        id name description plock_time
-      ],
-      include: {
-        intervals: {
-          only: %i[
-            id start_at end_at
-          ]
+  def self.search_by_status(user_id)
+    __elasticsearch__.search({
+      query: {
+        match: {
+          user_id: user_id
+        } 
+      },
+      aggs: {
+        group_by_status: {
+          terms: {
+            field: 'status.keyword'
+          }
         }
       }
-    )
+    }).response['aggregations']['group_by_status']['buckets']
+  end
+
+  def self.search_plock_time_given_user_and_project(user_id, project_id)
+    __elasticsearch__.search({
+      query: {
+        bool: {
+          must: [
+            { term: { user_id: user_id } },
+            { term: { project_id: project_id } }
+          ]
+        }
+      },
+      aggs: {
+        time_worked: {
+          sum: { field: 'plock_time' }
+        }
+      }
+    }).response['aggregations']['time_worked']['value']
   end
 end

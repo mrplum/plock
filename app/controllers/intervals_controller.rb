@@ -63,7 +63,7 @@ class IntervalsController < ApplicationController
   def destroy
     @interval.destroy
     respond_to do |format|
-      format.html { redirect_to track_url(@interval.track), notice: 'Project was successfully destroyed.' }
+      format.html { redirect_to track_url(@interval.track), notice: 'Interval was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

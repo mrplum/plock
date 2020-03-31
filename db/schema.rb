@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_122426) do
+ActiveRecord::Schema.define(version: 2020_02_13_122703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_122426) do
     t.datetime "start_at"
     t.datetime "end_at"
     t.string "description", default: ""
+    t.integer "minutes", default: 0
     t.index ["track_id"], name: "index_intervals_on_track_id"
     t.index ["user_id"], name: "index_intervals_on_user_id"
   end

@@ -5,6 +5,6 @@ class ProjectUserStat
   end
 
   def call
-    @user.tracks.where(project_id: @project.id).sum(&:plock_time)
+    Track.search_plock_time_given_user_and_project(@user.id, @project.id).to_i
   end
 end

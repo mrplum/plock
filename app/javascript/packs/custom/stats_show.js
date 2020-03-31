@@ -1,32 +1,43 @@
 if (document.getElementById("graph-d3-project") !== null) {
   let project_id = document.getElementById('project_id').value;
-  ajax('dataProject', project_id, 'project')
+  ajax('dataProject', { m_id: project_id }, 'project', draw)
 }
-else if (document.getElementById("graph-d3-user") !== null) {
-  ajax('dataUser', '', 'user')
+if (document.getElementById("graph-d3-user") !== null) {
+  ajax('dataUser', {}, 'user', draw)
 }  
-else if (document.getElementById("graph-d3-team") !== null) {
+if (document.getElementById("graph-d3-team") !== null) {
   let team_id = document.getElementById('team_id').value;
-  ajax('dataTeam', team_id, 'team')  
+  ajax('dataTeam', { m_id: team_id }, 'team', draw)
+}
+if (document.getElementById("graph-d3-lineChart") !== null) {
+  ajax('dataUser/hoursIntervalTime', { interval: 'day' }, '', lineChart)
+  document.getElementById("change_interval").addEventListener(
+    'change',
+    () => {
+      document.getElementById("graph-d3-lineChart").innerHTML = '';
+      let intervalTime = document.getElementById("change_interval").value
+      ajax('dataUser/hoursIntervalTime', { interval: intervalTime }, '', lineChart)
+    }
+  )
 }
 
-function ajax(data, id, nameModel){
+function ajax(data, params, nameModel, functionGraph){
   $.ajax({
     type: "GET",
     contentType: "application/json; charset=utf-8",
     url: '/me/'+data,
     dataType: 'json',
-    data: { m_id: id },
-    success: function (data) {
-      draw(data, nameModel);
+    data: params,
+    success: function (json) {
+      functionGraph(json, nameModel);
     },
     error: function (result) {
-      error();
+      error(result);
     }
   })
 }
 
-function draw(data,nameModel) {
+function draw(data, nameModel){
   var margin = {top: 40, right: 20, bottom: 30, left: 40},
   width = 960 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
@@ -46,7 +57,7 @@ function draw(data,nameModel) {
   .scale(y)
   .orient("left")
   .tickFormat(formatPercent);
-          
+      
   var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
@@ -88,3 +99,65 @@ function draw(data,nameModel) {
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
 };    
+
+const radio = (item) => {
+  value = item.time == 0 ?  0 :  3.5
+  return value
+}
+
+function lineChart(data, a) {
+  var margin = {top: 40, right: 20, bottom: 30, left: 40},
+  width = 960 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
+
+  var parseDate = d3.time.format("%d-%b-%y").parse;
+
+  var x = d3.time.scale().range([0, width]);
+  var y = d3.scale.linear().range([height, 0]);
+
+  var xAxis = d3.svg.axis().scale(x)
+  .orient("bottom").ticks(5);
+
+  var yAxis = d3.svg.axis().scale(y)
+  .orient("left").ticks(5);
+
+  var valueline = d3.svg.line()
+  .x(function(d) { return x(d.date); })
+  .y(function(d) { return y(d.time); });
+
+  var svg = d3.select("#graph-d3-lineChart")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+  data.forEach(function(d) {
+    d.date = new Date(d.date);
+    d.time = +d.time;
+
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d) { return d.time; })]);
+
+    svg.append("path")
+      .attr("class", "line")
+      .attr("d", valueline(data));
+
+    svg.selectAll("dot")
+      .data(data)
+      .enter().append("circle")
+      .attr("r", (d) => radio(d))
+      .attr("cx", d =>  x(d.date))
+      .attr("cy", d =>  y(d.time));
+
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+  });
+}
