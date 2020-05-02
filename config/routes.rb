@@ -31,8 +31,8 @@ Rails.application.routes.draw do
 
   get 'me/dataUser' => 'users#data_user', :defaults => { :format => 'json' }
   get 'me/dataUser/hoursIntervalTime' => 'users#hours_interval_time', :defaults => { :format => 'json' }
-  get 'me/dataProject' => 'projects#dataProject', :defaults => { :format => 'json' }
-  get 'me/dataTeam' => 'teams#dataTeam', :defaults => { :format => 'json' }
+  get 'me/dataProject' => 'projects#data_project', :defaults => { :format => 'json' }
+  get 'me/dataTeam' => 'teams#data_team', :defaults => { :format => 'json' }
   
   scope :admin do
     get '/', to: 'statics#dashboard'
