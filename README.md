@@ -3,14 +3,18 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+## Arquitecture
+
+![arquitecture](https://github.com/mrplum/plock/blob/doc/arquitecture.png)
 
 * Ruby version
+
+  2.6.2
 
 * System dependencies
 
 * Configuration
-  + install elasticsearch
+  + Docker
 
 * Database creation
 
