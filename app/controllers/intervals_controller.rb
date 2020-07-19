@@ -54,7 +54,7 @@ class IntervalsController < ApplicationController
         format.html { redirect_to track_path(@interval.track), notice: 'Interval was successfully updated.' }
         format.json { redirect_to track_path(@interval.track), status: :ok, location: @interval }
       else
-        format.html { redirect_to track_path(@interval.track), notice: @interval.error }
+        format.html { redirect_to track_path(@interval.track), notice: @interval.errors.full_messages.join(', ') }
         format.json { render json: @interval.errors, status: :unprocessable_entity }
       end
     end

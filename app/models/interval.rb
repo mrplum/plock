@@ -19,7 +19,7 @@ class Interval < ApplicationRecord
   after_create :update_minutes
   after_update :update_minutes
   after_destroy :reset_track_status
-  after_commit :calculate_plock_time, :index_elasticsearch, :check_day
+  after_commit :calculate_plock_time, :index_elasticsearch
   before_save :change_track_status, if: -> { close_track || start_track }
 
   searchkick callbacks: false
@@ -44,22 +44,6 @@ class Interval < ApplicationRecord
     start_at.to_date == end_at.to_date
   end
 
-  def check_day
-    if !same_day? && !self.destroyed?
-      new_start_at = start_at + 1.day
-      new_end_at = end_at.change(hour: 23, min: 59, sec: 59) - 1.day
-      old_end_at = end_at
-      self.update_columns(end_at: new_end_at)
-      Interval.create(
-        user_id: user_id,
-        track_id: track_id,
-        description: description,
-        start_at: new_start_at.change(hour: 00),
-        end_at: old_end_at
-      )
-    end
-  end
-
   def no_other_open_interval
     if track.has_open_intervals?
       self.errors.add :base, 'There is already an open interval, please close before starting a new one'
@@ -67,7 +51,7 @@ class Interval < ApplicationRecord
   end
 
   def valid_date
-    if !valid_start_date? || !valid_interval_dates?     
+    if !valid_start_date? || !valid_interval_dates?
       self.errors.add :base, 'invalid Dates!'
     end
   end
@@ -100,16 +84,12 @@ class Interval < ApplicationRecord
   private
 
   def calculate_minutes
-    minutes = (end_at - start_at) / 1.minute
+    (end_at - start_at) / 1.minute
   end
 
   def calculate_plock_time
     minutes = calculate_minutes
-    if self.destroyed?
-      track.plock_time = track.plock_time - minutes.to_i
-    else
-      track.plock_time = track.plock_time + minutes.to_i
-    end
+    track.plock_time = self.destroyed? ? track.plock_time - minutes.to_i : track.plock_time + minutes.to_i
     track.save
   end
 
@@ -134,24 +114,4 @@ class Interval < ApplicationRecord
     end
   end
 
-  def self.search_plock_time_by_interval_time(user_id, interval)
-    __elasticsearch__.search({
-      query: {
-        match: { user_id: user_id }
-      },
-      aggs: {
-        simpleDatehHistogram: {
-          date_histogram: {
-            field: 'start_at',
-            interval: interval
-          },
-          aggs: {
-            time_worked: {
-              sum: { field: 'minutes' }
-            }
-          }
-        }
-      }
-    }).response['aggregations']['simpleDatehHistogram']['buckets']
-  end
 end

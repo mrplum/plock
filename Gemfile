@@ -77,3 +77,5 @@ gem 'd3-rails'
 
 gem 'graphql'
 
+# read .env
+gem 'dotenv-rails'

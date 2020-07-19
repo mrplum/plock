@@ -91,17 +91,6 @@ class IntervalTest < ActiveSupport::TestCase
     assert_not_equal(0, interval.minutes)
   end
 
-  test 'divide the interval if it starts on one day and ends on another' do
-    interval = intervals(:five)
-    interval.check_day
-    i = Interval.find(interval.id)
-    i1 = Interval.find_by(start_at: '2019-01-23 00:00:00 UTC')
-    assert_equal(interval.start_at, i.start_at)
-    assert_equal('2019-01-22 23:59:59 UTC', i.end_at.to_s)
-    assert_equal('2019-01-23 00:00:00 UTC', i1.start_at.to_s)
-    assert_equal('2019-01-23 00:05:10 UTC', i1.end_at.to_s)
-  end
-
   # In case it is deleted, it is in_progress and has no intervals.
   test 'should update status' do
     interval = intervals(:six)

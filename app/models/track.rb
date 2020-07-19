@@ -54,39 +54,4 @@ class Track < ApplicationRecord
       indexes :updated_at, type: :date
     end
   end
-
-  def self.search_by_status(user_id)
-    __elasticsearch__.search({
-      query: {
-        match: {
-          user_id: user_id
-        } 
-      },
-      aggs: {
-        group_by_status: {
-          terms: {
-            field: 'status.keyword'
-          }
-        }
-      }
-    }).response['aggregations']['group_by_status']['buckets']
-  end
-
-  def self.search_plock_time_given_user_and_project(user_id, project_id)
-    __elasticsearch__.search({
-      query: {
-        bool: {
-          must: [
-            { term: { user_id: user_id } },
-            { term: { project_id: project_id } }
-          ]
-        }
-      },
-      aggs: {
-        time_worked: {
-          sum: { field: 'plock_time' }
-        }
-      }
-    }).response['aggregations']['time_worked']['value']
-  end
 end
