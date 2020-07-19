@@ -37,9 +37,9 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.save
         TeamUser.create(team_id: @team.id,user_id: current_user.id, incorporated_at: DateTime.now)
-        @team.users.each { |user|
-          UserMailer.with(user: user, team: @team).welcome_email.deliver_later
-        }
+        @team.users.each do |user|
+          UserMailer.welcome_email(user, @team).deliver
+        end
         format.html do
           redirect_to @team, notice: 'Team was successfully created.'
         end
@@ -61,9 +61,9 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.update(team_params)
         TeamUser.create(team_id: @team.id,user_id: current_user.id, incorporated_at: DateTime.now)
-        @team.users.each { |user|
-          UserMailer.with(user: user, team: @team).welcome_email.deliver_later
-        }
+        @team.users.each do |user|
+          UserMailer.welcome_email(user, @team).deliver
+        end
         format.html do
           redirect_to @team, notice: 'Team was successfully updated.'
         end

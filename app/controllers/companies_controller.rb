@@ -64,15 +64,15 @@ class CompaniesController < ApplicationController
     email = params[:user][:email]
     pass = "password"
     @company = Company.find_by(id: params[:company_id])
-    @user = User.new(name: "your name", lastname: "your lastname", email: email, password: pass, company_id: params[:company_id], incorporated_at: DateTime.now)
+    user = User.new(name: "your name", lastname: "your lastname", email: email, password: pass, company_id: params[:company_id], incorporated_at: DateTime.now)
     respond_to do |format|
-      if @user.save
-        UserMailer.with( company: @company, user: @user).welcome_to_company.deliver_later
-        format.html { redirect_to @user }
+      if user.save
+        UserMailer.welcome_to_company(@company, user).deliver
+        format.html { redirect_to user }
         format.json { render :show, status: :created, location: company_subscribe_user_path }
       else
-        format.html { render :_addUsers, user: @user }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { render :_addUsers, user: user }
+        format.json { render json: user.errors, status: :unprocessable_entity }
       end
     end
   end
