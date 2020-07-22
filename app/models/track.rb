@@ -46,7 +46,7 @@ class Track < ApplicationRecord
     mapping dynamic: false do
       indexes :name, analyzer: 'english'
       indexes :description, analyzer: 'english'
-      indexes :status, type: :integer
+      indexes :status, type: :string
       indexes :plock_time, type: :integer
       indexes :user_id, type: :integer
       indexes :project_id, type: :integer
