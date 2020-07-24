@@ -16,23 +16,23 @@ const PieChartComponent = (props) => {
 
   const searchStatus = (key) => {
     return (
-      props.chartData.filter( obj => obj.key === key )
+      props.chartData.filter( obj => obj.status == key )
     );
   }
 
   const setUnstarted = () => {
     let result = searchStatus('unstarted')
-    return result.length ? result[0].doc_count : 0
+    return result != null ? result.value : 0
   }
 
   const setFinished = () => {
     let result = searchStatus('finished')
-    return result.length ? result[0].doc_count : 0
+    return result != null ? result.value : 0
   }
 
   const setInprogress = () => {
     let result = searchStatus('in_progress')
-    return result.length ? result[0].doc_count : 0
+    return result != null ? result.value : 0
   }
 
   if (props.chartData.length) {

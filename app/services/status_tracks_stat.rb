@@ -4,7 +4,7 @@ class StatusTracksStat
   end
 
   def call
-    Track.search_by_status(@user.id)
+    Track.where(user_id: @user.id).select("status, count(id) as value").group(:status)
   end
 
   private

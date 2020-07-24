@@ -1,15 +1,15 @@
 curl -X DELETE 'http://localhost:9200/_all'
 
------------------------------ ALL TRACKS -----------------------------------------------
+------------------------------------------ ALL TRACKS ------------------------------------------
 
-curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
   "query": {
     "bool": { 
     }
   }
 }'
 
----------------------------- STATS BY STATUS --------------------------------------------
+-------------------------------------------- STATS BY STATUS -------------------------------------------- (OLD)
 
 curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
   "query": {
@@ -25,13 +25,28 @@ curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application
         "field": "status.keyword"
       },
       "aggs" : {
-        "tracks count" : { "value_count" : { "field" : "id" } }
+        "tracks_count" : { "value_count" : { "field" : "id" } }
       }
     }
   }
 }'
 
---------------------------------- STATS BY DAY ------------------------------------------
+-------------------------------------------- STATS BY STATUS -------------------------------------------- (NEW)
+
+curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": { 
+      "filter": [
+        { "match": { "user_id": 2 }}
+      ]
+    }
+  },
+  "aggs" : {
+    "tracks_count" : { "value_count" : { "field" : "status.keyword" } }
+  }
+}'
+
+------------------------------------------ STATS BY DAY ------------------------------------------
 
 curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
   "query": {
@@ -54,7 +69,7 @@ curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application
   }
 }'
 
------------------------------- STATS BY PROJECT ----------------------------
+------------------------------------------ STATS BY PROJECT ------------------------------------------
 
 curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
   "query": {

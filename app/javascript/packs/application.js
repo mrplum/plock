@@ -7,8 +7,9 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
-require("packs/d3.v3.min")
-require("packs/d3.tip.v0.6.3")
+require("packs/lib/d3.v3.min")
+// require("packs/lib/d3.underscore-min")
+require("packs/lib/d3.tip.v0.6.3")
 require("packs/custom/require-show-stat")
 
 // Uncomment to copy all static images under ../images to the output folder and reference

@@ -65,6 +65,10 @@ class TracksController < ApplicationController
     end
   end
 
+  def data_tracks
+    render json: StatusTracksStat.new(current_user).call
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
