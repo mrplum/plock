@@ -2,13 +2,16 @@ version: "3"
 services:
   web:
     build: .
-    command: bash -c "bundle check || bundle install && bundle exec rerun --background 'rackup --host 0.0.0.0 -p 9292' 1>/dev/null"
+    # command: bash -c "rm -f tmp/pids/server.pid && bundle check || bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    links:
+      - db
+      - redis
+      - elasticsearch
     ports:
-      - "9292:9292"
+      - "3000:3000"
     environment:
       LANG: "C.UTF-8"
       LC_ALL: "C.UTF-8"
-      TZ: "Europe/Madrid"
     volumes:
       - .:/usr/src/app
       - ./.bundle:/usr/local/bundle
@@ -16,27 +19,44 @@ services:
     # use latest official postgres version
     image: postgres
     env_file:
-      - config/database.env
+      - .env
     # persist data even if container shuts down
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  redis:
+  redis: &redis
     image: 'redis:4.0-alpine'
     command: redis-server --requirepass yourpassword
     volumes:
       - 'redis:/data'
 
+  redis-test:
+    <<: *redis
+
   sidekiq:
     depends_on:
-      - 'postgres'
+      - 'db'
       - 'redis'
     build: .
-    command: sidekiq -C config/sidekiq.yml.erb
+    command: bundle exec sidekiq
     volumes:
       - '.:/app'
     env_file:
       - '.env'
+
+  elasticsearch: &elasticsearch
+    image: elasticsearch:1.7.6
+    ports: ["9200"]
+    healthcheck:
+      test: ["CMD", "curl", "-SsfL", "127.0.0.1:9200/_status"]
+      interval: 1s
+      timeout: 1s
+      retries: 300
+  elasticsearch-test:
+    <<: *elasticsearch
+    # place elasticsearch data on tmpfs for performance
+    tmpfs: /usr/share/elasticsearch/data
+
 volumes:
   postgres-data:
   redis:
