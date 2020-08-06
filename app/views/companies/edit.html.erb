@@ -1,12 +1,15 @@
-<div class="form-team-b">
-    <h2 class="text-center text-white"> Editing Company</h2>
-
-    <%= render 'form', company: @company %>
-
-    <%= link_to :back, html_options = {class: "btn btn-light navbar-btn-team"} do %>
-        <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back
-    <% end %>
-    <%= link_to  @company, html_options = {class: "btnIcon btnIconColor btnShow"} do %>
-        <i class="fa fa-eye mr-3 text-light"></i>Show
-    <% end %>
-</div>    
+<h1 class="h3 mb-4 text-gray-800"> Company Settings </h1>
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> Edit Company </h6>
+      </div>
+      <div class="card-body">
+        <div  class="row justify-content-center">
+          <%= render 'form', company: @company %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

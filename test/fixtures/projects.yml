@@ -2,7 +2,7 @@
 
 one:
   name: MyString
-  repository: MyString
+  description: MyString
   cost: 9.99
   start_at: 2018-01-06
   user: matias
@@ -11,7 +11,7 @@ one:
 
 two:
   name: MyString2
-  repository: MyString2
+  description: MyString2
   cost: 9.99
   start_at: 2020-01-06
   user: matias
@@ -21,7 +21,7 @@ two:
 three:
   id: 999
   name: MyString3
-  repository: MyString3
+  description: MyString3
   cost: 9.99
   user: one
   company: one
@@ -30,7 +30,7 @@ three:
 four:
   id: 888
   name: MyString4
-  repository: MyString4
+  description: MyString4
   cost: 9.99
   user: one
   company: one
@@ -39,7 +39,7 @@ four:
 five:
   id: 777
   name: MyString5
-  repository: MyString5
+  description: MyString5
   cost: 9.89
   user: one
   company: one

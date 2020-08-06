@@ -42,7 +42,7 @@ date_project = 2.months.ago
 
 project = Project.create(
     name: 'Plock',
-    repository: 'Plock is the best',
+    description: 'Plock is the best',
     cost: 25000,
     start_at: date_project,
     user: owner,
@@ -52,7 +52,7 @@ project = Project.create(
 
 project2 = Project.create(
     name: 'Plock2',
-    repository: 'Plock is the best2',
+    description: 'Plock is the best2',
     cost: 240,
     start_at: date_project,
     user: owner,
@@ -62,7 +62,7 @@ project2 = Project.create(
 
 project3 = Project.create(
     name: 'Plock3',
-    repository: 'Plock is the best3',
+    description: 'Plock is the best3',
     cost: 2400,
     start_at: date_project,
     user: member_user1,

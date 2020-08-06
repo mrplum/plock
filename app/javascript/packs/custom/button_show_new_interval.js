@@ -10,7 +10,7 @@ if (document.getElementById('date-view-interval') !== null) {
       var dayStartAt = form.interval_start_at_3i.value;
       var hoursStartAt = form.interval_start_at_4i.value;
       var minutesStartAt = form.interval_start_at_5i.value;
-          
+
       var dateStartAt = new Date(yearStartAt, monthStartAt, dayStartAt, hoursStartAt, minutesStartAt);
 
       var yearEndAt = form.interval_end_at_1i.value;
@@ -18,9 +18,9 @@ if (document.getElementById('date-view-interval') !== null) {
       var dayEndAt = form.interval_end_at_3i.value;
       var hoursEndAt = form.interval_end_at_4i.value;
       var minutesEndAt = form.interval_end_at_5i.value;
-      
+
       var dateEndAt = new Date(yearEndAt, monthEndAt, dayEndAt, hoursEndAt, minutesEndAt);
-      
+
       if (dateStartAt < dateEndAt){
         document.getElementById("invalid-form").classList.add("hidden");
         document.getElementById("create-button").classList.remove("hidden");

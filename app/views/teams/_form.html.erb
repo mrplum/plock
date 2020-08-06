@@ -1,48 +1,30 @@
-<div class="form-team-c">
+<div class="col-lg-4">
+  <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 20rem;" src="/images/teams.svg" alt="">
+</div>
+<div class="col-lg-6">
   <%= form_with(model: team, local: true) do |form| %>
-  
-    <% if team.errors[:name].any? %>	
-      <div class="form-group">
-        <div style='border: 3px solid red !important'>
-          <span class="input-group-addon"></span>
-          <% if team.errors.count == 1%>
-            <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: team.errors[:name][0] %>
-          <% else %>
-            <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: team.errors[:name][1] %>
-          <% end %>				
-        </div>
-      </div>
-    <% else %>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon"></span>
-          <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>				
-        </div>
-      </div>
-    <% end %>
+    <div class="form-group">
+      <%= form.label 'Name:', class: "text-primary" %><br/>
+      <%= form.text_field :name, class: "form-control", placeholder: 'Name' %>
+    </div>
 
     <div class="form-group">
+      <%= form.label 'selected team members:', class: "text-primary" %><br/>
       <%= form.select( :user_ids, options_from_collection_for_select(
         User.where.not("id = ?", current_user.id),"id", "name"),
-        {}, { :class => 'form-control', include_blank: true,  multiple: true })
-      %>
+        {}, { :class => 'form-control', include_blank: true,  multiple: true })%>
     </div>
 
     <div class="form-group">
-      <%= form.submit class: "btn btn-new-team login-btn btn-block" %>
+      <%= form.submit class: "btn btn-primary btn-block" %>
     </div>
 
-    <div class="or-seperator"></div>
-
-
     <% if team.errors.any? %>
-     <% if team.errors.count == 1%>
+      <% if team.errors.count == 1%>
         <p  style="color: red;"> Name <%= team.errors[:name][0] %> </p>
-     <% else %>
+      <% else %>
         <p  style="color: red;"> Name <%= team.errors[:name][1] %> </p>
       <% end %>
-    <% end %>  	  
-    
+    <% end %>
   <% end %>
-
 </div>

@@ -1,34 +1,42 @@
-<div class="form-team-b"> 
-    <div class="form-team-c">
-      <%= form_with(model: @user, local: true, url: company_send_email_path, method: 'get') do |form| %>
-        <% if @user.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-            <ul>
-              <% @user.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
+<h1 class="h3 mb-4 text-gray-800"> Company Settings </h1>
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> Add Employee to <%= @company.name %> </h6>
+      </div>
+      <div class="card-body">
+        <div  class="row justify-content-center">
+          <div class="col-lg-4">
+            <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="/images/add_user_company.svg" alt="">
+          </div>
+          <div class="col-lg-6">
+            <%= form_with(model: @user, local: true, url: company_send_email_path, method: 'get') do |form| %>
+              <% if @user.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+                  <ul>
+                    <% @user.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
               <% end %>
-            </ul>
-          </div>
-        <% end %>
-        <p> <%= @error%> </p>
+              <p> <%= @error%> </p>
 
-          <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"></span>
-              <%= form.text_field :email, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Email' %>				
-            </div>
-          </div>
+              <div class="form-group">
+                <%= form.label 'Email:', class: "text-primary" %>
+                <%= form.text_field :email, class: "form-control", placeholder: 'Email' %>
+              </div>
 
-          <div class="form-group">
-            <%= form.submit "Add user",class: "btn btn-new-team login-btn btn-block" %>
+              <div class="form-group">
+                <%= form.submit "Add user", class: "btn btn-primary btn-block" %>
+              </div>
+            <% end %>
+            <div id="user-add"> </div>
           </div>
-
-        <% end %>
-    
-      <%= link_to :back, html_options = {class: "btn btn-light navbar-btn-team"} do %>
-        <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back
-      <% end %>
+        </div>
+      </div>
     </div>
-</div>  
+  </div>
+</div>

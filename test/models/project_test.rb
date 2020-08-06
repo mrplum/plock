@@ -15,7 +15,7 @@ class ProjectTest < ActiveSupport::TestCase
   test 'create project' do
     p = Project.create(
       name: 'Is test',
-      repository: 'github',
+      description: 'github',
       cost: 5,
       start_at: Date.new,
       user: @user
@@ -26,7 +26,7 @@ class ProjectTest < ActiveSupport::TestCase
   test 'name uniqueness' do
     p = Project.create(
       name: 'MyString',
-      repository: 'github',
+      description: 'github',
       cost: 5,
       start_at: Date.new,
       user: @user
@@ -40,9 +40,9 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not p.valid?
   end
 
-  test 'repository not null' do
+  test 'description not null' do
     p = @project
-    p.repository = nil
+    p.description = nil
     assert_not p.valid?
   end
 

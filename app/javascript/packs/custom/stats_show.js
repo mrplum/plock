@@ -4,7 +4,7 @@ if (document.getElementById("graph-d3-project") !== null) {
 }
 if (document.getElementById("graph-d3-user") !== null) {
   ajax('dataUser', {}, 'user', draw)
-}  
+}
 if (document.getElementById("graph-d3-team") !== null) {
   let team_id = document.getElementById('team_id').value;
   ajax('dataTeam', { m_id: team_id }, 'team', draw)
@@ -42,25 +42,25 @@ function ajax(url, params, nameModel, functionGraph){
 
 function draw(data, nameModel){
   var margin = {top: 40, right: 20, bottom: 30, left: 40},
-  width = 960 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
-  
-  var formatPercent = d3.format("0");    
+  width = 800 - margin.left - margin.right,
+  height = 528 - margin.top - margin.bottom;
+
+  var formatPercent = d3.format("0");
   var x = d3.scale.ordinal()
   .rangeRoundBands([0, width], .1);
-      
+
   var y = d3.scale.linear()
   .range([height, 0]);
-      
+
   var xAxis = d3.svg.axis()
   .scale(x)
   .orient("bottom");
-      
+
   var yAxis = d3.svg.axis()
   .scale(y)
   .orient("left")
   .tickFormat(formatPercent);
-      
+
   var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
@@ -101,7 +101,7 @@ function draw(data, nameModel){
     .attr("height", function(d) { return height - y(d.time); })
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
-};    
+};
 
 const radio = (item) => {
   value = item.time == 0 ?  0 :  3.5
@@ -133,7 +133,7 @@ function lineChart(data, a) {
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", 
+    .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
   data.forEach(function(d) {
@@ -166,8 +166,8 @@ function lineChart(data, a) {
 }
 
 function pieChart(data, a) {
-  var w = 500;
-  var h = 500;
+  var w = 800;
+  var h = 528;
   var r = h/2;
   var aColor = [
       '#008000',

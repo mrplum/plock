@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # class IntervalsController
-# 
+#
 class IntervalsController < ApplicationController
   before_action :authenticate_user!
   before_action :get_track, only: [:new, :update]
@@ -14,7 +14,7 @@ class IntervalsController < ApplicationController
   end
 
   def create
-  
+
     start_at = params[:start_at] || DateTime.now
     end_at = params[:end_at] || start_at
 
@@ -33,7 +33,7 @@ class IntervalsController < ApplicationController
         format.json { redirect_to track_path(@interval.track), status: :created, location: @interval }
       else
         format.html do
-          get_track 
+          get_track
           if automatic_interval_creation?
             redirect_to track_path(@interval.track), alert: @interval.errors.full_messages.join(', ')
           else
@@ -81,7 +81,7 @@ class IntervalsController < ApplicationController
 
     def get_interval
       @interval = @track&.open_interval || Interval.find(params[:id])
-    end 
+    end
 
     def check_owner_interval
       interval = Interval.find(params[:id])

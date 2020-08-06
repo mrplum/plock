@@ -1,60 +1,44 @@
-<div class="form-team-b">
-  <div class="form-team-c" id="date-view-interval">
-
-  <p> <h2 class="text-center text-white">New Interval</h2></p>
-
-  <%= form_with(model: [@track, @interval], local: true) do |form| %>
-  
-  <%= form.hidden_field :start_track %>
-
-
-  <% if @interval.errors[:description].any? %>
-    <div class="form-group">
-      <div class="handleElement" style='border: 3px solid red !important'>
-        <span class="input-group-addon"></span>
-        <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: @interval.errors[:description][0] %>				
-      </div>
-    </div>
-  <% else %>
-    <div class="form-group">
-      <div class="input-group handleElement">
-        <span class="input-group-addon"></span>
-        <%= form.text_field :description, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Description' %>				
-      </div>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <p class="newCenterInterval"> start at: </p>
-    <div class="input-group handleElement">
-      <span class="input-group-addon"></span>
-      <%= form.datetime_select( :start_at, {}, {:class => 'form-control', data: { turbolinks: false }}) %>
-    </div>
-  </div>
-
-  <div class="form-group">
-  <p class="newCenterInterval"> end at: </p>
-    <div class="input-group handleElement">
-      <span class="input-group-addon"></span>
-        <%= form.datetime_select( :end_at, {}, {:class => 'form-control', data: { turbolinks: false }}) %>
-    </div>
-  </div>  
-
-  <div class="form-group" >
-  <div id="create-button" class="hidden">
-      <%= form.submit class: "btn btn-new-team login-btn btn-block", data: { turbolinks: false } %> 
-      <div class="or-seperator"></div>
-  </div>
-
-  <div id="invalid-form" class="" >    
-      <div class="or-seperator"></div>
-      <p style="color:red;"> invalid date time </p>
-  </div>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-4 text-gray-800">Interval</h1>
+  <%= link_to track_path(@track), class: "d-none d-sm-inline-block btn btn-primary shadow-sm", data: { turbolinks: false } do %>
+    <i class="fa fa-arrow-left fa-sm text-white-50"></i>
+    <span> Back </span>
+  <%end%>
 </div>
 
-  <%= link_to track_path(@track), html_options = {class: "btn btn-light navbar-btn-team"} do %>
-        <i class="fa fa-backward mr-3 text-light fa-fw"></i>Back
-    <% end %>
-<% end %>
-</div>
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">New Interval</h6>
+      </div>
+      <div class="card-body">
+        <div  class="row justify-content-center">
+          <div class="col-lg-4">
+            <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 20rem;" src="/images/interval.svg" alt="">
+          </div>
+          <div class="col-lg-6">
+            <%= form_with(model: [@track, @interval], local: true) do |form| %>
+              <%= form.hidden_field :start_track %>
+              <div class="form-group">
+                <%= form.label 'Description:', class: "text-primary" %><br/>
+                <%= form.text_field :description, class: "form-control", placeholder: 'Description' %>
+              </div>
+              <div class="form-group">
+                <%= form.label 'Start at:', class: "text-primary" %><br/>
+                <%= form.datetime_select( :start_at, {}, {:class => '', data: { turbolinks: false }}) %>
+              </div>
+              <div class="form-group">
+                <%= form.label 'End at:', class: "text-primary" %><br/>
+                <%= form.datetime_select( :end_at, {}, {:class => '', data: { turbolinks: false }}) %>
+              </div>
+              <div class="form-group">
+                <%= form.submit class: "btn btn-primary btn-block" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

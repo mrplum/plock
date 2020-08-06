@@ -1,16 +1,46 @@
-<%= render 'navbar-user', user: @user %>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"> Profile </h1>
+  <%= link_to edit_user_path(@user), class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm", data: { turbolinks: false } do %>
+    <i class="fa fa-edit fa-sm text-white-50"></i>
+    <span> Edit Profile </span>
+  <%end%>
+</div>
 
-<div class="page-content p-5" id="content">
-
-  <%= render 'about-user', user: @user %>
-  <%= render 'team-user', user: @user %>
-  <%= render 'projects-user', projects: @projects %>
-
-  <div id = 'statics-user' class='statics-user hidden'>
-    <div id = "graph-d3-user"> </div>
-    <%= select_tag :interval, options_for_interval_types, id: 'change_interval'%>
-    <div id = "graph-d3-lineChart"> </div>
-    <div id = "graph-d3-pieChart"> </div>
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> Information </h6>
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-lg-4">
+            <% if @user.avatar.url.present? %>
+              <%= image_tag(@user.avatar.url, alt: @user.name.upcase, class: "img-fluid px-5 px-sm-4 mt-3 mb-4", style:"width: 20rem;")%>
+            <% else %>
+              <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 20rem;" src="/images/user_default.png" alt="">
+            <% end %>
+          </div>
+          <div class="col-lg-6">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label class="text-primary">Name: </label><br/>
+              <input class="form-control" type="text" value="<%= @user.name %>" readonly="readonly">
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label class="text-primary">Lastname: </label><br/>
+              <input class="form-control" type="text" value="<%= @user.lastname %>" readonly="readonly">
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label class="text-primary">Company: </label><br/>
+              <input class="form-control" type="text" value="<%= @user.company&.name %>" readonly="readonly">
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label class="text-primary">Email: </label><br/>
+              <input class="form-control" type="text" value="<%= @user.email %>" readonly="readonly">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
 </div>

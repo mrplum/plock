@@ -2,12 +2,17 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-      @user = current_user
-      @projects = @user.projects
+    @user = current_user
+    @projects = @user.projects
   end
 
   def edit
     @user = User.find(params[:id])
+  end
+
+  def statics
+    @user = current_user
+    @projects = @user.projects
   end
 
   def update
@@ -34,17 +39,18 @@ class UsersController < ApplicationController
 
   def hours_interval_time
     intervals = UserTracksStatIntervalTime.new(current_user, params[:interval]).call
-    render json: intervals.map { |interval| 
+    render json: intervals.map { |interval|
       {
         date: DateTime.parse(interval.key_as_string).try(:to_f)*1000,
-        time: interval.time_worked.value 
+        time: interval.time_worked.value
       }
     }.reject(&:empty?)
   end
-    
+
   private
     def user_params
-      params.require(:user).permit(:name, :lastname, :password, :reset_password_token, :password_confirmation)
+      params.require(:user).permit(:name, :lastname, :password, :reset_password_token,
+                                   :password_confirmation, :avatar)
     end
 
 end

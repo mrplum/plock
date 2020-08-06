@@ -1,10 +1,142 @@
-<%= render 'navbar-company', company: @company %>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"> Company Settings </h1>
+</div>
 
-<div class="page-content p-5" id="content">
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <%= link_to edit_company_path(@company), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
+          <i class="fa fa-edit fa-sm text-white-50"></i>
+          <span> Edit </span>
+        <%end%>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> Information </h6>
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-lg-4">
+            <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 20rem;" src="/images/company.svg" alt="">
+          </div>
+          <div class="col-lg-6">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label class="text-primary">Name: </label><br/>
+              <input class="form-control" type="text" value="<%= @company.name %>" readonly="readonly">
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label class="text-primary">Description: </label><br/>
+              <input class="form-control" type="text" value="<%= @company.description %>" readonly="readonly">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <%= render 'about-company', company: @company %>
-  <%= render 'company-user', users: @company.users %>
-  <%= render 'company-project', projects: @projects %>
-  <%= render 'company-team', projects: @projects %>
-  
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <%= link_to company_subscribe_user_path(@company), class: "float-right btn btn-sm btn-success shadow-sm" do %>
+          <i class="fa fa-user-plus fa-sm text-white-50"></i>
+          <span> Add employee </span>
+        <%end%>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-user"></i> Employees </h6>
+      </div>
+      <div class="card-body">
+        <% if @company.users.present? %>
+          <table class="table table-bordered table-hover" id="dataTable">
+            <thead>
+              <tr class="text-center">
+                <th> Name </th>
+                <th> Email </th>
+                <th> Last sign in</th>
+              </tr>
+            </thead>
+            <% @company.users.each do |user| %>
+              <tr class="text-center">
+                <td><%= "#{user.name} #{user.lastname}" %> &nbsp&nbsp </td>
+                <td><%= user.email %>&nbsp</td>
+                <td><%= user.last_sign_in_at %> &nbsp </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-users"></i> Teams </h6>
+      </div>
+      <div class="card-body">
+        <% if @projects.present? %>
+          <table class="table table-bordered table-hover" id="dataTable2">
+            <thead>
+              <tr class="text-center">
+                <th> Name </th>
+                <th> Created at </th>
+                <th> Action </th>
+              </tr>
+            </thead>
+            <% @projects.to_a.uniq(&:team_id).each do |project| %>
+              <% if project.team.present? %>
+                <tr class="text-center">
+                  <td><%= project.team&.name %> </td>
+                  <td><%= project.team&.created_at&.strftime("%F %T") %></td>
+                  <td>
+                    <%= link_to project.team, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                      <i class="fa fa-eye fa-sm text-white-50"></i>
+                    <%end%>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </table>
+        <%end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-cubes"></i> Projects </h6>
+      </div>
+      <div class="card-body">
+        <% if @projects.present? %>
+          <table class="table table-bordered table-hover" id="dataTable3">
+            <thead>
+              <tr class="text-center">
+                <th> Name </th>
+                <th> Description </th>
+                <th> Cost </th>
+                <th> Start at </th>
+                <th> Action </th>
+              </tr>
+            </thead>
+            <% @projects.each do |project| %>
+              <tr class="text-center">
+                <td><%= project.name %> </td>
+                <td><%= project.description %> </td>
+                <td><%= project.cost %> </td>
+                <td><%= project.start_at&.strftime("%F %T") %></td>
+                <td>
+                  <%= link_to project, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                    <i class="fa fa-eye fa-sm text-white-50"></i>
+                  <%end%>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <%end %>
+      </div>
+    </div>
+  </div>
 </div>

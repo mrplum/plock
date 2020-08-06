@@ -1,37 +1,41 @@
-<div class="teams-card-container">
-
-  <% @teams.each do |team| %>
-    <div class="card-teams">
-      <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-        <div class="card-header" style="text-align: center;"> <%= team.name %> </div>
-        <div class="card-body">
-          <h5 class="card-title"> created at </h5>
-          <p class="card-text"> <%= team.created_at.strftime("%F %T") %> </p>
-          <%= link_to team, class: "btnIcon btnIconColor btnShow", data: { turbolinks: false } do %>
-            <i class="fa fa-eye text-light"></i>
-          <% end %>
-          <%= link_to edit_team_path(team), class: "btnIcon btnIconColor btnEdit" do %>
-            <i class="fa fa-edit text-light"></i>
-          <% end %>
-          <%= link_to team, method: :delete, data: { confirm: 'Are you sure?' }, class: "btnIcon btnIconColor btnTrash" do %>
-            <i class="fa fa-trash text-light"></i>
-          <% end %>
-        </div>  
-      </div>
-    </div>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Teams</h1>
+  <%= link_to new_team_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+    <i class="fa fa-plus fa-sm text-white-50"></i>
+    <span> New Team </span>
   <%end%>
+</div>
 
-  <div class="card-teams">
-    <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-      <div class="card-header" style="text-align: center;"> New team</div>
-      <div class="card-body">
-        <p class="card-text"></p>
-        <%= link_to new_team_path, class: "btnIcon btnIconColor btnNew" do %>
-          <i class="fa fa-plus text-light"></i>
-        <% end %>
-        <p class="card-text"></p>
-      </div>  
+<div class="card shadow mb-4 border-bottom-primary">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">My Teams</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr class="text-center">
+            <th>Name</th>
+            <th>Created at</th>
+            <th>Updated at</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @teams.each do |team| %>
+            <tr class="text-center">
+              <td><%= team.name %></td>
+              <td><%= team.created_at&.strftime("%F %T") %></td>
+              <td><%= team.updated_at&.strftime("%F %T") %></td>
+              <td>
+                <%= link_to team_path(team), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                  <i class="fa fa-eye fa-sm text-white-50"></i>
+                <%end%>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
-  
 </div>

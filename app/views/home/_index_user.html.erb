@@ -1,0 +1,158 @@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"></div>
+            <div class="row no-gutters align-items-center">
+              <div class="col-auto">
+                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+              </div>
+              <div class="col">
+                <div class="progress progress-sm mr-2">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-comments fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-list-ul"></i> Unfinished Tracks</h6>
+      </div>
+      <div class="card-body">
+        <% if @tracks.present? %>
+          <table class="table table-bordered table-hover" id="dataTable">
+            <thead>
+              <tr class="text-center">
+                <th>Name</th>
+                <th>Project Name</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <% @tracks.each do |track| %>
+              <tr class="text-center">
+                <td><%= track.name %></td>
+                <td><%= track.project&.name %></td>
+                <td>
+                  <% if track.in_progress?%>
+                    <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
+                  <% elsif track.unstarted?%>
+                    <i class="fa fa-circle mr-3 text-danger fa-fw"></i>
+                  <% else %>
+                    <i class="fa fa-check mr-3 text-success fa-fw"></i>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to track, class: "btn btn-sm btn-primary shadow-sm", data: { turbolinks: false } do %>
+                    <i class="fa fa-sign-in-alt fa-sm text-white"></i>
+                  <%end%>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+          <div class="mt-4 text-center small">
+            <span class="mr-2">
+              <i class="fas fa-circle text-warning"></i> in progress
+            </span>
+            <span class="mr-2">
+              <i class="fas fa-circle text-danger"></i> unstarted
+            </span>
+          </div>
+          <br/>
+        <% else %>
+          <div class="mt-4 text-center">
+            <span class="text-danger font-weight-bold">
+              You have not assigned tracks yet
+              <i class="fa fa-fw fa-calendar-times text-danger"></i>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-clipboard-list"></i> Status Projects</h6>
+      </div>
+      <div class="card-body">
+        <% if @projects.present? %>
+          <% @projects.map do |k,v| %>
+            <h4 class="small font-weight-bold"> <%= k %> <span class="float-right"><%= "#{v}%" %></span></h4>
+            <div class="progress mb-4">
+              <div id="id_progress_color" class="progress-bar" role="progressbar" style="<%="width: #{v}%"%>" aria-valuenow=<%=v%> aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

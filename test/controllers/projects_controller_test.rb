@@ -29,7 +29,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
         project: {
           cost: @project.cost,
           name: @project.name,
-          repository: @project.repository,
+          description: @project.description,
           start_at: @project.start_at
           }
         }
@@ -53,8 +53,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       project: {
         cost: @project.cost,
         name: @project.name,
-        repository: @project.repository,
-        start_at: @project.start_at 
+        description: @project.description,
+        start_at: @project.start_at
       }
     }
     assert_redirected_to project_url(@project)

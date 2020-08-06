@@ -4,9 +4,7 @@ class CompaniesController < ApplicationController
   before_action :authenticate_user!, except: %i[accept_invitation_to_company]
   # GET /companies
   # GET /companies.json
-  def index
-    @companies = Company.all
-  end
+  def index; end
 
   # GET /companies/1
   # GET /companies/1.json
@@ -76,17 +74,17 @@ class CompaniesController < ApplicationController
       end
     end
   end
-    
-    def subscribe_user
-      company_id = params[:company_id]
-      @company = Company.find_by(id: company_id)
-      @user = User.find(@company.id)
-      respond_to do |format|
-        format.html { render :_addUsers, user: @user  }
-        format.json { render :show, status: :created, location: company_subscribe_user_path }
-      end
+
+  def subscribe_user
+    company_id = params[:company_id]
+    @company = Company.find_by(id: company_id)
+    @user = User.find(@company.id)
+    respond_to do |format|
+      format.html { render :_addUsers, user: @user  }
+      format.json { render :show, status: :created, location: company_subscribe_user_path }
     end
-    
+  end
+
   def accept_invitation_to_company
     redirect_to edit_user_path(params[:user_id])
   end

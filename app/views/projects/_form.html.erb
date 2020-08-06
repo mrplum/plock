@@ -1,76 +1,38 @@
-<div class="form-team-c">
-<%= form_with(model: project, local: true) do |form| %>
- 
-  <% if project.errors[:name].any? %>				
-    <div class="form-group">
-      <div style='border: 3px solid red !important'>
-        <span class="input-group-addon"></span>
-        <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: project.errors[:name][0] %>  
-      </div>
-    </div>    
-    <% else %>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon"></span>
-          <%= form.text_field :name, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Name' %>
-        </div>
-      </div>
-    <% end %>      
+<div class="col-lg-6">
+  <%= form_with(model: project, local: true) do |form| %>
 
-  <% if project.errors[:repository].any? %>
     <div class="form-group">
-      <div style='border: 3px solid red !important'>
-        <span class="input-group-addon"></span>
-        <%= form.text_field :repository, input_html: {class: 'form-control'}, class: "form-control", placeholder: project.errors[:repository][0] %>				
-      </div>
+      <%= form.label 'Name:', class: "text-primary" %><br/>
+      <%= form.text_field :name, class: "form-control", placeholder: 'Name' %>
     </div>
-  <%else%>	
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"></span>
-        <%= form.text_field :repository, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Repository' %>				
-      </div>
-    </div>
-  <% end %>
 
-  <% if project.errors[:cost].any? %>
     <div class="form-group">
-      <div style='border: 3px solid red !important'>
-        <span class="input-group-addon"></span>
-        <%= form.text_field :cost, input_html: {class: 'form-control'}, class: "form-control", placeholder:  project.errors[:cost][0] %>				
-      </div>
+      <%= form.label 'Description:', class: "text-primary" %><br/>
+      <%= form.text_field :description, class: "form-control", placeholder: 'Description' %>
     </div>
-  <% else %>
+
     <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"></span>
-        <%= form.text_field :cost, input_html: {class: 'form-control'}, class: "form-control", placeholder: 'Cost' %>				
-      </div>
+      <%= form.label 'Cost:', class: "text-primary" %><br/>
+      <%= form.text_field :cost, class: "form-control", placeholder: 'Cost' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label 'Start at:', class: "text-primary" %><br/>
+      <%= form.date_select( :start_at, {}, {:class => ''}) %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label 'Selected Team:', class: "text-primary" %><br/>
+      <%= form.select( :team_id, options_from_collection_for_select(
+        current_user.teams,"id", "name"),
+        {}, { :class => 'form-control', include_blank: true,  multiple: false })%>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit class: "btn btn-primary btn-block" %>
     </div>
   <% end %>
-  
-  <div class="form-group">
-    <p class="newCenterInterval"> start at: </p>
-    <div class="input-group">
-      <span class="input-group-addon"></span>
-      <%= form.date_select( :start_at, {}, {:class => 'form-control'}) %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <a style="color: white;"> select team </a>
-    <%= form.select( :team_id, options_from_collection_for_select(
-      current_user.teams,"id", "name"),
-      {}, { :class => 'form-control', include_blank: true,  multiple: false })
-    %>
-  </div>
-
-  <div class="form-group">
-    <%= form.submit class: "btn btn-new-team login-btn btn-block" %>
-  </div>
-
-  <div class="or-seperator"></div>
-
-  
-<% end %>
+</div>
+<div class="col-lg-4 d-flex flex-row align-items-center justify-content-between">
+  <img class="img-fluid px-6 px-sm-12 mt-4 mb-4" style="width: 25rem;" src="/images/projects.svg" alt="">
 </div>

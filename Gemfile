@@ -77,5 +77,6 @@ gem 'd3-rails'
 
 gem 'graphql'
 
+gem 'carrierwave', '~> 2.0'
 # read .env
 gem 'dotenv-rails'

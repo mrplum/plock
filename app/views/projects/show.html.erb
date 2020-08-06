@@ -1,13 +1,122 @@
-<%= hidden_field_tag :project_id, @project.id %>
-<%= render 'navbar-project', project: @project %>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"> Project </h1>
+</div>
 
-<div class="page-content p-5" id="content">
-
-  <%= render 'about-projects', project: @project %>
-  <%= render 'tracks-project', tracks: @tracks %>
-
-  <div id='statics-project' class='statics-project hidden'>
-    <div id="graph-d3-project"></div>
+<div class="row">
+  <div class="col-xl-6 col-lg-7">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> About Project </h6>
+        <%= link_to edit_project_path(@project), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
+          <i class="fa fa-edit fa-sm text-white-50"></i>
+          <span> Edit </span>
+        <%end%>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="text-primary">Name: </label><br/>
+          <input class="form-control" type="text" value="<%= @project.name %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary">Description: </label><br/>
+          <input class="form-control" type="text" value="<%= @project.description %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary">Cost: </label><br/>
+          <input class="form-control" type="text" value="<%= @project.cost %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary">Start at: </label><br/>
+          <input class="form-control" type="text" value="<%= @project.start_at %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary">Team: </label><br/>
+          <input class="form-control" type="text" value="<%= @project.team&.name %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary">Owner: </label><br/>
+          <input class="form-control" type="text" value="<%= "#{@project.user.name} #{@project.user.lastname}" %>" readonly="readonly">
+        </div>
+      </div>
+    </div>
   </div>
-  
+
+  <div class="col-xl-6 col-lg-5">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-chart-bar"></i> Statistics </h6>
+      </div>
+      <div class="card-body">
+        <%= hidden_field_tag :project_id, @project.id %>
+        <div id='statics-project' class='statics-project'>
+          <div id="graph-d3-project"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <%= link_to new_project_track_path(@project), class: "float-right btn btn-sm btn-success shadow-sm text-white" do %>
+          <i class="fa fa-plus fa-sm text-white"></i>
+          <span> New Track </span>
+        <%end%>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-tasks"></i> Tracks </h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr class="text-center">
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tracks.order("id desc").each do |track| %>
+                <tr class="text-center">
+                  <td><%= track.name %></td>
+                  <td><%= track.description %></td>
+                  <td>
+                    <% if track.in_progress?%>
+                      <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
+                    <% elsif track.unstarted?%>
+                      <i class="fa fa-circle mr-3 text-danger fa-fw"></i>
+                    <% else %>
+                      <i class="fa fa-check mr-3 text-success fa-fw"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                      <i class="fa fa-eye fa-sm text-white-50"></i>
+                    <%end%>
+                    <%= link_to track, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger shadow-sm", data: { turbolinks: false } do %>
+                      <i class="fa fa-trash text-light"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-4 text-center small">
+          <span class="mr-2">
+            <i class="fas fa-check text-success"></i> finished
+          </span>
+          <span class="mr-2">
+            <i class="fas fa-circle text-warning"></i> in progress
+          </span>
+          <span class="mr-2">
+            <i class="fas fa-circle text-danger"></i> unstarted
+          </span>
+        </div>
+        <br/>
+      </div>
+    </div>
+  </div>
 </div>

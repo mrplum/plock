@@ -1,10 +1,51 @@
-<%= hidden_field_tag :team_id, @team.id %>
-<%= render 'navbar-team', team: @team %>
-
-<div class="page-content p-5" id="content">
-    <div id="graph-d3-team"></div>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"> <%= @team.name %> </h1>
+  <%= link_to edit_team_path(@team), class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+    <i class="fa fa-edit fa-sm text-white-50"></i>
+    <span> Edit Team </span>
+  <%end%>
 </div>
 
+<div class="row">
+  <div class="col-xl-6 col-lg-7">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary"> Team Members </h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @team.users&.each do | user| %>
+                <tr>
+                  <th><%= user.id %> </th>
+                  <td><%= "#{user.name} #{user.lastname}" %></td>
+                  <td><%= user.email %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-
+  <div class="col-xl-6 col-lg-5">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-chart-bar"></i> Statistics </h6>
+      </div>
+      <div class="card-body">
+        <%= hidden_field_tag :team_id, @team.id %>
+        <div id="graph-d3-team"></div>
+      </div>
+    </div>
+  </div>
+</div>

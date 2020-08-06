@@ -1,8 +1,100 @@
-<%= render 'navbar-track', track: @track %>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">
+    Track
+    <% if @track.in_progress?%>
+      <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
+    <% elsif @track.unstarted?%>
+      <i class="fa fa-circle mr-3 text-danger fa-fw"></i>
+    <% else %>
+      <i class="fa fa-check mr-3 text-success fa-fw"></i>
+    <% end %>
+  </h1>
+  <% if @track.in_progress? %>
+    <%= form_with(model: [@track, @track.intervals.last], local: true) do |form| %>
+      <div class="actions">
+        <%= form.hidden_field 'close_track', value: true %>
+        <%= form.button class: 'd-none d-sm-inline-block btn btn-success shadow-sm' do %>
+          <i class="fa fa-check fa-sm text-white"></i>
+          <span> Finish </span>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+  <%= link_to project_path(@track.project), class: "d-none d-sm-inline-block btn btn-primary shadow-sm", data: { turbolinks: false } do %>
+    <i class="fa fa-arrow-left fa-sm text-white-50"></i>
+    <span> Back To The Project </span>
+  <%end%>
+</div>
 
-<div class="page-content p-5" id="content">
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <%= link_to edit_track_path(@track), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
+          <i class="fa fa-edit fa-sm text-white-50"></i>
+          <span> Edit </span>
+        <%end%>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> About </h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="text-primary">Name: </label><br/>
+          <input class="form-control" type="text" value="<%= @track.name %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary">Description: </label><br/>
+          <input class="form-control" type="text" value="<%= @track.description %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary">Status: </label><br/>
+          <input class="form-control" type="text" value="<%= @track.status %>" readonly="readonly">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <%= render 'about-track', track: @track %>
-  <%= render 'track_interval', track: @track %>
-  
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-history"></i> Intervals </h6>
+      </div>
+      <div class="card-body">
+        <% if @track.intervals.present? %>
+          <table class="table table-bordered table-hover" id="dataTable">
+            <thead>
+              <tr class="text-center">
+                <th> Start </th>
+                <th> End </th>
+                <th> Description </th>
+                <th> User </th>
+                <th> Action </th>
+              </tr>
+            </thead>
+            <% @track.intervals.order("id desc").each do |interval| %>
+              <tr class="text-center">
+                <td>
+                  <p class="fontColorTable"><%= interval.start_at.strftime("%F") %></p>
+                  <p class="fontColorTable"><%= interval.start_at.strftime("%T") %></p>
+                </td>
+                <td>
+                  <p class="fontColorTable"><%= interval.end_at.strftime("%F") %> </p>
+                  <p class="fontColorTable"><%= interval.end_at.strftime("%T") %> </p>
+                </td>
+                <td> <p class="fontColorTable"><%= interval.description %> </p></td>
+                <td> <p class="fontColorTable"><%= "#{interval.user.name} #{interval.user.lastname}" %> </p></td>
+                <td>
+                  <%= link_to track_interval_path(track_id: @track.id, id: interval.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                    <i class="fa fa-trash text-light"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+          <%= render 'track_interval', track: @track %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

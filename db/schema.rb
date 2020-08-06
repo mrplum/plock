@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_13_122703) do
+ActiveRecord::Schema.define(version: 2020_08_06_131221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2020_02_13_122703) do
 
   create_table "projects", force: :cascade do |t|
     t.string "name", null: false
-    t.string "repository", null: false
+    t.string "description", null: false
     t.decimal "cost", null: false
     t.date "start_at"
     t.datetime "created_at", precision: 6, null: false
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2020_02_13_122703) do
     t.datetime "incorporated_at"
     t.bigint "company_id"
     t.string "jti"
+    t.string "avatar"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

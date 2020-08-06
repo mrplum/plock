@@ -1,33 +1,42 @@
-<div class="login-form">
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>   
-    <h2 class="text-center">Log in</h2>
+<div class="row">
+  <div class="col-lg-6 d-none d-lg-block">
+    <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="/images/login.svg" alt="rss feed" />
+  </div>
+  <div class="col-lg-6">
+    <div class="p-5">
+      <h2>Log in</h2>
 
-    <div class="form-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-          <%= f.text_field :email, input_html: {class: 'form-control'}, class: "form-control",placeholder: 'Email' %>
-      </div>
-    </div>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html_options: {class: "user"}) do |f| %>
+          <div class="form-group">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-user", placeholder: 'Email' %>
+          </div>
 
-    <div class="form-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fa fa-lock" aria-hidden="true" ></i></span>
-        <%= f.password_field :password, input_html: {class: 'form-control'}, class: 'form-control', placeholder: 'Password' %>
-      </div>
-    </div>
+          <div class="form-group">
+            <%= f.password_field :password, class: "form-control form-control-user", placeholder: 'Password' %>
+          </div>
 
-    <div class="form-group  mb-3">
-      <%= f.submit "Sign in", class: "btn btn-primaryy login-btn btn-block" %>
-    </div>
+          <% if devise_mapping.rememberable? %>
+            <div class="form-group">
+              <div class="custom-control custom-checkbox small">
+                <%= f.check_box :remember_me, class: "custom-control-input" %>
+                <%= f.label :remember_me, class: "custom-control-label" %>
+              </div>
+            </div>
+          <% end %>
 
-    <div class="clearfix">   
-      <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-        <% if devise_mapping.rememberable? %>
-          <%= f.label :remember_me, label_html: { class: "pull-left checkbox-inline" } %>
-          <%= f.input :remember_me, input_html: { type: "checkbox" } %>
+          <div class="form-group">
+            <%= f.submit "Log in", class: "btn btn-primary btn-user btn-block" %>
+          </div>
+
+          <div class="clearfix">
+            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me </label>
+              <% if devise_mapping.rememberable? %>
+                <%= f.label :remember_me, label_html: { class: "pull-left checkbox-inline" } %>
+                <%= f.input :remember_me, input_html: { type: "checkbox" } %>
+              <% end %>
+              <%= link_to "Forgot your password?", new_password_path(resource_name), html_options = {class: "float-right"} %><br />
+          </div>
         <% end %>
-        <%= link_to "Forgot your password?", new_password_path(resource_name), html_options = {class: "pull-right2"} %><br />
     </div>
-
-  <% end %>
+  </div>
 </div>

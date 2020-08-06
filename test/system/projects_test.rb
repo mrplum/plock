@@ -19,7 +19,7 @@ class ProjectsTest < ApplicationSystemTestCase
 
     fill_in "Cost", with: @project.cost
     fill_in "Name", with: "@project.name"
-    fill_in "Repository", with: @project.repository
+    fill_in "Description", with: @project.description
     click_on "Create Project"
 
     assert_text "Project was successfully created"
@@ -32,7 +32,7 @@ class ProjectsTest < ApplicationSystemTestCase
 
     fill_in "Cost", with: @project.cost
     fill_in "Name", with: @project.name
-    fill_in "Repository", with: @project.repository
+    fill_in "Description", with: @project.description
     click_on "Update Project"
 
     assert_text "Project was successfully updated"

@@ -5,15 +5,16 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
-  
+
   root to: "home#index"
   get 'profile', to: 'users#show'
+  get 'user/statics', to: 'users#statics'
   resources :companies do
     get 'subscribe_user'
     get 'send_email'
     get 'accept_invitation_to_company', on: :collection
   end
-  
+
   mount Sidekiq::Web => '/sidekiq'
 
   devise_for :users
@@ -55,7 +56,7 @@ Rails.application.routes.draw do
       resources :projects do
         get :projects_table, on: :collection
       end
-      resources :teams do 
+      resources :teams do
         get :teams_table, on: :collection
       end
     end
