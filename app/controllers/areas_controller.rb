@@ -4,22 +4,20 @@
 #
 class AreasController < ApplicationController
   before_action :set_area, only: [:show, :edit, :update, :destroy]
-  before_action :check_permissions, only: [ :edit, :update, :destroy]
+  # before_action :check_permissions, only: [ :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /areas
   # GET /areas.json
   def index
     @user = current_user
-    @areas = Area.all
+    @areas = Area.where(company_id: @user.company_id)
   end
 
   # GET /areas/1
   # GET /areas/1.json
   def show
     @area = Area.find(params[:id])
-
-    redirect_to areas_path
   end
 
   # GET /areas/new

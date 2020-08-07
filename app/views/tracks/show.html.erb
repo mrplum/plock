@@ -1,6 +1,6 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">
-    Track
+    <%= t('track') %>
     <% if @track.in_progress?%>
       <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
     <% elsif @track.unstarted?%>
@@ -15,14 +15,14 @@
         <%= form.hidden_field 'close_track', value: true %>
         <%= form.button class: 'd-none d-sm-inline-block btn btn-success shadow-sm' do %>
           <i class="fa fa-check fa-sm text-white"></i>
-          <span> Finish </span>
+          <span> <%= t('finish') %> </span>
         <% end %>
       </div>
     <% end %>
   <% end %>
   <%= link_to project_path(@track.project), class: "d-none d-sm-inline-block btn btn-primary shadow-sm", data: { turbolinks: false } do %>
     <i class="fa fa-arrow-left fa-sm text-white-50"></i>
-    <span> Back To The Project </span>
+    <span> <%= t('back') %> </span>
   <%end%>
 </div>
 
@@ -32,21 +32,21 @@
       <div class="card-header py-3">
         <%= link_to edit_track_path(@track), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
           <i class="fa fa-edit fa-sm text-white-50"></i>
-          <span> Edit </span>
+          <span> <%= t('edit') %> </span>
         <%end%>
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> About </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> <%= t('about') %> </h6>
       </div>
       <div class="card-body">
         <div class="form-group">
-          <label class="text-primary">Name: </label><br/>
+          <label class="text-primary"> <%= t('name') %> </label><br/>
           <input class="form-control" type="text" value="<%= @track.name %>" readonly="readonly">
         </div>
         <div class="form-group">
-          <label class="text-primary">Description: </label><br/>
+          <label class="text-primary"> <%= t('description') %> </label><br/>
           <input class="form-control" type="text" value="<%= @track.description %>" readonly="readonly">
         </div>
         <div class="form-group">
-          <label class="text-primary">Status: </label><br/>
+          <label class="text-primary"> <%= t('status') %> </label><br/>
           <input class="form-control" type="text" value="<%= @track.status %>" readonly="readonly">
         </div>
       </div>
@@ -65,11 +65,11 @@
           <table class="table table-bordered table-hover" id="dataTable">
             <thead>
               <tr class="text-center">
-                <th> Start </th>
-                <th> End </th>
-                <th> Description </th>
-                <th> User </th>
-                <th> Action </th>
+                <th> <%= t('start') %> </th>
+                <th> <%= t('end') %> </th>
+                <th> <%= t('description') %> </th>
+                <th> <%= t('user') %> </th>
+                <th> <%= t('action') %> </th>
               </tr>
             </thead>
             <% @track.intervals.includes(:user).order("id desc").each do |interval| %>

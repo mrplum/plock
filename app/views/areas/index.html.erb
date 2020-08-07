@@ -15,9 +15,10 @@
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr class="text-center">
-            <th>Name</th>
-            <th>Description</th>
-            <th>location</th>
+            <th><%= t('name') %></th>
+            <th><%= t('description') %></th>
+            <th><%= t('location') %></th>
+            <th><%= t('action') %></th>
           </tr>
         </thead>
         <tbody>
@@ -26,7 +27,6 @@
               <td><%= area.name %></td>
               <td><%= area.description %></td>
               <td><%= area.location %></td>
-              
               <td>
                 <%= link_to area_path(area), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
                   <i class="fa fa-eye fa-sm text-white-50"></i>

@@ -1,5 +1,5 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800"> Company Settings </h1>
+  <h1 class="h3 mb-0 text-gray-800"> <%= t 'company_settings' %> </h1>
 </div>
 
 <div class="row justify-content-center">
@@ -8,9 +8,9 @@
       <div class="card-header py-3">
         <%= link_to edit_company_path(@company), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
           <i class="fa fa-edit fa-sm text-white-50"></i>
-          <span> Edit </span>
+          <span> <%= t 'edit' %>  </span>
         <%end%>
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> Information </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> <%= t 'about' %>  </h6>
       </div>
       <div class="card-body">
         <div class="row justify-content-center">
@@ -19,11 +19,11 @@
           </div>
           <div class="col-lg-6">
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <label class="text-primary">Name: </label><br/>
+              <label class="text-primary"> <%= t('name') %> </label><br/>
               <input class="form-control" type="text" value="<%= @company.name %>" readonly="readonly">
             </div>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <label class="text-primary">Description: </label><br/>
+              <label class="text-primary"> <%= t('description') %> </label><br/>
               <input class="form-control" type="text" value="<%= @company.description %>" readonly="readonly">
             </div>
           </div>
@@ -39,18 +39,18 @@
       <div class="card-header py-3">
         <%= link_to company_subscribe_user_path(@company), class: "float-right btn btn-sm btn-success shadow-sm" do %>
           <i class="fa fa-user-plus fa-sm text-white-50"></i>
-          <span> Add employee </span>
+          <span> <%= t 'add_employee' %> </span>
         <%end%>
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-user"></i> Employees </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-user"></i> <%= t 'employees' %> </h6>
       </div>
       <div class="card-body">
         <% if @company.users.present? %>
           <table class="table table-bordered table-hover" id="dataTable">
             <thead>
               <tr class="text-center">
-                <th> Name </th>
-                <th> Email </th>
-                <th> Last sign in</th>
+                <th> <%= t('name') %> </th>
+                <th> <%= t('email') %> </th>
+                <th> <%= t('last_sign_in') %></th>
               </tr>
             </thead>
             <% @company.users.each do |user| %>
@@ -79,8 +79,8 @@
             <thead>
               <tr class="text-center">
                 <th> <%= t('name') %> </th>
-                <th> Created at </th>
-                <th> Action </th>
+                <th> <%= t('created_at') %> </th>
+                <th> <%= t('action') %> </th>
               </tr>
             </thead>
             <% @projects.to_a.uniq(&:team_id).each do |project| %>
@@ -109,18 +109,18 @@
   <div class="col-lg-10">
     <div class="card shadow mb-4 border-bottom-primary">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-cubes"></i> Projects </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-cubes"></i> <%= t('projects') %> </h6>
       </div>
       <div class="card-body">
         <% if @projects.present? %>
           <table class="table table-bordered table-hover" id="dataTable3">
             <thead>
               <tr class="text-center">
-                <th> Name </th>
-                <th> Description </th>
-                <th> Cost </th>
-                <th> Start at </th>
-                <th> Action </th>
+                <th> <%= t('name') %> </th>
+                <th> <%= t('description') %> </th>
+                <th> <%= t('cost') %> </th>
+                <th> <%= t('start_at') %> </th>
+                <th> <%= t('action') %> </th>
               </tr>
             </thead>
             <% @projects.each do |project| %>

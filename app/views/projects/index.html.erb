@@ -1,8 +1,8 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800"> Projects </h1>
+  <h1 class="h3 mb-0 text-gray-800"> <%= t 'projects' %> </h1>
   <%= link_to new_project_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
     <i class="fa fa-plus fa-sm text-white-50"></i>
-    <span> New Project  </span>
+    <span> <%= t 'new_project' %>  </span>
   <%end%>
 </div>
 
@@ -15,11 +15,11 @@
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr class="text-center">
-            <th>Name</th>
-            <th>Description</th>
-            <th>Start at</th>
-            <th>Team</th>
-            <th>Action</th>
+            <th><%= t('name') %></th>
+            <th><%= t('description') %></th>
+            <th><%= t('start_at') %></th>
+            <th><%= t('team') %></th>
+            <th><%= t('accion') %></th>
           </tr>
         </thead>
         <tbody>
