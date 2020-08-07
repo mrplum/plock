@@ -3,7 +3,9 @@
 owner = User.create(name: 'Owner', lastname: 'Plock', email: 'owner@plock.com', password: '123123')
 
 # Craete the company of owner user
-c = Company.create(name: 'Plum', description: 'The company', owner_id: owner.id)
+c = Company.create(name: 'Plum', description: 'The company', owner: owner)
+
+owner.update(company: c)
 
 a = Area.create(company: c, name: 'test')
 
@@ -91,7 +93,8 @@ track_values = [
         description: 'Is a example',
         user: owner,
         project: project,
-        status: :in_progress
+        status: :in_progress,
+        team: t
     },
     {
         name: 'Track Two',
@@ -99,6 +102,7 @@ track_values = [
         status: :finished,
         user: member_user,
         project: project2,
+        team: t
     },
     {
         name: 'Track Three',
@@ -106,61 +110,70 @@ track_values = [
         status: :finished,
         user: member_user,
         project: project,
+        team: t
     },
     {
         name: 'Track Four',
         description: 'Is a example',
         user: member_user1,
         project: project,
-        status: :finished
+        status: :finished,
+        team: t
     },
     {
         name: 'Track Five',
         description: 'Is a example',
         user: owner,
         project: project2,
-        status: :in_progress
+        status: :in_progress,
+        team: t
     },
     {
         name: 'Track Six',
         description: 'Is a example',
         user: member_user,
         project: project2,
-        status: :finished
+        status: :finished,
+        team: t
     },
     {
         name: 'Track Seven',
         description: 'Is a example',
         user: member_user1,
         project: project2,
-        status: :finished
+        status: :finished,
+        team: t
     },
     {
         name: 'Track Eigth',
         description: 'Is a example',
         user: member_user,
         project: project2,
-        status: :in_progress
+        status: :in_progress,
+        team: t
     },
     {
         name: 'Track Nine',
         description: 'Is a example',
         user: member_user1,
         project: project2,
-        status: :in_progress
+        status: :in_progress,
+        team: t
     },
     {
         name: 'Track Ten',
         description: 'Is a example',
         user: member_user1,
         project: project3,
-        status: :finished
+        status: :finished,
+        team: t
     },
     {
         name: 'Track Eleven',
         description: 'Is a example',
         user: member_user,
         project: project,
+        team: t
     }
 ]
 
