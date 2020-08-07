@@ -24,7 +24,7 @@ class Project < ApplicationRecord
 
   private
   def create_owners_team
-    t = Team.create(name: "Owners Team", project_id: id)
+    t = Team.create(name: "Owners Team #{name}", project_id: id)
     t.users << user
     self.teams << t
   end
