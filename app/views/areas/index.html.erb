@@ -1,0 +1,41 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"> <%= t 'areas' %> </h1>
+  <%= link_to new_area_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+    <i class="fa fa-plus fa-sm text-white-50"></i>
+    <span> <%= t 'new_area' %>  </span>
+  <%end%>
+</div>
+
+<div class="card shadow mb-4 border-bottom-primary">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary"><%= t 'my_areas' %></h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr class="text-center">
+            <th>Name</th>
+            <th>Description</th>
+            <th>location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @areas.each do |area| %>
+            <tr class="text-center">
+              <td><%= area.name %></td>
+              <td><%= area.description %></td>
+              <td><%= area.location %></td>
+              
+              <td>
+                <%= link_to area_path(area), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                  <i class="fa fa-eye fa-sm text-white-50"></i>
+                <%end%>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

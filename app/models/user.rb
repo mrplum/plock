@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :tracks
   has_many :teams, through: :team_users
   has_many :projects, through: :teams, source: :projects
+  has_many :areas, through: :projects
   has_many :intervals
   belongs_to :company,  optional: true
   mount_uploader :avatar, AvatarUploader

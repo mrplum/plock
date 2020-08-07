@@ -1,5 +1,8 @@
 es:
   date:
+    formats:
+      default: "%Y/%m/%d"
+      abbr_month: "%B"
     order:
       - :day
       - :month
@@ -9,12 +12,39 @@ es:
       default: "%Y/%m/%d"
       short: "%b %d"
       long: "%B %d, %Y"
+      abbr_month: "%B"
+  time:
+    am: am
+    formats:
+      default: ! '%a, %d %b %Y %H:%M:%S %z'
+  jan: "Enero"
+  feb: "Febrero"
+  month_names:
+    - 
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+  areas: Areas
   hello: "Hello world"
   company: UNRC
+  my_area: Mis Areas
   my_projects: Mis Dependencias
   my_teams: Mis Oficinas
   new: Nuevo
+  new_area: Nueva Area
+  new_team: Nueva Oficina
+  new_project: Nueva Dependencias
   projects: Dependencias
+  select_team_members: Miembros de esta oficina
   statistics: Estadísticas
   teams: Oficinas
   tracks: Horas

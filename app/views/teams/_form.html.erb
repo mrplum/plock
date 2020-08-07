@@ -9,7 +9,7 @@
     </div>
 
     <div class="form-group">
-      <%= form.label 'selected team members:', class: "text-primary" %><br/>
+      <%= form.label t('select_team_members'), class: "text-primary" %><br/>
       <%= form.select( :user_ids, options_from_collection_for_select(
         User.where.not("id = ?", current_user.id),"id", "name"),
         {}, { :class => 'form-control', include_blank: true,  multiple: true })%>
