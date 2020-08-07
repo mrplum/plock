@@ -66,16 +66,21 @@ es:
   company: UNRC
   cost: Costo
   members_count: Cantidad de personas
-  my_area: Mis Areas
+  my_areas: Mis Areas
   my_projects: Mis Dependencias
   my_teams: Mis Oficinas
   my_tracks: Mis Registros
   name: Nombre
   new: Nuevo
+  action: Acción
   new_area: Nueva Area
+  edit_area: Editar Area
   new_team: Nueva Oficina
+  edit_team: Editar Oficina
   new_track: Nuevo Registro
-  new_project: Nueva Dependencias
+  edit_track: Editar Registro
+  new_project: Nueva Dependencia
+  edit_project: Editar Dependencia
   location: Lugar
   project: Dependencia
   projects: Dependencias
@@ -87,3 +92,31 @@ es:
   teams: Oficinas
   track: Registro
   tracks: Horas
+  company_settings: Configuración UNRC
+  edit: Editar
+  employees: Integrantes
+  created_at: Creado el
+  last_sign_in: Ultimo Inicio de Sesion
+  about: Información
+  add_employee: Agregar Integrante
+  back: Volver
+  owner: Propietario
+  start_at: Empezado el
+  status: Estado
+  finished: Finalizado
+  finish: Finalizar
+  in_progress: En Progreso
+  unstarted: No Iniciado
+  start: Inicio
+  end: Fin
+  started: Iniciar
+  pause: Pausa
+  complete: Completar
+  resume: Continuar
+  profile: Perfil
+  lastname: Apellido
+  update_data: Actulizar Datos
+  change_password: Cambiar Contraseña
+  password: Contraseña
+  password_confirmation: Confirmar Contraseña
+  status_project: Estado de mis Proyectos

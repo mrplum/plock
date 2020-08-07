@@ -5,13 +5,13 @@
   <%= form_with(model: company, local: true) do |form| %>
 
     <div class="form-group">
-      <%= form.label 'Name:', class: "text-primary" %><br/>
-      <%= form.text_field :name, class: "form-control", placeholder: 'Name' %>
+      <%= form.label t('name'), class: "text-primary" %><br/>
+      <%= form.text_field :name, class: "form-control", placeholder: t('name') %>
     </div>
 
     <div class="form-group">
-      <%= form.label 'Description:', class: "text-primary" %><br/>
-      <%= form.text_field :description, class: "form-control", placeholder: 'Description' %>
+      <%= form.label t('description'), class: "text-primary" %><br/>
+      <%= form.text_field :description, class: "form-control", placeholder: t('description') %>
     </div>
 
     <div class="form-group">

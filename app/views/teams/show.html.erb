@@ -2,7 +2,7 @@
   <h1 class="h3 mb-0 text-gray-800"> <%= @team.name %> </h1>
   <%= link_to edit_team_path(@team), class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
     <i class="fa fa-edit fa-sm text-white-50"></i>
-    <span> Edit Team </span>
+    <span> <%= t('edit_team') %></span>
   <%end%>
 </div>
 
@@ -18,8 +18,8 @@
             <thead>
               <tr>
                 <th> </th>
-                <th>Name</th>
-                <th>Email</th>
+                <th><%= t('name') %></th>
+                <th><%= t('email') %></th>
               </tr>
             </thead>
             <tbody>
@@ -40,7 +40,7 @@
   <div class="col-xl-6 col-lg-5">
     <div class="card shadow mb-4 border-bottom-primary">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-chart-bar"></i> Statistics </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-chart-bar"></i> <%= t('statistics') %> </h6>
       </div>
       <div class="card-body">
         <%= hidden_field_tag :team_id, @team.id %>

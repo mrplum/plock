@@ -1,0 +1,32 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800"> <%= t 'areas' %> </h1>
+  <%= link_to edit_area_path(@area), class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm", data: { turbolinks: false } do %>
+    <i class="fa fa-edit fa-sm text-white-50"></i>
+    <span> <%= t 'edit' %> </span>
+  <%end%>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card shadow mb-4 border-bottom-primary">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> <%= t 'about_area' %> </h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="text-primary"> <%= t('name') %>: </label><br/>
+          <input class="form-control" type="text" value="<%= @area.name %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary"> <%= t('description') %>: </label><br/>
+          <input class="form-control" type="text" value="<%= @area.description %>" readonly="readonly">
+        </div>
+        <div class="form-group">
+          <label class="text-primary"> <%= t('location') %>: </label><br/>
+          <input class="form-control" type="text" value="<%= @area.location %>" readonly="readonly">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

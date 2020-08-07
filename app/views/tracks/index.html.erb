@@ -20,8 +20,8 @@
                 <th><%= t('name') %> </th>
                 <th><%= t('project') %></th>
                 <th><%= t('team') %> </th>
-                <th>Status</th>
-                <th>Action</th>
+                <th><%= t('status') %></th>
+                <th><%= t('action') %></th>
               </tr>
             </thead>
             <% @tracks.each do |track| %>
@@ -48,13 +48,13 @@
           </table>
           <div class="mt-4 text-center small">
             <span class="mr-2">
-              <i class="fas fa-check text-success"></i> finished
+              <i class="fas fa-check text-success"></i> <%= t('finished') %>
             </span>
             <span class="mr-2">
-              <i class="fas fa-circle text-warning"></i> in progress
+              <i class="fas fa-circle text-warning"></i> <%= t('in_progress') %>
             </span>
             <span class="mr-2">
-              <i class="fas fa-circle text-danger"></i> unstarted
+              <i class="fas fa-circle text-danger"></i> <%= t('unstarted') %>
             </span>
           </div>
           <br/>

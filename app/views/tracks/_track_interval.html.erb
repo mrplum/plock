@@ -20,11 +20,11 @@
         <%= form.hidden_field 'start_track', value: true %>
         <%= form.button class: 'btn btn-sm btn-success shadow-sm', data: { turbolinks: false } do %>
           <i class="fa fa-play text-white"></i>
-          <span> Start </span>
+          <span> <%= t('started') %> </span>
         <% end %>
         <%= link_to new_track_interval_path(track.id, start_track: true), class: 'btn btn-sm btn-primary shadow-sm', data: { turbolinks: false } do %>
           <i class="fa fa-list-ul text-white"></i>
-          <span> Complete </span>
+          <span> <%= t('complete') %> </span>
         <% end %>
       </div>
     <% end %>
@@ -36,7 +36,7 @@
           <%= form.hidden_field 'start_track', value: true %>
           <%= form.button class: 'btn btn-sm btn-danger shadow-sm', data: { turbolinks: false } do %>
             <i class="fa fa-pause text-white"></i>
-            <span> Pause </span>
+            <span> <%= t('pause') %> </span>
           <% end %>
         </div>
       <% end %>
@@ -61,11 +61,11 @@
           <%= form.hidden_field 'start_track', value: true %>
           <%= form.button class: 'btn btn-sm btn-success shadow-sm', data: { turbolinks: false } do %>
             <i class="fa fa-retweet text-white"></i>
-            <span> Resume </span>
+            <span> <%= t('resume') %> </span>
           <% end %>
           <%= link_to new_track_interval_path(track.id, start_track: true), class: 'btn btn-sm btn-primary shadow-sm', data: { turbolinks: false } do %>
             <i class="fa fa-list-ul text-white"></i>
-            <span> Complete </span>
+            <span> <%= t('complete') %> </span>
           <% end %>
         </div>
       <% end %>
