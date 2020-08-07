@@ -1,20 +1,20 @@
-class Statics::TeamsController < ApplicationController
+class Stadistics::TeamsController < ApplicationController
   def teams_table
     render json: Team.all
   end
 
   def index
     @record = 'teams'
-    render 'statics/index'
+    render 'stadistics/index'
   end
 
   def new
     @model = Team.new
-    render 'statics/new'
+    render 'stadistics/new'
   end
 
   def edit
-    render 'statics/edit'
+    render 'stadistics/edit'
   end
 
   def create

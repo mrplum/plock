@@ -1,20 +1,20 @@
-class Statics::TracksController < ApplicationController
+class Stadistics::TracksController < ApplicationController
   def tracks_table
     render json: Track.all
   end
 
   def index
     @record = 'tracks'
-    render 'statics/index'
+    render 'stadistics/index'
   end
 
   def new
     @model = Track.new
-    render 'statics/new'
+    render 'stadistics/new'
   end
 
   def edit
-    render 'statics/edit'
+    render 'stadistics/edit'
   end
 
   def create

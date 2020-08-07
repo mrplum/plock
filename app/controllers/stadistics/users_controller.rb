@@ -1,4 +1,4 @@
-class Statics::UsersController < ApplicationController
+class Stadistics::UsersController < ApplicationController
   def users_table
     render json: User.all
   end
@@ -10,16 +10,16 @@ class Statics::UsersController < ApplicationController
 
   def index
     @record = 'users'
-    render 'statics/index'
+    render 'stadistics/index'
   end
 
   def new
     @model = User.new
-    render 'statics/new'
+    render 'stadistics/new'
   end
 
   def edit
-    render 'statics/edit'
+    render 'stadistics/edit'
   end
 
   def create

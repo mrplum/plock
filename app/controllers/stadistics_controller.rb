@@ -1,4 +1,4 @@
-class StaticsController < ApplicationController
+class StadisticsController < ApplicationController
   layout 'admin'
   
   def dashboard

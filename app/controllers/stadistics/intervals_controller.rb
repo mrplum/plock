@@ -1,20 +1,20 @@
-class Statics::IntervalsController < ApplicationController
+class Stadistics::IntervalsController < ApplicationController
   def intervals_table
     render json: Interval.all
   end
 
   def index
     @record = 'intervals'
-    render 'statics/index'
+    render 'stadistics/index'
   end
 
   def new
     @model = Interval.new
-    render 'statics/new'
+    render 'stadistics/new'
   end
 
   def edit
-    render 'statics/edit'
+    render 'stadistics/edit'
   end
 
   def create

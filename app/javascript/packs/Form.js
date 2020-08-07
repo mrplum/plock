@@ -5,7 +5,7 @@ const Form = props => {
   const [user, setUser] = useState('');
 
   async function fetchUsers() {
-    const users_fetch = await fetch("http://localhost:3000/admin/statics/users/user_select");
+    const users_fetch = await fetch("http://localhost:3000/admin/stadistics/users/user_select");
     users_fetch
       .json()
       .then(res => {
@@ -25,7 +25,7 @@ const Form = props => {
 
   return(
     <div className='admin-form'> 
-      <form action='/admin/statics/companies' method='POST' id='admin-form'>
+      <form action='/admin/stadistics/companies' method='POST' id='admin-form'>
         
         <div className="field">
           <label>Name</label>

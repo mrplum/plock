@@ -10,7 +10,7 @@ const Index = props => {
   const [user, setUser] = useState('')
 
   async function fetchRecords() {
-    const records_fetch = await fetch(`http://localhost:3000/admin/statics/${props.record}/${props.record}_table`);
+    const records_fetch = await fetch(`http://localhost:3000/admin/stadistics/${props.record}/${props.record}_table`);
     records_fetch
       .json()
       .then(res => {

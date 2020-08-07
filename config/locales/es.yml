@@ -1,0 +1,20 @@
+es:
+  date:
+    order:
+      - :day
+      - :month
+      - :year
+  time:
+    formats:
+      default: "%Y/%m/%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+  hello: "Hello world"
+  company: UNRC
+  my_projects: Mis Dependencias
+  my_teams: Mis Oficinas
+  new: Nuevo
+  projects: Dependencias
+  statistics: Estadísticas
+  teams: Oficinas
+  tracks: Horas

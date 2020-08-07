@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def statics
+  def stadistics
     @user = current_user
     @projects = @user.projects
   end

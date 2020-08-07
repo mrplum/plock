@@ -1,4 +1,4 @@
-class Statics::CompaniesController < ApplicationController
+class Stadistics::CompaniesController < ApplicationController
   layout 'admin'
 
   protect_from_forgery with: :null_session
@@ -9,24 +9,24 @@ class Statics::CompaniesController < ApplicationController
 
   def index
     @record = 'companies'
-    render 'statics/index'
+    render 'stadistics/index'
   end
 
   def new
     @model = Company.new
-    render 'statics/new'
+    render 'stadistics/new'
   end
 
   def edit
-    render 'statics/edit'
+    render 'stadistics/edit'
   end
 
   def create
     company = Company.new company_params
     if company.save
-      redirect_to statics_companies_path
+      redirect_to stadistics_companies_path
     else
-      redirect_to new_statics_company_path
+      redirect_to new_stadistics_company_path
     end
   end
 
