@@ -10,6 +10,7 @@ class Track < ApplicationRecord
   has_many :intervals
   belongs_to :project, touch: true
   belongs_to :user, touch: true
+  belongs_to :team, touch: true
 
   def has_open_intervals?
     intervals.any?(&:open?)

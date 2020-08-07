@@ -38,18 +38,43 @@ es:
       # This will be the default ones, will take effect if no other
       # are specifically defined for the models.
       create: "Crear %{model}"
+  activerecord:
+    errors:
+      models:
+        team:
+          attributes:
+            name:
+              too_short: demasiado corto
+        project:
+          attributes:
+            team:
+              required: Team es requerido
+            description:
+              blank: Descripción no puede ser vacia
+            name:
+              taken: Nombre ya tomado
+        track:
+          attributes:
+            name:
+              blank: No puede ser blanco
+            description:
+              blank: No puede ser blanco
+  area: Area
   areas: Areas
   description: Descripción
   hello: "Hello world"
   company: UNRC
   cost: Costo
+  members_count: Cantidad de personas
   my_area: Mis Areas
   my_projects: Mis Dependencias
   my_teams: Mis Oficinas
+  my_tracks: Mis Registros
   name: Nombre
   new: Nuevo
   new_area: Nueva Area
   new_team: Nueva Oficina
+  new_track: Nuevo Registro
   new_project: Nueva Dependencias
   location: Lugar
   project: Dependencia
@@ -57,5 +82,8 @@ es:
   select_teams: Oficinas de esta Dependencia
   select_team_members: Miembros de esta oficina
   statistics: Estadísticas
+  team: Oficina
+  team_members: Miembros de la oficina
   teams: Oficinas
+  track: Registro
   tracks: Horas

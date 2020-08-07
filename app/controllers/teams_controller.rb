@@ -34,7 +34,6 @@ class TeamsController < ApplicationController
   # POST /teams
   # POST /teams.json
   def create
-
     @team = Team.new(team_params)
 
     respond_to do |format|
@@ -117,7 +116,7 @@ class TeamsController < ApplicationController
   def team_params
     params[:team][:user_ids] = params.dig(:team, :user_ids).to_a.reject(&:empty?).map(&:to_i).compact
 
-    params.require(:team).permit(:name, user_ids: [])
+    params.require(:team).permit(:name, :project_id, user_ids: [])
   end
 
   def check_permissions

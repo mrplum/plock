@@ -1,21 +1,25 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800"> Track </h1>
+  <h1 class="h3 mb-0 text-gray-800"><%= t('track') %></h1>
+  <%= link_to new_track_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+    <i class="fa fa-plus fa-sm text-white-50"></i>
+    <span> <%= t('new_track') %> </span>
+  <% end %>
 </div>
 
 <div class="row justify-content-center">
   <div class="col-lg-10">
     <div class="card shadow mb-4 border-bottom-primary">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-tasks"></i> My Tracks </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-tasks"></i> <%= t('my_tracks') %> </h6>
       </div>
       <div class="card-body">
         <% if @tracks.present? %>
           <table class="table table-bordered table-hover" id="dataTable">
             <thead>
               <tr class="text-center">
-                <th>Name</th>
-                <th>Project Name</th>
-                <th>Description</th>
+                <th><%= t('name') %> </th>
+                <th><%= t('project') %></th>
+                <th><%= t('team') %> </th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -24,7 +28,7 @@
               <tr class="text-center">
                 <td><%= track.name %></td>
                 <td><%= track.project&.name %></td>
-                <td><%= track.description %></td>
+                <td><%= track.team&.name %></td>
                 <td>
                   <% if track.in_progress?%>
                     <i class="fa fa-circle mr-3 text-warning fa-fw"></i>

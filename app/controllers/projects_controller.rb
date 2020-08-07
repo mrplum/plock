@@ -35,14 +35,19 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(project_params.merge({ user_id: current_user.id, company_id: current_user.company_id }))
+    @project = Project.new(project_params.merge({
+      user_id: current_user.id,
+      company_id: current_user.company_id }))
 
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
-        format.html { render :new }
+        format.html do
+          flash.now[:danger] = @project.errors.full_messages
+          render :new
+        end
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +61,10 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
-        format.html { render :edit }
+        format.html do
+          flash.now[:danger] = @project.errors
+          render :edit
+        end
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
