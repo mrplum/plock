@@ -7,6 +7,7 @@ one:
   start_at: 2018-01-06
   user: matias
   company: one
+  area: one
   team: one
 
 two:
@@ -16,6 +17,7 @@ two:
   start_at: 2020-01-06
   user: matias
   company: one
+  area: one
   team: one
 
 three:
@@ -26,6 +28,7 @@ three:
   user: one
   company: one
   start_at: 2021-01-06
+  area: one
 
 four:
   id: 888
@@ -35,6 +38,7 @@ four:
   user: one
   company: one
   start_at: 2020-01-06
+  area: one
 
 five:
   id: 777
@@ -44,3 +48,4 @@ five:
   user: one
   company: one
   start_at: 2020-01-06
+  area: one

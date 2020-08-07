@@ -1,77 +1,18 @@
 curl -X DELETE 'http://localhost:9200/_all'
+curl 'http://localhost:9200/_aliases'  # show indexes create
 
------------------------------------------- ALL TRACKS ------------------------------------------
+------------------------------------------ ALL INTERVAL ------------------------------------------
 
-curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
   "query": {
     "bool": { 
     }
   }
 }'
 
--------------------------------------------- STATS BY STATUS -------------------------------------------- (OLD)
+------------------------------------------ SUM MINUTES IN FOR INTERVAL FILTER ------------------------------------------
 
-curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
-  "query": {
-    "bool": { 
-      "filter": [
-        { "match": { "user_id": 2 }}
-      ]
-    }
-  },
-  "aggs": {
-    "group_by_state": {
-      "terms": {
-        "field": "status.keyword"
-      },
-      "aggs" : {
-        "tracks_count" : { "value_count" : { "field" : "id" } }
-      }
-    }
-  }
-}'
-
--------------------------------------------- STATS BY STATUS -------------------------------------------- (NEW)
-
-curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
-  "query": {
-    "bool": { 
-      "filter": [
-        { "match": { "user_id": 2 }}
-      ]
-    }
-  },
-  "aggs" : {
-    "tracks_count" : { "value_count" : { "field" : "status.keyword" } }
-  }
-}'
-
------------------------------------------- STATS BY DAY ------------------------------------------
-
-curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
-  "query": {
-    "bool": { 
-      "filter": [
-        { "match": { "user_id": 2 }}
-      ]
-    }
-  }, 
-  "aggs": {
-    "simpleDatehHistogram": {
-      "date_histogram": {
-        "field": "updated_at",
-        "interval": "day"
-      },
-      "aggs" : {
-        "time_worked" : { "sum" : { "field" : "plock_time" } }
-      }
-    }
-  }
-}'
-
------------------------------------------- STATS BY PROJECT ------------------------------------------
-
-curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application/json' -d '{
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
   "query": {
     "bool": {
       "must": [
@@ -82,7 +23,200 @@ curl -X GET "localhost:9200/tracks/_search?pretty" -H 'Content-Type: application
   },
   "aggs": {
     "time_worked": {
-      "sum": { "field": "plock_time" } 
+      "sum": { "field": "minutes" } 
+    }
+  }
+}'
+
+
+--------------------------------------------------------------------------------------------------------------
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+"query": {
+    "bool": {
+      "filter": [
+        {
+          "range": {
+            "start_at": {
+              "lt": "2020-08-31",
+              "gt": "2020-08-01",
+              "format": "yyyy-MM-dd"
+            }
+          }
+        }
+      ]
+    }
+  }
+}'
+
+--------------------------------------------------------------------------------------------------------------
+# filter  by
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": { 
+      "filter": [
+        { "match": { "user_id": 4 } },
+        { "match": { "project_id": 1 } }
+      ]
+    }
+  }
+}'
+
+--------------------------------------------------------------------------------------------------------------
+# parametrized calendar_interval
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "aggs": {
+    "sales_over_time": {
+      "date_histogram": {
+        "field": "start_at",
+        "calendar_interval": "month"
+      }
+    }
+  }
+}'
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "aggs": {
+    "sales_over_time": {
+      "date_histogram": {
+        "field": "start_at",
+        "calendar_interval": "month"
+      },
+      "aggs": {
+        "time_worked": {
+          "sum": { "field": "minutes" } 
+        }
+      }
+    }
+  }
+}'
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": { 
+      "filter": [
+        { "match": { "user_id": 4 } },
+        { "match": { "project_id": 1 } }
+      ]
+    }
+  },
+  "aggs": {
+    "sales_over_time": {
+      "date_histogram": {
+        "field": "start_at",
+        "calendar_interval": "day"
+      },
+      "aggs": {
+        "time_worked": {
+          "sum": { "field": "minutes" } 
+        }
+      }
+    }
+  }
+}'
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": { 
+      "filter": [
+        { "match": { "user_id": 4 } },
+        { "match": { "project_id": 1 } }
+      ]
+    }
+  },
+  "aggs": {
+    "sales_over_time": {
+      "date_histogram": {
+        "field": "start_at",
+        "calendar_interval": "day"
+      },
+      "aggs": {
+        "time_worked": {
+          "sum": { "field": "minutes" } 
+        }
+      }
+    }
+  }
+}'
+--------------------------------------------------------------------------------------------------------------
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": { 
+      "filter": [
+        { "match": { "user_id": 4 } },
+        { "match": { "project_id": 1 } },
+        {
+          "range": {
+            "start_at": {
+              "lt": "2020-09-30",
+              "gt": "2020-08-01",
+              "format": "yyyy-MM-dd"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "aggs": {
+    "sales_over_time": {
+      "date_histogram": {
+        "field": "start_at",
+        "calendar_interval": "month"
+      },
+      "aggs": {
+        "time_worked": {
+          "sum": { "field": "minutes" } 
+        }
+      }
+    }
+  }
+}'
+
+
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": {
+      "filter": [
+        { "match": { "user_id": 4 } },
+        { "match": { "project_id": 1 } }
+      ],
+      "must": [
+        {
+          "range": {
+            "start_at": {
+              "lt": "2020-09-30",
+              "gt": "2020-08-01",
+              "format": "yyyy-MM-dd"
+            }
+          }
+        },
+        {
+          "range": {
+            "end_at": {
+              "lt": "2020-09-30",
+              "gt": "2020-08-01",
+              "format": "yyyy-MM-dd"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "aggs": {
+    "sales_over_time": {
+      "date_histogram": {
+        "field": "start_at",
+        "calendar_interval": "month"
+      },
+      "aggs": {
+        "time_worked": {
+          "sum": { "field": "minutes" } 
+        }
+      }
     }
   }
 }'

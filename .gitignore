@@ -37,3 +37,6 @@ yarn-debug.log*
 /App-Plock/node_modules
 .rvmrc
 /App-Plock/.env
+
+dump.rdb
+

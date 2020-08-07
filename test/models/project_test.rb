@@ -9,6 +9,7 @@ class ProjectTest < ActiveSupport::TestCase
     @user = users(:matias)
     @project = projects(:one)
     @project1 = projects(:two)
+    @area = areas(:one)
     @team = teams(:one)
   end
 
@@ -18,7 +19,8 @@ class ProjectTest < ActiveSupport::TestCase
       description: 'github',
       cost: 5,
       start_at: Date.new,
-      user: @user
+      user: @user,
+      area: @area
     )
     assert p.valid?
   end

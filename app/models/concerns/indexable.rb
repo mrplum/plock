@@ -6,10 +6,9 @@
 #
 module Indexable
   extend ActiveSupport::Concern
-
   included do
-    def index_elasticsearch
-      ElasticSearchWorker.perform_async(self.class.to_s, self.id)
+    def index_elasticsearch(action)
+      ElasticSearchWorker.perform_async(self.class.name, self.id, action)
     end
   end
 end

@@ -5,13 +5,13 @@ class ProjectUserStat
   end
 
   def call
-    search_plock_time_given_user_and_project(@user.id, @project.id).to_i
+    search_plock_time_given_user_and_project(@user.id, @project.id)
   end
 
   private
 
   def search_plock_time_given_user_and_project(user_id, project_id)
-    Track.__elasticsearch__.search({
+    Interval.__elasticsearch__.search({
       query: {
         bool: {
           must: [
@@ -22,9 +22,9 @@ class ProjectUserStat
       },
       aggs: {
         time_worked: {
-          sum: { field: 'plock_time' }
+          sum: { field: 'minutes' }
         }
       }
-    }).response['aggregations']['time_worked']['value']
+    }).response['aggregations']['time_worked']['value'].to_i
   end
 end

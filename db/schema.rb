@@ -15,6 +15,15 @@ ActiveRecord::Schema.define(version: 2020_08_06_131221) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "areas", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.string "location"
+    t.bigint "company_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -47,6 +56,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_131221) do
     t.bigint "user_id", null: false
     t.bigint "team_id"
     t.bigint "company_id"
+    t.integer "area_id"
     t.index ["company_id"], name: "index_projects_on_company_id"
     t.index ["name"], name: "index_projects_on_name", unique: true
     t.index ["team_id"], name: "index_projects_on_team_id"

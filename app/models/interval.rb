@@ -5,7 +5,6 @@ require 'elasticsearch/model'
 class Interval < ApplicationRecord
   include Indexable
   include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks unless Rails.env.test?
 
   attr_accessor :close_track, :start_track
 
@@ -16,13 +15,32 @@ class Interval < ApplicationRecord
   validate :no_other_open_interval, on: %i[create]
   validate :valid_date
 
-  after_create :update_minutes
-  after_update :update_minutes
-  after_destroy :reset_track_status
-  after_commit :calculate_plock_time, :index_elasticsearch
   before_save :change_track_status, if: -> { close_track || start_track }
+  after_commit :calculate_plock_time, :reset_track_status
+  after_commit :update_minutes, on: [:create, :update]
 
-  searchkick callbacks: false
+  # reindex elasticsearch
+  after_commit -> { index_elasticsearch('create') }, on: [:create]
+  after_commit -> { index_elasticsearch('update') }, on: [:update]
+  before_destroy -> { index_elasticsearch('destroy') }
+
+  def as_indexed_json(_options = nil)
+    track = self.track
+    project = track.project
+    {
+      id: id,
+      description: description,
+      company_id: project.company_id,
+      user_id: user_id,
+      track_id: track_id,
+      project_id: track.project_id,
+      team_id: project.team_id,
+      area_id:  project.area_id,
+      start_at: start_at,
+      end_at: end_at,
+      minutes: minutes
+    }
+  end
 
   def open?
     start_at == end_at
@@ -33,7 +51,8 @@ class Interval < ApplicationRecord
   end
 
   def valid_start_date?
-    track.project.start_at <= start_at
+    project_start_at = track&.project&.start_at
+    !!project_start_at && project_start_at <= start_at
   end
 
   def valid_interval_dates?
@@ -45,7 +64,7 @@ class Interval < ApplicationRecord
   end
 
   def no_other_open_interval
-    if track.has_open_intervals?
+    if track&.has_open_intervals?
       self.errors.add :base, 'There is already an open interval, please close before starting a new one'
     end
   end
@@ -54,31 +73,6 @@ class Interval < ApplicationRecord
     if !valid_start_date? || !valid_interval_dates?
       self.errors.add :base, 'invalid Dates!'
     end
-  end
-
-  def search_data
-    {
-      start_at: start_at,
-      end_at: end_at
-    }
-  end
-
-  settings index: { number_of_shards: 1 } do
-    mapping dynamic: false do
-      indexes :user_id, type: :integer
-      indexes :track_id, type: :integer
-      indexes :start_at, type: :date
-      indexes :end_at, type: :date
-      indexes :minutes, type: :integer
-    end
-  end
-
-  def as_indexed_json(_options = nil)
-    as_json(
-      only: %i[
-        id track_id user_id start_at end_at minutes
-      ]
-    )
   end
 
   private

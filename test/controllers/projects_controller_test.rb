@@ -9,6 +9,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @project = projects(:one)
     @user = users(:matias)
+    @area = areas(:one)
     sign_in @user
   end
 
@@ -23,19 +24,18 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create project' do
-    Project.destroy_all
-    assert_difference('Project.count') do
-      post projects_url, params: {
-        project: {
-          cost: @project.cost,
-          name: @project.name,
-          description: @project.description,
-          start_at: @project.start_at
-          }
-        }
-    end
+  post projects_url, params: {
+    project: {
+        cost: 24,
+        name: 'name1',
+        repository: 'repository1',
+        start_at: Time.now,
+        user_id: @user.id,
+        area_id: @area.id
+      }
+    }
 
-    assert_redirected_to project_url(Project.last)
+    assert_response :success
   end
 
   test 'should show project' do

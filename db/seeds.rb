@@ -1,28 +1,26 @@
 
 # Create Owner User Company
-owner = User.new(name: 'Owner', lastname: 'Plock', email: 'owner@plock.com', password: '123123')
+owner = User.create(name: 'Owner', lastname: 'Plock', email: 'owner@plock.com', password: '123123')
 
 # Craete the company of owner user
-c = Company.new(name: 'Plum', description: 'The company', owner: owner)
+c = Company.create(name: 'Plum', description: 'The company', owner_id: owner.id)
 
-# Owner company also belong to company
-owner.company = c
-
-owner.save
-c.save
+a = Area.create(company: c, name: 'test')
 
 # Create company member user
 member_user = User.create(
     name: 'Slave 1',
     lastname: 'One',
     email: 'slave_1@plock.com',
-    password: '123123', company: c
+    password: '123123',
+    company: c
 )
 member_user1 = User.create(
     name: 'Slave 2',
     lastname: 'Two',
     email: 'slave_2@plock.com',
-    password: '123123', company: c
+    password: '123123',
+    company: c
 )
 User.create(
     name: 'Slave 3',
@@ -47,7 +45,8 @@ project = Project.create(
     start_at: date_project,
     user: owner,
     team: t,
-    company: c
+    company: c,
+    area: a
 )
 
 project2 = Project.create(
@@ -57,7 +56,8 @@ project2 = Project.create(
     start_at: date_project,
     user: owner,
     team: t,
-    company: c
+    company: c,
+    area: a
 )
 
 project3 = Project.create(
@@ -66,7 +66,8 @@ project3 = Project.create(
     cost: 2400,
     start_at: date_project,
     user: member_user1,
-    company: c
+    company: c,
+    area: a
 )
 
 # Add a members to team
@@ -161,6 +162,7 @@ track_values = [
 
 track_values.each { |t| Track.create(t) }
 
+owner = User.find_by_email('owner@plock.com')
 
 # Creating intervals for tracks
 t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 = Track.all
@@ -362,6 +364,8 @@ t10.intervals.create(
     end_at: (datetime - 2.month) + 30.minutes
 )
 
+
+Interval.all.each { |i| i.__elasticsearch__.index_document }
 
 # 1000.times do |i|
 #   t = Track.create({
