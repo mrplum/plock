@@ -72,7 +72,7 @@
                 <th> Action </th>
               </tr>
             </thead>
-            <% @track.intervals.order("id desc").each do |interval| %>
+            <% @track.intervals.includes(:user).order("id desc").each do |interval| %>
               <tr class="text-center">
                 <td>
                   <p class="fontColorTable"><%= interval.start_at.strftime("%F") %></p>

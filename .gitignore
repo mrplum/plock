@@ -39,4 +39,4 @@ yarn-debug.log*
 /App-Plock/.env
 
 dump.rdb
-
+logfile

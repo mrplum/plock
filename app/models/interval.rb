@@ -34,7 +34,7 @@ class Interval < ApplicationRecord
       user_id: user_id,
       track_id: track_id,
       project_id: track.project_id,
-      team_id: team_id,
+      team_id: project.team_id,
       area_id: project.area_id,
       start_at: start_at,
       end_at: end_at,

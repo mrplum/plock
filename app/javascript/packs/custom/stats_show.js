@@ -1,13 +1,13 @@
 if (document.getElementById("graph-d3-project") !== null) {
   let project_id = document.getElementById('project_id').value;
-  ajax('dataProject', { m_id: project_id }, 'project', draw)
+  ajax('dataProject/hoursMembersTeam', { m_id: project_id }, 'project', draw)
 }
 if (document.getElementById("graph-d3-user") !== null) {
-  ajax('dataUser', {}, 'user', draw)
+  ajax('dataUser/hoursInTracks', {}, 'user', draw)
 }
 if (document.getElementById("graph-d3-team") !== null) {
   let team_id = document.getElementById('team_id').value;
-  ajax('dataTeam', { m_id: team_id }, 'team', draw)
+  ajax('dataTeam/hoursToProjects', { m_id: team_id }, 'team', draw)
 }
 if (document.getElementById("graph-d3-lineChart") !== null) {
   ajax('dataUser/hoursIntervalTime', { interval: 'day' }, '', lineChart)
@@ -64,7 +64,7 @@ function draw(data, nameModel){
   var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
-  .html(function(d) { return "<strong> time: </strong> <span style='color:green'>" + d.time + " min </span>"; })
+  .html(function(d) { return `<strong> Tiempo: </strong> <span style='color:green'>` + d.time + ` ${convertNameTime(d.time)} </span>`; })
 
   var svg = d3.select(`#graph-d3-${nameModel}`).append("svg")
   .attr("width", width + margin.left + margin.right)
@@ -90,7 +90,7 @@ function draw(data, nameModel){
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("time");
+    .text("Tiempo");
   svg.selectAll(".bar")
     .data(data)
     .enter().append("rect")
@@ -145,7 +145,7 @@ function lineChart(data, a) {
 
     svg.append("path")
       .attr("class", "line")
-      .attr("d", valueline(data));
+      .attr("d", valueline(data))
 
     svg.selectAll("dot")
       .data(data)
@@ -207,4 +207,8 @@ function pieChart(data, a) {
 
 function showItem(item) {
   return `${item.status.charAt(0).toUpperCase() + item.status.slice(1)} ${item.value}`.replace("_", " ");
+}
+
+const convertNameTime = (time) => {
+  return time > 0 ? 'Horas' : 'Minutos'
 }

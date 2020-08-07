@@ -15,8 +15,4 @@ class Project < ApplicationRecord
 
   validates :name, :description, :cost, :user_id, presence: true
   validates :name, uniqueness: true
-
-  def time_worked_project
-    Track.where(project_id: id).sum(&:plock_time)
-  end
 end

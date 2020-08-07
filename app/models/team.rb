@@ -9,8 +9,4 @@ class Team < ApplicationRecord
   has_many :projects, through: :project_teams
 
   validates :name, presence: true, length: { minimum: 3 }
-
-  def time_worked_team
-    Project.where(team_id: id).sum(&:time_worked_project)
-  end
 end

@@ -33,10 +33,10 @@ Rails.application.routes.draw do
       resources :tracks
     end
 
-    get 'me/dataUser' => 'users#data_user', :defaults => { :format => 'json' }
+    get 'me/dataUser/hoursInTracks' => 'users#data_user_in_tracks', :defaults => { :format => 'json' }
     get 'me/dataUser/hoursIntervalTime' => 'users#hours_interval_time', :defaults => { :format => 'json' }
-    get 'me/dataProject' => 'projects#data_project', :defaults => { :format => 'json' }
-    get 'me/dataTeam' => 'teams#data_team', :defaults => { :format => 'json' }
+    get 'me/dataProject/hoursMembersTeam' => 'projects#hours_members_team', :defaults => { :format => 'json' }
+    get 'me/dataTeam/hoursToProjects' => 'teams#hours_to_projects', :defaults => { :format => 'json' }
     get 'me/dataTracks' => 'tracks#data_tracks', :defaults => { :format => 'json' }
 
     scope :admin do

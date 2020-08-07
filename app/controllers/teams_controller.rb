@@ -2,7 +2,9 @@
 
 # TeamsController class
 class TeamsController < ApplicationController
+  include ConvertToHours
   before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team_api, only: [ :hours_to_projects ]
   before_action :check_permissions, only: [ :edit, :update, :destroy]
   before_action :authenticate_user!
 
@@ -99,15 +101,8 @@ class TeamsController < ApplicationController
     redirect_to new_user_session_path
   end
 
-  def data_team
-    @team = Team.find(params[:m_id])
-    result = @team.projects.to_a.map do |project|
-      {
-        name: project.name,
-        time: project.time_worked_project
-      }
-    end
-    render json: result.present? ? result : [].to_json
+  def hours_to_projects
+    render json: get_hours_to_projects
   end
 
   private
@@ -128,6 +123,23 @@ class TeamsController < ApplicationController
   def check_permissions
     unless @team.team_users.minimum(:incorporated_at) == @team.team_users.find_by(user_id: current_user.id)&.incorporated_at
       redirect_to teams_path, flash: { danger: 'Not authorized!' }
+    end
+  end
+
+  def set_team_api
+    @team = Team.find(params[:m_id])
+  end
+
+  def get_hours_to_projects
+    projects = @team.projects
+    project_ids = projects.ids
+    project_names = projects.pluck(:name)
+    result = project_ids.map.with_index do |project_id, index|
+      service = Elasticsearch::DataStatistics.new({'team_id': @team.id, 'project_id': project_id })
+      {
+        name: project_names[index],
+        time: convert_to_hours(service.minutes_total.time_worked.value)
+      }
     end
   end
 end

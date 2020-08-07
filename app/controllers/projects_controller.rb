@@ -3,7 +3,9 @@
 # ProjectsController class
 #
 class ProjectsController < ApplicationController
+  include ConvertToHours
   before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project_api, only: [ :hours_members_team ]
   before_action :check_permissions, only: [ :edit, :update, :destroy]
   before_action :authenticate_user!
 
@@ -70,15 +72,8 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def data_project
-    @project = Project.find(params[:m_id])
-    result = @project.teams.map(&:users).flatten.to_a.map do |user|
-      {
-        name: user.name,
-        time: ProjectUserStat.new(user, @project).call
-      }
-    end
-    render json: result.present? ? result : [].to_json
+  def hours_members_team
+    render json: get_hours_members_team
   end
 
   private
@@ -97,6 +92,23 @@ class ProjectsController < ApplicationController
     def check_permissions
       unless @project.user_id == current_user.id
         redirect_to projects_path, flash: { danger: 'Not authorized!' }
+      end
+    end
+
+    def set_project_api
+      @project = Project.find(params[:m_id])
+    end
+
+    def get_hours_members_team
+      users_team = @project.team.users
+      user_ids = users_team.ids
+      user_names = users_team.pluck(:name)
+      user_ids.map.with_index do |user_id, index|
+        service = Elasticsearch::DataStatistics.new({'user_id': user_id, 'team_id': @project.team_id })
+        {
+          name: user_names[index],
+          time: convert_to_hours(service.minutes_total.time_worked.value)
+        }
       end
     end
 end
