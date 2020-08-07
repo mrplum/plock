@@ -382,7 +382,7 @@ t10.intervals.create(
 )
 
 
-Interval.all.each { |i| i.__elasticsearch__.index_document }
+# Interval.all.each { |i| i.__elasticsearch__.index_document }
 
 # 1000.times do |i|
 #   t = Track.create({

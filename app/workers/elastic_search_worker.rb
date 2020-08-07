@@ -2,7 +2,7 @@ require 'sidekiq'
 
 class ElasticSearchWorker
 include Sidekiq::Worker
-  # sidekiq_options queue: :elasticsearch, retry: false, backtrace: true
+  sidekiq_options queue: :elasticsearch, retry: false, backtrace: true
 
   def perform(klass, id, action)
     case action
