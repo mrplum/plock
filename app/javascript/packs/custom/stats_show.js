@@ -64,7 +64,7 @@ function draw(data, nameModel){
   var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
-  .html(function(d) { return `<strong> Tiempo: </strong> <span style='color:green'>` + d.time + ` ${convertNameTime(d.time)} </span>`; })
+  .html(function(d) { return `<strong> Tiempo: </strong> <span style='color:green'>` + d.time + ` Horas </span>`; })
 
   var svg = d3.select(`#graph-d3-${nameModel}`).append("svg")
   .attr("width", width + margin.left + margin.right)
@@ -207,8 +207,4 @@ function pieChart(data, a) {
 
 function showItem(item) {
   return `${item.status.charAt(0).toUpperCase() + item.status.slice(1)} ${item.value}`.replace("_", " ");
-}
-
-const convertNameTime = (time) => {
-  return time > 0 ? 'Horas' : 'Minutos'
 }
