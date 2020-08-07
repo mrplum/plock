@@ -2,25 +2,25 @@
   <%= form_with(model: project, local: true) do |form| %>
 
     <div class="form-group">
-      <%= form.label 'Name:', class: "text-primary" %><br/>
+      <%= form.label t('name'), class: "text-primary" %><br/>
       <%= form.text_field :name, class: "form-control", placeholder: 'Name' %>
     </div>
 
     <div class="form-group">
-      <%= form.label 'Description:', class: "text-primary" %><br/>
+      <%= form.label t('description'), class: "text-primary" %><br/>
       <%= form.text_field :description, class: "form-control", placeholder: 'Description' %>
     </div>
 
     <div class="form-group">
-      <%= form.label 'Cost:', class: "text-primary" %><br/>
+      <%= form.label t('cost'), class: "text-primary" %><br/>
       <%= form.text_field :cost, class: "form-control", placeholder: 'Cost' %>
     </div>
 
     <div class="form-group">
-      <%= form.label 'Selected Team:', class: "text-primary" %><br/>
-      <%= form.select( :team_id, options_from_collection_for_select(
+      <%= form.label t('select_teams'), class: "text-primary" %><br/>
+      <%= form.select( :team_ids, options_from_collection_for_select(
         current_user.teams,"id", "name"),
-        {}, { :class => 'form-control', include_blank: true,  multiple: false })%>
+        {}, { :class => 'form-control', include_blank: true,  multiple: true })%>
     </div>
 
     <div class="form-group">

@@ -25,6 +25,6 @@ class User < ApplicationRecord
          jwt_revocation_strategy: self
 
   def member_of?(project)
-    project.team.in?(teams)
+    (project.team_ids & team_ids).any?
   end
 end

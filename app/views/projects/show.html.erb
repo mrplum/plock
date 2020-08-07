@@ -1,5 +1,5 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800"> Project </h1>
+  <h1 class="h3 mb-0 text-gray-800"> <%= t('project') %> </h1>
 </div>
 
 <div class="row">
@@ -30,8 +30,11 @@
           <input class="form-control" type="text" value="<%= @project.start_at %>" readonly="readonly">
         </div>
         <div class="form-group">
-          <label class="text-primary">Team: </label><br/>
-          <input class="form-control" type="text" value="<%= @project.team&.name %>" readonly="readonly">
+          <label class="text-primary"><%= t('teams') %> </label><br/>
+          <% @project.teams.each do |team| %>
+            <input class="form-control" type="text" value="<%= team.name %>" readonly="readonly">
+          <% end -%>
+          
         </div>
         <div class="form-group">
           <label class="text-primary">Owner: </label><br/>

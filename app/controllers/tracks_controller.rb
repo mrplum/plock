@@ -72,7 +72,7 @@ class TracksController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:id, :name, :description, :plock_time, :status,:project_id)
+      params.require(:track).permit(:id, :name, :description, :plock_time, :status, :project_id)
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -88,11 +88,13 @@ class TracksController < ApplicationController
     end
 
     def check_team_invitation
-      @project.team.team_users.find_by(user_id: current_user.id).incorporated?
+      TeamUser.where("team_id IN :teams", @project.team_ids)
+        .find_by(user_id: current_user.id)
+        .incorporated?
     end
 
     def check_permissions
-      unless @project.team_id.in?(current_user.teams.pluck(:id)) && check_team_invitation
+      unless current_user.member_of?(project) && check_team_invitation
         redirect_to project_path(@project.id), flash: { danger: 'Not authorized!' }
       end
     end

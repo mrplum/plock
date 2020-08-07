@@ -49,6 +49,8 @@ project = Project.create(
     area: a
 )
 
+project.teams << t
+
 project2 = Project.create(
     name: 'Plock2',
     description: 'Plock is the best2',
@@ -59,6 +61,8 @@ project2 = Project.create(
     company: c,
     area: a
 )
+
+project2.teams << t
 
 project3 = Project.create(
     name: 'Plock3',

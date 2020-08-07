@@ -4,7 +4,7 @@
 <div class="col-lg-6">
   <%= form_with(model: team, local: true) do |form| %>
     <div class="form-group">
-      <%= form.label 'Name:', class: "text-primary" %><br/>
+      <%= form.label t('name'), class: "text-primary" %><br/>
       <%= form.text_field :name, class: "form-control", placeholder: 'Name' %>
     </div>
 

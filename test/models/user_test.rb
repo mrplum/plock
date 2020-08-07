@@ -5,6 +5,7 @@ class UserTest < ActiveSupport::TestCase
     # user belongs to project `one` through team `one`
     @project = projects(:one)
     @team = teams(:one)
+    @project.teams << @team
     @user = users(:user_in_team_one)
 
     # user doesn't belongs to any team

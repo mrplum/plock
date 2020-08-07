@@ -31,16 +31,20 @@
 
 en:
   areas: Areas
-  hello: "Hello world"
+  description: Description
   company: Company
+  cost: Cost
   my_area: My Area
   my_projects: My Projects
   my_teams: My Teams
+  name: Name
   new: New
   new_area: New Area
   new_project: New Project
   new_teams: New Teams
+  project: Project
   projects: Projects
+  select_teams: Select Teams
   select_team_members: Select Team Members
   statistics: statistics
   teams: Teams

@@ -84,16 +84,18 @@
               </tr>
             </thead>
             <% @projects.to_a.uniq(&:team_id).each do |project| %>
-              <% if project.team.present? %>
-                <tr class="text-center">
-                  <td><%= project.team&.name %> </td>
-                  <td><%= project.team&.created_at&.strftime("%F %T") %></td>
-                  <td>
-                    <%= link_to project.team, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
-                      <i class="fa fa-eye fa-sm text-white-50"></i>
-                    <%end%>
-                  </td>
-                </tr>
+              <% if project.teams.present? %>
+                <% project.teams.each do |project| %>
+                  <tr class="text-center">
+                    <td><%= project.team&.name %> </td>
+                    <td><%= project.team&.created_at&.strftime("%F %T") %></td>
+                    <td>
+                      <%= link_to project.team, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                        <i class="fa fa-eye fa-sm text-white-50"></i>
+                      <%end%>
+                    </td>
+                  </tr>
+                <% end -%>
               <% end %>
             <% end %>
           </table>

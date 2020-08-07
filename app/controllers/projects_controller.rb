@@ -72,7 +72,7 @@ class ProjectsController < ApplicationController
 
   def data_project
     @project = Project.find(params[:m_id])
-    result = @project.team.users.to_a.map do |user|
+    result = @project.teams.map(&:users).flatten.to_a.map do |user|
       {
         name: user.name,
         time: ProjectUserStat.new(user, @project).call
@@ -89,7 +89,9 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :description, :cost, :start_at, :team_id)
+      params[:project][:team_ids] = params.dig(:project, :team_ids).to_a.reject(&:empty?).map(&:to_i).compact
+
+      params.require(:project).permit(:name, :description, :cost, :start_at, team_ids: [])
     end
 
     def check_permissions
