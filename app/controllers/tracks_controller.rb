@@ -112,7 +112,7 @@ class TracksController < ApplicationController
 
     def check_permissions
       # This user doesn't have any project yet (not owner nor member)
-      if @project.nil? || !(check_user_ownership || check_user_memebership)
+      if !(check_user_ownership || check_user_memebership)
         redirect_to tracks_path, flash: { danger: 'You do not have any project' }
 
       # ToDo: I don't get the reason of this check

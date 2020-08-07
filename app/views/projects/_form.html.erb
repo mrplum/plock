@@ -12,11 +12,6 @@
     </div>
 
     <div class="form-group">
-      <%= form.label t('cost'), class: "text-primary" %><br/>
-      <%= form.text_field :cost, class: "form-control", placeholder: 'Cost' %>
-    </div>
-
-    <div class="form-group">
       <%= form.label t('select_teams'), class: "text-primary" %><br/>
       <%= form.select( :team_ids, options_from_collection_for_select(
         current_user.teams,"id", "name"),

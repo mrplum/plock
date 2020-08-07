@@ -71,28 +71,28 @@
   <div class="col-lg-10">
     <div class="card shadow mb-4 border-bottom-primary">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-users"></i> Teams </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-users"></i> <%= t('teams') %> </h6>
       </div>
       <div class="card-body">
         <% if @projects.present? %>
           <table class="table table-bordered table-hover" id="dataTable2">
             <thead>
               <tr class="text-center">
-                <th> Name </th>
+                <th> <%= t('name') %> </th>
                 <th> Created at </th>
                 <th> Action </th>
               </tr>
             </thead>
             <% @projects.to_a.uniq(&:team_id).each do |project| %>
               <% if project.teams.present? %>
-                <% project.teams.each do |project| %>
+                <% project.teams.each do |team| %>
                   <tr class="text-center">
-                    <td><%= project.team&.name %> </td>
-                    <td><%= project.team&.created_at&.strftime("%F %T") %></td>
+                    <td><%= team&.name %> </td>
+                    <td><%= team&.created_at&.strftime("%F %T") %></td>
                     <td>
-                      <%= link_to project.team, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                      <%= link_to team, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
                         <i class="fa fa-eye fa-sm text-white-50"></i>
-                      <%end%>
+                      <% end %>
                     </td>
                   </tr>
                 <% end -%>
