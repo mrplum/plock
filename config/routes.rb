@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :tracks do
       resources :intervals
     end
+    resources :areas
     resources :projects do
       resources :tracks
     end
