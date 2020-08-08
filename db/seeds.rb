@@ -146,6 +146,15 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
     team_user.save
   }
 
+  office3.users << owner
+  ActiveRecord::Migration.say("#{owner.name} added to #{office3.name}")
+
+  office4.users << owner
+  ActiveRecord::Migration.say("#{owner.name} added to #{office4.name}")
+
+  office5.users << owner
+  ActiveRecord::Migration.say("#{owner.name} added to #{office5.name}")
+
   # Creating Tracks for this project
   track_values = [
     {
