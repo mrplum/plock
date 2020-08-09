@@ -17,6 +17,8 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
     owner_id: owner.id)
   ActiveRecord::Migration.say("Company #{company.name}: #{company.persisted?}")
 
+  owner.update(company: company)
+
 
   # Creating Company Users...
   user_one = User.find_or_create_by(

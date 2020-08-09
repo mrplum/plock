@@ -17,7 +17,9 @@ Rails.application.routes.draw do
       get 'accept_invitation_to_company', on: :collection
     end
 
-    mount Sidekiq::Web => '/sidekiq'
+    authenticate :user, lambda { |u| u.company&.owner_id == u.id } do
+      mount Sidekiq::Web => '/sidekiq'
+    end
 
     devise_for :users
     resources :users
