@@ -4,5 +4,6 @@ document.onreadystatechange = () => {
     require("packs/custom/stats_show")
     require("packs/custom/home_index")
     require("packs/custom/datatables")
+    require("packs/custom/time_series")
   }
 }
