@@ -3,36 +3,39 @@ es:
     formats:
       default: "%Y/%m/%d"
       abbr_month: "%B"
+    month_names:
+      -
+      - Enero
+      - Febrero
+      - Marzo
+      - Abril
+      - Mayo
+      - Junio
+      - Julio
+      - Agosto
+      - Septiembre
+      - Octubre
+      - Noviembre
+      - Diciembre
     order:
       - :day
       - :month
       - :year
+    day_names:
+      - Domingo
+      - Lunes
+      - Martes
+      - Miércoles
+      - Jueves
+      - Viernes
+      - Sábado
   time:
+    am: am
     formats:
       default: "%Y/%m/%d"
       short: "%b %d"
       long: "%B %d, %Y"
       abbr_month: "%B"
-  time:
-    am: am
-    formats:
-      default: ! '%a, %d %b %Y %H:%M:%S %z'
-  jan: "Enero"
-  feb: "Febrero"
-  month_names:
-    - 
-    - Jan
-    - Feb
-    - Mar
-    - Apr
-    - May
-    - Jun
-    - Jul
-    - Aug
-    - Sep
-    - Oct
-    - Nov
-    - Dec
   helpers:
     submit:
       # This will be the default ones, will take effect if no other

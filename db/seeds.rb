@@ -132,7 +132,7 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
   ActiveRecord::Migration.say("#{user_one.name} added to #{office1.name}")
   office1.users << user_two
   ActiveRecord::Migration.say("#{user_two.name} added to #{office1.name}")
-  
+
   office1.team_users.each { |team_user|
     team_user.incorporated_at = DateTime.now
     team_user.save
@@ -256,7 +256,7 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
 
 
   # Creating intervals for tracks
-  t1, t2, t3, t4, t5, t6, t7, t8, t9 = Track.all
+  t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 = Track.all
 
   t1_intervals = [
     {
@@ -304,7 +304,7 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
   })
   ActiveRecord::Migration.say(
     "Adding #{i_t2.send(:calculate_minutes)} to #{i_t2.track.name}: #{i_t2.persisted?}")
-  
+
   t3_intervals =[
     {
       description: "this is a description of the interval5",
@@ -326,12 +326,89 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
     }
   ]
 
-
   t3_intervals.each_with_index do |interval, index|
     i = t3.intervals.create(interval)
     ActiveRecord::Migration.say("[#{index}] Adding #{i.send(:calculate_minutes)} to #{i.track.name}: #{i.persisted?}")
   end
-  
+
+  t5_intervals =[
+    {
+      description: "this is a description of the interval8",
+      user: user_two,
+      start_at: datetime - 4.month,
+      end_at: (datetime - 4.month) + 10.minutes
+    },
+    {
+      description: "this is a description of the interval9",
+      user: user_two,
+      start_at: datetime - 3.month,
+      end_at: (datetime - 3.month) + 35.minutes
+    },
+    {
+      description: "this is a description of the interval10",
+      user: user_two,
+      start_at: datetime - 2.month,
+      end_at: (datetime - 2.month) + 15.minutes
+    }
+  ]
+
+  t5_intervals.each_with_index do |interval, index|
+    i = t5.intervals.create(interval)
+    ActiveRecord::Migration.say("[#{index}] Adding #{i.send(:calculate_minutes)} to #{i.track.name}: #{i.persisted?}")
+  end
+
+  t8_intervals =[
+    {
+      description: "this is a description of the interval11",
+      user: owner,
+      start_at: datetime - 4.month,
+      end_at: (datetime - 4.month) + 20.minutes
+    },
+    {
+      description: "this is a description of the interval12",
+      user: owner,
+      start_at: datetime - 3.month,
+      end_at: (datetime - 3.month) + 30.minutes
+    },
+    {
+      description: "this is a description of the interval13",
+      user: owner,
+      start_at: datetime - 2.month,
+      end_at: (datetime - 2.month) + 25.minutes
+    }
+  ]
+
+  t8_intervals.each_with_index do |interval, index|
+    i = t8.intervals.create(interval)
+    ActiveRecord::Migration.say("[#{index}] Adding #{i.send(:calculate_minutes)} to #{i.track.name}: #{i.persisted?}")
+  end
+
+  t9_intervals =[
+    {
+      description: "this is a description of the interval14",
+      user: user_one,
+      start_at: datetime - 4.month,
+      end_at: (datetime - 4.month) + 30.minutes
+    },
+    {
+      description: "this is a description of the interval15",
+      user: user_one,
+      start_at: datetime - 3.month,
+      end_at: (datetime - 3.month) + 15.minutes
+    },
+    {
+      description: "this is a description of the interval16",
+      user: user_one,
+      start_at: datetime - 2.month,
+      end_at: (datetime - 2.month) + 35.minutes
+    }
+  ]
+
+  t9_intervals.each_with_index do |interval, index|
+    i = t9.intervals.create(interval)
+    ActiveRecord::Migration.say("[#{index}] Adding #{i.send(:calculate_minutes)} to #{i.track.name}: #{i.persisted?}")
+  end
+
   Interval.all.each { |i| i.__elasticsearch__.index_document }
 end
 
