@@ -1,25 +1,48 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Ruby version
+  - `ruby-2.6.2`
 
-Things you may want to cover:
+## Database creation
+  - `rails db:create`
 
-* Ruby version
+## Database initialization
+  - `rails db:migrate db:seed`
 
-* System dependencies
+# Run project
 
-* Configuration
-  + install elasticsearch
+  ## Elasticsearch
+  ```
+  elasticsearch
+  ```
 
-* Database creation
+  ## Redis
+  ```
+  redis-server
+  ```
 
-* Database initialization
+  ## Sidekiq
+  ```
+  bundle exec sidekiq -c 1 -q elasticsearch
+  ```
 
-* How to run the test suite
+  ## Rails
+  ```
+  rails s
+  ```
 
-* Services (job queues, cache servers, search engines, etc.)
+# Deploy HEROKU
 
-* Deployment instructions
+  - `heroku git:remote -a plock`
 
-* ...
+  - `git push heroku master`
+
+  - `git push heroku develop:master -f`
+
+  - `heroku logs -a plock -t`
+
+  - `heroku run bash -a plock`
+
+  - `heroku run rails db:migrate -a plock`
+
+  - `heroku run worker`
