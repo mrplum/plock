@@ -107,7 +107,7 @@
       <li class="nav-item">
         <%= link_to company_path(current_user.company), class: "nav-link", data: { turbolinks: false } do %>
           <i class="fa fa-fw fa-building"></i>
-          <span> <%= t 'company' %> </span></a>
+          <span> <%= current_user.company&.name %> </span></a>
         <%end%>
       </li>
 

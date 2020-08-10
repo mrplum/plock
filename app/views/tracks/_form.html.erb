@@ -23,6 +23,17 @@
         { :class => 'form-control', include_blank: true,  multiple: false }) %>
     </div>
 
+    <% if @project.nil? %>
+      <div class="form-group">
+        <%= form.label t('project'), class: "text-primary" %><br/>
+        <%= form.select(
+          :project_id,
+          options_from_collection_for_select(current_user.projects, "id", "name"),
+          {},
+          { :class => 'form-control', include_blank: true,  multiple: false}) %>
+      </div>
+    <% end %>
+
     <div class="form-group">
       <%= form.submit class: "btn btn-primary btn-block" %>
     </div>
