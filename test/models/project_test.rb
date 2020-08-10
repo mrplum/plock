@@ -48,12 +48,6 @@ class ProjectTest < ActiveSupport::TestCase
     assert_not p.valid?
   end
 
-  test 'cost not null' do
-    p = @project
-    p.cost = nil
-    assert_not p.valid?
-  end
-
   test 'user_id not null' do
     p = @project
     p.user = nil

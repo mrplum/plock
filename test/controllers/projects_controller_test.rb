@@ -14,17 +14,17 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get projects_url
+    get projects_url(locale: 'en')
     assert_response :success
   end
 
   test 'should get new' do
-    get new_project_url
+    get new_project_url(locale: 'en')
     assert_response :success
   end
 
   test 'should create project' do
-  post projects_url, params: {
+  post projects_url(locale: 'en'), params: {
     project: {
         cost: 24,
         name: 'name1',
@@ -39,17 +39,17 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show project' do
-    get project_url(@project)
+    get project_url(@project, locale: 'en')
     assert_response :success
   end
 
   test 'should get edit' do
-    get edit_project_url(@project)
+    get edit_project_url(@project, locale: 'en')
     assert_response :success
   end
 
   test 'should update project' do
-    patch project_url(@project), params: {
+    patch project_url(@project, locale: 'en'), params: {
       project: {
         cost: @project.cost,
         name: @project.name,
@@ -57,14 +57,14 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
         start_at: @project.start_at
       }
     }
-    assert_redirected_to project_url(@project)
+    assert_redirected_to project_url(@project, locale: 'en')
   end
 
   test 'should destroy project' do
     assert_difference('Project.count', -1) do
-      delete project_url(@project)
+      delete project_url(@project, locale: 'en')
     end
 
-    assert_redirected_to projects_url
+    assert_redirected_to projects_url(locale: 'en')
   end
 end

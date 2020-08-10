@@ -11,17 +11,17 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get tracks_url
+    get tracks_url(locale: 'en')
     assert_response :success
   end
 
   test 'should get new' do
-    get new_track_url, params: { project_id: @project.id }
+    get new_track_url(locale: 'en'), params: { project_id: @project.id }
     assert_response :success
   end
 
   test 'should create track' do
-    post tracks_url, params: {
+    post tracks_url(locale: 'en'), params: {
       project_id: @project.id,
       track: {
         description: @track.description,
@@ -31,23 +31,23 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
         project: @project
       }
     }
-    assert_response :redirect
+    assert_response :success
   end
 
   test 'should show track' do
-    get track_url(@track)
+    get track_url(@track, locale: 'en')
     assert_response :success
   end
 
   test 'should get edit' do
-    get edit_track_url(@track)
+    get edit_track_url(@track, locale: 'en')
     assert_response :success
   end
 
   test "should update track" do
-    patch track_url(@track), params: {
+    patch track_url(@track, locale: 'en'), params: {
       project_id: @project.id,
-      track: { 
+      track: {
         description: @track.description,
         name: @track.name,
         status: @track.status,
@@ -55,13 +55,22 @@ class TracksControllerTest < ActionDispatch::IntegrationTest
         project: @project
       }
     }
-    assert_redirected_to track_url(@track)
+    assert_response :success
   end
 
   test 'should destroy track' do
     assert_difference('Track.count', -1) do
-      delete track_url(@track)
+      delete track_url(@track.id, locale: 'en'), params: {
+        project_id: @project.id,
+        track: {
+          description: @track.description,
+          name: @track.name,
+          status: @track.status,
+          plock_time: @track.plock_time,
+          project: @project
+        }
+      }
     end
-    assert_redirected_to project_url(@project.id)
+    assert_redirected_to project_url(@project.id, locale: 'en')
   end
 end

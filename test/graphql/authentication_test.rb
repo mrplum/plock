@@ -37,7 +37,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
   end
 
   test "not logged user doesn't has results" do
-    post graphql_path,
+    post graphql_path(locale: 'en'),
       params: { query: @query_string },
       headers: { 'Authorization' => "Bearer INVALID" }
 
@@ -48,7 +48,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
 
   test 'logged user has results from query' do
     token = bearer_token('test@example.com', '123123')['user']['token']
-    post graphql_path,
+    post graphql_path(locale: 'en'),
       params: { query: @query_string },
       headers: { 'Authorization' => "Bearer #{token}" }
 
