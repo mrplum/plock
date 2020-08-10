@@ -15,7 +15,7 @@ class Interval < ApplicationRecord
   validate :no_other_open_interval, on: %i[create]
   validate :valid_date
 
-  before_save :change_track_status, if: -> { close_track || start_track }
+  after_commit :change_track_status, if: -> { close_track || start_track }
   after_commit :calculate_plock_time, :reset_track_status
   after_commit :update_minutes, on: [:create, :update]
 
