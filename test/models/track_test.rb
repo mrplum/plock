@@ -6,6 +6,7 @@ class TrackTest < ActiveSupport::TestCase
     @project = projects(:one)
     @track = tracks(:one)
     @track1 = tracks(:two)
+    @team = teams(:one)
   end
 
   test 'You can save a track' do
@@ -14,7 +15,8 @@ class TrackTest < ActiveSupport::TestCase
       description: 'asd',
       plock_time: 225,
       user: @user,
-      project: @project
+      project: @project,
+      team: @team
     )
     assert track.valid?
   end
@@ -23,12 +25,12 @@ class TrackTest < ActiveSupport::TestCase
     test 'test of the validation open intervals' do
       assert_not @track.has_open_intervals?
     end
-  
+
     # (Case in which the interval was not closed)
     test 'test of the validation  open intervals.' do
       assert @track1.has_open_intervals?
     end
-    
+
     test 'unstarted?' do
       assert @track.unstarted?
     end

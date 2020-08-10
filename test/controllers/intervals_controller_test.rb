@@ -15,7 +15,7 @@ class IntervalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create interval' do
-    post track_intervals_url(@track.id), params: {
+    post track_intervals_url(@track.id, locale: 'en'), params: {
       interval: {
         user_id: @user.id,
         track_id: @track.id,
@@ -28,17 +28,17 @@ class IntervalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update interval' do
-    patch track_interval_url(@track.id, @interval.id), params: {
+    patch track_interval_url(@track.id, @interval.id, locale: 'en'), params: {
       interval: {
         end_at: DateTime.now
       }
     }
 
-    assert_redirected_to track_url(@track.id)
+    assert_redirected_to track_url(@track.id, locale: 'en')
   end
 
   test 'should delete interval' do
-    delete track_interval_path(@track1.id, @interval.id)
-    assert_redirected_to track_path(@track1.id)
+    delete track_interval_path(@track1.id, @interval.id, locale: 'en')
+    assert_redirected_to track_path(@track1.id, locale: 'en')
   end
 end

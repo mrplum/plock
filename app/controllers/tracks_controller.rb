@@ -30,10 +30,11 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.json
   def create
-    @track = Track.new(track_params.merge({
-      user_id: current_user.id,
-      project_id: @project&.id || @team&.project_id
-    }))
+    if track_params[:project_id].present?
+      @track = Track.new(track_params.merge({user_id: current_user.id}))
+    else
+      @track = Track.new(track_params.merge({user_id: current_user.id, project_id: @project&.id}))
+    end
     respond_to do |format|
       if @track.save
         format.html { redirect_to @track, notice: 'track was successfully created.' }
