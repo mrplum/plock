@@ -5,7 +5,7 @@
         <button type='button' class='cFlose' data-dismiss='alert'> x </button>
         <% if message.is_a? Array %>
           <% message.each do |msg| %>
-            <p><%= msg %></p> 
+            <p><%= msg %></p>
           <% end %>
         <% else %>
           <p><%= message.html_safe %></p>

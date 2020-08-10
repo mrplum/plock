@@ -23,7 +23,7 @@
         { :class => 'form-control', include_blank: true,  multiple: false }) %>
     </div>
 
-    <% if @project.nil? %>
+    <% if @project.nil? && !track.persisted? %>
       <div class="form-group">
         <%= form.label t('project'), class: "text-primary" %><br/>
         <%= form.select(
