@@ -26,10 +26,6 @@
           <input class="form-control" type="text" value="<%= @project.cost %>" readonly="readonly">
         </div>
         <div class="form-group">
-          <label class="text-primary"> <%= t('start_at') %> </label><br/>
-          <input class="form-control" type="text" value="<%= @project.start_at %>" readonly="readonly">
-        </div>
-        <div class="form-group">
           <label class="text-primary"><%= t('teams') %> </label><br/>
           <% @project.teams.each do |team| %>
             <input class="form-control" type="text" value="<%= team.name %>" readonly="readonly">

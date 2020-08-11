@@ -50,11 +50,6 @@ class Interval < ApplicationRecord
     !open?
   end
 
-  def valid_start_date?
-    project_start_at = track&.project&.start_at
-    !!project_start_at && project_start_at <= start_at
-  end
-
   def valid_interval_dates?
     self.start_at <= self.end_at
   end
@@ -70,7 +65,7 @@ class Interval < ApplicationRecord
   end
 
   def valid_date
-    if !valid_start_date? || !valid_interval_dates?
+    if !valid_interval_dates?
       self.errors.add :base, 'invalid Dates!'
     end
   end
