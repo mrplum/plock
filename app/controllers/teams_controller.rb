@@ -42,17 +42,13 @@ class TeamsController < ApplicationController
         @team.users.each do |user|
           UserMailer.welcome_email(user, @team).deliver
         end
-        format.html do
-          redirect_to @team, notice: 'Team was successfully created.'
-        end
-        format.json do
-          render :show, status: :created, location: @team
-        end
+        flash[:success] = t('.success')
+        format.html { redirect_to @team }
+        format.json { render :show, status: :created, location: @team }
       else
+        flash[:danger] = @team.errors.full_messages
         format.html { render :new }
-        format.json do
-          render json: @team.errors, status: :unprocessable_entity
-        end
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,15 +62,13 @@ class TeamsController < ApplicationController
         @team.users.each do |user|
           UserMailer.welcome_email(user, @team).deliver
         end
-        format.html do
-          redirect_to @team, notice: 'Team was successfully updated.'
-        end
+        flash[:success] = t('.success')
+        format.html { redirect_to @team }
         format.json { render :show, status: :ok, location: @team }
       else
+        flash[:danger] = @team.errors.full_messages
         format.html { render :edit }
-        format.json do
-          render json: @team.errors, status: :unprocessable_entity
-        end
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -84,10 +78,8 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html do
-        redirect_to teams_url,
-        notice: 'Team was successfully destroyed.'
-      end
+      flash[:success] = t('.success')
+      format.html { redirect_to teams_url }
       format.json { head :no_content }
     end
   end

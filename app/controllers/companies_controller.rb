@@ -30,14 +30,16 @@ class CompaniesController < ApplicationController
         current_user.company_id = @company.id
         current_user.incorporated_at = DateTime.now
         @user = current_user
+        flash[:success] = t('.success')
         if @user.save!
-          format.html { redirect_to @company, notice: 'Company was successfully created.' }
+          format.html { redirect_to @company }
           format.json { render :show, status: :created, location: @company }
         else
           format.html { render :new }
           format.json { render json: @company.errors, status: :unprocessable_entity }
         end
       else
+        flash[:danger] = @company.errors.full_messages
         format.html { render :new }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
@@ -49,9 +51,11 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to @company, notice: 'Company was successfully updated.' }
+        flash[:success] = t('.success')
+        format.html { redirect_to @company }
         format.json { render :show, status: :ok, location: @company }
       else
+        flash[:danger] = @company.errors.full_messages
         format.html { render :edit }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
@@ -65,10 +69,12 @@ class CompaniesController < ApplicationController
     user = User.new(name: "your name", lastname: "your lastname", email: email, password: pass, company_id: params[:company_id], incorporated_at: DateTime.now)
     respond_to do |format|
       if user.save
+        flash[:success] = 'Invitation sent.'
         UserMailer.welcome_to_company(@company, user).deliver
-        format.html { redirect_to user }
+        format.html { redirect_to @company }
         format.json { render :show, status: :created, location: company_subscribe_user_path }
       else
+        flash[:danger] = user.errors.full_messages
         format.html { render :_addUsers, user: user }
         format.json { render json: user.errors, status: :unprocessable_entity }
       end

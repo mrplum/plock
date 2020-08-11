@@ -30,6 +30,52 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  areas:
+    create:
+      success: Area was successfully created.
+    update:
+      success: Area was successfully updated.
+    destroy:
+      success: Area was successfully destroyed.
+  teams:
+    create:
+      success: Team was successfully created.
+    update:
+      success: Team was successfully updated.
+    destroy:
+      success: Team was successfully destroyed.
+  companies:
+    create:
+      success: Company was successfully created.
+    update:
+      success: Company was successfully updated.
+    destroy:
+      success: Company was successfully destroyed.
+  intervals:
+    create:
+      success: Interval was successfully created.
+    update:
+      success: Interval was successfully updated.
+    destroy:
+      success: Interval was successfully destroyed.
+  projects:
+    create:
+      success: Project was successfully created.
+    update:
+      success: Project was successfully updated.
+    destroy:
+      success: Project was successfully destroyed.
+  tracks:
+    create:
+      success: Track was successfully created.
+    update:
+      success: Track was successfully updated.
+    destroy:
+      success: Track was successfully destroyed.
+  users:
+    update:
+      success: Profile was successfully updated.
+
   areas: Areas
   description: Description
   company: Company

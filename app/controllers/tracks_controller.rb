@@ -37,13 +37,12 @@ class TracksController < ApplicationController
     end
     respond_to do |format|
       if @track.save
-        format.html { redirect_to @track, notice: 'track was successfully created.' }
+        flash[:success] = t('.success')
+        format.html { redirect_to @track }
         format.json { render :show, status: :created, location: @track }
       else
-        format.html do
-          flash.now[:danger] = @track.errors.full_messages
-          render :new
-        end
+        flash[:danger] = @track.errors.full_messages
+        format.html { render :new }
         format.json { render json: @track.errors, status: :unprocessable_entity }
       end
     end
@@ -54,9 +53,11 @@ class TracksController < ApplicationController
   def update
     respond_to do |format|
       if @track.update(track_params)
-        format.html { redirect_to @track, notice: 'track was successfully updated.' }
+        flash[:success] = t('.success')
+        format.html { redirect_to @track }
         format.json { render :show, status: :ok, location: @track }
       else
+        flash[:danger] = @track.errors.full_messages
         format.html { render :edit }
         format.json { render json: @track.errors, status: :unprocessable_entity }
       end
@@ -68,7 +69,8 @@ class TracksController < ApplicationController
   def destroy
     @track.destroy
     respond_to do |format|
-      format.html { redirect_to project_path(@project.id), notice: 'Track was successfully destroyed.' }
+      flash[:success] = t('.success')
+      format.html { redirect_to project_path(@project.id) }
       format.json { head :no_content }
     end
   end

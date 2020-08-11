@@ -20,9 +20,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'Project was successfully updated.' }
+        flash[:success] = t('.success')
+        format.html { redirect_to @user }
         format.json { render :show, status: :ok, location: @user }
       else
+        flash[:danger] = @user.errors.full_messages
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

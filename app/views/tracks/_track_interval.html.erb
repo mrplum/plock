@@ -1,21 +1,12 @@
 <div class="text-center">
   <% if track.unstarted? %>
     <%= form_with(model: [@track, interval = Interval.new], local: true) do |form| %>
-      <% if interval.errors[:description].any? %>
-        <div class="form-group">
-          <div style='border: 3px solid red !important'>
-            <span class="input-group-addon"></span>
-            <%= form.text_field :description, class: "form-control", placeholder: interval.errors[:description][0] %>
-          </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <%= form.text_field :description, class: "form-control", placeholder: 'what will you do in this time?' %>
         </div>
-      <% else %>
-        <div class="form-group">
-          <div class="input-group">
-            <span class="input-group-addon"></span>
-            <%= form.text_field :description, class: "form-control", placeholder: 'what will you do in this time?' %>
-          </div>
-        </div>
-      <% end %>
+      </div>
       <div class="actions">
         <%= form.hidden_field 'start_track', value: true %>
         <%= form.button class: 'btn btn-sm btn-success shadow-sm', data: { turbolinks: false } do %>
@@ -42,21 +33,12 @@
       <% end %>
     <% else %>
       <%= form_with(model: [@track, interval = Interval.new], local: true) do |form| %>
-        <% if interval.errors[:description].any? %>
-          <div class="form-group">
-            <div style='border: 3px solid red !important'>
-              <span class="input-group-addon"></span>
-              <%= form.text_field :description, class: "form-control", placeholder: interval.errors[:description][0] %>
-            </div>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon"></span>
+            <%= form.text_field :description, class: "form-control", placeholder: '(*) What will you do in this time?' %>
           </div>
-        <% else %>
-          <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon"></span>
-              <%= form.text_field :description, class: "form-control", placeholder: '(*) What will you do in this time?' %>
-            </div>
-          </div>
-        <% end %>
+        </div>
         <div class="actions">
           <%= form.hidden_field 'start_track', value: true %>
           <%= form.button class: 'btn btn-sm btn-success shadow-sm', data: { turbolinks: false } do %>

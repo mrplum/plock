@@ -36,9 +36,11 @@ class AreasController < ApplicationController
 
     respond_to do |format|
       if @area.save
-        format.html { redirect_to @area, notice: 'Area was successfully created.' }
+        flash[:success] = t('.success')
+        format.html { redirect_to @area }
         format.json { render :show, status: :created, location: @area }
       else
+        flash[:danger] = @area.errors.full_messages
         format.html { render :new }
         format.json { render json: @area.errors, status: :unprocessable_entity }
       end
@@ -50,9 +52,11 @@ class AreasController < ApplicationController
   def update
     respond_to do |format|
       if @area.update(area_params)
-        format.html { redirect_to @area, notice: 'Area was successfully updated.' }
+        flash[:success] = t('.success')
+        format.html { redirect_to @area }
         format.json { render :show, status: :ok, location: @area }
       else
+        flash[:danger] = @area.errors.full_messages
         format.html { render :edit }
         format.json { render json: @area.errors, status: :unprocessable_entity }
       end
@@ -64,7 +68,8 @@ class AreasController < ApplicationController
   def destroy
     @area.destroy
     respond_to do |format|
-      format.html { redirect_to areas_url, notice: 'Area was successfully destroyed.' }
+      flash[:success] = t('.success')
+      format.html { redirect_to areas_url }
       format.json { head :no_content }
     end
   end

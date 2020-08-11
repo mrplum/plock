@@ -27,13 +27,5 @@
     <div class="form-group">
       <%= form.submit class: "btn btn-primary btn-block" %>
     </div>
-
-    <% if team.errors.any? %>
-      <% if team.errors.count == 1%>
-        <p  style="color: red;"> Name <%= team.errors[:name][0] %> </p>
-      <% else %>
-        <p  style="color: red;"> Name <%= team.errors[:name][1] %> </p>
-      <% end %>
-    <% end %>
   <% end %>
 </div>

@@ -29,15 +29,15 @@ class IntervalsController < ApplicationController
 
     respond_to do |format|
       if @interval.save
-        format.html { redirect_to track_path(@interval.track), notice: 'Interval was successfully created.' }
+        format.html { redirect_to track_path(@interval.track) }
         format.json { redirect_to track_path(@interval.track), status: :created, location: @interval }
       else
         format.html do
           get_track
+          flash[:danger] = @interval.errors.full_messages
           if automatic_interval_creation?
-            redirect_to track_path(@interval.track), alert: @interval.errors.full_messages.join(', ')
+            redirect_to track_path(@interval.track)
           else
-            flash.now[:error] = @interval.errors.full_messages.join(', ')
             render :new
           end
         end
@@ -51,10 +51,11 @@ class IntervalsController < ApplicationController
   def update
     respond_to do |format|
       if @interval.update(interval_params.merge({end_at: DateTime.now}))
-        format.html { redirect_to track_path(@interval.track), notice: 'Interval was successfully updated.' }
+        format.html { redirect_to track_path(@interval.track) }
         format.json { redirect_to track_path(@interval.track), status: :ok, location: @interval }
       else
-        format.html { redirect_to track_path(@interval.track), notice: @interval.errors.full_messages.join(', ') }
+        flash[:danger] = @interval.errors.full_messages
+        format.html { redirect_to track_path(@interval.track) }
         format.json { render json: @interval.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +64,8 @@ class IntervalsController < ApplicationController
   def destroy
     @interval.destroy
     respond_to do |format|
-      format.html { redirect_to track_url(@interval.track), notice: 'Interval was successfully destroyed.' }
+      flash[:success] = t('.success')
+      format.html { redirect_to track_url(@interval.track) }
       format.json { head :no_content }
     end
   end

@@ -1,4 +1,50 @@
 es:
+  areas:
+    create:
+      success: El area ha sido creada correctamente.
+    update:
+      success: El area ha sido actualizada correctamente.
+    destroy:
+      success: El area ha sido eliminada correctamente.
+  teams:
+    create:
+      success: La oficina ha sido creada correctamente.
+    update:
+      success: La oficina ha sido actualizada correctamente.
+    destroy:
+        success: La oficina ha sido eliminada correctamente.
+  companies:
+    create:
+      success: La empresa ha sido creada correctamente.
+    update:
+      success: La empresa ha sido actualizada correctamente.
+    destroy:
+      success: La empresa ha sido eliminada correctamente.
+  intervals:
+    create:
+      success: El intervalo ha sido creado correctamente.
+    update:
+      success: El intervalo ha sido actualizado correctamente.
+    destroy:
+      success: El intervalo ha sido eliminado correctamente.
+  projects:
+    create:
+      success: La Dependencia ha sido creada correctamente.
+    update:
+      success: La Dependencia ha sido actualizada correctamente.
+    destroy:
+      success: La Dependencia ha sido eliminada correctamente.
+  tracks:
+    create:
+      success: El registro ha sido creado correctamente.
+    update:
+      success: El registro ha sido actualizado correctamente.
+    destroy:
+      success: El registro ha sido eliminado correctamente.
+  users:
+    update:
+      success: Perfil actualizado correctamente.
+
   date:
     formats:
       default: "%Y/%m/%d"
@@ -42,26 +88,61 @@ es:
       # are specifically defined for the models.
       create: "Crear %{model}"
   activerecord:
+    attributes:
+      project:
+        name: Nombre
+        description: Descripción
+      track:
+        name: Nombre
+        description: Descripción
+      area:
+        name: Nombre
+        description: Descripción
+        location: Lugar
+      company:
+        name: Nombre
+        description: Descripción
+      team:
+        name: Nombre
+      interval:
+        description: Descripción
     errors:
       models:
         team:
           attributes:
             name:
               too_short: demasiado corto
+              blank: no puede ser vacio
         project:
           attributes:
             team:
-              required: Team es requerido
+              required: es requerido
             description:
-              blank: Descripción no puede ser vacia
+              blank: no puede ser vacia
             name:
-              taken: Nombre ya tomado
+              blank: no puede ser vacio
+              taken: ya tomado
         track:
           attributes:
             name:
-              blank: No puede ser blanco
+              blank: no puede ser vacio
             description:
-              blank: No puede ser blanco
+              blank: no puede ser vacia
+        area:
+          attributes:
+            name:
+              blank: no puede ser vacio
+        company:
+          attributes:
+            name:
+              blank: no puede ser vacio
+            description:
+              blank: no puede ser vacia
+        interval:
+          attributes:
+            description:
+              blank: no puede ser vacia
+
   area: Area
   areas: Areas
   description: Descripción
@@ -123,3 +204,5 @@ es:
   password: Contraseña
   password_confirmation: Confirmar Contraseña
   status_project: Estado de mis Proyectos
+  add_employee_to: Agregar Integrante a
+  add_user: Agregar Integrante
