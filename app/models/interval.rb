@@ -11,7 +11,6 @@ class Interval < ApplicationRecord
   belongs_to :track, touch: true
   belongs_to :user
 
-  validates :description, presence: true
   validate :no_other_open_interval, on: %i[create]
   validate :valid_date
 

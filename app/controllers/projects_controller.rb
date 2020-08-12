@@ -21,6 +21,9 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @tracks = @project.tracks
+    @tracks_unstarted = @project.tracks.where(status: :unstarted)
+    @tracks_in_progress = @project.tracks.where(status: :in_progress)
+    @tracks_finished = @project.tracks.where(status: :finished)
   end
 
   # GET /projects/new

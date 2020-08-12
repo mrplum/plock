@@ -1,4 +1,11 @@
-<h1 class="h3 mb-4 text-gray-800"> <%= t 'projects' %> </h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-4 text-gray-800"> <%= t 'project' %> </h1>
+  <%= link_to project_path(@project), class: "d-none d-sm-inline-block btn btn-primary shadow-sm", data: { turbolinks: false } do %>
+    <i class="fa fa-arrow-left fa-sm text-white-50"></i>
+    <span> <%= t('back') %> </span>
+  <% end %>
+</div>
+
 <div class="row justify-content-center">
   <div class="col-lg-10">
     <div class="card shadow mb-4 border-bottom-primary">

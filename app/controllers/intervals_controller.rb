@@ -29,21 +29,32 @@ class IntervalsController < ApplicationController
 
     respond_to do |format|
       if @interval.save
-        format.html { redirect_to track_path(@interval.track) }
-        format.json { redirect_to track_path(@interval.track), status: :created, location: @interval }
+        if modal_params.present? && modal_params[:modal] != 'complete'
+          format.html { redirect_to project_path(@interval.track.project) }
+          format.json { redirect_to project_path(@interval.track.project), status: :created, location: @interval }
+        else
+          format.html { redirect_to track_path(@interval.track) }
+          format.json { redirect_to track_path(@interval.track), status: :created, location: @interval }
+        end
       else
-        format.html do
-          get_track
-          flash[:danger] = @interval.errors.full_messages
-          if automatic_interval_creation?
-            redirect_to track_path(@interval.track)
+        flash[:danger] = @interval.errors.full_messages
+        if modal_params.present?
+          if modal_params[:modal] == 'complete'
+            format.html { redirect_to track_path(@interval.track) }
           else
-            render :new
+            format.html { redirect_to project_path(@interval.track.project) }
+          end
+        else
+          format.html do
+            get_track
+            if automatic_interval_creation?
+              redirect_to track_path(@interval.track)
+            else
+              render :new
+            end
           end
         end
-        format.json do
-          render json: @interval.errors, status: :unprocessable_entity
-        end
+        format.json { render json: @interval.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -51,12 +62,22 @@ class IntervalsController < ApplicationController
   def update
     respond_to do |format|
       if @interval.update(interval_params.merge({end_at: DateTime.now}))
-        format.html { redirect_to track_path(@interval.track) }
-        format.json { redirect_to track_path(@interval.track), status: :ok, location: @interval }
+        if modal_params.present? && modal_params[:modal] != 'complete'
+          format.html { redirect_to project_path(@interval.track.project) }
+          format.json { redirect_to project_path(@interval.track.project), status: :ok, location: @interval }
+        else
+          format.html { redirect_to track_path(@interval.track) }
+          format.json { redirect_to track_path(@interval.track), status: :ok, location: @interval }
+        end
       else
         flash[:danger] = @interval.errors.full_messages
-        format.html { redirect_to track_path(@interval.track) }
-        format.json { render json: @interval.errors, status: :unprocessable_entity }
+        if modal_params.present? && modal_params[:modal] != 'complete'
+          format.html { redirect_to project_path(@interval.track.project) }
+          format.json { render json: @interval.errors, status: :unprocessable_entity }
+        else
+          format.html { redirect_to track_path(@interval.track) }
+          format.json { render json: @interval.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -77,6 +98,10 @@ class IntervalsController < ApplicationController
         .permit(:track_id, :user_id, :start_at, :end_at, :description, :close_track, :start_track)
     end
 
+    def modal_params
+      params.require(:interval).permit(:modal)
+    end
+
     def get_track
       @track = Track.find(params[:track_id])
     end
@@ -88,14 +113,24 @@ class IntervalsController < ApplicationController
     def check_owner_interval
       interval = Interval.find(params[:id])
       if interval.user_id != current_user.id
-        redirect_to track_path(params[:track_id]), flash: { danger: 'You do not have permission to clear the interval' }
+        if modal_params.present? && modal_params[:modal] != 'complete'
+          project = Track.find_by(id: params[:track_id]).project
+          redirect_to project_path(project), flash: { danger: t('error_permission') }
+        else
+          redirect_to track_path(params[:track_id]), flash: { danger: t('error_permission') }
+        end
       end
     end
 
     def check_owner_track
       track = Track.find(params[:track_id])
       if track.user_id != current_user.id
-        redirect_to track_path(params[:track_id]), flash: { danger: 'You do not have permission to create the interval' }
+        if modal_params.present? && modal_params[:modal] != 'complete'
+          project = Track.find_by(id: params[:track_id]).project
+          redirect_to project_path(project), flash: { danger: t('error_permission') }
+        else
+          redirect_to track_path(params[:track_id]), flash: { danger: t('error_permission') }
+        end
       end
     end
 

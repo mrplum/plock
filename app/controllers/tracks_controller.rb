@@ -1,7 +1,7 @@
 # Track class is for model the differents tasks of each project
 class TracksController < ApplicationController
   before_action :get_track, only: [:show, :edit, :update, :destroy]
-  before_action :get_team, only: [:create, :update, :destroy]
+  before_action :get_team, only: [:create, :update]
   before_action :get_project, only: [:new, :create, :update, :destroy]
   before_action :check_permissions, only: [:new, :create, :update, :destroy]
   before_action :authenticate_user!
@@ -38,12 +38,22 @@ class TracksController < ApplicationController
     respond_to do |format|
       if @track.save
         flash[:success] = t('.success')
-        format.html { redirect_to @track }
-        format.json { render :show, status: :created, location: @track }
+        if modal_params.present?
+          format.html { redirect_to project_path(@track.project) }
+          format.json { render :show, status: :created, location: @track }
+        else
+          format.html { redirect_to @track }
+          format.json { render :show, status: :created, location: @track }
+        end
       else
         flash[:danger] = @track.errors.full_messages
-        format.html { render :new }
-        format.json { render json: @track.errors, status: :unprocessable_entity }
+        if modal_params.present?
+          format.html { redirect_to project_path(@track.project) }
+          format.json { render json: @track.errors, status: :unprocessable_entity }
+        else
+          format.html { render :new }
+          format.json { render json: @track.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -83,6 +93,10 @@ class TracksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
       params.require(:track).permit(:id, :name, :description, :plock_time, :status, :project_id, :team_id)
+    end
+
+    def modal_params
+      params.require(:track).permit(:modal)
     end
 
     # Use callbacks to share common setup or constraints between actions.

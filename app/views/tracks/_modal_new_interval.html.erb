@@ -1,0 +1,36 @@
+<!-- Modal new interval -->
+<%= form_with(model: [track, interval = Interval.new], local: true) do |form| %>
+  <div class="modal fade" id="newIntervalModal" tabindex="-1" role="dialog" aria-labelledby="newIntervalModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newIntervalModalLabel"> <%= t('complete') %> </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= form.hidden_field :start_track %>
+          <div class="form-group">
+            <%= form.text_field :description, class: "form-control", placeholder: t('description') %>
+          </div>
+          <div class="form-group">
+            <%= form.label t('start_at'), class: "text-primary" %><br/>
+            <%= form.datetime_select( :start_at, {}, {:class => '', data: { turbolinks: false }}) %>
+          </div>
+          <div class="form-group">
+            <%= form.label t('end_at'), class: "text-primary" %><br/>
+            <%= form.datetime_select( :end_at, {}, {:class => '', data: { turbolinks: false }}) %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"> <%= t('cancel') %> </button>
+          <div class="form-group">
+            <%= form.hidden_field 'modal', value: 'complete' %>
+            <%= form.submit t('complete'), class: "btn btn-primary btn-block" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -99,3 +99,5 @@ en:
   teams: Teams
   track: Track
   tracks: tracks
+  description_interval: What will you do in this time?
+  error_permission: You do not have permission to perform this action

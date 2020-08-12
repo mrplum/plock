@@ -1,10 +1,11 @@
+<%= render 'modal_new_interval', track: @track%>
 <div class="text-center">
   <% if track.unstarted? %>
     <%= form_with(model: [@track, interval = Interval.new], local: true) do |form| %>
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-addon"></span>
-          <%= form.text_field :description, class: "form-control", placeholder: 'what will you do in this time?' %>
+          <%= form.text_field :description, class: "form-control", placeholder: t('description_interval') %>
         </div>
       </div>
       <div class="actions">
@@ -13,10 +14,10 @@
           <i class="fa fa-play text-white"></i>
           <span> <%= t('started') %> </span>
         <% end %>
-        <%= link_to new_track_interval_path(track.id, start_track: true), class: 'btn btn-sm btn-primary shadow-sm', data: { turbolinks: false } do %>
+        <button type="button" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#newIntervalModal">
           <i class="fa fa-list-ul text-white"></i>
           <span> <%= t('complete') %> </span>
-        <% end %>
+        </button>
       </div>
     <% end %>
 
@@ -36,7 +37,7 @@
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon"></span>
-            <%= form.text_field :description, class: "form-control", placeholder: '(*) What will you do in this time?' %>
+            <%= form.text_field :description, class: "form-control", placeholder: t('description_interval') %>
           </div>
         </div>
         <div class="actions">
@@ -45,10 +46,10 @@
             <i class="fa fa-retweet text-white"></i>
             <span> <%= t('resume') %> </span>
           <% end %>
-          <%= link_to new_track_interval_path(track.id, start_track: true), class: 'btn btn-sm btn-primary shadow-sm', data: { turbolinks: false } do %>
+          <button type="button" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#newIntervalModal">
             <i class="fa fa-list-ul text-white"></i>
             <span> <%= t('complete') %> </span>
-          <% end %>
+          </button>
         </div>
       <% end %>
     <% end %>

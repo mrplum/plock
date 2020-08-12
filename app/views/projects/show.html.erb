@@ -3,114 +3,222 @@
 </div>
 
 <div class="row">
-  <div class="col-xl-6 col-lg-7">
+  <div class="col-xl-12 col-lg-12">
     <div class="card shadow mb-4 border-bottom-primary">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> <%= t 'about' %> </h6>
         <%= link_to edit_project_path(@project), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
-          <i class="fa fa-edit fa-sm text-white-50"></i>
+          <i class="fa fa-edit fa-sm text-white"></i>
           <span> <%= t 'edit' %> </span>
         <%end%>
       </div>
       <div class="card-body">
-        <div class="form-group">
-          <label class="text-primary"> <%= t('name') %> </label><br/>
-          <input class="form-control" type="text" value="<%= @project.name %>" readonly="readonly">
-        </div>
-        <div class="form-group">
-          <label class="text-primary"> <%= t('description') %> </label><br/>
-          <input class="form-control" type="text" value="<%= @project.description %>" readonly="readonly">
-        </div>
-        <div class="form-group">
-          <label class="text-primary"> <%= t('cost') %> </label><br/>
-          <input class="form-control" type="text" value="<%= @project.cost %>" readonly="readonly">
-        </div>
-        <div class="form-group">
-          <label class="text-primary"><%= t('teams') %> </label><br/>
-          <% @project.teams.each do |team| %>
-            <input class="form-control" type="text" value="<%= team.name %>" readonly="readonly">
-          <% end -%>
-        </div>
-        <div class="form-group">
-          <label class="text-primary"> <%= t('owner') %> </label><br/>
-          <input class="form-control" type="text" value="<%= "#{@project.user.name} #{@project.user.lastname}" %>" readonly="readonly">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xl-6 col-lg-5">
-    <div class="card shadow mb-4 border-bottom-primary">
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-chart-bar"></i> <%= t('statistics') %> </h6>
-      </div>
-      <div class="card-body">
-        <%= hidden_field_tag :project_id, @project.id %>
-        <div id='statics-project' class='statics-project'>
-          <div id="graph-d3-project"></div>
+        <div class="row">
+          <div class="col-xl-6 col-lg-6">
+            <div class="form-group">
+              <label class="text-primary"> <%= t('name') %> </label><br/>
+              <input class="form-control" type="text" value="<%= @project.name %>" readonly="readonly">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6">
+            <div class="form-group">
+              <label class="text-primary"> <%= t('description') %> </label><br/>
+              <input class="form-control" type="text" value="<%= @project.description %>" readonly="readonly">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-12">
+            <div class="form-group">
+              <label class="text-primary"> <%= t('cost') %> </label><br/>
+              <input class="form-control" type="text" value="<%= @project.cost %>" readonly="readonly">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6">
+            <div class="form-group">
+              <label class="text-primary"> <%= t('owner') %> </label><br/>
+              <input class="form-control" type="text" value="<%= "#{@project.user.name} #{@project.user.lastname}" %>" readonly="readonly">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6">
+            <div class="form-group">
+              <label class="text-primary"><%= t('teams') %> </label><br/>
+              <% @project.teams.each do |team| %>
+                <div class="form-group">
+                  <input class="form-control" type="text" value="<%= team.name %>" readonly="readonly">
+                </div>
+              <% end -%>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<%= render 'modal_new_track' %>
+
 <div class="row">
   <div class="col-xl-12 col-lg-12">
     <div class="card shadow mb-4 border-bottom-primary">
       <div class="card-header py-3">
-        <%= link_to new_project_track_path(@project), class: "float-right btn btn-sm btn-success shadow-sm text-white" do %>
+        <button type="button" class="float-right btn btn-sm btn-primary shadow-sm text-white" data-toggle="modal" data-target="#newTrackModal">
           <i class="fa fa-plus fa-sm text-white"></i>
           <span> <%= t 'new_track' %> </span>
-        <%end%>
+        </button>
         <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-tasks"></i> <%= t 'tracks' %> </h6>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-              <tr class="text-center">
-                <th><%= t('name') %></th>
-                <th><%= t('description') %></th>
-                <th><%= t('status') %></th>
-                <th><%= t('action') %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @tracks.order("id desc").each do |track| %>
-                <tr class="text-center">
-                  <td><%= track.name %></td>
-                  <td><%= track.description %></td>
-                  <td>
-                    <% if track.in_progress?%>
-                      <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
-                    <% elsif track.unstarted?%>
-                      <i class="fa fa-circle mr-3 text-danger fa-fw"></i>
-                    <% else %>
-                      <i class="fa fa-check mr-3 text-success fa-fw"></i>
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
-                      <i class="fa fa-eye fa-sm text-white-50"></i>
-                    <%end%>
-                    <%= link_to track, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger shadow-sm", data: { turbolinks: false } do %>
-                      <i class="fa fa-trash text-light"></i>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+        <div class="row">
+          <!-- unstarted -->
+          <div class="col-xl-4 col-lg-4">
+            <div class="card shadow mb-4 border-bottom-danger">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight text-primary"> <i class="fas fa-circle text-danger"></i> <%= t('unstarted') %> </h6>
+              </div>
+              <div class="card-body border-left-danger scroll-project">
+                <div class="table-responsive">
+                  <table class="table" width="100%" cellspacing="0">
+                    <thead>
+                      <tr class="text-center">
+                        <th><%= t('name') %></th>
+                        <th><%= t('action') %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @tracks_unstarted.order("id desc").each do |track| %>
+                        <%= render 'modal_start', track: track %>
+                        <tr class="text-center">
+                          <td><%= track.name %></td>
+                          <td>
+                            <%= link_to track, class: "btn btn-sm btn-info shadow-sm", data: { target: "#startModal#{track.id}", toggle: 'modal', turbolinks: false } do %>
+                              <i class="fa fa-play fa-sm text-white"></i>
+                            <%end%>
+                            <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                              <i class="fa fa-eye fa-sm text-white"></i>
+                            <%end%>
+                            <%= link_to track, method: :delete, data: { confirm: 'Are you sure?', turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                              <i class="fa fa-trash fa-sm fa-sm text-white"></i>
+                            <% end %>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- in progress -->
+          <div class=" col-lg-4">
+            <div class="card shadow mb-4 border-bottom-warning">
+              <div class="card-header py-3">
+                <h6 class="m-0 text-primary"> <i class="fas fa-circle text-warning"></i> <%= t('in_progress') %> </h6>
+              </div>
+              <div class="card-body border-left-warning scroll-project">
+                <div class="table-responsive" style="overflow-x: hidden;">
+                  <table class="table" width="100%" cellspacing="0">
+                    <thead>
+                      <tr class="text-center">
+                        <th><%= t('name') %></th>
+                        <th><%= t('action') %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @tracks_in_progress.order("updated_at desc").each do |track| %>
+                        <%= render 'modal_in_progress', track: track %>
+                        <tr class="text-center">
+                          <td><%= track.name %></td>
+                          <td>
+                            <div class="row justify-content-center">
+                            <div class="mr-1">
+                            <% if track.open_interval %>
+                              <%= form_with(model: [track, track.open_interval], local: true) do |form| %>
+                                <%= form.hidden_field 'start_track', value: true %>
+                                <%= form.hidden_field 'modal', value: true %>
+                                <%= form.button class: 'btn btn-sm btn-danger shadow-sm', data: { turbolinks: false } do %>
+                                  <i class="fa fa-pause fa-sm text-white"></i>
+                                <% end %>
+                              <% end %>
+                            <% else %>
+                              <%= link_to track, class: "btn btn-sm btn-info shadow-sm", data: { target: "#progressModal#{track.id}", toggle: 'modal', turbolinks: false } do %>
+                                <i class="fa fa-retweet fa-sm text-white"></i>
+                              <%end%>
+                            <% end %>
+                            </div>
+                            <div class="mr-1">
+                            <%= form_with(model: [track, track.intervals.last], local: true) do |form| %>
+                              <%= form.hidden_field 'close_track', value: true %>
+                              <%= form.hidden_field 'modal', value: true %>
+                              <%= form.button class: 'btn btn-sm btn btn-success shadow-sm' do %>
+                                <i class="fa fa-check fa-sm text-white"></i>
+                              <% end %>
+                            <% end %>
+                            </div>
+                            <div class="mr-1">
+                            <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                              <i class="fa fa-eye fa-sm text-white"></i>
+                            <%end%>
+                            </div>
+                            <div class="mr-1">
+                            <%= link_to track, method: :delete, data: { confirm: 'Are you sure?', turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                              <i class="fa fa-trash fa-sm text-white"></i>
+                            <% end %>
+                            </div>
+                            </div>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- finished -->
+          <div class="col-xl-4 col-lg-4">
+            <div class="card shadow mb-4 border-bottom-success">
+              <div class="card-header py-3">
+                <h6 class="m-0 text-primary"> <i class="fas fa-check text-success"></i> <%= t('finished') %> </h6>
+              </div>
+              <div class="card-body border-left-success scroll-project">
+                <div class="table-responsive">
+                  <table class="table" width="100%" cellspacing="0">
+                    <thead>
+                      <tr class="text-center">
+                        <th><%= t('name') %></th>
+                        <th><%= t('action') %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @tracks_finished.order("updated_at desc").each do |track| %>
+                        <tr class="text-center">
+                          <td><%= track.name %></td>
+                          <td>
+                            <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                              <i class="fa fa-eye fa-sm text-white"></i>
+                            <%end%>
+                            <%= link_to track, method: :delete, data: { confirm: 'Are you sure?', turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                              <i class="fa fa-trash fa-sm text-white"></i>
+                            <% end %>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
         <div class="mt-4 text-center small">
-          <span class="mr-2">
-            <i class="fas fa-check text-success"></i> <%= t('finished') %>
+        <span class="mr-2">
+            <i class="fas fa-circle text-danger"></i> <%= t('unstarted') %>
           </span>
           <span class="mr-2">
             <i class="fas fa-circle text-warning"></i> <%= t('in_progress') %>
           </span>
           <span class="mr-2">
-            <i class="fas fa-circle text-danger"></i> <%= t('unstarted') %>
+            <i class="fas fa-check text-success"></i> <%= t('finished') %>
           </span>
         </div>
         <br/>

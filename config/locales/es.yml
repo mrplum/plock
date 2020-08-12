@@ -185,7 +185,8 @@ es:
   add_employee: Agregar Integrante
   back: Volver
   owner: Propietario
-  start_at: Empezado el
+  start_at: Empezado
+  end_at: Terminado
   status: Estado
   finished: Finalizado
   finish: Finalizar
@@ -206,3 +207,7 @@ es:
   status_project: Estado de mis Proyectos
   add_employee_to: Agregar Integrante a
   add_user: Agregar Integrante
+  logout: Cerrar Sesión
+  cancel: Cancelar
+  description_interval: ¿Qué vas a hacer en este tiempo?
+  error_permission: No tienes permiso para realizar esta acción
