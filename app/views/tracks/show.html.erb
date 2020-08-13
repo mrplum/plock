@@ -1,6 +1,6 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">
-    <%= t('track') %>
+    <%= @track.name %>
     <% if @track.in_progress?%>
       <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
     <% elsif @track.unstarted?%>
@@ -37,17 +37,19 @@
         <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> <%= t('about') %> </h6>
       </div>
       <div class="card-body">
-        <div class="form-group">
-          <label class="text-primary"> <%= t('name') %> </label><br/>
-          <input class="form-control" type="text" value="<%= @track.name %>" readonly="readonly">
-        </div>
-        <div class="form-group">
-          <label class="text-primary"> <%= t('description') %> </label><br/>
-          <input class="form-control" type="text" value="<%= @track.description %>" readonly="readonly">
-        </div>
-        <div class="form-group">
-          <label class="text-primary"> <%= t('status') %> </label><br/>
-          <input class="form-control" type="text" value="<%= @track.status %>" readonly="readonly">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="text-primary"> <%= t('description') %> </label><br/>
+              <input class="form-control" type="text" value="<%= @track.description %>" readonly="readonly">
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="text-primary"> <%= t('team') %> </label><br/>
+              <input class="form-control" type="text" value="<%= @track.team&.name %>" readonly="readonly">
+            </div>
+          </div>
         </div>
       </div>
     </div>
