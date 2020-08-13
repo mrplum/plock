@@ -24,7 +24,7 @@ class IntervalsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_response :success
+    assert_response :found
   end
 
   test 'should update interval' do

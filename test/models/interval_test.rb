@@ -48,12 +48,6 @@ class IntervalTest < ActiveSupport::TestCase
     assert_equal(@user.name, user.name)
   end
 
-  test 'start not valid' do
-    @interval.track.project.start_at = Date.parse('2020-01-01')
-    @interval.start_at = Date.parse('2020-02-01')
-    assert @interval.valid_start_date?
-  end
-
   test 'interval not valid' do
     interval = intervals(:three)
 

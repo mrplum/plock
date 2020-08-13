@@ -99,7 +99,7 @@ class IntervalsController < ApplicationController
     end
 
     def modal_params
-      params.require(:interval).permit(:modal)
+      params.require(:interval).permit(:modal) if params[:modal].present?
     end
 
     def get_track
