@@ -1,5 +1,5 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800"> <%= t('project') %> </h1>
+  <h1 class="h3 mb-0 text-gray-800"> <%= @project.name %> </h1>
 </div>
 
 <div class="row">
@@ -16,17 +16,11 @@
         <div class="row">
           <div class="col-xl-6 col-lg-6">
             <div class="form-group">
-              <label class="text-primary"> <%= t('name') %> </label><br/>
-              <input class="form-control" type="text" value="<%= @project.name %>" readonly="readonly">
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6">
-            <div class="form-group">
               <label class="text-primary"> <%= t('description') %> </label><br/>
               <input class="form-control" type="text" value="<%= @project.description %>" readonly="readonly">
             </div>
           </div>
-          <div class="col-xl-6 col-lg-12">
+          <div class="col-xl-6 col-lg-6">
             <div class="form-group">
               <label class="text-primary"> <%= t('cost') %> </label><br/>
               <input class="form-control" type="text" value="<%= @project.cost %>" readonly="readonly">
@@ -129,40 +123,40 @@
                           <td><%= track.name %></td>
                           <td>
                             <div class="row justify-content-center">
-                            <div class="mr-1">
-                            <% if track.open_interval %>
-                              <%= form_with(model: [track, track.open_interval], local: true) do |form| %>
-                                <%= form.hidden_field 'start_track', value: true %>
-                                <%= form.hidden_field 'modal', value: true %>
-                                <%= form.button class: 'btn btn-sm btn-danger shadow-sm', data: { turbolinks: false } do %>
-                                  <i class="fa fa-pause fa-sm text-white"></i>
+                              <div class="mr-1">
+                                <% if track.open_interval %>
+                                  <%= form_with(model: [track, track.open_interval], local: true) do |form| %>
+                                    <%= form.hidden_field 'start_track', value: true %>
+                                    <%= form.hidden_field 'modal', value: true %>
+                                    <%= form.button class: 'btn btn-sm btn-danger shadow-sm', data: { turbolinks: false } do %>
+                                      <i class="fa fa-pause fa-sm text-white"></i>
+                                    <% end %>
+                                  <% end %>
+                                <% else %>
+                                  <%= link_to track, class: "btn btn-sm btn-info shadow-sm", data: { target: "#progressModal#{track.id}", toggle: 'modal', turbolinks: false } do %>
+                                    <i class="fa fa-retweet fa-sm text-white"></i>
+                                  <%end%>
                                 <% end %>
-                              <% end %>
-                            <% else %>
-                              <%= link_to track, class: "btn btn-sm btn-info shadow-sm", data: { target: "#progressModal#{track.id}", toggle: 'modal', turbolinks: false } do %>
-                                <i class="fa fa-retweet fa-sm text-white"></i>
-                              <%end%>
-                            <% end %>
-                            </div>
-                            <div class="mr-1">
-                            <%= form_with(model: [track, track.intervals.last], local: true) do |form| %>
-                              <%= form.hidden_field 'close_track', value: true %>
-                              <%= form.hidden_field 'modal', value: true %>
-                              <%= form.button class: 'btn btn-sm btn btn-success shadow-sm' do %>
-                                <i class="fa fa-check fa-sm text-white"></i>
-                              <% end %>
-                            <% end %>
-                            </div>
-                            <div class="mr-1">
-                            <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
-                              <i class="fa fa-eye fa-sm text-white"></i>
-                            <%end%>
-                            </div>
-                            <div class="mr-1">
-                            <%= link_to track, method: :delete, data: { confirm: 'Are you sure?', turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
-                              <i class="fa fa-trash fa-sm text-white"></i>
-                            <% end %>
-                            </div>
+                              </div>
+                              <div class="mr-1">
+                                <%= form_with(model: [track, track.intervals.last], local: true) do |form| %>
+                                  <%= form.hidden_field 'close_track', value: true %>
+                                  <%= form.hidden_field 'modal', value: true %>
+                                  <%= form.button class: 'btn btn-sm btn btn-success shadow-sm' do %>
+                                    <i class="fa fa-check fa-sm text-white"></i>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                              <div class="mr-1">
+                                <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                                  <i class="fa fa-eye fa-sm text-white"></i>
+                                <%end%>
+                              </div>
+                              <div class="mr-1">
+                                <%= link_to track, method: :delete, data: { confirm: 'Are you sure?', turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                                  <i class="fa fa-trash fa-sm text-white"></i>
+                                <% end %>
+                              </div>
                             </div>
                           </td>
                         </tr>

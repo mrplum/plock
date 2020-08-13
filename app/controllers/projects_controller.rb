@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @user = current_user
-    @projects = @user.projects
+    @projects = @user.projects.uniq
   end
 
   # GET /projects/1

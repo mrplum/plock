@@ -189,6 +189,7 @@ es:
   end_at: Terminado
   status: Estado
   finished: Finalizado
+  total: Total
   finish: Finalizar
   in_progress: En Progreso
   unstarted: No Iniciado
@@ -200,14 +201,25 @@ es:
   resume: Continuar
   profile: Perfil
   lastname: Apellido
-  update_data: Actulizar Datos
+  update_data: Actualizar Datos
   change_password: Cambiar Contraseña
   password: Contraseña
   password_confirmation: Confirmar Contraseña
-  status_project: Estado de mis Proyectos
   add_employee_to: Agregar Integrante a
   add_user: Agregar Integrante
   logout: Cerrar Sesión
   cancel: Cancelar
   description_interval: ¿Qué vas a hacer en este tiempo?
   error_permission: No tienes permiso para realizar esta acción
+  total_tracks: Registros Totales
+  unstarted_tracks: Registros sin iniciar
+  in_progress_tracks: Registros en progreso
+  finished_tracks: Registros finalizados
+  not_projects: Aún no tienes dependencias
+  not_tracks: Aún no tienes registros
+  not_areas: Aún no tienes areas
+  not_teams: Aún no tienes oficinas
+  proj_unfinished_tracks: Dependencias con registros sin terminar
+  status_projects: Estado de mis dependencias
+  not_unfinished_tracks: No tienes registros sin terminar
+  tracks_count_unfinished: Cantidad de registros sin terminar

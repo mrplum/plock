@@ -3,16 +3,26 @@ class HomeController < ApplicationController
 
   def index
     if current_user.present?
-      @tracks = Track.where(status: "in_progress").
-                      or(Track.where(status: "unstarted")).
-                      where(user_id: current_user.id)
+      @tracks = Track.where(user_id: current_user.id)
+      @tracks_unstarted = @tracks.where(status: "unstarted")
+      @tracks_progress = @tracks.where(status: "in_progress")
+      @tracks_finished = @tracks.where(status: "finished")
+
+      tracks_unfinished = @tracks_unstarted.merge(@tracks_progress).pluck(:project_id)
+      @projects_unfinished = {}
+      tracks_unfinished.uniq.each { |p_id|
+        project = Project.find_by(id: p_id)
+        @projects_unfinished[project.name] = [project, tracks_unfinished.count(p_id)]
+      }
+
       @projects = {}
-      current_user.projects.each{ |p|
-        total = p.tracks.count
+      current_user.projects.each { |project|
+        total = project.tracks.count
+        finished = project.tracks.where(status: "finished").count
         if total == 0
-          @projects[p.name] = 0
+          @projects[project.name] = 0
         else
-          @projects[p.name] = (100 * p.tracks.where(status: "finished").count) / total
+          @projects[project.name] = (100 * finished) / total
         end
       }
     end

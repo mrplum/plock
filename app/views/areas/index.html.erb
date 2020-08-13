@@ -12,30 +12,39 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-          <tr class="text-center">
-            <th><%= t('name') %></th>
-            <th><%= t('description') %></th>
-            <th><%= t('location') %></th>
-            <th><%= t('action') %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @areas.each do |area| %>
+      <% if @areas.present? %>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
             <tr class="text-center">
-              <td><%= area.name %></td>
-              <td><%= area.description %></td>
-              <td><%= area.location %></td>
-              <td>
-                <%= link_to area_path(area), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
-                  <i class="fa fa-eye fa-sm text-white-50"></i>
-                <%end%>
-              </td>
+              <th><%= t('name') %></th>
+              <th><%= t('description') %></th>
+              <th><%= t('location') %></th>
+              <th><%= t('action') %></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @areas.each do |area| %>
+              <tr class="text-center">
+                <td><%= area.name %></td>
+                <td><%= area.description %></td>
+                <td><%= area.location %></td>
+                <td>
+                  <%= link_to area_path(area), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                    <i class="fa fa-eye fa-sm text-white-50"></i>
+                  <%end%>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="mt-4 text-center">
+          <span class="text-danger font-weight-bold">
+            <%= t('not_areas') %>
+            <i class="fa fa-fw fa-times text-danger"></i>
+          </span>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -1,63 +1,116 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+  <h1 class="h3 mb-0 text-gray-800"> Dashboard </h1>
+  <%= link_to root_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm", data: { turbolinks: false } do %>
+    <i class="fas fa-download fa-sm text-white-50"></i>
+    <span> Generate Report </span>
+  <%end%>
+</div>
+
+<!-- Content Row -->
+<div class="row">
+  <!-- total tracks -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> <%= t('total_tracks') %> </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> <%= @tracks.count %> </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-tasks fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- unstarted tracks -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-danger shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1"> <%= t('unstarted_tracks') %> </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @tracks_unstarted.count %></div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-times fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- in progress tracks -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> <%= t('in_progress_tracks') %> </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> <%= @tracks_progress.count %> </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-spinner fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- finished tracks -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> <%= t('finished_tracks') %> </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"> <%= @tracks_finished.count %> </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-check fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Content Row -->
 <div class="row">
 
   <div class="col-lg-6 mb-4">
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 home-datatable">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-list-ul"></i> Unfinished Tracks </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-list-ul"></i> <%= t('proj_unfinished_tracks') %> </h6>
       </div>
       <div class="card-body">
-        <% if @tracks.present? %>
+        <% if @projects_unfinished.present? %>
           <table class="table table-bordered table-hover" id="dataTable">
             <thead>
               <tr class="text-center">
-                <th><%= t('name') %></th>
                 <th><%= t('project') %></th>
-                <th><%= t('status') %></th>
+                <th><%= t('tracks_count_unfinished') %></th>
                 <th><%= t('action') %></th>
               </tr>
             </thead>
-            <% @tracks.each do |track| %>
+            <% @projects_unfinished.map do |k,v| %>
               <tr class="text-center">
-                <td><%= track.name %></td>
-                <td><%= track.project&.name %></td>
+                <td><%= k %></td>
+                <td><%= v[1] %></td>
                 <td>
-                  <% if track.in_progress?%>
-                    <i class="fa fa-circle mr-3 text-warning fa-fw"></i>
-                  <% elsif track.unstarted?%>
-                    <i class="fa fa-circle mr-3 text-danger fa-fw"></i>
-                  <% else %>
-                    <i class="fa fa-check mr-3 text-success fa-fw"></i>
-                  <% end %>
-                </td>
-                <td>
-                  <%= link_to track, class: "btn btn-sm btn-primary shadow-sm", data: { turbolinks: false } do %>
+                  <%= link_to v[0], class: "btn btn-sm btn-primary shadow-sm", data: { turbolinks: false } do %>
                     <i class="fa fa-sign-in-alt fa-sm text-white"></i>
                   <%end%>
                 </td>
               </tr>
             <% end %>
           </table>
-          <div class="mt-4 text-center small">
-            <span class="mr-2">
-              <i class="fas fa-circle text-warning"></i> <%= t('in_progress') %>
-            </span>
-            <span class="mr-2">
-              <i class="fas fa-circle text-danger"></i> <%= t('unstarted') %>
-            </span>
-          </div>
           <br/>
         <% else %>
           <div class="mt-4 text-center">
             <span class="text-danger font-weight-bold">
-              You have not assigned tracks yet
-              <i class="fa fa-fw fa-calendar-times text-danger"></i>
+              <%= t('not_unfinished_tracks') %>
+              <i class="fa fa-fw fa-times text-danger"></i>
             </span>
           </div>
         <% end %>
@@ -65,9 +118,9 @@
     </div>
   </div>
   <div class="col-lg-6 mb-4">
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 home-status-projects">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-clipboard-list"></i> <%= t('status_project') %></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-clipboard-list"></i> <%= t('status_projects') %></h6>
       </div>
       <div class="card-body">
         <% if @projects.present? %>
@@ -77,6 +130,13 @@
               <div id="id_progress_color" class="progress-bar" role="progressbar" style="<%="width: #{v}%"%>" aria-valuenow=<%=v%> aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           <% end %>
+        <% else %>
+          <div class="mt-4 text-center">
+            <span class="text-danger font-weight-bold">
+              <%= t('not_projects') %>
+              <i class="fa fa-fw fa-times text-danger"></i>
+            </span>
+          </div>
         <% end %>
       </div>
     </div>
