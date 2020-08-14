@@ -41,6 +41,7 @@ function ajax(url, params, nameModel, functionGraph){
 }
 
 function draw(data, nameModel){
+  console.log(data[0].name)
   var margin = {top: 40, right: 20, bottom: 30, left: 40},
   width = 800 - margin.left - margin.right,
   height = 528 - margin.top - margin.bottom;

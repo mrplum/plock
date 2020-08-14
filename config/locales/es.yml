@@ -223,3 +223,5 @@ es:
   status_projects: Estado de mis dependencias
   not_unfinished_tracks: No tienes registros sin terminar
   tracks_count_unfinished: Cantidad de registros sin terminar
+  time_in_tracks: Tiempo de mis registros
+  status_in_tracks: Informe del estado de mis registros

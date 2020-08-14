@@ -3,7 +3,7 @@ class HomeController < ApplicationController
 
   def index
     if current_user.present?
-      @tracks = Track.where(user_id: current_user.id)
+      @tracks = current_user.tracks
       @tracks_unstarted = @tracks.where(status: "unstarted")
       @tracks_progress = @tracks.where(status: "in_progress")
       @tracks_finished = @tracks.where(status: "finished")

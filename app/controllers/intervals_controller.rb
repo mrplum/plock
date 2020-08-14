@@ -99,7 +99,7 @@ class IntervalsController < ApplicationController
     end
 
     def modal_params
-      params.require(:interval).permit(:modal) if params[:modal].present?
+      params.require(:interval).permit(:modal)
     end
 
     def get_track
@@ -113,7 +113,7 @@ class IntervalsController < ApplicationController
     def check_owner_interval
       interval = Interval.find(params[:id])
       if interval.user_id != current_user.id
-        if modal_params.present? && modal_params[:modal] != 'complete'
+        if params[:modal].present? && params[:modal] != 'complete'
           project = Track.find_by(id: params[:track_id]).project
           redirect_to project_path(project), flash: { danger: t('error_permission') }
         else
