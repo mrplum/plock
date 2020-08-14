@@ -63,6 +63,7 @@
         <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-history"></i> Intervals </h6>
       </div>
       <div class="card-body">
+        <%= render 'track_interval', track: @track %>
         <% if @track.intervals.present? %>
           <table class="table table-bordered table-hover" id="dataTable">
             <thead>
@@ -95,7 +96,6 @@
             <% end %>
           </table>
         <% end %>
-        <%= render 'track_interval', track: @track %>
       </div>
     </div>
   </div>

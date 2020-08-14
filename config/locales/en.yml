@@ -109,4 +109,5 @@ en:
   not_unfinished_tracks: You have no unfinished tracks
   tracks_count_unfinished: Number of unfinished tracks
   time_in_tracks: Time of my tracks
-  status_in_tracks: Report the status of my tracks
+  status_in_tracks: Status of my tracks
+  time_in_intervals: Time of the intervals of my tracks

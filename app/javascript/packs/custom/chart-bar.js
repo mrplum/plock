@@ -27,6 +27,25 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+var ctx2 = document.getElementById("myBarChartTeam");
+if (ctx2 !== null) {
+  let team_id = document.getElementById('team_id').value;
+  console.log(team_id)
+  $.ajax({
+    type: "GET",
+    contentType: "application/json; charset=utf-8",
+    url: '/me/dataTeam/hoursToProjects',
+    dataType: 'json',
+    data: { m_id: team_id },
+    success: function (json) {
+      functionGraph(json, ctx2);
+    },
+    error: function (result) {
+      error(result);
+    }
+  })
+}
+
 var ctx = document.getElementById("myBarChart");
 if (ctx !== null) {
   $.ajax({
@@ -98,7 +117,7 @@ function functionGraph(data, ctx){
             maxTicksLimit: 5,
             padding: 10,
             callback: function(value, index, values) {
-              return number_format(value);
+              return number_format(value) + ' hs';
             }
           },
           gridLines: {

@@ -2,8 +2,8 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-var ctx = document.getElementById("myPieChart");
-if (ctx !== null) {
+var ctx4 = document.getElementById("myPieChart");
+if (ctx4 !== null) {
   $.ajax({
     type: "GET",
     contentType: "application/json; charset=utf-8",
@@ -11,7 +11,7 @@ if (ctx !== null) {
     dataType: 'json',
     data: {},
     success: function (json) {
-      functionGraph(json, ctx);
+      functionGraph(json, ctx4);
     },
     error: function (result) {
       error(result);
@@ -20,22 +20,14 @@ if (ctx !== null) {
 }
 
 function functionGraph(data, ctx){
-  console.log(data)
-  var dataLabels = [];
-  var dataValue = [];
-  for (var i = 0; i < data.length; i++) {
-    dataLabels.push(data[i].status)
-    dataValue.push(data[i].value)
-  }
-
   var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: dataLabels,
+      labels: ['unstarted', 'in progress', 'finished'],
       datasets: [{
-        data: dataValue,
-        backgroundColor: ['#e74a3b', '#f6c23e', '#1cc88a'],
-        hoverBackgroundColor: ['#cf4235', '#ddae37', '#17a673'],
+        data: dataValue(data),
+        backgroundColor: ['#4e73df', '#36b9cc', '#1cc88a'],
+        hoverBackgroundColor: ['#2e59d9', '#2c9faf', '#17a673'],
         hoverBorderColor: "rgba(234, 236, 244, 1)",
       }],
     },
@@ -57,4 +49,50 @@ function functionGraph(data, ctx){
       cutoutPercentage: 80,
     },
   });
+}
+
+function dataValue(data){
+  var dataValue = [];
+  if (data.length == 1){
+    if (data[0].status == 'unstarted'){
+      dataValue[0] = data[0].value;
+      dataValue[1] = 0;
+      dataValue[2] = 0;
+    }
+    else if (data[0].status == 'in_progress'){
+      dataValue[0] = 0;
+      dataValue[1] = data[0].value;
+      dataValue[2] = 0;
+    }
+    else if (data[0].status == 'finished'){
+      dataValue[0] = 0;
+      dataValue[1] = 0;
+      dataValue[2] = data[0].value;
+    }
+  }
+  else if (data.length == 2){
+    if (data[0].status == 'unstarted' && data[1].status == 'in_progress'){
+      dataValue[0] = data[0].value;
+      dataValue[1] = data[1].value;
+      dataValue[2] = 0;
+    }
+    else if (data[0].status == 'in_progress' && data[1].status == 'finished'){
+      dataValue[0] = 0;
+      dataValue[1] = data[0].value;
+      dataValue[2] = data[1].value;
+    }
+    else if (data[0].status == 'unstarted' && data[1].status == 'finished'){
+      dataValue[0] = data[0].value;
+      dataValue[1] = 0;
+      dataValue[2] = data[1].value;
+    }
+  }
+  else {
+    if (data[0].status == 'unstarted' && data[1].status == 'in_progress' && data[2].status == 'finished'){
+      dataValue[0] = data[0].value;
+      dataValue[1] = data[1].value;
+      dataValue[2] = data[2].value;
+    }
+  }
+  return dataValue;
 }

@@ -65,8 +65,8 @@ class UsersController < ApplicationController
     data = intervals.collect do |interval|
       time = interval.time_worked.value
       {
-        date: interval.key_,
-        time: convert_to_hours(time)
+        date: interval['key_as_string'],
+        time: convert_to_hours(interval['time_worked']['value'])
       }
     end
   end

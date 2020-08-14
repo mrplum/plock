@@ -179,7 +179,7 @@ es:
   company_settings: Configuración UNRC
   edit: Editar
   employees: Integrantes
-  created_at: Creado el
+  created_at: Creado
   last_sign_in: Ultimo Inicio de Sesion
   about: Información
   add_employee: Agregar Integrante
@@ -224,4 +224,5 @@ es:
   not_unfinished_tracks: No tienes registros sin terminar
   tracks_count_unfinished: Cantidad de registros sin terminar
   time_in_tracks: Tiempo de mis registros
-  status_in_tracks: Informe del estado de mis registros
+  status_in_tracks: Estado de mis registros
+  time_in_intervals: Tiempo de los intervalos de mis registros

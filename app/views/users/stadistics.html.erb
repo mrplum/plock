@@ -21,9 +21,10 @@
     <!-- Area Chart -->
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-chart-line"></i> <%= t('time_in_tracks')%></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-chart-area"></i> <%= t('time_in_intervals')%></h6>
       </div>
       <div class="card-body">
+          <%= select_tag :interval, options_for_interval_types, class: "form-control", id: 'change_interval'%>
         <div class="chart-area">
           <canvas id="myAreaChart"></canvas>
         </div>
@@ -35,21 +36,19 @@
   <!-- Donut Chart -->
   <div class="col-xl-4 col-lg-5">
     <div class="card shadow mb-4">
-      <!-- Card Header - Dropdown -->
       <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-chart-pie"></i> <%= t('status_in_tracks')%></h6>
       </div>
-      <!-- Card Body -->
       <div class="card-body">
         <div class="chart-pie pt-4">
           <canvas id="myPieChart"></canvas>
         </div>
         <div class="mt-4 text-center small">
           <span class="mr-2">
-            <i class="fas fa-circle text-danger"></i> <%= t('unstarted') %>
+            <i class="fas fa-circle text-primary"></i> <%= t('unstarted') %>
           </span>
           <span class="mr-2">
-            <i class="fas fa-circle text-warning"></i> <%= t('in_progress') %>
+            <i class="fas fa-circle text-info"></i> <%= t('in_progress') %>
           </span>
           <span class="mr-2">
             <i class="fas fa-circle text-success"></i> <%= t('finished') %>

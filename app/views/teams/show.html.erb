@@ -8,7 +8,7 @@
 
 <div class="row">
   <div class="col-xl-6 col-lg-7">
-    <div class="card shadow mb-4 border-bottom-primary">
+    <div class="card shadow mb-4 border-bottom-primary size-card">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary"> <%= t('team_members') %> </h6>
       </div>
@@ -38,13 +38,15 @@
   </div>
 
   <div class="col-xl-6 col-lg-5">
-    <div class="card shadow mb-4 border-bottom-primary">
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-chart-bar"></i> <%= t('statistics') %> </h6>
+    <div class="card shadow mb-4 border-bottom-primary size-card">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-chart-bar"></i> <%= t('statistics') %> </h6>
       </div>
       <div class="card-body">
-        <%= hidden_field_tag :team_id, @team.id %>
-        <div id="graph-d3-team"></div>
+        <div class="chart-bar" id="content">
+          <%= hidden_field_tag :team_id, @team.id %>
+          <canvas id="myBarChartTeam"></canvas>
+        </div>
       </div>
     </div>
   </div>
