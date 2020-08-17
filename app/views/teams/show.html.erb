@@ -12,22 +12,30 @@
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary"> <%= t('team_members') %> </h6>
       </div>
-      <div class="card-body">
+      <div class="card-body scroll-card ">
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-striped" id="dataTableUserTeam" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th> </th>
-                <th><%= t('name') %></th>
-                <th><%= t('email') %></th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <% @team.users&.each do | user| %>
-                <tr>
-                  <th><%= user.id %> </th>
-                  <td><%= "#{user.name} #{user.lastname}" %></td>
-                  <td><%= user.email %></td>
+              <% @team.users&.each do |user| %>
+                <tr class="text-center">
+                  <td>
+                    <% if user.avatar.url.present? %>
+                      <%= image_tag(user.avatar.url, alt: user.name.upcase, class: "img-profile rounded-circle", style:"width: 4rem;")%>
+                    <% else %>
+                      <img class="img-profile rounded-circle" style="width: 4rem;" src="/images/user_default.png">
+                    <% end %>
+                  </td>
+                  <td>
+                    <p class="margin-table-p"> <strong> <%= "#{user.name} #{user.lastname}" %> </strong> </p>
+                    <p class="margin-table-p"> <%= "#{t('incorporated_at')}: #{TeamUser.find_by(team_id: @team.id, user_id: user.id).incorporated_at&.strftime("%F")}" %> </p>
+                    <p class="margin-table-p"> <%= user.email %> </p>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
