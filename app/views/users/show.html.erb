@@ -16,9 +16,9 @@
         <div class="row justify-content-center">
           <div class="col-lg-4">
             <% if @user.avatar.url.present? %>
-              <%= image_tag(@user.avatar.url, alt: @user.name.upcase, class: "img-fluid px-5 px-sm-4 mt-3 mb-4", style:"width: 20rem;")%>
+              <%= image_tag(@user.avatar.url, alt: @user.name.upcase, class: "img-fluid px-5 px-sm-4 mt-3 mb-4", style:"width: 70%;")%>
             <% else %>
-              <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 20rem;" src="/images/user_default.png" alt="">
+              <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 70%;" src="/images/user_default.png" alt="">
             <% end %>
           </div>
           <div class="col-lg-6">

@@ -204,6 +204,7 @@ es:
   update_data: Actualizar Datos
   change_password: Cambiar Contraseña
   password: Contraseña
+  new_password: Nueva contraseña
   password_confirmation: Confirmar Contraseña
   add_employee_to: Agregar Integrante a
   add_user: Agregar Integrante
@@ -227,3 +228,5 @@ es:
   status_in_tracks: Estado de mis registros
   time_in_intervals: Tiempo de los intervalos de mis registros
   incorporated_at: Incorporado
+  avatar_upload: Seleccionar Imagen
+  remove_avatar: Eliminar Imagen

@@ -31,6 +31,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def remove_avatar
+    user = User.find params[:id]
+    user.update(avatar: nil)
+    redirect_to edit_user_path(user)
+  end
+
   def data_user_in_tracks
     render json: time_in_tracks
   end

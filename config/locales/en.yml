@@ -112,3 +112,12 @@ en:
   status_in_tracks: Status of my tracks
   time_in_intervals: Time of the intervals of my tracks
   incorporated_at: Incorporated at
+  members_count: Number of members
+  avatar_upload: Select image
+  remove_avatar: Delete image
+  lastname: Lastname
+  update_data: Update data
+  change_password: Change password
+  password: Password
+  new_password: New password
+  password_confirmation: Password confirmation
