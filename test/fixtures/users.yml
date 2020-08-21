@@ -16,6 +16,7 @@ two:
 matias:
   name: Matias
   email: email@example.com
+  company: one
 
 user:
   name: does not work

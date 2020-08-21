@@ -63,13 +63,13 @@ class CompaniesController < ApplicationController
   end
 
   def send_email
-    email = params[:user][:email]
+    email = params[:email]
     pass = "password"
     @company = Company.find_by(id: params[:company_id])
     user = User.new(name: "your name", lastname: "your lastname", email: email, password: pass, company_id: params[:company_id], incorporated_at: DateTime.now)
     respond_to do |format|
       if user.save
-        flash[:success] = 'Invitation sent.'
+        flash[:success] = t('.success')
         UserMailer.welcome_to_company(@company, user).deliver
         format.html { redirect_to @company }
         format.json { render :show, status: :created, location: company_subscribe_user_path }

@@ -51,7 +51,7 @@ class ProjectsController < ApplicationController
         if modal_params.present?
           format.html { redirect_to root_path }
         else
-          format.html { render new }
+          format.html { render :new }
         end
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end

@@ -20,6 +20,8 @@ es:
       success: La empresa ha sido actualizada correctamente.
     destroy:
       success: La empresa ha sido eliminada correctamente.
+    send_email:
+      success: Invitación enviada.
   intervals:
     create:
       success: El intervalo ha sido creado correctamente.
@@ -88,6 +90,13 @@ es:
       # are specifically defined for the models.
       create: "Crear %{model}"
   activerecord:
+    models:
+      project: Dependencia
+      area: Area
+      track: Registro
+      company: Empresa
+      Team: Oficina
+      interval: Hora
     attributes:
       project:
         name: Nombre
@@ -121,7 +130,7 @@ es:
               blank: no puede ser vacia
             name:
               blank: no puede ser vacio
-              taken: ya tomado
+              taken: en uso
         track:
           attributes:
             name:
@@ -142,12 +151,17 @@ es:
           attributes:
             description:
               blank: no puede ser vacia
+        user:
+          attributes:
+            email:
+              blank: no puede ser vacio
+              taken: en uso
 
   area: Area
   areas: Areas
   description: Descripción
   hello: "Hello world"
-  company: UNRC
+  company: Empresa
   cost: Costo
   members_count: Cantidad de personas
   my_areas: Mis Areas
@@ -175,7 +189,9 @@ es:
   team_members: Miembros de la oficina
   teams: Oficinas
   track: Registro
-  tracks: Horas
+  tracks: Registros
+  interval: Hora
+  intervals: Horas
   company_settings: Configuración UNRC
   edit: Editar
   employees: Integrantes
@@ -228,9 +244,10 @@ es:
   tracks_count_unfinished: Cantidad de registros sin terminar
   time_in_tracks: Tiempo de mis registros
   status_in_tracks: Estado de mis registros
-  time_in_intervals: Tiempo de los intervalos de mis registros
+  time_in_intervals: Horas de mis registros
   incorporated_at: Incorporado
   avatar_upload: Seleccionar imagen
   remove_avatar: Eliminar imagen
   logo_upload: Seleccionar logo
   remove_logo: Eliminar logo
+  calendar: Calendario

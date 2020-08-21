@@ -12,13 +12,13 @@
   </div>
   <div class="card-body">
     <% if @teams.present? %>
-      <div class="row" style= "height: 100%;">
+      <div class="row">
         <% @teams.each_with_index do |team, index| %>
           <div class="col-xl-3 mb-4">
-            <%= link_to team_path(team), style:"height: 100%;", class: "btn card shadow mb-5 border-bottom-info", data: { turbolinks: false } do %>
+            <%= link_to team_path(team), style:"height: 80%;", class: "btn card shadow bg-light mb-3 border-bottom-info", data: { turbolinks: false } do %>
               <div class="row">
                 <div class="col-md-2">
-                  <div class="text-center card border-3 border-info">
+                  <div class="text-center card bg-light border-3 border-info">
                     <h5> <strong> <%= index+1 %> </strong> </h5>
                   </div>
                 </div>
