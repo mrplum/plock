@@ -1,38 +1,7 @@
-<%= render 'modal_new_interval', track: @track%>
-<div class="text-center">
-  <% if track.unstarted? %>
-    <%= form_with(model: [@track, interval = Interval.new], local: true) do |form| %>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon"></span>
-          <%= form.text_field :description, class: "form-control", placeholder: t('description_interval') %>
-        </div>
-      </div>
-      <div class="actions">
-        <%= form.hidden_field 'start_track', value: true %>
-        <%= form.button class: 'btn btn-sm btn-success shadow-sm', data: { turbolinks: false } do %>
-          <i class="fa fa-play text-white"></i>
-          <span> <%= t('started') %> </span>
-        <% end %>
-        <button type="button" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#newIntervalModal">
-          <i class="fa fa-list-ul text-white"></i>
-          <span> <%= t('complete') %> </span>
-        </button>
-      </div>
-    <% end %>
-
-  <% elsif track.in_progress? %>
-    <% if track.open_interval %>
-      <%= form_with(model: [@track, @track.open_interval], local: true) do |form| %>
-        <div class="actions">
-          <%= form.hidden_field 'start_track', value: true %>
-          <%= form.button class: 'btn btn-sm btn-danger shadow-sm', data: { turbolinks: false } do %>
-            <i class="fa fa-pause text-white"></i>
-            <span> <%= t('pause') %> </span>
-          <% end %>
-        </div>
-      <% end %>
-    <% else %>
+<% if @track.user_id == current_user.id %>
+  <%= render 'modal_new_interval', track: @track%>
+  <div class="text-center">
+    <% if track.unstarted? %>
       <%= form_with(model: [@track, interval = Interval.new], local: true) do |form| %>
         <div class="form-group">
           <div class="input-group">
@@ -43,8 +12,8 @@
         <div class="actions">
           <%= form.hidden_field 'start_track', value: true %>
           <%= form.button class: 'btn btn-sm btn-success shadow-sm', data: { turbolinks: false } do %>
-            <i class="fa fa-retweet text-white"></i>
-            <span> <%= t('resume') %> </span>
+            <i class="fa fa-play text-white"></i>
+            <span> <%= t('started') %> </span>
           <% end %>
           <button type="button" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#newIntervalModal">
             <i class="fa fa-list-ul text-white"></i>
@@ -52,7 +21,40 @@
           </button>
         </div>
       <% end %>
+
+    <% elsif track.in_progress? %>
+      <% if track.open_interval %>
+        <%= form_with(model: [@track, @track.open_interval], local: true) do |form| %>
+          <div class="actions">
+            <%= form.hidden_field 'start_track', value: true %>
+            <%= form.button class: 'btn btn-sm btn-danger shadow-sm', data: { turbolinks: false } do %>
+              <i class="fa fa-pause text-white"></i>
+              <span> <%= t('pause') %> </span>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <%= form_with(model: [@track, interval = Interval.new], local: true) do |form| %>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"></span>
+              <%= form.text_field :description, class: "form-control", placeholder: t('description_interval') %>
+            </div>
+          </div>
+          <div class="actions">
+            <%= form.hidden_field 'start_track', value: true %>
+            <%= form.button class: 'btn btn-sm btn-success shadow-sm', data: { turbolinks: false } do %>
+              <i class="fa fa-retweet text-white"></i>
+              <span> <%= t('resume') %> </span>
+            <% end %>
+            <button type="button" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#newIntervalModal">
+              <i class="fa fa-list-ul text-white"></i>
+              <span> <%= t('complete') %> </span>
+            </button>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>
 

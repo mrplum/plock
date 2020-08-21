@@ -3,7 +3,8 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
   owner = User.find_or_create_by(
     name: 'Owner',
     lastname: 'Plock',
-    email: 'owner@plock.com')
+    email: 'owner@plock.com',
+    admin: true)
   owner.password = '123123'
   owner.save!
 
@@ -14,6 +15,7 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
   company = Company.find_or_create_by(
     name: 'UNRC',
     description: 'The company',
+    email: 'company@plock.com',
     owner_id: owner.id)
   ActiveRecord::Migration.say("Company #{company.name}: #{company.persisted?}")
 

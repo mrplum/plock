@@ -27,9 +27,7 @@ class TeamsController < ApplicationController
   end
 
   # GET /teams/1/edit
-  def edit
-    # edit
-  end
+  def edit; end
 
   # POST /teams
   # POST /teams.json

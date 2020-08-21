@@ -95,6 +95,12 @@ class CompaniesController < ApplicationController
     redirect_to edit_user_path(params[:user_id])
   end
 
+  def remove_logo
+    company = Company.find(params[:id])
+    company.update(logo: nil)
+    redirect_to edit_company_path(company)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -104,6 +110,6 @@ class CompaniesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def company_params
-    params.require(:company).permit(:id, :name, :description, :company, :email, :owner_id)
+    params.require(:company).permit(:id, :name, :description, :email, :logo)
   end
 end

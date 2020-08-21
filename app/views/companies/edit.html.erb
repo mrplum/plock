@@ -3,11 +3,62 @@
   <div class="col-lg-10">
     <div class="card shadow mb-4 border-bottom-primary">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"> <%= t 'edit_company' %> </h6>
+        <h6 class="m-0 font-weight-bold text-primary"> <%= t 'edit' %> </h6>
       </div>
       <div class="card-body">
-        <div  class="row justify-content-center">
-          <%= render 'form', company: @company %>
+        <div class="row justify-content-center">
+
+          <div class="col-lg-4 text-center">
+            <%= form_with(model: @company, local: true) do |form| %>
+              <div class='form-group'>
+                <% if @company.logo? %>
+                  <%= image_tag(@company.logo_url, class: "img-responsive", id: "blah", style:"width: 50%;")%>
+                <% else %>
+                  <img id="blah" class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 50%;" src="/images/company.svg" alt="">
+                <% end %>
+                <div class="row ml-5 mr-5">
+                  <div class="m-2">
+                    <label class="btn btn-sm btn-primary">
+                      <%= form.file_field :logo, id:"imgInp", style: "display:none;" %>
+                      <div class="text-center">
+                        <i class="fa fa-upload"></i>
+                        <%= t 'logo_upload' %>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="m-2">
+                    <%= link_to remove_logo_path(@company), method: :patch, class: "btn btn-sm btn-danger", data: { turbolinks: false } do %>
+                      <i class="fa fa-trash fa-sm text-white"></i>
+                      <span> <%= t('remove_logo') %> </span>
+                    <%end%>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group">
+                <%= form.label t('name'), class: "text-primary" %><br/>
+                <%= form.text_field :name, class: "form-control", placeholder: t('name') %>
+              </div>
+              <div class="form-group">
+                <%= form.label t('description'), class: "text-primary" %><br/>
+                <%= form.text_field :description, class: "form-control", placeholder: t('description') %>
+              </div>
+              <div class="form-group">
+                <%= form.label t('email'), class: "text-primary" %><br/>
+                <%= form.text_field :email, class: "form-control", placeholder: t('email') %>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="form-group">
+                <%= form.submit t('update_data'), class: "btn btn-primary btn-block" %>
+              </div>
+            </div>
+            <div id="user-add"> </div>
+          <% end %>
+
         </div>
       </div>
     </div>

@@ -105,6 +105,7 @@ en:
   not_tracks: You still don't have tracks
   not_areas: You still don't have areas
   not_teams: You still don't have teams
+  not_intervals: You still don't have intervals
   proj_unfinished_tracks: Projects with unfinished tracks
   not_unfinished_tracks: You have no unfinished tracks
   tracks_count_unfinished: Number of unfinished tracks
@@ -115,6 +116,8 @@ en:
   members_count: Number of members
   avatar_upload: Select image
   remove_avatar: Delete image
+  logo_upload: Select logo
+  remove_logo: Delete logo
   lastname: Lastname
   update_data: Update data
   change_password: Change password

@@ -8,11 +8,6 @@ class CompaniesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
-  test 'should get new' do
-    get new_company_url(locale: 'en')
-    assert_response :success
-  end
-
   test 'should create company' do
     Company.destroy_all
       post companies_url(

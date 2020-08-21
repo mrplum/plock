@@ -2,29 +2,55 @@
   <h1 class="h3 mb-0 text-gray-800"> <%= t 'company_settings' %> </h1>
 </div>
 
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    <div class="card shadow mb-4 border-bottom-primary">
-      <div class="card-header py-3">
-        <%= link_to edit_company_path(@company), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
-          <i class="fa fa-edit fa-sm text-white-50"></i>
-          <span> <%= t 'edit' %>  </span>
-        <%end%>
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> <%= t 'about' %>  </h6>
-      </div>
-      <div class="card-body">
-        <div class="row justify-content-center">
-          <div class="col-lg-4">
-            <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 20rem;" src="/images/company.svg" alt="">
-          </div>
-          <div class="col-lg-6">
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <label class="text-primary"> <%= t('name') %> </label><br/>
-              <input class="form-control" type="text" value="<%= @company.name %>" readonly="readonly">
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link active" href="" data-turbolinks="false" id ="button-about-company"> <%= t 'about' %> </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="" data-turbolinks="false" id="button-employees-company"> <%= t 'employees' %> </a>
+  </li>
+</ul>
+
+<div id="about-company">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow mb-4 border-bottom-primary">
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-xl-12 col-lg-12">
+              <%= link_to edit_company_path(@company), class: "float-right btn btn-sm btn-primary shadow-sm", data: { turbolinks: false } do %>
+                <i class="fa fa-edit fa-sm text-white-50"></i>
+                <span> <%= t 'edit' %>  </span>
+              <%end%>
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <label class="text-primary"> <%= t('description') %> </label><br/>
-              <input class="form-control" type="text" value="<%= @company.description %>" readonly="readonly">
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-4">
+              <% if @company.logo.url.present? %>
+                <%= image_tag(@company.logo.url, alt: @company.name.upcase, class: "img-fluid px-5 px-sm-4 mt-3 mb-4", style:"width: 50%;")%>
+              <% else %>
+                <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" style="width: 50%;" src="/images/company.svg" alt="">
+              <% end %>
+            </div>
+            <div class="col-lg-6">
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <label class="text-primary"> <%= t('name') %> </label>
+                  <input class="form-control" type="text" value="<%= @company.name %>" readonly="readonly">
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <label class="text-primary"> <%= t('description') %> </label>
+                  <input class="form-control" type="text" value="<%= @company.description %>" readonly="readonly">
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <label class="text-primary"> <%= t('email') %> </label>
+                  <input class="form-control" type="text" value="<%= @company.email %>" readonly="readonly">
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -33,111 +59,50 @@
   </div>
 </div>
 
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    <div class="card shadow mb-4 border-bottom-primary">
-      <div class="card-header py-3">
-        <%= link_to company_subscribe_user_path(@company), class: "float-right btn btn-sm btn-success shadow-sm" do %>
-          <i class="fa fa-user-plus fa-sm text-white-50"></i>
-          <span> <%= t 'add_employee' %> </span>
-        <%end%>
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-user"></i> <%= t 'employees' %> </h6>
-      </div>
-      <div class="card-body">
-        <% if @company.users.present? %>
-          <table class="table table-bordered table-hover" id="dataTable">
-            <thead>
-              <tr class="text-center">
-                <th> <%= t('name') %> </th>
-                <th> <%= t('email') %> </th>
-                <th> <%= t('last_sign_in') %></th>
-              </tr>
-            </thead>
-            <% @company.users.each do |user| %>
-              <tr class="text-center">
-                <td><%= "#{user.name} #{user.lastname}" %> &nbsp&nbsp </td>
-                <td><%= user.email %>&nbsp</td>
-                <td><%= user.last_sign_in_at %> &nbsp </td>
-              </tr>
-            <% end %>
-          </table>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    <div class="card shadow mb-4 border-bottom-primary">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-users"></i> <%= t('teams') %> </h6>
-      </div>
-      <div class="card-body">
-        <% if @projects.present? %>
-          <table class="table table-bordered table-hover" id="dataTable2">
-            <thead>
-              <tr class="text-center">
-                <th> <%= t('name') %> </th>
-                <th> <%= t('created_at') %> </th>
-                <th> <%= t('action') %> </th>
-              </tr>
-            </thead>
-            <% @projects.to_a.uniq(&:team_id).each do |project| %>
-              <% if project.teams.present? %>
-                <% project.teams.each do |team| %>
-                  <tr class="text-center">
-                    <td><%= team&.name %> </td>
-                    <td><%= team&.created_at&.strftime("%F %T") %></td>
-                    <td>
-                      <%= link_to team, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
-                        <i class="fa fa-eye fa-sm text-white-50"></i>
-                      <% end %>
-                    </td>
+<div id="employees-company" class="hidden">
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card shadow mb-4 border-bottom-primary size-card">
+        <div class="card-body scroll-card ">
+          <div class="row mb-3">
+            <div class="col-xl-12 col-lg-12">
+              <%= link_to company_subscribe_user_path(@company), class: "float-right btn btn-sm btn-success shadow-sm" do %>
+                <i class="fa fa-user-plus fa-sm text-white-50"></i>
+                <span> <%= t 'add_employee' %> </span>
+              <%end%>
+            </div>
+          </div>
+          <% if @company.users.present? %>
+            <div class="table-responsive">
+              <table class="table table-striped" id="dataTableUserCompany" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
                   </tr>
-                <% end -%>
-              <% end %>
-            <% end %>
-          </table>
-        <%end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    <div class="card shadow mb-4 border-bottom-primary">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-cubes"></i> <%= t('projects') %> </h6>
-      </div>
-      <div class="card-body">
-        <% if @projects.present? %>
-          <table class="table table-bordered table-hover" id="dataTable3">
-            <thead>
-              <tr class="text-center">
-                <th> <%= t('name') %> </th>
-                <th> <%= t('description') %> </th>
-                <th> <%= t('cost') %> </th>
-                <th> <%= t('start_at') %> </th>
-                <th> <%= t('action') %> </th>
-              </tr>
-            </thead>
-            <% @projects.each do |project| %>
-              <tr class="text-center">
-                <td><%= project.name %> </td>
-                <td><%= project.description %> </td>
-                <td><%= project.cost %> </td>
-                <td><%= project.start_at&.strftime("%F %T") %></td>
-                <td>
-                  <%= link_to project, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
-                    <i class="fa fa-eye fa-sm text-white-50"></i>
-                  <%end%>
-                </td>
-              </tr>
-            <% end %>
-          </table>
-        <%end %>
+                </thead>
+                <tbody>
+                  <% @company.users.each do |user| %>
+                    <tr class="text-center">
+                      <td>
+                        <% if user.avatar.url.present? %>
+                          <%= image_tag(user.avatar.url, alt: user.name.upcase, class: "img-profile rounded-circle", style:"width: 4rem;")%>
+                        <% else %>
+                          <img class="img-profile rounded-circle" style="width: 4rem;" src="/images/user_default.png">
+                        <% end %>
+                      </td>
+                      <td>
+                        <p class="margin-table-p"> <strong> <%= "#{user.name} #{user.lastname}" %> </strong> </p>
+                        <p class="margin-table-p"> <%= "#{t('last_sign_in')}: #{user.last_sign_in_at&.strftime("%F %T")}" %> </p>
+                        <p class="margin-table-p"> <%= user.email %> </p>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <%end%>
+        </div>
       </div>
     </div>
   </div>

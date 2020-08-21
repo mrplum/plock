@@ -3,3 +3,11 @@
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
+.hidden {
+  display: none;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+  text-align:left;
+}

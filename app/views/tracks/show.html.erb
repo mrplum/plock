@@ -23,31 +23,45 @@
   <%= link_to project_path(@track.project), class: "d-none d-sm-inline-block btn btn-primary shadow-sm", data: { turbolinks: false } do %>
     <i class="fa fa-arrow-left fa-sm text-white-50"></i>
     <span> <%= t('back') %> </span>
-  <%end%>
+  <% end %>
 </div>
 
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    <div class="card shadow mb-4 border-bottom-primary">
-      <div class="card-header py-3">
-        <%= link_to edit_track_path(@track), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
-          <i class="fa fa-edit fa-sm text-white-50"></i>
-          <span> <%= t('edit') %> </span>
-        <%end%>
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-info"></i> <%= t('about') %> </h6>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label class="text-primary"> <%= t('description') %> </label><br/>
-              <input class="form-control" type="text" value="<%= @track.description %>" readonly="readonly">
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link active" href="" data-turbolinks="false" id ="button-intervals-track"> <%= t 'interval' %> </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="" data-turbolinks="false" id="button-about-track"> <%= t 'about' %> </a>
+  </li>
+</ul>
+
+<div id='about-track' class="hidden">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow mb-4 border-bottom-primary">
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-xl-12 col-lg-12">
+              <% if @track.user_id == current_user.id %>
+                <%= link_to edit_track_path(@track), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
+                  <i class="fa fa-edit fa-sm text-white-50"></i>
+                  <span> <%= t('edit') %> </span>
+                <% end %>
+              <% end %>
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label class="text-primary"> <%= t('team') %> </label><br/>
-              <input class="form-control" type="text" value="<%= @track.team&.name %>" readonly="readonly">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="text-primary"> <%= t('description') %> </label><br/>
+                <input class="form-control" type="text" value="<%= @track.description %>" readonly="readonly">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="text-primary"> <%= t('team') %> </label><br/>
+                <input class="form-control" type="text" value="<%= @track.team&.name %>" readonly="readonly">
+              </div>
             </div>
           </div>
         </div>
@@ -56,46 +70,54 @@
   </div>
 </div>
 
-<div class="row justify-content-center">
-  <div class="col-lg-10">
-    <div class="card shadow mb-4 border-bottom-primary">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-history"></i> Intervals </h6>
-      </div>
-      <div class="card-body">
-        <%= render 'track_interval', track: @track %>
-        <% if @track.intervals.present? %>
-          <table class="table table-bordered table-hover" id="dataTable">
-            <thead>
-              <tr class="text-center">
-                <th> <%= t('start') %> </th>
-                <th> <%= t('end') %> </th>
-                <th> <%= t('description') %> </th>
-                <th> <%= t('user') %> </th>
-                <th> <%= t('action') %> </th>
-              </tr>
-            </thead>
-            <% @track.intervals.includes(:user).order("id desc").each do |interval| %>
-              <tr class="text-center">
-                <td>
-                  <p class="fontColorTable"><%= interval.start_at.strftime("%F") %></p>
-                  <p class="fontColorTable"><%= interval.start_at.strftime("%T") %></p>
-                </td>
-                <td>
-                  <p class="fontColorTable"><%= interval.end_at.strftime("%F") %> </p>
-                  <p class="fontColorTable"><%= interval.end_at.strftime("%T") %> </p>
-                </td>
-                <td> <p class="fontColorTable"><%= interval.description %> </p></td>
-                <td> <p class="fontColorTable"><%= "#{interval.user.name} #{interval.user.lastname}" %> </p></td>
-                <td>
-                  <%= link_to track_interval_path(track_id: @track.id, id: interval.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger shadow-sm" do %>
-                    <i class="fa fa-trash text-light"></i>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </table>
-        <% end %>
+<div id='intervals-track'>
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow mb-4 border-bottom-primary">
+        <div class="card-body">
+          <%= render 'track_interval', track: @track %>
+          <% if @track.intervals.present? %>
+            <table class="table table-bordered table-hover" id="dataTable">
+              <thead>
+                <tr class="text-center">
+                  <th> <%= t('start') %> </th>
+                  <th> <%= t('end') %> </th>
+                  <th> <%= t('description') %> </th>
+                  <th> <%= t('user') %> </th>
+                  <th> <%= t('action') %> </th>
+                </tr>
+              </thead>
+              <% @track.intervals.includes(:user).order("id desc").each do |interval| %>
+                <tr class="text-center">
+                  <td>
+                    <p class="fontColorTable"><%= interval.start_at.strftime("%F") %></p>
+                    <p class="fontColorTable"><%= interval.start_at.strftime("%T") %></p>
+                  </td>
+                  <td>
+                    <p class="fontColorTable"><%= interval.end_at.strftime("%F") %> </p>
+                    <p class="fontColorTable"><%= interval.end_at.strftime("%T") %> </p>
+                  </td>
+                  <td> <p class="fontColorTable"><%= interval.description %> </p></td>
+                  <td> <p class="fontColorTable"><%= "#{interval.user.name} #{interval.user.lastname}" %> </p></td>
+                  <td>
+                    <% if interval.user_id == current_user.id %>
+                      <%= link_to track_interval_path(track_id: @track.id, id: interval.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                        <i class="fa fa-trash text-light"></i>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          <% else %>
+            <div class="mt-4 text-center">
+              <span class="text-danger font-weight-bold">
+                <%= t('not_intervals') %>
+                <i class="fa fa-fw fa-times text-danger"></i>
+              </span>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

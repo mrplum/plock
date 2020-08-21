@@ -193,6 +193,7 @@ es:
   finish: Finalizar
   in_progress: En Progreso
   unstarted: No Iniciado
+  email: Email
   start: Inicio
   end: Fin
   started: Iniciar
@@ -220,6 +221,7 @@ es:
   not_tracks: Aún no tienes registros
   not_areas: Aún no tienes areas
   not_teams: Aún no tienes oficinas
+  not_intervals: Aún no tienes intervalos
   proj_unfinished_tracks: Dependencias con registros sin terminar
   status_projects: Estado de mis dependencias
   not_unfinished_tracks: No tienes registros sin terminar
@@ -228,5 +230,7 @@ es:
   status_in_tracks: Estado de mis registros
   time_in_intervals: Tiempo de los intervalos de mis registros
   incorporated_at: Incorporado
-  avatar_upload: Seleccionar Imagen
-  remove_avatar: Eliminar Imagen
+  avatar_upload: Seleccionar imagen
+  remove_avatar: Eliminar imagen
+  logo_upload: Seleccionar logo
+  remove_logo: Eliminar logo

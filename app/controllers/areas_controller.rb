@@ -26,8 +26,7 @@ class AreasController < ApplicationController
   end
 
   # GET /areas/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /areas
   # POST /areas.json

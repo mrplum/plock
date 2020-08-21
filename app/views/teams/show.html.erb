@@ -1,59 +1,71 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800"> <%= @team.name %> </h1>
-  <%= link_to edit_team_path(@team), class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
-    <i class="fa fa-edit fa-sm text-white-50"></i>
-    <span> <%= t('edit_team') %></span>
-  <%end%>
 </div>
 
-<div class="row">
-  <div class="col-xl-6 col-lg-7">
-    <div class="card shadow mb-4 border-bottom-primary size-card">
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary"> <%= t('team_members') %> </h6>
-      </div>
-      <div class="card-body scroll-card ">
-        <div class="table-responsive">
-          <table class="table table-striped" id="dataTableUserTeam" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @team.users&.each do |user| %>
-                <tr class="text-center">
-                  <td>
-                    <% if user.avatar.url.present? %>
-                      <%= image_tag(user.avatar.url, alt: user.name.upcase, class: "img-profile rounded-circle", style:"width: 4rem;")%>
-                    <% else %>
-                      <img class="img-profile rounded-circle" style="width: 4rem;" src="/images/user_default.png">
-                    <% end %>
-                  </td>
-                  <td>
-                    <p class="margin-table-p"> <strong> <%= "#{user.name} #{user.lastname}" %> </strong> </p>
-                    <p class="margin-table-p"> <%= "#{t('incorporated_at')}: #{TeamUser.find_by(team_id: @team.id, user_id: user.id).incorporated_at&.strftime("%F")}" %> </p>
-                    <p class="margin-table-p"> <%= user.email %> </p>
-                  </td>
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link active" href="" data-turbolinks="false" id ="button-about-team"> <%= t 'about' %> </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="" data-turbolinks="false" id="button-statistics-team"> <%= t 'statistics' %> </a>
+  </li>
+</ul>
+
+<div id="about-team">
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card shadow mb-4 border-bottom-primary size-card">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"> <%= t('team_members') %> </h6>
+          <%= link_to edit_team_path(@team), class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
+            <i class="fa fa-edit fa-sm text-white"></i>
+            <span> <%= t('edit') %></span>
+          <%end%>
+        </div>
+        <div class="card-body scroll-card ">
+          <div class="table-responsive">
+            <table class="table table-striped" id="dataTableUserTeam" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <% @team.users&.each do |user| %>
+                  <tr class="text-center">
+                    <td>
+                      <% if user.avatar.url.present? %>
+                        <%= image_tag(user.avatar.url, alt: user.name.upcase, class: "img-profile rounded-circle", style:"width: 4rem;")%>
+                      <% else %>
+                        <img class="img-profile rounded-circle" style="width: 4rem;" src="/images/user_default.png">
+                      <% end %>
+                    </td>
+                    <td>
+                      <p class="margin-table-p"> <strong> <%= "#{user.name} #{user.lastname}" %> </strong> </p>
+                      <p class="margin-table-p"> <%= "#{t('incorporated_at')}: #{TeamUser.find_by(team_id: @team.id, user_id: user.id).incorporated_at&.strftime("%F")}" %> </p>
+                      <p class="margin-table-p"> <%= user.email %> </p>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="col-xl-6 col-lg-5">
-    <div class="card shadow mb-4 border-bottom-primary size-card">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-chart-bar"></i> <%= t('statistics') %> </h6>
-      </div>
-      <div class="card-body">
-        <div class="chart-bar" id="content">
-          <%= hidden_field_tag :team_id, @team.id %>
-          <canvas id="myBarChartTeam"></canvas>
+<div id="statistics-team" class="hidden">
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card shadow mb-4 border-bottom-primary size-card">
+        <div class="card-body">
+          <div class="chart-bar" id="content">
+            <%= hidden_field_tag :team_id, @team.id %>
+            <canvas id="myBarChartTeam"></canvas>
+          </div>
         </div>
       </div>
     </div>

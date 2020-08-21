@@ -18,7 +18,6 @@ class ProjectTest < ActiveSupport::TestCase
       name: 'Is test',
       description: 'github',
       cost: 5,
-      start_at: Date.new,
       user: @user,
       area: @area
     )
@@ -30,7 +29,6 @@ class ProjectTest < ActiveSupport::TestCase
       name: 'MyString',
       description: 'github',
       cost: 5,
-      start_at: Date.new,
       user: @user
     )
     assert_not p.valid?

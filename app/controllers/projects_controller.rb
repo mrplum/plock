@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @user = current_user
-    @projects = @user.projects.uniq
+    @projects = @user.company.projects.uniq
   end
 
   # GET /projects/1
@@ -32,8 +32,7 @@ class ProjectsController < ApplicationController
   end
 
   # GET /projects/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /projects
   # POST /projects.json
@@ -49,7 +48,11 @@ class ProjectsController < ApplicationController
         format.json { render :show, status: :created, location: @project }
       else
         flash[:danger] = @project.errors.full_messages
-        format.html { render :new }
+        if modal_params.present?
+          format.html { redirect_to root_path }
+        else
+          format.html { render new }
+        end
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
@@ -96,7 +99,11 @@ class ProjectsController < ApplicationController
     def project_params
       params[:project][:team_ids] = params.dig(:project, :team_ids).to_a.reject(&:empty?).map(&:to_i).compact
 
-      params.require(:project).permit(:name, :description, :cost, :start_at, team_ids: [])
+      params.require(:project).permit(:name, :description, :area_id, :cost, team_ids: [])
+    end
+
+    def modal_params
+      params.require(:project).permit(:modal)
     end
 
     def check_permissions

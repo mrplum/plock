@@ -8,7 +8,7 @@
 
 <div class="card shadow mb-4 border-bottom-primary">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary"><%= t('my_projects') %></h6>
+    <h6 class="m-0 font-weight-bold text-primary"><%= t('projects') %></h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -18,7 +18,6 @@
             <tr class="text-center">
               <th><%= t('name') %></th>
               <th><%= t('description') %></th>
-              <th><%= t('start_at') %></th>
               <th><%= t('team') %></th>
               <th><%= t('accion') %></th>
             </tr>
@@ -28,7 +27,6 @@
               <tr class="text-center">
                 <td><%= project.name %></td>
                 <td><%= project.description %></td>
-                <td><%= project.start_at %></td>
                 <td><%= project.team&.name %></td>
                 <td>
                   <%= link_to project_path(project), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>

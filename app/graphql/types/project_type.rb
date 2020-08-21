@@ -7,7 +7,6 @@ module Types
     field :id, ID, null: false
     field :name, String, null: false
     field :description, String, null: false
-    field :start_at, String, null: true
     field :owner, UserType, null: false
     field :team, TeamType, null: true
     field :company, CompanyType, null: true
