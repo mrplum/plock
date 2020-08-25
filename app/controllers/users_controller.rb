@@ -85,33 +85,21 @@ class UsersController < ApplicationController
   end
 
   def user_events
-    data = []
-    intervals = Interval.where(user_id: current_user.id)
-    intervals.each { |interval|
+    response = []
+    intervals = current_user.intervals.includes(:track => :project)
+    intervals.map do |interval|
       start_at = interval.start_at.strftime("%F")
       end_at = interval.end_at.strftime("%F")
       start_at_time = interval.start_at.strftime("%T")
       end_at_time = interval.end_at.strftime("%T")
-      if interval.open?
-        data << {
-          title: interval.track.name,
-          start: start_at,
-          description: interval.description,
-          start_at_time: start_at_time,
-          project: interval.track.project.name
-        }
-      else
-        data << {
-          title: interval.track.name,
-          start: start_at,
-          end: end_at,
-          description: interval.description,
-          start_at_time: start_at_time,
-          end_at_time: end_at_time,
-          project: interval.track.project.name
-        }
-      end
-    }
-    data
+      data = {
+        title: interval.track.name,
+        start: start_at,
+        description: interval.description,
+        start_at_time: start_at_time,
+        project: interval.track.project.name
+      }
+      interval.open? ? data : data.merge({ end: end_at, end_at_time: end_at_time })
+    end
   end
 end

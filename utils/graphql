@@ -1,0 +1,116 @@
+mutation login($email: String!, $password: String!){
+        login(email: $email, password: $password){
+          user {
+            id
+            token
+          }
+          errors
+        }
+      }
+
+
+
+
+ {
+    project(id: 1) {
+      name
+      tracks(first: 1) {
+        edges{
+          node{
+            name
+          }
+        }
+      }
+    teams {
+        edges{
+          node{
+            name
+          }
+        }
+      }
+      owner {
+        email
+    	}
+      team {
+        name
+        users {
+          name
+        }
+      }
+      company {
+      	name
+        owner {
+          name
+          email
+          intervals {
+            edges{
+              node{
+                description
+              }
+            }
+          }
+          
+        }
+        areas {
+          edges{
+          node{
+            name
+          }
+        }
+        }
+      }
+    }
+}
+
+
+
+
+{
+  projects {
+    name
+    team {
+      name
+      users {
+        name
+      }
+    }
+    tracks(first: 1) {
+      edges{
+        node{
+          name
+        }
+      }
+    }
+    company {
+      name
+    }
+  }
+}
+
+
+
+{
+  user {
+    name
+    email
+    tracks(first: 3) {
+      edges{
+        node{
+          name
+          status
+        }
+      }
+    }
+    projects {
+      name
+    }
+    teams {
+      name
+    }
+  }
+}
+
+{ 
+  statsByProjects
+}
+

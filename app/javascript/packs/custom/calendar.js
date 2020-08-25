@@ -13,7 +13,6 @@ if (calendarEl !== null) {
 }
 
 function functionCalendar(data) {
-  console.log(data)
   var calendar = new FullCalendar.Calendar(calendarEl, {
     locale: 'esLocale',
     headerToolbar: {
