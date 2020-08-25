@@ -27,6 +27,13 @@
     </div>
 
     <li class="nav-item">
+      <%= link_to calendar_path(current_user), class: "nav-link", data: { turbolinks: false } do %>
+          <i class="fa fa-fw fa-calendar"></i>
+          <span><%= t 'calendar' %></span>
+        <%end%>
+    </li>
+
+    <li class="nav-item">
       <%= link_to teams_path, class: "nav-link", data: { turbolinks: false } do %>
           <i class="fa fa-fw fa-users"></i>
           <span><%= t 'teams' %></span>

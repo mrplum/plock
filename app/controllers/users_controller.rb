@@ -37,6 +37,14 @@ class UsersController < ApplicationController
     redirect_to edit_user_path(user)
   end
 
+  def calendar
+    @user = current_user
+  end
+
+  def events
+    render json: user_events
+  end
+
   def data_user_in_tracks
     render json: time_in_tracks
   end
@@ -74,5 +82,36 @@ class UsersController < ApplicationController
         time: to_hours(interval['time_worked']['value'])
       }
     end
+  end
+
+  def user_events
+    data = []
+    intervals = Interval.where(user_id: current_user.id)
+    intervals.each { |interval|
+      start_at = interval.start_at.strftime("%F")
+      end_at = interval.end_at.strftime("%F")
+      start_at_time = interval.start_at.strftime("%T")
+      end_at_time = interval.end_at.strftime("%T")
+      if interval.open?
+        data << {
+          title: interval.track.name,
+          start: start_at,
+          description: interval.description,
+          start_at_time: start_at_time,
+          project: interval.track.project.name
+        }
+      else
+        data << {
+          title: interval.track.name,
+          start: start_at,
+          end: end_at,
+          description: interval.description,
+          start_at_time: start_at_time,
+          end_at_time: end_at_time,
+          project: interval.track.project.name
+        }
+      end
+    }
+    data
   end
 end

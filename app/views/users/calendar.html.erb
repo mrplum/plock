@@ -1,0 +1,48 @@
+<!-- Modal events -->
+<div class="modal fade" id="eventsModal" tabindex="-1" role="dialog" aria-labelledby="eventsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="text-primary"><%= t('start_at') %> </label>
+            <div class="form-control" type="text" readonly="readonly" id="modalBodyStart"></div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="text-primary"><%= t('end_at') %> </label>
+            <div class="form-control" type="text" readonly="readonly" id="modalBodyEnd"></div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="text-primary"><%= t('description') %> </label>
+            <div class="form-control" type="text" readonly="readonly" id="modalBodyDesc"></div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="text-primary"><%= t('project') %> </label>
+            <div class="form-control" type="text" readonly="readonly" id="modalBodyProj"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> <%= t('cancel') %> </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="calendar"></div>
+  </div>
+</div>

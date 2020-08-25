@@ -30,7 +30,6 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 var ctx2 = document.getElementById("myBarChartTeam");
 if (ctx2 !== null) {
   let team_id = document.getElementById('team_id').value;
-  console.log(team_id)
   $.ajax({
     type: "GET",
     contentType: "application/json; charset=utf-8",

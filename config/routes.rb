@@ -35,8 +35,10 @@ Rails.application.routes.draw do
       resources :tracks
     end
 
+    get 'users/:id/calendar', to: "users#calendar", as: :calendar
     patch 'users/:id/remove_avatar', to: "users#remove_avatar", as: :remove_avatar
     patch 'companies/:id/remove_logo', to: "companies#remove_logo", as: :remove_logo
+    get 'me/dataUser/events' => 'users#events', :defaults => { :format => 'json' }
     get 'me/dataUser/hoursInTracks' => 'users#data_user_in_tracks', :defaults => { :format => 'json' }
     get 'me/dataUser/hoursIntervalTime' => 'users#hours_interval_time', :defaults => { :format => 'json' }
     get 'me/dataProject/hoursMembersTeam' => 'projects#hours_members_team', :defaults => { :format => 'json' }

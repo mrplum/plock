@@ -21,6 +21,7 @@ require("datatables.net")
 require("datatables.net-dt")
 require("./template/datatables/dataTables.bootstrap4.min")
 require("./template/chart/Chart.min")
+require("./template/fullcalendar/main.min")
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
