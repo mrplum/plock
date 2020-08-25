@@ -410,8 +410,6 @@ ActiveRecord::Migration.say_with_time("Creating UNRC Structure & Examples..") do
     i = t9.intervals.create(interval)
     ActiveRecord::Migration.say("[#{index}] Adding #{i.send(:calculate_minutes)} to #{i.track.name}: #{i.persisted?}")
   end
-
-  Interval.all.each { |i| i.__elasticsearch__.index_document }
 end
 
 

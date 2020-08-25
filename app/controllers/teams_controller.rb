@@ -127,7 +127,7 @@ class TeamsController < ApplicationController
       service = Elasticsearch::DataStatistics.new({'team_id': @team.id, 'project_id': project_id })
       {
         name: project_names[index],
-        time: convert_to_hours(service.minutes_total.time_worked.value)
+        time: to_hours(service.minutes_total.time_worked.value)
       }
     end
   end

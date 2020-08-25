@@ -23,8 +23,8 @@ const BarChartComponent = (props) => {
   };
 
   if (props.chartData.length) {
-    const keys = props.chartData.map( object => object[0] )
-    const minutes = props.chartData.map( object => object[1] )
+    const keys = props.chartData.map( object => object.name )
+    const minutes = props.chartData.map( object => object.time )
     return (
       <View>
         {props.chartData &&

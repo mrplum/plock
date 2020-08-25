@@ -4,6 +4,8 @@ module Types
   # class QueryType
   #
   class QueryType < Types::BaseObject
+    include ConvertToHours
+
     def current_user
       context[:current_user]
     end
@@ -28,7 +30,8 @@ module Types
       argument :interval, String, required: true
     end
     def stats_by_time_interval(interval:)
-      UserTracksStatIntervalTime.new(current_user, interval).call
+      service = Elasticsearch::DataStatistics.new({ 'user_id': current_user.id })
+      service.minutes_by_calendar_interval(interval)
     end
 
     field :stats_by_projects,
@@ -36,9 +39,12 @@ module Types
       null: true,
       description: 'hours worked per project'
     def stats_by_projects
-      current_user.projects.map do |project| 
-        name = project.name,
-        time = ProjectUserStat.new(current_user, project).call
+      current_user.projects.map do |project|
+        service = Elasticsearch::DataStatistics.new({ 'user_id': current_user.id, 'project_id': project.id })
+        {
+          name: project.name,
+          time: to_hours(service.minutes_total['time_worked']['value'])
+        }
       end
     end
 

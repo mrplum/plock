@@ -1,4 +1,5 @@
 curl -X DELETE 'http://localhost:9200/_all'
+curl -X DELETE 'http://localhost:9200/intervals'
 curl 'http://localhost:9200/_aliases'  # show indexes create
 
 ------------------------------------------ ALL INTERVAL ------------------------------------------

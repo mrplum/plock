@@ -11,6 +11,7 @@ module Types
     field :status, String, null: false
     field :user, UserType, null: false
     field :project, ProjectType, null: false
+    field :intervals, IntervalType.connection_type, null: false
     field :created_at, String, null: true
     field :updated_at, String, null: true
   end

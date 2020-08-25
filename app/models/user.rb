@@ -27,4 +27,8 @@ class User < ApplicationRecord
   def member_of?(project)
     (project.team_ids & team_ids).any?
   end
+
+  def token
+    JsonWebToken.encode(self)
+  end
 end

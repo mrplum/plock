@@ -60,7 +60,7 @@ class UsersController < ApplicationController
       service = Elasticsearch::DataStatistics.new({'user_id': current_user.id, 'track_id': track_id })
       {
         name: track_names[index],
-        time: convert_to_hours(service.minutes_total.time_worked.value)
+        time: to_hours(service.minutes_total['time_worked']['value'])
       }
     end
   end
@@ -69,10 +69,9 @@ class UsersController < ApplicationController
     service = Elasticsearch::DataStatistics.new({'user_id': current_user.id})
     intervals = service.minutes_by_calendar_interval(params[:interval])
     data = intervals.collect do |interval|
-      time = interval.time_worked.value
       {
         date: interval['key_as_string'],
-        time: convert_to_hours(interval['time_worked']['value'])
+        time: to_hours(interval['time_worked']['value'])
       }
     end
   end
