@@ -197,6 +197,7 @@ es:
   edit: Editar
   employees: Integrantes
   created_at: Creado
+  updated_at: Actualizado
   last_sign_in: Ultimo Inicio de Sesion
   about: Información
   add_employee: Agregar Integrante
@@ -210,6 +211,7 @@ es:
   finish: Finalizar
   in_progress: En Progreso
   unstarted: No Iniciado
+  tracks_empty: No hay Registros disponibles
   email: Email
   start: Inicio
   end: Fin

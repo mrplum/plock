@@ -1,0 +1,43 @@
+<div class="card-body">
+  <%= content_tag(:div, :class => "card shadow mb-4 border-bottom-#{color_border(type)} scroll-project") do %>
+    <div class="card-header py-3">
+      <h6 class="m-0 text-dark"> <%= icon_header(type) %> <%= name_card(type) %> </h6>
+    </div>
+    <%= content_tag(:div, :class => "card-body border-left-#{color_border(type)} scroll-project") do %>
+      <%if tracks.any? %>
+        <div class="table-responsive" style="overflow-x: hidden;">
+          <table class="table" width="100%" cellspacing="0">
+            <thead>
+              <tr class="text-center">
+                <th><%= t('name') %></th>
+                <th><%= t('project') %></th>
+                <th><%= t('action') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% tracks.order("updated_at desc").each do |track| %>
+                <tr class="text-center">
+                  <td><%= track.name %></td>
+                  <td><%= track.project.name %></td>
+                  <td>
+                    <div class="row justify-content-center">
+                      <div class="mr-1">
+                        <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                          <i class="fa fa-eye fa-sm text-white"></i>
+                        <%end%>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <br>
+        <br>
+        <h3 class="text-center" ><%= t('tracks_empty') %></h3>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

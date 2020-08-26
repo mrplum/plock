@@ -21,6 +21,8 @@
                 <th><%= t('project') %></th>
                 <th><%= t('team') %> </th>
                 <th><%= t('status') %></th>
+                <th><%= t('created_at') %></th>
+                <th><%= t('updated_at') %></th>
                 <th><%= t('action') %></th>
               </tr>
             </thead>
@@ -38,6 +40,8 @@
                     <i class="fa fa-check mr-3 text-success fa-fw"></i>
                   <% end %>
                 </td>
+                <td><%= track.created_at %></td>
+                <td><%= track.updated_at %></td>
                 <td>
                   <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
                     <i class="fa fa-eye fa-sm text-white-50"></i>

@@ -7,10 +7,14 @@ class Track < ApplicationRecord
 
   validates :name, :description, presence: true
 
-  has_many :intervals
+  has_many :intervals, dependent: :destroy
   belongs_to :project, touch: true
   belongs_to :user, touch: true
   belongs_to :team, touch: true
+
+  scope :ordered_states, ->(type) {
+    order(updated_at: :desc).where(status: type).includes(:project)
+  }
 
   def has_open_intervals?
     intervals.any?(&:open?)

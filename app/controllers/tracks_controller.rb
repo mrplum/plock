@@ -9,7 +9,7 @@ class TracksController < ApplicationController
   # GET /tracks
   # GET /tracks.json
   def index
-    @tracks = Track.where(user_id: current_user.id).includes(:project)
+    @tracks = current_user.tracks.includes(:project, :team)
   end
 
   # GET /tracks/1

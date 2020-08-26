@@ -1,12 +1,53 @@
+
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <button type="button" class="float-right btn btn-sm btn-primary shadow-sm text-white" data-toggle="modal" data-target="#newTrackModal">
+    <button type="button" class="float-right btn btn-sm btn-primary shadow-sm text-white" data-toggle="modal" data-target="#newProjectModal">
       <i class="fa fa-plus fa-sm text-white"></i>
-      <span> <%= t 'new_track' %> </span>
+      <span> <%= t 'new_project' %> </span>
     </button>
+    <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-cubes mr-2"></i><%= t('my_projects') %></h6>
+  </div>
+  <div class="card-body">
+    <% if @projects.present? %>
+      <div class="row">
+        <% @projects.each_with_index do |project, index| %>
+          <div class="col-xl-3 mb-4">
+            <%= link_to project_path(project), style:"height: 80%;", class: "btn card shadow mb-3 bg-light border-bottom-info", data: { turbolinks: false } do %>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="text-center card bg-light border-3 border-info">
+                    <h4> <strong> <%= index+1 %> </strong> </h4>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="card-body">
+                    <div class="text-center">
+                      <p> <strong> <%= project.name %> </strong> </p>
+                      <p> <%= project.description %> </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <%end%>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mt-4 text-center">
+        <span class="text-danger font-weight-bold">
+          <%= t('not_projects') %>
+          <i class="fa fa-fw fa-times text-danger"></i>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-cubes mr-2"></i><%= t('my_tracks_status') %></h6>
   </div>
-<!-- Content Row -->
+  <!-- Content Row -->
   <div class="row card-body">
     <!-- total tracks -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -75,49 +116,33 @@
   </div>
 </div>
 
-<%= render 'projects/modal_new_track' %>
-<%= render 'projects/modal_new_project' %>
-
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <button type="button" class="float-right btn btn-sm btn-primary shadow-sm text-white" data-toggle="modal" data-target="#newProjectModal">
-      <i class="fa fa-plus fa-sm text-white"></i>
-      <span> <%= t 'new_project' %> </span>
-    </button>
-    <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-cubes mr-2"></i><%= t('my_projects') %></h6>
-  </div>
-  <div class="card-body">
-    <% if @projects.present? %>
-      <div class="row">
-        <% @projects.each_with_index do |project, index| %>
-          <div class="col-xl-3 mb-4">
-            <%= link_to project_path(project), style:"height: 80%;", class: "btn card shadow mb-3 bg-light border-bottom-info", data: { turbolinks: false } do %>
-              <div class="row">
-                <div class="col-md-2">
-                  <div class="text-center card bg-light border-3 border-info">
-                    <h5> <strong> <%= index+1 %> </strong> </h5>
-                  </div>
-                </div>
-                <div class="col-md-9">
-                  <div class="card-body">
-                    <div class="text-center">
-                      <p> <strong> <%= project.name %> </strong> </p>
-                      <p> <%= project.description %> </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <%end%>
+<div id=''>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card shadow mb-4 border-bottom-primary">
+        <div class="card-header py-3">
+          <button type="button" class="float-right btn btn-sm btn-primary shadow-sm text-white" data-toggle="modal" data-target="#newTrackModal">
+            <i class="fa fa-plus fa-sm text-white"></i>
+            <span> <%= t 'new_track' %> </span>
+          </button>
+          <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-cubes mr-2"></i><%= t('my_tracks') %></h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- unstarted -->
+            <%= render 'tracks/car_table_tracks', tracks: @tracks_unstarted, type: 'unstarted' %>
+            <!-- in progress -->
+            <%= render 'tracks/car_table_tracks', tracks: @tracks_progress, type: 'in_progress' %>
+            <!-- finished -->
+            <%= render 'tracks/car_table_tracks', tracks: @tracks_finished, type: 'finished' %>
           </div>
-        <% end %>
+          <br/>
+        </div>
       </div>
-    <% else %>
-      <div class="mt-4 text-center">
-        <span class="text-danger font-weight-bold">
-          <%= t('not_projects') %>
-          <i class="fa fa-fw fa-times text-danger"></i>
-        </span>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
+
+
+<%= render 'projects/modal_new_track' %>
+<%= render 'projects/modal_new_project' %>

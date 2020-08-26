@@ -77,8 +77,10 @@ class Interval < ApplicationRecord
 
   def calculate_plock_time
     minutes = calculate_minutes
-    track.plock_time = self.destroyed? ? track.plock_time - minutes.to_i : track.plock_time + minutes.to_i
-    track.save
+    if !track.destroyed?
+      track.plock_time = self.destroyed? ? track.plock_time - minutes.to_i : track.plock_time + minutes.to_i
+      track.save
+    end
   end
 
   def update_minutes
@@ -96,7 +98,7 @@ class Interval < ApplicationRecord
   end
 
   def reset_track_status
-    if track.intervals.empty? && (track.in_progress? || track.finished?)
+    if !track.destroyed? && track.intervals.empty? && (track.in_progress? || track.finished?)
       track.status = :unstarted
       track.save
     end
