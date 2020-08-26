@@ -34,7 +34,7 @@
               <%= form.label t('project'), class: "text-primary" %><br/>
               <%= form.select(
                 :project_id,
-                options_from_collection_for_select(current_user.projects, "id", "name"),
+                options_from_collection_for_select(current_user.projects.uniq, "id", "name"),
                 {},
                 { :class => 'form-control', include_blank: true,  multiple: false}) %>
             </div>

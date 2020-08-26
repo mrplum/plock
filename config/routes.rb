@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   root to: "home#index"
 
-  scope "(:locale)", locale: /es|en/ do
+  scope "(:locale)", locale: /en|es/ do
     get 'profile', to: 'users#show'
     get 'user/stadistics', to: 'users#stadistics'
     resources :companies do
