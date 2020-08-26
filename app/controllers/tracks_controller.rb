@@ -38,7 +38,7 @@ class TracksController < ApplicationController
       if @track.save
         flash[:success] = t('.success')
         if modal_params.present?
-          format.html { redirect_to project_path(@track.project) }
+          format.html { redirect_to @project.present? ? project_path(@track.project) : root_path }
           format.json { render :show, status: :created, location: @track }
         else
           format.html { redirect_to @track }
@@ -47,7 +47,7 @@ class TracksController < ApplicationController
       else
         flash[:danger] = @track.errors.full_messages
         if modal_params.present?
-          format.html { redirect_to project_path(@track.project) }
+          format.html { redirect_to @project.present? ? project_path(@track.project) : root_path }
           format.json { render json: @track.errors, status: :unprocessable_entity }
         else
           format.html { render :new }
