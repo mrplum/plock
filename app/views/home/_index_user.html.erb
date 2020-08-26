@@ -116,33 +116,30 @@
   </div>
 </div>
 
-<div id=''>
-  <div class="row">
-    <div class="col-xl-12 col-lg-12">
-      <div class="card shadow mb-4 border-bottom-primary">
-        <div class="card-header py-3">
-          <button type="button" class="float-right btn btn-sm btn-primary shadow-sm text-white" data-toggle="modal" data-target="#newTrackModal">
-            <i class="fa fa-plus fa-sm text-white"></i>
-            <span> <%= t 'new_track' %> </span>
-          </button>
-          <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-cubes mr-2"></i><%= t('my_tracks') %></h6>
+<div class="row">
+  <div class="col-xl-12 col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <button type="button" class="float-right btn btn-sm btn-primary shadow-sm text-white" data-toggle="modal" data-target="#newTrackModal">
+          <i class="fa fa-plus fa-sm text-white"></i>
+          <span> <%= t 'new_track' %> </span>
+        </button>
+        <h6 class="m-0 font-weight-bold text-primary"><i class="fa fa-fw fa-cubes mr-2"></i><%= t('my_tracks') %></h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- unstarted -->
+          <%= render 'tracks/car_table_tracks', tracks: @tracks_unstarted, type: 'unstarted' %>
+          <!-- in progress -->
+          <%= render 'tracks/car_table_tracks', tracks: @tracks_progress, type: 'in_progress' %>
+          <!-- finished -->
+          <%= render 'tracks/car_table_tracks', tracks: @tracks_finished, type: 'finished' %>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <!-- unstarted -->
-            <%= render 'tracks/car_table_tracks', tracks: @tracks_unstarted, type: 'unstarted' %>
-            <!-- in progress -->
-            <%= render 'tracks/car_table_tracks', tracks: @tracks_progress, type: 'in_progress' %>
-            <!-- finished -->
-            <%= render 'tracks/car_table_tracks', tracks: @tracks_finished, type: 'finished' %>
-          </div>
-          <br/>
-        </div>
+        <br/>
       </div>
     </div>
   </div>
 </div>
-
 
 <%= render 'projects/modal_new_track' %>
 <%= render 'projects/modal_new_project' %>
