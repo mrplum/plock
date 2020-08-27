@@ -29,7 +29,7 @@
                 <td><%= area.description %></td>
                 <td><%= area.location %></td>
                 <td>
-                  <%= link_to area_path(area), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                  <%= link_to area_path(area), title: t('show'),class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
                     <i class="fa fa-eye fa-sm text-white-50"></i>
                   <%end%>
                 </td>

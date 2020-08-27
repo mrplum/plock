@@ -6,9 +6,10 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
 
-  root to: "home#index"
+  scope "(:locale)", locale: ENV['LANGUAGE'] || /en|es/ do
 
-  scope "(:locale)", locale: /en|es/ do
+    root to: "home#index"
+
     get 'profile', to: 'users#show'
     get 'user/stadistics', to: 'users#stadistics'
     resources :companies do

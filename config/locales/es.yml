@@ -1,4 +1,14 @@
 es:
+  log_in: INICIAR SESIÓN
+  welcome: Bienvenidos a Plock
+  motivation: Plock está cambiando la forma en que operan las empresas
+  motivation1: Permite trabajar de forma más colaborativa y ser más productivo.
+  characteristic1_title: Gestión de proyectos probada para equipos exitosos
+  characteristic1_body: Con una visión compartida de las prioridades del equipo, un proceso que fomenta la colaboración y herramientas dinámicas para analizar el progreso, su equipo entregará resultados con mayor frecuencia y coherencia.
+  characteristic2_title: Transparencia del equipo de un vistazo
+  characteristic2_body: Con una visión clara y compartida del trabajo de su equipo, todos tienen una única fuente de verdad en tiempo real. Un análisis rápido explica el estado de su equipo y quién es responsable de qué.
+  characteristic3_title: Manual de estrategia de equipo
+  characteristic3_body: No encontrarás complicaciones a la hora de configurar y poner a trabajar a todo tu equipo con Plock. Hemos reunido todos los tableros y herramientas que necesita para lograr el éxito en un recurso práctico.
   areas:
     create:
       success: El area ha sido creada correctamente.
@@ -202,6 +212,10 @@ es:
   about: Información
   add_employee: Agregar Integrante
   back: Volver
+  show: Ver
+  delete: Borrar
+  resume: Reanudar
+  confirm: '¿Estás seguro?'
   owner: Propietario
   start_at: Empezado
   end_at: Terminado
@@ -254,3 +268,4 @@ es:
   logo_upload: Seleccionar logo
   remove_logo: Eliminar logo
   calendar: Calendario
+  working_day: Jornada laboral

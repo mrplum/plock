@@ -93,7 +93,9 @@
                       </td>
                       <td>
                         <p class="margin-table-p"> <strong> <%= "#{user.name} #{user.lastname}" %> </strong> </p>
-                        <p class="margin-table-p"> <%= "#{t('last_sign_in')}: #{user.last_sign_in_at&.strftime("%F %T")}" %> </p>
+                        <% if user.last_sign_in_at.present? %>
+                          <p class="margin-table-p"> <%= "#{t('last_sign_in')}: #{user.last_sign_in_at&.strftime("%F %T")}" %> </p>
+                        <% end %>
                         <p class="margin-table-p"> <%= user.email %> </p>
                       </td>
                     </tr>

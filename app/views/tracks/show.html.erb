@@ -101,7 +101,7 @@
                   <td> <p class="fontColorTable"><%= "#{interval.user.name} #{interval.user.lastname}" %> </p></td>
                   <td>
                     <% if interval.user_id == current_user.id %>
-                      <%= link_to track_interval_path(track_id: @track.id, id: interval.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                      <%= link_to track_interval_path(track_id: @track.id, id: interval.id), method: :delete, data: { confirm: t('confirm') }, class: "btn btn-sm btn-danger shadow-sm" do %>
                         <i class="fa fa-trash text-light"></i>
                       <% end %>
                     <% end %>

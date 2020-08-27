@@ -30,6 +30,16 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  log_in: LOG IN
+  welcome: Welcome to Plock
+  motivation: Plock is changing the way companies operate
+  motivation1: Allows you to work more collaboratively and be more productive.
+  characteristic1_title: Proven project management for successful teams
+  characteristic1_body: With a shared view of team priorities, a process that fosters collaboration, and dynamic tools to analyze progress, your team will deliver more frequently and consistently.
+  characteristic2_title: Team transparency a glance
+  characteristic2_body: With a shared, clear view of your team's work, everyone has a real-time, single source of truth. A quick scan explains your team's status and who's responsible for what.
+  characteristic3_title: Team Strategy Manual
+  characteristic3_body: You will not find complications when configuring and putting your entire team to work with Plock. We have gathered all the boards and tools you need to achieve success in a practical resource.
   areas:
     create:
       success: Area was successfully created.
@@ -76,6 +86,7 @@ en:
     update:
       success: Profile was successfully updated.
 
+  area: Area
   areas: Areas
   description: Description
   company: Company
@@ -86,6 +97,7 @@ en:
   my_tracks: My Tracks
   my_tracks_status: My Tracks status
   name: Name
+  email: Email
   new: New
   new_area: New Area
   new_project: New Project
@@ -125,3 +137,16 @@ en:
   password: Password
   new_password: New password
   password_confirmation: Password confirmation
+  last_sign_in: Last login
+  show: Show
+  back: Back
+  delete: Destroy
+  resume: Resume
+  finish: Finish
+  confirm: 'Are you sure?'
+  add_employee: Add member
+  add_user: Add employee
+  location: Location
+  calendar: Calendar
+  statistics: Stadistics
+  working_day: Workday

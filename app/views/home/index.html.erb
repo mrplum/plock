@@ -2,15 +2,15 @@
   <div id="index_id" class="card">
     <div class="card-header py-3">
       <%= link_to new_user_session_path, class: "btn btn-primary float-right" do %>
-        <span> SIGN IN </span>
+        <span> <%= t('log_in') %> </span>
       <%end%>
       <h2><%= link_to 'PLOCK', root_path, class: "m-0 font-weight-bold text-primary", data: { turbolinks: false }, style:'text-decoration: none;'%></h2>
     </div>
     <div class="card-body">
 
-      <h1 class="h1-home font-weight-bold text-center text-dark">Welcome to Plock</h1>
-      <h2 class="font-weight-bold text-center text-dark"> Plock is changing the way companies operate </h2>
-      <h3 class="text-center"><small class="text-muted">allows you to work more collaboratively and be more productive.</small></h3>
+      <h1 class="h1-home font-weight-bold text-center text-dark"><%= t('welcome') %></h1>
+      <h2 class="font-weight-bold text-center text-dark"><%= t('motivation') %></h2>
+      <h3 class="text-center"><small class="text-muted"><%= t('motivation1') %></small></h3>
 
       <div class="card o-hidden border-0">
         <div class="card-body p-0">
@@ -21,36 +21,25 @@
 
                   <div class="card-home">
                     <div class="card text-white bg-success mb-3" style="max-width: 30rem;">
-                      <div class="card-header text-center"> <b>Proven project management for successful teams</b> </div>
+                      <div class="card-header text-center"> <b> <%= t('characteristic1_title') %> </b> </div>
                       <div class="card-body">
-                        <h5 class="card-title">  </h5>
-                        <p class="card-text">With a shared view of team priorities, a process
-                          that fosters collaboration, and dynamic tools to analyze progress,
-                          your team will deliver more frequently and consistently.</p>
+                        <p class="card-text"><%= t('characteristic1_body') %></p>
                       </div>
                     </div>
                   </div>
                   <div class="card-home">
                     <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
-                      <div class="card-header text-center"> <b> Team transparency at a glance </b> </div>
+                      <div class="card-header text-center"> <b> <%= t('characteristic2_title') %> </b> </div>
                       <div class="card-body">
-                        <h5 class="card-title">  </h5>
-                        <p class="card-text">With a shared, clear view of your team's work,
-                          everyone has a real-time, single source of truth. A
-                          quick  scan explains your team's status, who's
-                          responsible for what.</p>
+                        <p class="card-text"><%= t('characteristic2_body') %></p>
                       </div>
                     </div>
                   </div>
                   <div class="card-home">
                     <div class="card text-white bg-primary mb-3" style="max-width: 30rem;">
-                      <div class="card-header text-center"> <b> Team Strategy Manual </b></div>
+                      <div class="card-header text-center"> <b> <%= t('characteristic3_title') %> </b></div>
                       <div class="card-body">
-                        <h5 class="card-title">  </h5>
-                        <p class="card-text"> You will not find complications when
-                          configuring and putting your entire team to work with Plock. We
-                          have gathered all the boards and tools you need to achieve success
-                          in a practical resource.</p>
+                        <p class="card-text"> <%= t('characteristic3_body') %> </p>
                       </div>
                     </div>
                   </div>

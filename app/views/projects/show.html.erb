@@ -104,19 +104,19 @@
                                   <%= form_with(model: [track, interval = Interval.new], local: true) do |form| %>
                                     <%= form.hidden_field 'start_track', value: true %>
                                     <%= form.hidden_field 'modal', value: true %>
-                                    <%= form.button class: 'btn btn-sm btn-info shadow-sm', data: { turbolinks: false } do %>
+                                    <%= form.button title: t('resume'), class: 'btn btn-sm btn-info shadow-sm', data: { turbolinks: false } do %>
                                       <i class="fa fa-play fa-sm text-white"></i>
                                     <% end %>
                                   <% end %>
                                 </div>
                                 <div class="mr-1">
-                                  <%= link_to track, method: :delete, data: { confirm: 'Are you sure?', turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                                  <%= link_to track, title: t('delete'), method: :delete, data: { confirm: t('confirm'), turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
                                     <i class="fa fa-trash fa-sm fa-sm text-white"></i>
                                   <% end %>
                                 </div>
                               <% end %>
                               <div class="mr-1">
-                                <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                                <%= link_to track, title: t('show'), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
                                   <i class="fa fa-eye fa-sm text-white"></i>
                                 <%end%>
                               </div>
@@ -164,7 +164,7 @@
                                       <%= form_with(model: [track, interval = Interval.new], local: true) do |form| %>
                                         <%= form.hidden_field 'start_track', value: true %>
                                         <%= form.hidden_field 'modal', value: true %>
-                                        <%= form.button class: 'btn btn-sm btn-info shadow-sm', data: { turbolinks: false } do %>
+                                        <%= form.button title: t('resume'), class: 'btn btn-sm btn-info shadow-sm', data: { turbolinks: false } do %>
                                           <i class="fa fa-retweet fa-sm text-white"></i>
                                         <% end %>
                                       <%end%>
@@ -174,19 +174,19 @@
                                     <%= form_with(model: [track, track.intervals.last], local: true) do |form| %>
                                       <%= form.hidden_field 'close_track', value: true %>
                                       <%= form.hidden_field 'modal', value: true %>
-                                      <%= form.button class: 'btn btn-sm btn btn-success shadow-sm' do %>
+                                      <%= form.button title: t('finish'), class: 'btn btn-sm btn btn-success shadow-sm' do %>
                                         <i class="fa fa-check fa-sm text-white"></i>
                                       <% end %>
                                     <% end %>
                                   </div>
                                   <div class="mr-1">
-                                    <%= link_to track, method: :delete, data: { confirm: 'Are you sure?', turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                                    <%= link_to track, title: t('delete'), method: :delete, data: { confirm: t('confirm'), turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
                                       <i class="fa fa-trash fa-sm text-white"></i>
                                     <% end %>
                                   </div>
                                 <% end %>
                                 <div class="mr-1">
-                                  <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                                  <%= link_to track, title: t('show'), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
                                     <i class="fa fa-eye fa-sm text-white"></i>
                                   <%end%>
                                 </div>
@@ -221,11 +221,11 @@
                             <td><%= track.name %></td>
                             <td>
                               <% if track.user_id == current_user.id %>
-                                <%= link_to track, method: :delete, data: { confirm: 'Are you sure?', turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                                <%= link_to track, title: t('delete'), method: :delete, data: { confirm: t('confirm'), turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
                                   <i class="fa fa-trash fa-sm text-white"></i>
                                 <% end %>
                               <% end %>
-                              <%= link_to track, class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
+                              <%= link_to track, title: t('show'), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
                                 <i class="fa fa-eye fa-sm text-white"></i>
                               <%end%>
                             </td>
