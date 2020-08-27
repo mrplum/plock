@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
 
-  scope "(:locale)", locale: ENV['LANGUAGE'] || /en|es/ do
+  authenticate :user, lambda { |u| u.company&.owner_id == u.id } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
+  scope "(:locale)", locale: /en|es/ do
 
     root to: "home#index"
 
@@ -18,9 +22,6 @@ Rails.application.routes.draw do
       get 'accept_invitation_to_company', on: :collection
     end
 
-    authenticate :user, lambda { |u| u.company&.owner_id == u.id } do
-      mount Sidekiq::Web => '/sidekiq'
-    end
 
     devise_for :users
     resources :users
