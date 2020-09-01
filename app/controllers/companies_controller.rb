@@ -9,12 +9,14 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.json
   def show
+    authorize @company
     @projects = @company.projects
   end
 
   # GET /companies/new
   def new
     @company = Company.new
+    authorize @company
   end
 
   # GET /companies/1/edit
@@ -24,7 +26,7 @@ class CompaniesController < ApplicationController
   # POST /companies.json
   def create
     @company = Company.new(company_params.merge({owner_id: current_user.id}))
-
+    authorize @company
     respond_to do |format|
       if @company.save
         current_user.company_id = @company.id
@@ -49,6 +51,7 @@ class CompaniesController < ApplicationController
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json
   def update
+    authorize @company
     respond_to do |format|
       if @company.update(company_params)
         flash[:success] = t('.success')
@@ -66,6 +69,7 @@ class CompaniesController < ApplicationController
     email = params[:email]
     pass = "password"
     @company = Company.find_by(id: params[:company_id])
+    authorize @company
     user = User.new(name: "your name", lastname: "your lastname", email: email, password: pass, company_id: params[:company_id], incorporated_at: DateTime.now)
     respond_to do |format|
       if user.save
@@ -84,6 +88,7 @@ class CompaniesController < ApplicationController
   def subscribe_user
     company_id = params[:company_id]
     @company = Company.find_by(id: company_id)
+    authorize @company
     @user = User.find(@company.id)
     respond_to do |format|
       format.html { render :_addUsers, user: @user  }
@@ -97,6 +102,7 @@ class CompaniesController < ApplicationController
 
   def remove_logo
     company = Company.find(params[:id])
+    authorize company
     company.update(logo: nil)
     redirect_to edit_company_path(company)
   end

@@ -6,7 +6,6 @@ class ProjectsController < ApplicationController
   include ConvertToHours
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :set_project_api, only: [ :hours_members_team ]
-  before_action :check_permissions, only: [ :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /projects
@@ -20,6 +19,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
+    authorize @project
     @tracks = @project.tracks
     @tracks_unstarted = @project.tracks.where(status: :unstarted)
     @tracks_in_progress = @project.tracks.where(status: :in_progress)
@@ -32,7 +32,9 @@ class ProjectsController < ApplicationController
   end
 
   # GET /projects/1/edit
-  def edit; end
+  def edit
+    authorize @project
+  end
 
   # POST /projects
   # POST /projects.json
@@ -61,6 +63,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    authorize @project
     respond_to do |format|
       if @project.update(project_params)
         flash[:success] = t('.success')
@@ -77,6 +80,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
+    authorize @project
     @project.destroy
     respond_to do |format|
       flash[:success] = t('.success')
@@ -104,12 +108,6 @@ class ProjectsController < ApplicationController
 
     def modal_params
       params.require(:project).permit(:modal)
-    end
-
-    def check_permissions
-      unless @project.user_id == current_user.id
-        redirect_to projects_path, flash: { danger: 'Not authorized!' }
-      end
     end
 
     def set_project_api

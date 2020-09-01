@@ -5,7 +5,6 @@ class TeamsController < ApplicationController
   include ConvertToHours
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :set_team_api, only: [ :hours_to_projects ]
-  before_action :check_permissions, only: [ :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /teams
@@ -19,6 +18,7 @@ class TeamsController < ApplicationController
   # GET /teams/1.json
   def show
     @team = Team.find(params[:id])
+    authorize @team
   end
 
   # GET /teams/new
@@ -27,7 +27,9 @@ class TeamsController < ApplicationController
   end
 
   # GET /teams/1/edit
-  def edit; end
+  def edit
+    authorize @team
+  end
 
   # POST /teams
   # POST /teams.json
@@ -54,6 +56,7 @@ class TeamsController < ApplicationController
   # PATCH/PUT /teams/1
   # PATCH/PUT /teams/1.json
   def update
+    authorize @team
     respond_to do |format|
       if @team.update(team_params)
         TeamUser.create(team_id: @team.id,user_id: current_user.id, incorporated_at: DateTime.now)
@@ -74,6 +77,7 @@ class TeamsController < ApplicationController
   # DELETE /teams/1
   # DELETE /teams/1.json
   def destroy
+    authorize @team
     @team.destroy
     respond_to do |format|
       flash[:success] = t('.success')
@@ -107,12 +111,6 @@ class TeamsController < ApplicationController
     params[:team][:user_ids] = params.dig(:team, :user_ids).to_a.reject(&:empty?).map(&:to_i).compact
 
     params.require(:team).permit(:name, :project_id, user_ids: [])
-  end
-
-  def check_permissions
-    unless @team.team_users.minimum(:incorporated_at) == @team.team_users.find_by(user_id: current_user.id)&.incorporated_at
-      redirect_to teams_path, flash: { danger: 'Not authorized!' }
-    end
   end
 
   def set_team_api

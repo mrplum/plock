@@ -5,12 +5,11 @@
 class IntervalsController < ApplicationController
   before_action :authenticate_user!
   before_action :get_track, only: [:new, :update]
-  before_action :check_owner_track, only: [:create]
   before_action :get_interval, only: [:update, :destroy]
-  before_action :check_owner_interval, only: [:destroy, :update]
 
   def new
     @interval = @track.intervals.build(user_id: current_user.id)
+    authorize @track
   end
 
   def create
@@ -26,7 +25,7 @@ class IntervalsController < ApplicationController
         end_at: end_at
       })
     )
-
+    authorize params[:track_id]
     respond_to do |format|
       if @interval.save
         if modal_params.present? && modal_params[:modal] != 'complete'
@@ -60,6 +59,7 @@ class IntervalsController < ApplicationController
   end
 
   def update
+    authorize @interval
     respond_to do |format|
       if @interval.update(interval_params.merge({end_at: DateTime.now}))
         if modal_params.present? && modal_params[:modal] != 'complete'
@@ -83,6 +83,7 @@ class IntervalsController < ApplicationController
   end
 
   def destroy
+    authorize @interval
     @interval.destroy
     respond_to do |format|
       flash[:success] = t('.success')
@@ -108,30 +109,6 @@ class IntervalsController < ApplicationController
 
     def get_interval
       @interval = @track&.open_interval || Interval.find(params[:id])
-    end
-
-    def check_owner_interval
-      interval = Interval.find(params[:id])
-      if interval.user_id != current_user.id
-        if params[:modal].present? && params[:modal] != 'complete'
-          project = Track.find_by(id: params[:track_id]).project
-          redirect_to project_path(project), flash: { danger: t('error_permission') }
-        else
-          redirect_to track_path(params[:track_id]), flash: { danger: t('error_permission') }
-        end
-      end
-    end
-
-    def check_owner_track
-      track = Track.find(params[:track_id])
-      if track.user_id != current_user.id
-        if modal_params.present? && modal_params[:modal] != 'complete'
-          project = Track.find_by(id: params[:track_id]).project
-          redirect_to project_path(project), flash: { danger: t('error_permission') }
-        else
-          redirect_to track_path(params[:track_id]), flash: { danger: t('error_permission') }
-        end
-      end
     end
 
     def automatic_interval_creation?

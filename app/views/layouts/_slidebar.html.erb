@@ -47,7 +47,7 @@
         <%end%>
     </li>
 
-    <% if current_user.admin? %>
+    <% if policy(:admin).sidebar? %>
       <!-- Divider -->
       <hr class="sidebar-divider">
 

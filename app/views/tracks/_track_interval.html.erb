@@ -1,4 +1,4 @@
-<% if @track.user_id == current_user.id %>
+<% if policy(@track).update? %>
   <%= render 'modal_new_interval', track: @track%>
   <div class="text-center">
     <% if track.unstarted? %>

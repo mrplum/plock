@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   around_action :switch_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -39,7 +41,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
   def extract_locale_from_accept_language_header
     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+  end
+
+  def user_not_authorized
+    flash[:danger] = t('not_authorized_error')
+    redirect_to(request.referrer || root_path)
   end
 end

@@ -81,5 +81,7 @@ gem 'carrierwave', '~> 2.0'
 
 gem 'fog-aws'
 
+gem 'pundit'
+
 # read .env
 gem 'dotenv-rails'

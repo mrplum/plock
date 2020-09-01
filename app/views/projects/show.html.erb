@@ -18,7 +18,7 @@
         <div class="card-body">
           <div class="row mb-3">
             <div class="col-xl-12 col-lg-12">
-              <% if current_user == @project.user%>
+              <% if policy(@project).update? %>
                 <%= link_to edit_project_path(@project), class: "float-right btn btn-sm btn-primary shadow-sm" do %>
                   <i class="fa fa-edit fa-sm text-white"></i>
                   <span> <%= t 'edit' %> </span>
@@ -99,7 +99,7 @@
                           <td><%= track.name %></td>
                           <td>
                             <div class="row justify-content-center">
-                              <% if track.user_id == current_user.id %>
+                              <% if policy(track).update? %>
                                 <div class="mr-1">
                                   <%= form_with(model: [track, interval = Interval.new], local: true) do |form| %>
                                     <%= form.hidden_field 'start_track', value: true %>
@@ -109,6 +109,8 @@
                                     <% end %>
                                   <% end %>
                                 </div>
+                              <% end %>
+                              <% if policy(track).destroy? %>
                                 <div class="mr-1">
                                   <%= link_to track, title: t('delete'), method: :delete, data: { confirm: t('confirm'), turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
                                     <i class="fa fa-trash fa-sm fa-sm text-white"></i>
@@ -150,7 +152,7 @@
                             <td><%= track.name %></td>
                             <td>
                               <div class="row justify-content-center">
-                                <% if track.user_id == current_user.id %>
+                                <% if policy(track).update? %>
                                   <div class="mr-1">
                                     <% if track.open_interval %>
                                       <%= form_with(model: [track, track.open_interval], local: true) do |form| %>
@@ -179,6 +181,8 @@
                                       <% end %>
                                     <% end %>
                                   </div>
+                                <% end %>
+                                <% if policy(track).destroy? %>
                                   <div class="mr-1">
                                     <%= link_to track, title: t('delete'), method: :delete, data: { confirm: t('confirm'), turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
                                       <i class="fa fa-trash fa-sm text-white"></i>
@@ -220,7 +224,7 @@
                           <tr class="text-center">
                             <td><%= track.name %></td>
                             <td>
-                              <% if track.user_id == current_user.id %>
+                              <% if policy(track).destroy? %>
                                 <%= link_to track, title: t('delete'), method: :delete, data: { confirm: t('confirm'), turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
                                   <i class="fa fa-trash fa-sm text-white"></i>
                                 <% end %>

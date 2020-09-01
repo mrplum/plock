@@ -3,7 +3,6 @@ class TracksController < ApplicationController
   before_action :get_track, only: [:show, :edit, :update, :destroy]
   before_action :get_team, only: [:create, :update]
   before_action :get_project, only: [:new, :create, :update, :destroy]
-  before_action :check_permissions, only: [:new, :create, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /tracks
@@ -16,15 +15,19 @@ class TracksController < ApplicationController
   # GET /tracks/1.json
   def show
     @track = Track.includes(:intervals => :user).find(params[:id])
+    authorize @track
   end
 
   # GET /tracks/new
   def new
     @track = Track.new
+    authorize @track
   end
 
   # GET /tracks/1/edit
-  def edit; end
+  def edit
+    authorize @track
+  end
 
   # POST /tracks
   # POST /tracks.json
@@ -34,6 +37,7 @@ class TracksController < ApplicationController
     else
       @track = Track.new(track_params.merge({user_id: current_user.id, project_id: @project&.id}))
     end
+    authorize @track
     respond_to do |format|
       if @track.save
         flash[:success] = t('.success')
@@ -60,6 +64,7 @@ class TracksController < ApplicationController
   # PATCH/PUT /tracks/1
   # PATCH/PUT /tracks/1.json
   def update
+    authorize @track
     respond_to do |format|
       if @track.update(track_params)
         flash[:success] = t('.success')
@@ -76,6 +81,7 @@ class TracksController < ApplicationController
   # DELETE /tracks/1
   # DELETE /tracks/1.json
   def destroy
+    authorize @track
     @track.destroy
     respond_to do |format|
       flash[:success] = t('.success')
@@ -112,28 +118,9 @@ class TracksController < ApplicationController
       @project ||= @track&.project
     end
 
-    def check_team_invitation
-      TeamUser.where("team_id IN :teams", @project.team_ids)
-        .find_by(user_id: current_user.id)
-        .incorporated?
-    end
-
-    def check_user_memebership
-      current_user.member_of?(@project) unless @project
-    end
-
-    def check_user_ownership
-      Project.where(user_id: current_user).exists?
-    end
-
-    def check_permissions
-      # This user doesn't have any project yet (not owner nor member)
-      if !(check_user_ownership || check_user_memebership)
-        redirect_to tracks_path, flash: { danger: 'You do not have any project' }
-
-      # ToDo: I don't get the reason of this check
-      # else  check_team_invitation
-      #   redirect_to project_path(@project.id), flash: { danger: 'Not authorized!' }
-      end
-    end
+    # def check_team_invitation
+    #   TeamUser.where("team_id IN :teams", @project.team_ids)
+    #     .find_by(user_id: current_user.id)
+    #     .incorporated?
+    # end
 end

@@ -4,12 +4,12 @@
 #
 class AreasController < ApplicationController
   before_action :set_area, only: [:show, :edit, :update, :destroy]
-  # before_action :check_permissions, only: [ :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /areas
   # GET /areas.json
   def index
+    authorize Area
     @user = current_user
     @areas = Area.where(company_id: @user.company_id)
   end
@@ -18,11 +18,13 @@ class AreasController < ApplicationController
   # GET /areas/1.json
   def show
     @area = Area.find(params[:id])
+    authorize @area
   end
 
   # GET /areas/new
   def new
     @area = Area.new
+    authorize @area
   end
 
   # GET /areas/1/edit
@@ -32,6 +34,7 @@ class AreasController < ApplicationController
   # POST /areas.json
   def create
     @area = Area.new(area_params.merge({ company_id: current_user.company_id }))
+    authorize @area
 
     respond_to do |format|
       if @area.save
@@ -49,6 +52,7 @@ class AreasController < ApplicationController
   # PATCH/PUT /areas/1
   # PATCH/PUT /areas/1.json
   def update
+    authorize @area
     respond_to do |format|
       if @area.update(area_params)
         flash[:success] = t('.success')
@@ -65,6 +69,7 @@ class AreasController < ApplicationController
   # DELETE /areas/1
   # DELETE /areas/1.json
   def destroy
+    authorize @area
     @area.destroy
     respond_to do |format|
       flash[:success] = t('.success')
@@ -93,11 +98,5 @@ class AreasController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def area_params
       params.require(:area).permit(:name, :description, :location)
-    end
-
-    def check_permissions
-      unless @area.user_id == current_user.id
-        redirect_to areas_path, flash: { danger: 'Not authorized!' }
-      end
     end
 end
