@@ -20,7 +20,7 @@ class TracksController < ApplicationController
 
   # GET /tracks/new
   def new
-    @track = Track.new
+    @track = Track.new(project_id: @project.id)
     authorize @track
   end
 

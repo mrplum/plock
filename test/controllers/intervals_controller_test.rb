@@ -28,13 +28,13 @@ class IntervalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update interval' do
-    patch track_interval_url(@track.id, @interval.id, locale: 'en'), params: {
+    patch track_interval_url(@track1.id, @interval.id, locale: 'en'), params: {
       interval: {
         end_at: DateTime.now
       }
     }
 
-    assert_redirected_to track_url(@track.id, locale: 'en')
+    assert_redirected_to track_url(@track1.id, locale: 'en')
   end
 
   test 'should delete interval' do

@@ -4,7 +4,7 @@
 #
 class IntervalsController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_track, only: [:new, :update]
+  before_action :get_track, only: [:new, :create, :update]
   before_action :get_interval, only: [:update, :destroy]
 
   def new
@@ -20,12 +20,12 @@ class IntervalsController < ApplicationController
     @interval = Interval.new(
       interval_params.merge({
         user_id: current_user.id,
-        track_id: params[:track_id],
+        track_id: @track.id,
         start_at: start_at,
         end_at: end_at
       })
     )
-    authorize params[:track_id]
+    authorize @track
     respond_to do |format|
       if @interval.save
         if modal_params.present? && modal_params[:modal] != 'complete'

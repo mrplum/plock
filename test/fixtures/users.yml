@@ -7,6 +7,8 @@
 one:
   name: User One
   email: a@b.com
+  admin: true
+  company: one
 
 two:
   name: User Two

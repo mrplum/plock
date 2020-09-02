@@ -12,7 +12,7 @@ one:
 two:
   description: 'interval 2'
   track: two
-  user: one
+  user: matias
   description: "description2"
   start_at: "2020-01-22 15:31:10 UTC"
   end_at: "2020-01-22 15:31:10 UTC"
@@ -27,7 +27,7 @@ three:
   end_at: "2020-01-22 16:01:10 UTC"
   minutes: 30
 
-four: 
+four:
   description: 'interval 4'
   track: two
   user: one
@@ -36,7 +36,7 @@ four:
   end_at: "2020-01-22 15:31:10 UTC"
   minutes: 0
 
-five: 
+five:
   description: 'divide interval'
   track: one
   user: one
