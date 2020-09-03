@@ -2,7 +2,6 @@ document.onreadystatechange = () => {
   if (document.readyState === 'complete') {
     require("packs/custom/sidebar")
     require("packs/custom/home_index")
-    require("packs/custom/buttons")
     require("packs/custom/calendar")
     require("packs/custom/datatables")
     require("packs/custom/flash")

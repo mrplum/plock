@@ -1,14 +1,16 @@
 # Examples usage
-# service = Elasticsearch::DataStatistics.new({'user_id': 4, 'project_id': 1, 'area_id': 1, 'start_at': {from_at: '2020-08-01', to_at:'2020-12-31'}})
+# service = Elasticsearch::DataStatistics.new({'user_id': 1, 'project_id': 1, 'area_id': 1, 'start_at': {from_at: '2020-08-01', to_at:'2020-12-31'}})
 # service.filter_intervals
 # service.minutes_total
 # service.minutes_by_calendar_interval('day')
 class Elasticsearch::DataStatistics
+  MAX_DOCUMENTS = 10000.freeze
+
   MATCH_PARAMS = ['user_id', 'area_id', 'company_id', 'track_id', 'project_id', 'team_id'].freeze
   BETWEEN_PARAMS = ['start_at', 'end_at'].freeze
   FORMAT_DATE = "yyyy-MM-dd".freeze
 
-  def initialize(params)
+  def initialize(params = {})
     @params = params
   end
 
@@ -58,7 +60,7 @@ class Elasticsearch::DataStatistics
           "#{key}": {
             format: FORMAT_DATE,
             gte: "#{value[:from_at]}",
-            lte: "#{value[:to_at]}", 
+            lte: "#{value[:to_at]}"
           }
         }
       } if BETWEEN_PARAMS.include?(key.to_s) && value.length == 2
@@ -76,6 +78,7 @@ class Elasticsearch::DataStatistics
 
   def filter_data
     {
+      size: MAX_DOCUMENTS,
       query: {
         bool: filter
       }

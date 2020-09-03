@@ -107,6 +107,21 @@ class CompaniesController < ApplicationController
     redirect_to edit_company_path(company)
   end
 
+  def report_employees
+    company = Company.find(params[:company_id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        send_data(
+          EmployeesReportPdf.new({ company: company, 'type': params[:type_report] }).render,
+          filename: "#{t("pdf.employee_report")}.pdf",
+          type: 'application/pdf',
+          disposition: 'inline'
+        )
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

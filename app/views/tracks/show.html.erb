@@ -26,16 +26,12 @@
   <% end %>
 </div>
 
-<ul class="nav nav-tabs mb-3">
-  <li class="nav-item">
-    <a class="nav-link active" href="" data-turbolinks="false" id ="button-intervals-track"> <%= t 'intervals' %> </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="" data-turbolinks="false" id="button-about-track"> <%= t 'about' %> </a>
-  </li>
-</ul>
+<div class="tab nav nav-tabs mb-3">
+  <button class="tablinks nav-link" id="defaultButton" onclick="renderDiv(event,'intervals-track')" > <%= t 'intervals' %> </button>
+  <button class="tablinks nav-link" onclick="renderDiv(event, 'about-track')"> <%= t 'about' %> </button>
+</div>
 
-<div id='about-track' class="hidden">
+<div id='about-track' class="tabcontent">
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <div class="card shadow mb-4 border-bottom-primary">
@@ -70,7 +66,7 @@
   </div>
 </div>
 
-<div id='intervals-track'>
+<div id='intervals-track' class="tabcontent">
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <div class="card shadow mb-4 border-bottom-primary">
@@ -122,3 +118,7 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById("defaultButton").click();
+</script>

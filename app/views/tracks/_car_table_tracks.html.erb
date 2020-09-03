@@ -1,10 +1,10 @@
 <div class="card-body">
-  <%= content_tag(:div, :class => "card shadow mb-4 border-bottom-#{color_border(type)} scroll-project") do %>
+  <%= content_tag(:div, :class => "card shadow mb-4 border-bottom-#{color_border(type)}") do %>
     <div class="card-header py-3">
       <h6 class="m-0 text-dark"> <%= icon_header(type) %> <%= name_card(type) %> </h6>
     </div>
     <%= content_tag(:div, :class => "card-body border-left-#{color_border(type)} scroll-project") do %>
-      <%if tracks.any? %>
+      <% if tracks.any? %>
         <div class="table-responsive" style="overflow-x: hidden;">
           <table class="table" width="100%" cellspacing="0">
             <thead>
@@ -24,7 +24,7 @@
                       <div class="mr-1">
                         <%= link_to track, title: t('show')  ,class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
                           <i class="fa fa-eye fa-sm text-white"></i>
-                        <%end%>
+                        <% end %>
                       </div>
                     </div>
                   </td>

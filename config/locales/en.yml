@@ -151,3 +151,28 @@ en:
   calendar: Calendar
   statistics: Stadistics
   working_day: Workday
+  reports: Reports
+  type_reports: Types of reports
+  type: Type
+  intervals: Intervals
+  tracks: Tracks
+  start_at: Start at
+  end_at: End at
+  complete: Complete
+
+  pdf:
+    employee_report: employee_report
+    report_to_employees: REPORT TO EMPLOYEES
+    company: COMPANY
+    description: DESCRIPTION
+    employee: EMPLOYEE
+    hours: HOURS
+    email: EMAIL
+    email_: Email
+    lastname: Lastname
+    name: Name
+    average: Average
+    total: Total
+    generate: Generate PDF
+    date: Date
+    year: YEAR

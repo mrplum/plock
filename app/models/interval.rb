@@ -9,7 +9,7 @@ class Interval < ApplicationRecord
   attr_accessor :close_track, :start_track
 
   belongs_to :track, touch: true
-  belongs_to :user
+  belongs_to :user, touch: true
 
   validate :no_other_open_interval, on: %i[create]
   validate :valid_date

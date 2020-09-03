@@ -270,3 +270,23 @@ es:
   remove_logo: Eliminar logo
   calendar: Calendario
   working_day: Jornada laboral
+  reports: Reportes
+  type_reports: Tipos de reportes
+  type: Tipo
+
+  pdf:
+    employee_report: reporte_de_empleados
+    report_to_employees: REPORTE DE EMPLEADOS
+    company: EMPRESA
+    description: DESCRIPCIÓN
+    employee: EMPLEADO
+    hours: HORAS
+    email: EMAIL
+    email_: Email
+    lastname: Apellido
+    name: Nombre
+    average: Promedio
+    total: Total
+    generate: Generar PDF
+    date: Fecha
+    year: AÑO

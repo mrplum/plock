@@ -85,3 +85,9 @@ gem 'pundit'
 
 # read .env
 gem 'dotenv-rails'
+
+# Fast, Nimble PDF Writer for Ruby
+gem 'prawn'
+
+# Provides tables for the Prawn PDF toolkit
+gem 'prawn-table'

@@ -6,8 +6,33 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
 
-  authenticate :user, lambda { |u| u.company&.owner_id == u.id } do
+  authenticate :user, lambda { |u| u.company&.owner_id == u.id && u.admin } do
     mount Sidekiq::Web => '/sidekiq'
+    scope :admin do
+      get '/', to: 'stadistics#dashboard'
+      get '/models_count', to: 'stadistics#models_count'
+      namespace :stadistics do
+        resources :companies do
+          get :companies_table, on: :collection
+        end
+        resources :intervals do
+          get :intervals_table, on: :collection
+        end
+        resources :tracks do
+          get :tracks_table, on: :collection
+        end
+        resources :users do
+          get :users_table, on: :collection
+          get :user_select, on: :collection
+        end
+        resources :projects do
+          get :projects_table, on: :collection
+        end
+        resources :teams do
+          get :teams_table, on: :collection
+        end
+      end
+    end
   end
 
   scope "(:locale)", locale: /en|es/ do
@@ -20,6 +45,7 @@ Rails.application.routes.draw do
       get 'subscribe_user'
       get 'send_email'
       get 'accept_invitation_to_company', on: :collection
+      get :report_employees
     end
 
 
@@ -46,31 +72,5 @@ Rails.application.routes.draw do
     get 'me/dataProject/hoursMembersTeam' => 'projects#hours_members_team', :defaults => { :format => 'json' }
     get 'me/dataTeam/hoursToProjects' => 'teams#hours_to_projects', :defaults => { :format => 'json' }
     get 'me/dataTracks' => 'tracks#data_tracks', :defaults => { :format => 'json' }
-
-    scope :admin do
-      get '/', to: 'stadistics#dashboard'
-      get '/models_count', to: 'stadistics#models_count'
-      namespace :stadistics do
-        resources :companies do
-          get :companies_table, on: :collection
-        end
-        resources :intervals do
-          get :intervals_table, on: :collection
-        end
-        resources :tracks do
-          get :tracks_table, on: :collection
-        end
-        resources :users do
-          get :users_table, on: :collection
-          get :user_select, on: :collection
-        end
-        resources :projects do
-          get :projects_table, on: :collection
-        end
-        resources :teams do
-          get :teams_table, on: :collection
-        end
-      end
-    end
   end
 end

@@ -116,12 +116,10 @@ class ProjectsController < ApplicationController
 
     def get_hours_members_team
       users_team = @project.team.users
-      user_ids = users_team.ids
-      user_names = users_team.pluck(:name)
-      user_ids.map.with_index do |user_id, index|
-        service = Elasticsearch::DataStatistics.new({'user_id': user_id, 'team_id': @project.team_id })
+      users_team.map do |user|
+        service = Elasticsearch::DataStatistics.new({'user_id': user.id, 'team_id': @project.team_id })
         {
-          name: user_names[index],
+          name: "#{user.name} #{user.lastname}",
           time: to_hours(service.minutes_total.time_worked.value)
         }
       end

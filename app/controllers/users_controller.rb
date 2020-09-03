@@ -62,12 +62,10 @@ class UsersController < ApplicationController
 
   def time_in_tracks
     tracks = current_user.tracks
-    track_ids = tracks.ids
-    track_names = tracks.pluck(:name)
-    data = track_ids.map.with_index do |track_id, index|
-      service = Elasticsearch::DataStatistics.new({'user_id': current_user.id, 'track_id': track_id })
+    data = tracks.map do |track|
+      service = Elasticsearch::DataStatistics.new({'user_id': current_user.id, 'track_id': track.id })
       {
-        name: track_names[index],
+        name: track.name,
         time: to_hours(service.minutes_total['time_worked']['value'])
       }
     end
