@@ -29,7 +29,7 @@ class IntervalsController < ApplicationController
     respond_to do |format|
       if @interval.save
         if modal_params.present? && modal_params[:modal] != 'complete'
-          format.html { redirect_to project_path(@interval.track.project) }
+          format.html { redirect_to modal_params[:modal]=='dash' ? root_path : project_path(@interval.track.project) }
           format.json { redirect_to project_path(@interval.track.project), status: :created, location: @interval }
         else
           format.html { redirect_to track_path(@interval.track) }
@@ -41,7 +41,7 @@ class IntervalsController < ApplicationController
           if modal_params[:modal] == 'complete'
             format.html { redirect_to track_path(@interval.track) }
           else
-            format.html { redirect_to project_path(@interval.track.project) }
+            format.html { redirect_to modal_params[:modal]=='dash' ? root_path : project_path(@interval.track.project) }
           end
         else
           format.html do
@@ -63,7 +63,7 @@ class IntervalsController < ApplicationController
     respond_to do |format|
       if @interval.update(interval_params.merge({end_at: DateTime.now}))
         if modal_params.present? && modal_params[:modal] != 'complete'
-          format.html { redirect_to project_path(@interval.track.project) }
+          format.html { redirect_to modal_params[:modal]=='dash' ? root_path : project_path(@interval.track.project) }
           format.json { redirect_to project_path(@interval.track.project), status: :ok, location: @interval }
         else
           format.html { redirect_to track_path(@interval.track) }
@@ -72,7 +72,7 @@ class IntervalsController < ApplicationController
       else
         flash[:danger] = @interval.errors.full_messages
         if modal_params.present? && modal_params[:modal] != 'complete'
-          format.html { redirect_to project_path(@interval.track.project) }
+          format.html { redirect_to modal_params[:modal]=='dash' ? root_path : project_path(@interval.track.project) }
           format.json { render json: @interval.errors, status: :unprocessable_entity }
         else
           format.html { redirect_to track_path(@interval.track) }

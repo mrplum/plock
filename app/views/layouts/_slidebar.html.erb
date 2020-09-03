@@ -34,6 +34,13 @@
     </li>
 
     <li class="nav-item">
+      <%= link_to projects_path, class: "nav-link", data: { turbolinks: false } do %>
+          <i class="fa fa-fw fa-cubes"></i>
+          <span><%= t 'projects' %></span>
+        <%end%>
+    </li>
+
+    <li class="nav-item">
       <%= link_to teams_path, class: "nav-link", data: { turbolinks: false } do %>
           <i class="fa fa-fw fa-users"></i>
           <span><%= t 'teams' %></span>
@@ -63,25 +70,6 @@
           <span> <%= current_user.company&.name %> </span></a>
         <%end%>
       </li>
-
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-        <i class="fa fa-fw fa-cubes"></i>
-        <span> <%= I18n.t 'projects' %> </span>
-      </a>
-      <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <%= link_to new_project_path, class: "collapse-item", data: { turbolinks: false } do %>
-            <span> <%= t 'new' %> </span>
-          <%end%>
-          <%= link_to projects_path, class: "collapse-item", data: { turbolinks: false } do %>
-            <span> <%= t 'projects' %> </span>
-          <%end%>
-        </div>
-      </div>
-    </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">

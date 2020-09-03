@@ -1,51 +1,49 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800"> <%= t 'projects' %> </h1>
-  <%= link_to new_project_path, class: "d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" do %>
-    <i class="fa fa-plus fa-sm text-white-50"></i>
-    <span> <%= t 'new_project' %>  </span>
-  <%end%>
+  <button type="button" class="float-right btn btn-sm btn-primary shadow-sm text-white" data-toggle="modal" data-target="#newProjectModal">
+    <i class="fa fa-plus fa-sm text-white"></i>
+    <span> <%= t 'new_project' %> </span>
+  </button>
 </div>
 
-<div class="card shadow mb-4 border-bottom-primary">
+<div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary"><%= t('projects') %></h6>
+    <h6 class="m-0 font-weight-bold text-primary"><%= t('my_projects') %></h6>
   </div>
   <div class="card-body">
-    <div class="table-responsive">
-      <% if @projects.present? %>
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-          <thead>
-            <tr class="text-center">
-              <th><%= t('name') %></th>
-              <th><%= t('description') %></th>
-              <th><%= t('team') %></th>
-              <th><%= t('accion') %></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @projects.each do |project| %>
-              <tr class="text-center">
-                <td><%= project.name %></td>
-                <td><%= project.description %></td>
-                <td><%= project.team&.name %></td>
-                <td>
-                  <%= link_to project_path(project), class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
-                    <i class="fa fa-eye fa-sm text-white-50"></i>
-                  <%end%>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        <div class="mt-4 text-center">
-          <span class="text-danger font-weight-bold">
-            <%= t('not_projects') %>
-            <i class="fa fa-fw fa-times text-danger"></i>
-          </span>
-        </div>
-      <% end %>
-    </div>
+    <% if @projects.present? %>
+      <div class="row">
+        <% @projects.each_with_index do |project, index| %>
+          <div class="col-xl-3 mb-4">
+            <%= link_to project_path(project), style:"height: 80%;", class: "btn card shadow mb-3 bg-light border-bottom-info", data: { turbolinks: false } do %>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="text-center card bg-light border-3 border-info">
+                    <h4> <strong> <%= index+1 %> </strong> </h4>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="card-body">
+                    <div class="text-center">
+                      <p> <strong> <%= project.name %> </strong> </p>
+                      <p> <%= project.description %> </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <%end%>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="mt-4 text-center">
+        <span class="text-danger font-weight-bold">
+          <%= t('not_projects') %>
+          <i class="fa fa-fw fa-times text-danger"></i>
+        </span>
+      </div>
+    <% end %>
   </div>
 </div>
 
+<%= render 'modal_new_project' %>

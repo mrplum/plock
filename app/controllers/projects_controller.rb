@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @user = current_user
-    @projects = @user.company.projects.uniq
+    @projects = @user.projects.uniq
   end
 
   # GET /projects/1
@@ -50,11 +50,7 @@ class ProjectsController < ApplicationController
         format.json { render :show, status: :created, location: @project }
       else
         flash[:danger] = @project.errors.full_messages
-        if modal_params.present?
-          format.html { redirect_to root_path }
-        else
-          format.html { render :new }
-        end
+        format.html { redirect_to modal_params.present? ? projects_path : new_project_path }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end

@@ -35,7 +35,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_response :success
+    assert_response :redirect
   end
 
   test 'should show project' do

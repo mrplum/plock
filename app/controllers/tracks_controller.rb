@@ -85,7 +85,7 @@ class TracksController < ApplicationController
     @track.destroy
     respond_to do |format|
       flash[:success] = t('.success')
-      format.html { redirect_to project_path(@project.id) }
+      format.html { redirect_to modal_params[:modal]=='dash' ? root_path : project_path(@project.id) }
       format.json { head :no_content }
     end
   end
@@ -101,7 +101,7 @@ class TracksController < ApplicationController
     end
 
     def modal_params
-      params.require(:track).permit(:modal)
+      params.permit(:modal)
     end
 
     # Use callbacks to share common setup or constraints between actions.

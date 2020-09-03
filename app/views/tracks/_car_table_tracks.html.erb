@@ -1,4 +1,4 @@
-<div class="card-body">
+<div class="col-xl-4 col-lg-4">
   <%= content_tag(:div, :class => "card shadow mb-4 border-bottom-#{color_border(type)}") do %>
     <div class="card-header py-3">
       <h6 class="m-0 text-dark"> <%= icon_header(type) %> <%= name_card(type) %> </h6>
@@ -9,7 +9,7 @@
           <table class="table" width="100%" cellspacing="0">
             <thead>
               <tr class="text-center">
-                <th><%= t('name') %></th>
+                <th><%= t('track') %></th>
                 <th><%= t('project') %></th>
                 <th><%= t('action') %></th>
               </tr>
@@ -17,15 +17,61 @@
             <tbody>
               <% tracks.order("updated_at desc").each do |track| %>
                 <tr class="text-center">
-                  <td><%= track.name %></td>
-                  <td><%= track.project.name %></td>
+                  <td><%= link_to track.name, track, data: { turbolinks: false } %></td>
+                  <td><%= link_to track.project.name, track.project, data: { turbolinks: false } %></td>
                   <td>
-                    <div class="row justify-content-center">
-                      <div class="mr-1">
-                        <%= link_to track, title: t('show')  ,class: "btn btn-sm btn-warning shadow-sm", data: { turbolinks: false } do %>
-                          <i class="fa fa-eye fa-sm text-white"></i>
+                    <div class="row justify-content-center w-100">
+                      <% if policy(track).update? %>
+
+                        <% if type == 'unstarted' %>
+                          <div class="mr-1 w-25 p-3">
+                            <%= form_with(model: [track, interval = Interval.new], local: true) do |form| %>
+                              <%= form.hidden_field 'start_track', value: true %>
+                              <%= form.hidden_field 'modal', value: 'dash' %>
+                              <%= form.button title: t('resume'), class: 'btn btn-sm btn-info shadow-sm', data: { turbolinks: false } do %>
+                                <i class="fa fa-play fa-sm text-white"></i>
+                              <% end %>
+                            <% end %>
+                          </div>
+
+                        <% elsif type == 'in_progress' %>
+                          <div class="mr-1 w-25 p-3">
+                            <% if track.open_interval %>
+                              <%= form_with(model: [track, track.open_interval], local: true) do |form| %>
+                                <%= form.hidden_field 'start_track', value: true %>
+                                <%= form.hidden_field 'modal', value: 'dash' %>
+                                <%= form.button class: 'btn btn-sm btn-danger shadow-sm', data: { turbolinks: false } do %>
+                                  <i class="fa fa-pause fa-sm text-white"></i>
+                                <% end %>
+                              <% end %>
+                            <% else %>
+                              <%= form_with(model: [track, interval = Interval.new], local: true) do |form| %>
+                                <%= form.hidden_field 'start_track', value: true %>
+                                <%= form.hidden_field 'modal', value: 'dash' %>
+                                <%= form.button title: t('resume'), class: 'btn btn-sm btn-info shadow-sm', data: { turbolinks: false } do %>
+                                  <i class="fa fa-retweet fa-sm text-white"></i>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+                          </div>
+                          <div class="mr-1 w-25 p-3">
+                            <%= form_with(model: [track, track.intervals.last], local: true) do |form| %>
+                              <%= form.hidden_field 'close_track', value: true %>
+                              <%= form.hidden_field 'modal', value: 'dash' %>
+                              <%= form.button title: t('finish'), class: 'btn btn-sm btn btn-success shadow-sm' do %>
+                                <i class="fa fa-check fa-sm text-white"></i>
+                              <% end %>
+                            <% end %>
+                          </div>
                         <% end %>
-                      </div>
+                      <% end %>
+                      <% if policy(track).destroy? %>
+                        <div class="mr-1 w-25 p-3">
+                          <%= link_to track_path(track, modal: 'dash'), title: t('delete'), method: :delete, data: { confirm: t('confirm'), turbolinks: false }, class: "btn btn-sm btn-danger shadow-sm" do %>
+                            <i class="fa fa-trash fa-sm text-white"></i>
+                          <% end %>
+                        </div>
+                      <% end %>
                     </div>
                   </td>
                 </tr>
@@ -36,7 +82,7 @@
       <% else %>
         <br>
         <br>
-        <h3 class="text-center" ><%= t('tracks_empty') %></h3>
+        <h4 class="text-center" ><%= t('tracks_empty') %></h4>
       <% end %>
     <% end %>
   <% end %>
