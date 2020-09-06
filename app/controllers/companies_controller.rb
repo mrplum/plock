@@ -1,6 +1,7 @@
 # #Company class used for create company for add users to work
 class CompaniesController < ApplicationController
-  before_action :get_company, only: %i[show edit update]
+  before_action :set_company, only: %i[show edit update]
+  before_action :set_company_reports, only: %i[report_employees send_report]
   before_action :authenticate_user!, except: %i[accept_invitation_to_company]
   # GET /companies
   # GET /companies.json
@@ -108,12 +109,11 @@ class CompaniesController < ApplicationController
   end
 
   def report_employees
-    company = Company.find(params[:company_id])
     respond_to do |format|
       format.html
       format.pdf do
         send_data(
-          EmployeesReportPdf.new({ company: company, 'type': params[:type_report] }).render,
+          EmployeesReportPdf.new({ company: @company, 'type': params[:type_report] }).render,
           filename: "#{t("pdf.employee_report")}.pdf",
           type: 'application/pdf',
           disposition: 'inline'
@@ -122,13 +122,22 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def send_report
+    CompanyMailer.send_report(@company, current_user, params[:type_report], params[:email]).deliver
+    flash[:success] = t('pdf.send_email.success')
+    redirect_to @company
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def get_company
+  def set_company
     @company = Company.find(params[:id])
   end
 
+  def set_company_reports
+    @company = Company.find(params[:company_id])
+  end
   # Never trust parameters from the scary internet, only allow the white list through.
   def company_params
     params.require(:company).permit(:id, :name, :description, :email, :logo)

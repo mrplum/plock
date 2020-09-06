@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-  default from: ENV["EMAIL_SENDER"]
+  default from: ENV["EMAIL_SENDER"] || "plock@mailer.com"
 
   def welcome_email(user, team)
     @user = user

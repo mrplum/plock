@@ -127,10 +127,14 @@
                 <tr class="text-center">
                   <td><%= option.first %></td>
                   <td>
-                    <%= link_to t('pdf.generate'),
-                      company_report_employees_path(@company, type_report: option.second, format: :pdf),
-                      target: :_blank, id: 'generate_report_link', class: 'btn btn-primary'
-                    %>
+                    <a class="btn btn-info text-white" target="_blank" href=<%=company_report_employees_path(@company, type_report: option.second, format: :pdf)%> > 
+                      <i class="fas fa-file-pdf text-white"></i>
+                      <span> <%= t('pdf.generate') %> </span>
+                    </a>
+                    <button onclick="addParamUrlForm(<%= option.second%>)" id=<%= option.second%> type="button" class="btn btn-success text-white" data-toggle="modal" data-target="#sendEmail"> 
+                      <i class="fa fa-envelope text-white"></i>
+                      <span> <%= t('pdf.send') %> </span>
+                    </button>
                   </td>
                 </tr>
                 <% end %>
@@ -142,6 +146,4 @@
   </div>
 </div>
 
-<script>
-  document.getElementById("defaultButton").click();
-</script>
+<%= render 'send_email_modal', company: @company %>

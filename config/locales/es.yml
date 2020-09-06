@@ -273,6 +273,15 @@ es:
   reports: Reportes
   type_reports: Tipos de reportes
   type: Tipo
+  user_mailer:
+    hello: Hola
+    welcome_company: Ha sido invitado a unirse a la Compañía
+    temporary_user: Se le ha creado un usuario temporal.
+    invitation_team: Te han invitado a unirte al equipo
+    accept: Aceptar
+    user:
+      his_email: Su correo electrónico es
+      his_password: Su contraseña es
 
   pdf:
     employee_report: reporte_de_empleados
@@ -288,5 +297,19 @@ es:
     average: Promedio
     total: Total
     generate: Generar PDF
+    send: Enviar
     date: Fecha
     year: AÑO
+    insert_email: Ingrese email
+    type: Tipo
+    send_email:
+      name_file: 'reporte_empleados.pdf'
+      success: Se envío correo correctamente
+    body_email:
+      hello: Hola
+      message: ha enviado un informe de %{company_name} a través de plock
+    types:
+      general: GENERAL
+      week: SEMANA
+      month: MES
+      year: AÑO

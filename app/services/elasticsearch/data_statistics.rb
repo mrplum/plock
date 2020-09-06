@@ -37,7 +37,7 @@ class Elasticsearch::DataStatistics
       Interval.__elasticsearch__.search(
         filter_data.merge(sum_grouped_calendar_interval(interval))
       ).response['aggregations']['sales_over_time']['buckets']
-      rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e 
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e 
         parse_error(e.message)
     end
   end

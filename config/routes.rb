@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       get 'send_email'
       get 'accept_invitation_to_company', on: :collection
       get :report_employees
+      post :send_report
     end
 
 

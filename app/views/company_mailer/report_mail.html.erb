@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1> <%= t('pdf.body_email.hello') %></h1>
+    <p> <%= @user.name %> <%= @user.lastname %> <%= t('pdf.body_email.message', company_name: @company.name) %> </p>
+  </body>
+</html>

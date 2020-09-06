@@ -159,6 +159,15 @@ en:
   start_at: Start at
   end_at: End at
   complete: Complete
+  user_mailer:
+    hello: Hello
+    welcome_company: You have been invited to join the Company
+    temporary_user: A temporary user has been created to you.
+    invitation_team: You have been invited to join the team
+    accept: Accept
+    user:
+      his_email: His email is
+      his_password: His password is
 
   pdf:
     employee_report: employee_report
@@ -174,5 +183,20 @@ en:
     average: Average
     total: Total
     generate: Generate PDF
+    send: Send
     date: Date
     year: YEAR
+    insert_email: Enter email
+    type: Type
+    send_email:
+      name_file: 'report_employees.pdf'
+      success: Mail was sent successfully
+    body_email:
+      hello: Hello
+      message: has submitted a %{company_name} report via Plock
+    types:
+      general: GENERAL
+      week: WEEK
+      month: MONTH
+      year: YEAR
+

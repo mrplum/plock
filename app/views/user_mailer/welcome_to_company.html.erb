@@ -4,12 +4,12 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1> Hello </h1>
-    <p> You have been invited to join the Company <%= @company.name %> </p>
-    <p> An temporary user has been created to you. </p>
-    <p> His email is <%= @user.email %> </p>
-    <p> His password is: password  </p>.
+    <h1> <%= t('user_mailer.hello') %> </h1>
+    <p> <%= t('user_mailer.welcome_company') %> <%= @company.name %> </p>
+    <p> <%= t('user_mailer.temporary_user') %> </p>
+    <p> <%= t('user_mailer.user.his_email') %>: <%= @user.email %> </p>
+    <p> <%= t('user_mailer.user.his_password') %>: password  </p>.
 
-    <%= link_to 'Accept', accept_invitation_to_company_companies_url(id: @company.id, user_id: @user.id), only_path: true %>
+    <%= link_to t('user_mailer.accept'), accept_invitation_to_company_companies_url(id: @company.id, user_id: @user.id), only_path: true %>
   </body>
 </html>

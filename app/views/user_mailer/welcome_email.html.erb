@@ -4,8 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1> Hello <%= @user.name %> </h1>
-    <p> You have been invited to join the team <%= @team.name %> </p>
-    <%= link_to 'Accept', accept_invitation_team_url(@team, user_id: @user, locale: 'en'), only_path: true %>
+    <h1> <%= t('user_mailer.hello') %> <%= @user.name %> </h1>
+    <p> <%= t('user_mailer.invitation_team') %> <%= @team.name %> </p>
+    <%= link_to t('user_mailer.accept'), accept_invitation_team_url(@team, user_id: @user, locale: 'en'), only_path: true %>
   </body>
 </html>

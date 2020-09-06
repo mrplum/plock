@@ -9,5 +9,6 @@ document.onreadystatechange = () => {
     require("packs/custom/chart-bar")
     require("packs/custom/chart-pie")
     require("packs/custom/chart-area")
+    require("packs/custom/click_tab")
   }
 }
