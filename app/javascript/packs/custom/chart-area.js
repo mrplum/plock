@@ -1,3 +1,5 @@
+import { ajax } from "../ajax";
+
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
@@ -29,34 +31,18 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 var ctx3 = document.getElementById("myAreaChart");
 if (ctx3 !== null) {
-  ajax(ctx3, { interval: 'day' })
+  ajax("GET", "/me/dataUser/hoursIntervalTime", { interval: 'day' }, functionGraph, ctx3);
   document.getElementById("change_interval").addEventListener(
     'change',
     () => {
       ctx3.innerHTML = '';
       let intervalTime = document.getElementById("change_interval").value
-      ajax(ctx3, { interval: intervalTime })
+      ajax("GET", "/me/dataUser/hoursIntervalTime", { interval: intervalTime }, functionGraph, ctx3);
     }
   )
 }
 
-function ajax(ctx3, params){
-  $.ajax({
-    type: "GET",
-    contentType: "application/json; charset=utf-8",
-    url: '/me/dataUser/hoursIntervalTime',
-    dataType: 'json',
-    data: params,
-    success: function (json) {
-      functionGraph(json, ctx3, params);
-    },
-    error: function (result) {
-      error(result);
-    }
-  })
-}
-
-function functionGraph(data, ctx, unit){
+function functionGraph(data, ctx){
   var dataLabels = [];
   var dataTime = [];
   for (var i = 0; i < data.length; i++) {
@@ -97,7 +83,7 @@ function functionGraph(data, ctx, unit){
       scales: {
         xAxes: [{
           time: {
-            unit: unit['interval']
+            unit: 'Hours'
           },
           gridLines: {
             display: false,

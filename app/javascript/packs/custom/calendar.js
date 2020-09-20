@@ -1,15 +1,8 @@
+import { ajax } from "../ajax";
+
 var calendarEl = document.getElementById('calendar');
 if (calendarEl !== null) {
-  $.ajax({
-    type: "GET",
-    contentType: "application/json; charset=utf-8",
-    url: '/me/dataUser/events',
-    dataType: 'json',
-    data: {},
-    success: function (data) {
-      functionCalendar(data);
-    }
-  })
+  ajax("GET", "/me/dataUser/events", { }, functionCalendar);
 }
 
 function functionCalendar(data) {

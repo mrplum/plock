@@ -273,6 +273,9 @@ es:
   reports: Reportes
   type_reports: Tipos de reportes
   type: Tipo
+  team:
+    members: Integrantes
+    projects: Dependencias
   user_mailer:
     hello: Hola
     welcome_company: Ha sido invitado a unirse a la Compañía

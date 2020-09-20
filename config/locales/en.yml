@@ -159,6 +159,9 @@ en:
   start_at: Start at
   end_at: End at
   complete: Complete
+  team:
+    members: Members
+    projects: Projects
   user_mailer:
     hello: Hello
     welcome_company: You have been invited to join the Company

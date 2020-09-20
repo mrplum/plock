@@ -5,8 +5,19 @@ curl 'http://localhost:9200/_aliases'  # show indexes create
 ------------------------------------------ ALL INTERVAL ------------------------------------------
 
 curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "size": 10000,
   "query": {
     "bool": { 
+    }
+  }
+}'
+
+curl -X GET "localhost:9200/intervals/_search?pretty" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": {
+      "must": [
+        { "term": { "user_id": 2 } }
+      ]
     }
   }
 }'

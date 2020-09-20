@@ -5,7 +5,6 @@
 class ProjectsController < ApplicationController
   include ConvertToHours
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_action :set_project_api, only: [ :hours_members_team ]
   before_action :authenticate_user!
 
   # GET /projects
@@ -85,39 +84,20 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def hours_members_team
-    render json: get_hours_members_team
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:id])
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def project_params
+    params[:project][:team_ids] = params.dig(:project, :team_ids).to_a.reject(&:empty?).map(&:to_i).compact
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def project_params
-      params[:project][:team_ids] = params.dig(:project, :team_ids).to_a.reject(&:empty?).map(&:to_i).compact
+    params.require(:project).permit(:name, :description, :area_id, :cost, team_ids: [])
+  end
 
-      params.require(:project).permit(:name, :description, :area_id, :cost, team_ids: [])
-    end
-
-    def modal_params
-      params.require(:project).permit(:modal)
-    end
-
-    def set_project_api
-      @project = Project.find(params[:m_id])
-    end
-
-    def get_hours_members_team
-      users_team = @project.team.users
-      users_team.map do |user|
-        service = Elasticsearch::DataStatistics.new({'user_id': user.id, 'team_id': @project.team_id })
-        {
-          name: "#{user.name} #{user.lastname}",
-          time: to_hours(service.minutes_total.time_worked.value)
-        }
-      end
-    end
+  def modal_params
+    params.require(:project).permit(:modal)
+  end
 end

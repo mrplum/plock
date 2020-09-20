@@ -1,3 +1,5 @@
+import { ajax } from "../ajax";
+
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
@@ -27,39 +29,21 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+var ctx3 = document.getElementById("myBarChartTeamUsers");
+if (ctx3 !== null) {
+  let team_id = document.getElementById('team_id').value;
+  ajax("GET", "/me/dataTeam/hoursMembers", { m_id: team_id }, functionGraph, ctx3);
+}
+
 var ctx2 = document.getElementById("myBarChartTeam");
 if (ctx2 !== null) {
   let team_id = document.getElementById('team_id').value;
-  $.ajax({
-    type: "GET",
-    contentType: "application/json; charset=utf-8",
-    url: '/me/dataTeam/hoursToProjects',
-    dataType: 'json',
-    data: { m_id: team_id },
-    success: function (json) {
-      functionGraph(json, ctx2);
-    },
-    error: function (result) {
-      error(result);
-    }
-  })
+  ajax("GET", "/me/dataTeam/hoursToProjects", { m_id: team_id }, functionGraph, ctx2);
 }
 
 var ctx = document.getElementById("myBarChart");
 if (ctx !== null) {
-  $.ajax({
-    type: "GET",
-    contentType: "application/json; charset=utf-8",
-    url: '/me/dataUser/hoursInTracks',
-    dataType: 'json',
-    data: {},
-    success: function (json) {
-      functionGraph(json, ctx);
-    },
-    error: function (result) {
-      error(result);
-    }
-  })
+  ajax("GET", "/me/dataUser/hoursInTracks", { }, functionGraph, ctx);
 }
 
 function functionGraph(data, ctx){

@@ -97,6 +97,7 @@ class EmployeesReportPdf < Prawn::Document
       time = Elasticsearch::DataStatistics.new(
         { 
           user_id: user.id,
+          company_id: user.company_id,
           start_at: { from_at: start_at, to_at: end_at },
           end_at: { from_at: start_at, to_at: end_at }
         }
@@ -113,6 +114,7 @@ class EmployeesReportPdf < Prawn::Document
       data = Elasticsearch::DataStatistics.new(
         {
           user_id: user.id,
+          company_id: user.company_id,
           start_at: { from_at: start_at, to_at: end_at },
           end_at: { from_at: start_at, to_at: end_at }
         }
@@ -155,6 +157,6 @@ class EmployeesReportPdf < Prawn::Document
   def average_general(user, time)
     total_week = 0
     (user.created_at.to_date..user.updated_at.to_date).each { |day| total_week += 1 if !is_weekend?(day) }
-    (hours(time) / total_week).round(2)
+    total_week == 0 ? 0.0 : (hours(time) / total_week).round(2)
   end
 end

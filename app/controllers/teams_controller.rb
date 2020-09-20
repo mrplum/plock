@@ -4,7 +4,7 @@
 class TeamsController < ApplicationController
   include ConvertToHours
   before_action :set_team, only: [:show, :edit, :update, :destroy]
-  before_action :set_team_api, only: [ :hours_to_projects ]
+  before_action :set_data_api, only: [ :hours_to_projects, :hours_members_team ]
   before_action :authenticate_user!
 
   # GET /teams
@@ -98,6 +98,10 @@ class TeamsController < ApplicationController
     render json: get_hours_to_projects
   end
 
+  def hours_members_team
+    render json: get_hours_members_team
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -113,17 +117,28 @@ class TeamsController < ApplicationController
     params.require(:team).permit(:name, :project_id, user_ids: [])
   end
 
-  def set_team_api
+  def set_data_api
     @team = Team.find(params[:m_id])
   end
 
   def get_hours_to_projects
     projects = @team.projects
     projects.map do |project|
-      service = Elasticsearch::DataStatistics.new({'team_id': @team.id, 'project_id': project.id })
+      service = Elasticsearch::DataStatistics.new({ 'team_id': @team.id, 'project_id': project.id })
       {
         name: project.name,
-        time: to_hours(service.minutes_total.time_worked.value)
+        time: to_hours(service.minutes_total['time_worked']['value'])
+      }
+    end
+  end
+
+  def get_hours_members_team
+    users = @team.users
+    users.map do |user|
+      service = Elasticsearch::DataStatistics.new({ 'team_id': @team.id, 'user_id': user.id })
+      {
+        name: "#{user.lastname}, #{user.name}",
+        time: to_hours(service.minutes_total['time_worked']['value'])
       }
     end
   end

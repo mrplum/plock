@@ -56,7 +56,26 @@
 <div id="statistics-team" class="tabcontent">
   <div class="row justify-content-center">
     <div class="col-xl-10">
-      <div class="card shadow mb-4 border-bottom-primary size-card">
+      <div class="card shadow mb-4 border-bottom-primary">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-chart-bar"></i> <%= t('team.members') %> </h6>
+        </div>
+        <div class="card-body">
+          <div class="chart-bar" id="content">
+            <%= hidden_field_tag :team_id, @team.id %>
+            <canvas id="myBarChartTeamUsers"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card shadow mb-4 border-bottom-primary">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary"> <i class="fa fa-fw fa-chart-bar"></i> <%= t('team.projects') %> </h6>
+        </div>
         <div class="card-body">
           <div class="chart-bar" id="content">
             <%= hidden_field_tag :team_id, @team.id %>

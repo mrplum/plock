@@ -1,22 +1,12 @@
+import { ajax } from "../ajax";
+
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
 var ctx4 = document.getElementById("myPieChart");
 if (ctx4 !== null) {
-  $.ajax({
-    type: "GET",
-    contentType: "application/json; charset=utf-8",
-    url: '/me/dataTracks',
-    dataType: 'json',
-    data: {},
-    success: function (json) {
-      functionGraph(json, ctx4);
-    },
-    error: function (result) {
-      error(result);
-    }
-  })
+  ajax("GET", "/me/dataTracks", { }, functionGraph, ctx4);
 }
 
 function functionGraph(data, ctx){
