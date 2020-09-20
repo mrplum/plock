@@ -32,18 +32,28 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 var ctx3 = document.getElementById("myBarChartTeamUsers");
 if (ctx3 !== null) {
   let team_id = document.getElementById('team_id').value;
-  ajax("GET", "/me/dataTeam/hoursMembers", { m_id: team_id }, functionGraph, ctx3);
+  ajax("GET", "me/dataTeam/hoursMembers", { m_id: team_id }, functionGraph, ctx3);
 }
 
 var ctx2 = document.getElementById("myBarChartTeam");
 if (ctx2 !== null) {
   let team_id = document.getElementById('team_id').value;
-  ajax("GET", "/me/dataTeam/hoursToProjects", { m_id: team_id }, functionGraph, ctx2);
+  ajax("GET", "me/dataTeam/hoursToProjects", { m_id: team_id }, functionGraph, ctx2);
 }
 
 var ctx = document.getElementById("myBarChart");
 if (ctx !== null) {
-  ajax("GET", "/me/dataUser/hoursInTracks", { }, functionGraph, ctx);
+  ajax("GET", "me/dataUser/hoursInTracks", { }, functionGraph, ctx);
+}
+
+var ctx4 = document.getElementById("myBarChartUserTeams");
+if (ctx4 !== null) {
+  ajax("GET", "me/dataUser/hoursInTeams", { }, functionGraph, ctx4);
+}
+
+var ctx5 = document.getElementById("myBarChartUserProjects");
+if (ctx5 !== null) {
+  ajax("GET", "me/dataUser/hoursInProjects", { }, functionGraph, ctx5);
 }
 
 function functionGraph(data, ctx){

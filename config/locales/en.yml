@@ -124,6 +124,8 @@ en:
   not_unfinished_tracks: You have no unfinished tracks
   tracks_count_unfinished: Number of unfinished tracks
   time_in_tracks: Time of my tracks
+  time_in_teams: Time in teams
+  time_in_projects: Time in projects
   status_in_tracks: Status of my tracks
   time_in_intervals: Time of the intervals of my tracks
   incorporated_at: Incorporated at

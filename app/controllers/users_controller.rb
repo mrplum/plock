@@ -53,6 +53,14 @@ class UsersController < ApplicationController
     render json: time_user_in_intervals
   end
 
+  def data_user_in_teams
+    render json: time_user_in_teams
+  end
+
+  def data_user_in_projects
+    render json: time_user_in_projects
+  end
+
   private
 
   def user_params
@@ -78,6 +86,28 @@ class UsersController < ApplicationController
       {
         date: interval['key_as_string'],
         time: to_hours(interval['time_worked']['value'])
+      }
+    end
+  end
+
+  def time_user_in_teams
+    teams = current_user.teams
+    teams.map do |team|
+      service = Elasticsearch::DataStatistics.new({ 'user_id': current_user.id, 'team_id': team.id })
+      {
+        name: team.name,
+        time: to_hours(service.minutes_total['time_worked']['value'])
+      }
+    end
+  end
+
+  def time_user_in_projects
+    projects = current_user.projects.uniq
+    projects.map do |project|
+      service = Elasticsearch::DataStatistics.new({ 'user_id': current_user.id, 'project_id': project.id })
+      {
+        name: project.name,
+        time: to_hours(service.minutes_total['time_worked']['value'])
       }
     end
   end

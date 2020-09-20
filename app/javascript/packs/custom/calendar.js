@@ -2,7 +2,7 @@ import { ajax } from "../ajax";
 
 var calendarEl = document.getElementById('calendar');
 if (calendarEl !== null) {
-  ajax("GET", "/me/dataUser/events", { }, functionCalendar);
+  ajax("GET", "me/dataUser/events", { }, functionCalendar);
 }
 
 function functionCalendar(data) {

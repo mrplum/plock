@@ -31,13 +31,13 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 var ctx3 = document.getElementById("myAreaChart");
 if (ctx3 !== null) {
-  ajax("GET", "/me/dataUser/hoursIntervalTime", { interval: 'day' }, functionGraph, ctx3);
+  ajax("GET", "me/dataUser/hoursIntervalTime", { interval: 'day' }, functionGraph, ctx3);
   document.getElementById("change_interval").addEventListener(
     'change',
     () => {
       ctx3.innerHTML = '';
       let intervalTime = document.getElementById("change_interval").value
-      ajax("GET", "/me/dataUser/hoursIntervalTime", { interval: intervalTime }, functionGraph, ctx3);
+      ajax("GET", "me/dataUser/hoursIntervalTime", { interval: intervalTime }, functionGraph, ctx3);
     }
   )
 }
@@ -54,21 +54,23 @@ function functionGraph(data, ctx){
     type: 'line',
     data: {
       labels: dataLabels,
-      datasets: [{
-        label: "Earnings",
-        lineTension: 0.3,
-        backgroundColor: "rgba(78, 115, 223, 0.05)",
-        borderColor: "rgba(78, 115, 223, 1)",
-        pointRadius: 3,
-        pointBackgroundColor: "rgba(78, 115, 223, 1)",
-        pointBorderColor: "rgba(78, 115, 223, 1)",
-        pointHoverRadius: 3,
-        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-        pointHitRadius: 10,
-        pointBorderWidth: 2,
-        data: dataTime,
-      }],
+      datasets: [
+        {
+          label: "Earnings",
+          lineTension: 0.3,
+          backgroundColor: "rgba(78, 115, 223, 0.05)",
+          borderColor: "rgba(78, 115, 223, 1)",
+          pointRadius: 2,
+          pointBackgroundColor: "rgba(78, 115, 223, 1)",
+          pointBorderColor: "rgba(78, 115, 223, 1)",
+          pointHoverRadius: 3,
+          pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+          pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+          pointHitRadius: 10,
+          pointBorderWidth: 2,
+          data: dataTime,
+        }
+      ]
     },
     options: {
       maintainAspectRatio: false,
@@ -129,7 +131,7 @@ function functionGraph(data, ctx){
         caretPadding: 10,
         callbacks: {
           label: function(tooltipItem, chart) {
-            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label;
             return datasetLabel + ': ' + number_format(tooltipItem.yLabel, 2);
           }
         }

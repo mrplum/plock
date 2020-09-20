@@ -6,7 +6,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
 
 var ctx4 = document.getElementById("myPieChart");
 if (ctx4 !== null) {
-  ajax("GET", "/me/dataTracks", { }, functionGraph, ctx4);
+  ajax("GET", "me/dataTracks", { }, functionGraph, ctx4);
 }
 
 function functionGraph(data, ctx){
