@@ -205,3 +205,9 @@ en:
       month: MONTH
       year: YEAR
 
+  home:
+    index:
+      total_tracks: total tracks
+      unstarted_tracks: unstarted tracks
+      in_progress_tracks: in progress tracks
+      finished_tracks: finished tracks
