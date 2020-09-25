@@ -15,7 +15,7 @@ const TracksSummary = (props) => {
                   <div className="h5 mb-0 font-weight-bold text-gray-800">{item.count}</div>
                 </div>
                 <div className="col-auto">
-                  <i className="fas fa-tasks fa-2x text-gray-300"></i>
+                  <i className={`fas ${item.icon} fa-2x text-gray-300`}></i>
                 </div>
               </div>
             </div>

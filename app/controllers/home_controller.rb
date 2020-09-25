@@ -19,22 +19,26 @@ class HomeController < ApplicationController
       {
         name: t('.total_tracks'),
         count: @tracks.count,
-        color: "primary"
+        color: "primary",
+        icon: 'fa-tasks'
       },
       {
         name: t('.unstarted_tracks'),
         count: @tracks_unstarted.count,
-        color: "secondary"
+        color: "danger",
+        icon: 'fa-times'
       },
       {
         name: t('.in_progress_tracks'),
         count: @tracks_progress.count,
-        color: "success"
+        color: "warning",
+        icon: 'fa-spinner'
       },
       {
         name: t('.finished_tracks'),
         count: @tracks_finished.count,
-        color: "info"
+        color: "success",
+        icon: 'fa-check'
       }
     ]
   end
