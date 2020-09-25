@@ -11,11 +11,11 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/68930.png",
+    "icon": "./assets/images/plock.png",
     "splash": {
-      "image": "./assets/images/plock.png",
+      "image": "./assets/images/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#808080"
+      "backgroundColor": "#003f5c"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

@@ -3,14 +3,11 @@ import {
   View,
   Image,
   Text,
+  TextInput,
   StyleSheet,
+  TouchableOpacity,
   KeyboardAvoidingView
 } from 'react-native';
-import {
-	Input,
-	Button,
-	Icon
-} from 'react-native-elements';
 import { API_HOST } from 'react-native-dotenv';
 import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
@@ -67,13 +64,6 @@ export const SignInScreen = props => {
 
   return (
     <View style={styles.container}>
-      
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior='position'
-        keyboardVerticalOffset={28}
-      >
-      
         <View style={styles.welcomeContainer}>
           <Image
             source={ require('../../assets/images/plock.png') }
@@ -81,57 +71,34 @@ export const SignInScreen = props => {
           />
         </View>
 
-        <Text style={styles.getStartedText}>Log in</Text>
-
-        <Input
-          placeholder=' Email'
-          style={styles.input}
-          onChangeText={value => setEmail({ email: value })}
-          value={email.email}
-          maxLength={30}
-          leftIcon={
-            <Icon
-              name='email'
-              color='#000000'
-            />
-          }
-        />
-
-        <Input
-          maxLength={20}
-          placeholder=' Password'
-          style={styles.input}
-          secureTextEntry
-          onChangeText={value => setPass({ password: value })}
-          value={pass.password}
-          leftIcon={
-            <Icon
-              name='lock'
-              color='#000000'
-            />
-          }
-        />
-
-        <View style={styles.SeparatorLine} />
-
-        <View style={styles.center}>
-            <Button
-              buttonStyle={styles.button}
-              title=' Log in'
-              onPress={signIn}
-              icon={
-                <Icon
-                  name="sign-in"
-                  size={15}
-                  color="white"
-                  type='font-awesome'
-                /> 
-              }
-            />
+        <View style={styles.input} >
+          <TextInput
+            style={styles.inputText}
+            placeholder="Email..."
+            placeholderTextColor="#003f5c"
+            value={email.email}
+            onChangeText={value => setEmail({email:value})}/>
         </View>
 
-      </KeyboardAvoidingView>
+        <View style={styles.input} >
+          <TextInput
+            secureTextEntry
+            style={styles.inputText}
+            placeholder="Password..."
+            placeholderTextColor="#003f5c"
+            value={pass.password}
+            onChangeText={value => setPass({password:value})}/>
+        </View>
 
+        <TouchableOpacity>
+          <Text style={styles.forgot}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginBtn} onPress={signIn} >
+          <Text style={styles.loginText}>LOGIN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.loginText}>Signup</Text>
+        </TouchableOpacity>
     </View>
   );
 };
@@ -146,8 +113,9 @@ SignInScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#003f5c',
+    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#808080'
   },
   welcomeImage: {
     width: 250,
@@ -157,9 +125,10 @@ const styles = StyleSheet.create({
     marginLeft: 0
   },
   welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 25
+    fontWeight:"bold",
+    fontSize:50,
+    color:"#fb5b5a",
+    marginBottom:40
   },
   welcome: {
     fontSize: 20,
@@ -167,33 +136,33 @@ const styles = StyleSheet.create({
     margin: 10
   },
   input: {
-		margin: 15,
-		height: 40,
-		padding: 5,
-		fontSize: 16,
-		borderBottomWidth: 1,
-		borderBottomColor: '#000000'
-	},
-  getStartedText: {
-    marginTop: -10,
-    fontSize: 17,
-    color: '#37435D',
-    lineHeight: 32,
-    textAlign: 'center',
-    backgroundColor: '#FFFFFF',
-    height: 35
+    width:"80%",
+    backgroundColor:"#465881",
+    borderRadius:25,
+    height:50,
+    marginBottom:20,
+    justifyContent:"center",
+    padding:20
   },
-  button: {
-    height: 50,
-    width: 150,
-    backgroundColor: '#8b0000',
-    borderRadius: 10
+  inputText: {
+    height:50,
+    color:"white"
   },
-  center: {
-    alignItems:'center',
-  	justifyContent:'center'
+  forgot:{
+    color:"white",
+    fontSize:11
   },
-  SeparatorLine :{
-		height: 40
-	}
+  loginBtn:{
+    width:"80%",
+    backgroundColor:"#fb5b5a",
+    borderRadius:25,
+    height:50,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:40,
+    marginBottom:10
+  },
+  loginText:{
+    color:"white"
+  }
 });
