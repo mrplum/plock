@@ -318,3 +318,11 @@ es:
       week: SEMANA
       month: MES
       year: AÑO
+
+
+  home:
+    index:
+      total_tracks: total tracks 
+      unstarted_tracks: unstarted tracks 
+      in_progress_tracks: in_progress tracks 
+      finished_tracks: finished tracks 
