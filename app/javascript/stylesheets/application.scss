@@ -10,3 +10,71 @@ $fa-font-path: "./template/fontawesome-free/webfonts";
 @import "projects";
 @import "stats_show";
 @import "teams";
+
+:root {
+  --gray-dark: #5a5c69;
+  --primary: #4e73df;
+  --success: #1cc88a;
+  --warning: #f6c23e;
+  --danger: #e74a3b;
+  --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.boxContainer {
+  display: flex ;
+  flex-direction: row ;
+  justify-content: space-between ;
+  width: 100% ;
+  align-items: stretch;
+  padding-bottom: 2.5%;
+}
+
+.boxItem {
+  display: flex ;
+  justify-content: space-around ;
+  align-items: center;
+  width: 22.5%;
+  padding: 2% ;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) ;
+  background: #ffffff ;
+  border: 1px solid rgba(0, 0, 0, 0.125) ;
+  border-radius: 0.25rem ;
+}
+.boxItem.primary {
+  border-left: .25rem solid var(--primary) ; 
+}
+.boxItem.danger {
+  border-left: .25rem solid var(--danger) ; 
+}
+.boxItem.warning {
+  border-left: .25rem solid var(--warning) ; 
+}
+.boxItem.success {
+  border-left: .25rem solid var(--success) ; 
+}
+
+.itemName {
+  font-weight: 700 ;
+  font-size: .7rem ;
+  text-transform: uppercase ;
+  margin-bottom: 0.25rem ;
+}
+.itemName.primary {
+  color: var(--primary) ; 
+}
+.itemName.danger {
+  color: var(--danger) ; 
+}
+.itemName.warning {
+  color: var(--warning) ; 
+}
+.itemName.success {
+  color: var(--success) ; 
+}
+
+.itemCount {
+  color: var(--gray-dark) ;
+  font-weight: 700 ;
+  font-size: 1.25rem;
+}
