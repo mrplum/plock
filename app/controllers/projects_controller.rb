@@ -4,14 +4,15 @@
 #
 class ProjectsController < ApplicationController
   include ConvertToHours
+  include DataToIndex
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /projects
   # GET /projects.json
   def index
-    @user = current_user
-    @projects = @user.projects.uniq
+    projects = current_user.projects.uniq
+    @data = set_data(projects, project_path(0), t('my_projects'), t('not_projects'))
   end
 
   # GET /projects/1

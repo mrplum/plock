@@ -3,6 +3,7 @@
 # TeamsController class
 class TeamsController < ApplicationController
   include ConvertToHours
+  include DataToIndex
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :set_data_api, only: [ :hours_to_projects, :hours_members_team ]
   before_action :authenticate_user!
@@ -10,8 +11,8 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
-    @user = current_user
-    @teams = @user.teams
+    teams = current_user.teams
+    @data = set_data(teams, team_path(0), t('my_teams'), t('not_teams'))
   end
 
   # GET /teams/1

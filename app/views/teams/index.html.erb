@@ -6,42 +6,4 @@
   <% end %>
 </div>
 
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary"><%= t('my_teams') %></h6>
-  </div>
-  <div class="card-body">
-    <% if @teams.present? %>
-      <div class="row">
-        <% @teams.each_with_index do |team, index| %>
-          <div class="col-xl-3 mb-4">
-            <%= link_to team_path(team), style:"height: 80%;", class: "btn card shadow bg-light mb-3 border-bottom-info", data: { turbolinks: false } do %>
-              <div class="row">
-                <div class="col-md-2">
-                  <div class="text-center card bg-light border-3 border-info">
-                    <h5> <strong> <%= index+1 %> </strong> </h5>
-                  </div>
-                </div>
-                <div class="col-md-9">
-                  <div class="card-body">
-                    <div class="text-center">
-                      <p> <strong> <%= team.name %> </strong> </p>
-                      <p> <%= "#{t('members_count')} #{team.users.count}" %> </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <%end%>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="mt-4 text-center">
-        <span class="text-danger font-weight-bold">
-          <%= t('not_teams') %>
-          <i class="fa fa-fw fa-times text-danger"></i>
-        </span>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= react_component("Index", { 'data': @data }) %>
