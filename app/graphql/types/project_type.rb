@@ -11,8 +11,8 @@ module Types
     field :company, CompanyType, null: false
     field :owner, UserType, null: false
     field :team, TeamType, null: true
-    field :users, UserType.connection_type, null: true
-    field :teams, TeamType.connection_type, null: true
+    field :users, [UserType], null: true
+    field :teams, [TeamType], null: true
     field :tracks, TrackType.connection_type, null: true
     field :created_at, String, null: false
     field :updated_at, String, null: false

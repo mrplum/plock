@@ -15,7 +15,7 @@ module Types
       argument :id, ID, required: true
     end
     def project(id:)
-      Project.find(id)
+      Project.find(id) if current_user.present?
     end
 
     field :user,

@@ -106,7 +106,7 @@ class QueryTypeTest < ActiveSupport::TestCase
     result = PlockSchema.execute(
       query_string,
       variables: { id: project_id },
-      context: {}
+      context: { current_user: @user }
     )
     project_name_result = result['data']['project']['name']
     project_track_name_result = result['data']['project']['tracks']['edges'][0]['node']['name']

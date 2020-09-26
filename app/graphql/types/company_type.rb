@@ -10,7 +10,7 @@ module Types
     field :owner, UserType, null: true
     field :users, [UserType], null: true
     field :projects, [ProjectType], null: true
-    field :areas, AreaType.connection_type, null: true
+    field :areas, [AreaType], null: true
     field :created_at, String, null: false
     field :updated_at, String, null: false
 
