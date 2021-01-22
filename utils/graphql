@@ -1,116 +1,93 @@
+
+query {
+        projects {
+          name
+          team {
+            name
+            users {
+              name
+            }
+          }
+          tracks(first: 1) {
+            edges{
+              node{
+                name
+              }
+            }
+          }
+          company {
+            name
+          }
+        }
+      }
+
+query($id: ID!) {
+        project(id: $id) {
+          name
+          tracks(first: 1) {
+            edges{
+              node{
+                name
+              }
+            }
+          }
+          owner {
+            email
+          }
+          team {
+            name
+            users {
+              name
+            }
+          }
+          company {
+            name
+          }
+        }
+      }
+
+query {
+        user {
+          name
+          email
+          tracks(first: 3) {
+            edges{
+              node{
+                name
+                status
+              }
+            }
+          }
+          projects {
+            name
+          }
+          teams {
+            name
+          }
+        }
+      }
+
 mutation login($email: String!, $password: String!){
         login(email: $email, password: $password){
           user {
-            id
             token
           }
           errors
         }
       }
 
-
-
-
- {
-    project(id: 1) {
-      name
-      tracks(first: 1) {
-        edges{
-          node{
-            name
-          }
-        }
-      }
-    teams {
-        edges{
-          node{
-            name
-          }
-        }
-      }
-      owner {
-        email
-    	}
-      team {
-        name
-        users {
-          name
-        }
-      }
-      company {
-      	name
-        owner {
-          name
-          email
-          intervals {
-            edges{
-              node{
-                description
-              }
-            }
-          }
-          
-        }
-        areas {
-          edges{
-          node{
-            name
-          }
-        }
-        }
-      }
-    }
+query {
+  statsByStatus
 }
 
-
-
-
-{
-  projects {
-    name
-    team {
-      name
-      users {
-        name
-      }
-    }
-    tracks(first: 1) {
-      edges{
-        node{
-          name
-        }
-      }
-    }
-    company {
-      name
-    }
-  }
+query {
+  statsByDay
 }
 
-
-
-{
-  user {
-    name
-    email
-    tracks(first: 3) {
-      edges{
-        node{
-          name
-          status
-        }
-      }
-    }
-    projects {
-      name
-    }
-    teams {
-      name
-    }
-  }
-}
-
-{ 
+query {
   statsByProjects
 }
 
+query($interval: String!) {
+  statsByTimeInterval(interval: $interval)
+}

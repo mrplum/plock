@@ -12,6 +12,8 @@ module Plock
     config.load_defaults 6.0
     config.autoload_paths += Dir[Rails.root.join('app', 'services')]
 
+    config.hosts << /[a-z0-9]+\.ngrok\.io/ if Rails.env.development?
+
     Dotenv.load
 
     # Settings in config/environments/* take precedence over those specified here.

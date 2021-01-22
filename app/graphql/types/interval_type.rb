@@ -9,6 +9,7 @@ module Types
     field :user_id, ID, null: false
     field :start_at, String, null: true
     field :end_at, String, null: false
+    field :minutes, Integer, null: false
     field :created_at, String, null: false
     field :updated_at, String, null: false
     field :description, String, null: false 
