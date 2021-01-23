@@ -19,7 +19,7 @@ The manager UI is a typical rails interface and to generate reports we've used D
 #### Admin Context
 There is a last context where there exists super admin users that can see the whole system information, this site was build using React.js.
 
-![arquitecture](https://github.com/mrplum/plock/blob/doc/arquitecture.png)
+![arquitecture](https://github.com/mrplum/plock/blob/master/doc/architecture.png)
 
 * Ruby version
   2.6.2
@@ -34,6 +34,7 @@ docker-compose up
 ```
 
 * Database creation & initialization
+
   The very first time you will need to create DBs and run a seed file to get some dummy data pre-loaded
   ```
     docker-compose run web rails db:setup
