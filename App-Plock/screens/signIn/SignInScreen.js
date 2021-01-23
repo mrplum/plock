@@ -11,9 +11,7 @@ import {
 import { API_HOST } from 'react-native-dotenv';
 import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
-
 import { AuthContext } from "../../components/StateContextProvider";
-
 
 const client = new ApolloClient({ uri: API_HOST });
 const { useState } = React;
@@ -71,13 +69,55 @@ export const SignInScreen = props => {
           />
         </View>
 
-        <View style={styles.input} >
-          <TextInput
-            style={styles.inputText}
-            placeholder="Email..."
-            placeholderTextColor="#003f5c"
-            value={email.email}
-            onChangeText={value => setEmail({email:value})}/>
+        <Text style={styles.getStartedText}>Log in</Text>
+
+        <Text> { API_HOST } </Text>
+
+        <Input
+          placeholder=' Email'
+          style={styles.input}
+          onChangeText={value => setEmail({ email: value })}
+          value={email.email}
+          maxLength={30}
+          leftIcon={
+            <Icon
+              name='email'
+              color='#000000'
+            />
+          }
+        />
+
+        <Input
+          maxLength={20}
+          placeholder=' Password'
+          style={styles.input}
+          secureTextEntry
+          onChangeText={value => setPass({ password: value })}
+          value={pass.password}
+          leftIcon={
+            <Icon
+              name='lock'
+              color='#000000'
+            />
+          }
+        />
+
+        <View style={styles.SeparatorLine} />
+
+        <View style={styles.center}>
+            <Button
+              buttonStyle={styles.button}
+              title=' Log in'
+              onPress={signIn}
+              icon={
+                <Icon
+                  name="sign-in"
+                  size={15}
+                  color="white"
+                  type='font-awesome'
+                /> 
+              }
+            />
         </View>
 
         <View style={styles.input} >

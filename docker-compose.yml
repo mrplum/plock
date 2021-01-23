@@ -1,0 +1,64 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    env_file:
+      - .env.postgres
+    # persist data even if container shuts down
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    links:
+      - db
+      - redis
+      - elasticsearch
+      - sidekiq
+    ports:
+      - "3000:3000"
+    environment:
+      LANG: "C.UTF-8"
+      LC_ALL: "C.UTF-8"
+    volumes:
+      - .:/usr/src/app
+      - ./.bundle:/usr/local/bundle
+    env_file:
+      - .env
+
+  redis: &redis
+    image: 'redis:4.0-alpine'
+    # volumes:
+    #   - 'redis:/data'
+    # command: redis-server --requirepass yourpassword
+
+  redis-test:
+    <<: *redis
+
+  sidekiq:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    links:
+      - db
+      - redis
+    env_file:
+      - .env
+    command: bundle exec sidekiq
+
+  elasticsearch: &elasticsearch
+    image: elasticsearch:1.7.6
+    ports: ["9200"]
+    healthcheck:
+      test: ["CMD", "curl", "-SsfL", "127.0.0.1:9200/_status"]
+      interval: 1s
+      timeout: 1s
+      retries: 300
+  elasticsearch-test:
+    <<: *elasticsearch
+    # place elasticsearch data on tmpfs for performance
+    tmpfs: /usr/share/elasticsearch/data
+
+volumes:
+  postgres-data:
+  redis:

@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import clientApollo from '../../../util/clientApollo';
 import gql from 'graphql-tag';
-
+import { API_HOST } from 'react-native-dotenv';
 
 const ProjectsList = props => {
   const [list, setList] = useState([]);
@@ -37,6 +37,10 @@ const ProjectsList = props => {
 
   const projectList = list.map((project) => (
     <View key={project.id}>
+
+      <Text>
+        { API_HOST }
+      </Text>
     
       <Text style={styles.welcome}>
         The name of the project is:
