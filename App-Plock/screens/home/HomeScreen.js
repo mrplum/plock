@@ -10,14 +10,13 @@ import {
   View,
   AsyncStorage
 } from 'react-native';
-import {
-Icon
-} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import gql from 'graphql-tag';
 import { Stopwatch } from 'react-native-stopwatch-timer';
 import clientApollo from '../../util/clientApollo';
 import stateContext from '../../components/StateContext';
 import { AuthContext, Chronometer } from "../../components/StateContextProvider";
+import { API_HOST } from "react-native-dotenv";
 
 const HomeScreen = (props) => {
 
@@ -73,6 +72,9 @@ const HomeScreen = (props) => {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
+        <Text>
+          {API_HOST}
+        </Text>
 
         <View style={styles.welcomeContainer}>
 
