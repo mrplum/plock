@@ -7,8 +7,8 @@ module Mutations
     type Types::IntervalType
 
     def resolve(id:)
-      i = Interval.find(id)
-      i.destroy
+      interval = Interval.find(id)
+      interval.destroy
     end
   end
 end

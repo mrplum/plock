@@ -8,9 +8,9 @@ module Mutations
     type Types::TrackType
 
     def resolve(id:, status:)
-      t = Track.find(id)
-      t.update(status: status)
-      return t
+      track = Track.find(id)
+      track.update(status: status)
+      track
     end
   end
 end

@@ -8,9 +8,9 @@ module Mutations
     type Types::IntervalType
 
     def resolve(id:, end_at:)
-      i = Interval.find(id)
-      i.update(end_at: end_at)
-      return i
+      interval = Interval.find(id)
+      interval.update(end_at: end_at)
+      interval
     end
   end
 end

@@ -61,7 +61,7 @@ module Types
       null: true,
       description: 'Returns a list of projects created by the user registered in plock'
     def projects
-      current_user&.projects
+      current_user&.projects.uniq
     end
   end
 end
