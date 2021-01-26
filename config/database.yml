@@ -21,7 +21,7 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: db # From docker-compose service's name
-  password: <%= ENV['POSTGRES_USER'] %> # From web's service environment
+  username: <%= ENV['POSTGRES_USER'] %> # From web's service environment
   password: <%= ENV['POSTGRES_PASSWORD'] %> # From web's service environment
 
 development:
